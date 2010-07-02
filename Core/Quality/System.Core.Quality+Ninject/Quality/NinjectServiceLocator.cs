@@ -28,6 +28,7 @@ namespace System.Quality
     [Serializable]
     public class NinjectServiceLocator : IServiceLocator, IDisposable
     {
+        private IKernel _container;
         private NinjectServiceRegistrar _registrar;
 
         public NinjectServiceLocator()
@@ -42,17 +43,17 @@ namespace System.Quality
 
         public void Dispose()
         {
-            if (Container != null)
+            if (_container != null)
             {
-                Container.Dispose();
-                Container = null;
+                _container.Dispose();
+                _container = null;
                 _registrar = null;
             }
         }
 
         public IServiceRegistrar GetRegistrar()
         {
-            return (_registrar = new NinjectServiceRegistrar(Container));
+            return _registrar;
         }
 
         public TServiceRegistrar GetRegistrar<TServiceRegistrar>()
@@ -126,7 +127,15 @@ namespace System.Quality
         public void TearDown<TService>(TService instance)
             where TService : class { }
 
-        public IKernel Container { get; set; }
+        public IKernel Container
+        {
+            get { return _container; }
+            private set
+            {
+                _container = value;
+                _registrar = new NinjectServiceRegistrar(this, value);
+            }
+        }
 
         //#region First Binding
         //private class FirstBindingInfo

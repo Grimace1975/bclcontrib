@@ -27,6 +27,7 @@ namespace System.Quality
     [Serializable]
     public class WindsorServiceLocator : IServiceLocator, IDisposable
     {
+        private IWindsorContainer _container;
         private WindsorServiceRegistrar _registrar;
 
         public WindsorServiceLocator()
@@ -39,17 +40,17 @@ namespace System.Quality
 
         public void Dispose()
         {
-            if (Container != null)
+            if (_container != null)
             {
-                Container.Dispose();
-                Container = null;
+                _container.Dispose();
+                _container = null;
                 _registrar = null;
             }
         }
 
         public IServiceRegistrar GetRegistrar()
         {
-            return (_registrar = new WindsorServiceRegistrar(Container));
+            return _registrar;
         }
 
         public TServiceRegistrar GetRegistrar<TServiceRegistrar>()
@@ -127,7 +128,15 @@ namespace System.Quality
                     .ForEach(property => Container.Release(property.GetValue(instance, null)));
         }
 
-        public IWindsorContainer Container { get; set; }
+        public IWindsorContainer Container
+        {
+            get { return _container; }
+            private set
+            {
+                _container = value;
+                _registrar = new WindsorServiceRegistrar(this, value);
+            }
+        }
 
         #region Domain specific
         private static IWindsorContainer CreateContainer()

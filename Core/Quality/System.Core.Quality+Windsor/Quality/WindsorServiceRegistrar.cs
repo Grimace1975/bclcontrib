@@ -26,17 +26,30 @@ namespace System.Quality
 {
     public class WindsorServiceRegistrar : IServiceRegistrar, IDisposable
     {
+        private WindsorServiceLocator _parent;
         private readonly IList<IRegistration> _registrations = new List<IRegistration>();
         private IWindsorContainer _container;
 
-        public WindsorServiceRegistrar(IWindsorContainer container)
+        public WindsorServiceRegistrar(WindsorServiceLocator parent, IWindsorContainer container)
         {
+            _parent = parent;
             _container = container;
         }
 
         public void Dispose()
         {
             _container.Register(_registrations.ToArray());
+        }
+
+        public IServiceLocator GetLocator()
+        {
+            return _parent;
+        }
+
+        public TServiceLocator GetLocator<TServiceLocator>()
+            where TServiceLocator : class, IServiceLocator
+        {
+            return (_parent as TServiceLocator);
         }
 
         public void Register<Source>(Source instance)

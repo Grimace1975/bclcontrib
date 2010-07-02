@@ -24,13 +24,26 @@ namespace System.Quality
 {
     public class NinjectServiceRegistrar : NinjectModule, IServiceRegistrar, IDisposable
     {
+        private NinjectServiceLocator _parent;
         private IKernel _container;
         private Guid _moduleId;
 
-        public NinjectServiceRegistrar(IKernel kernel)
+        public NinjectServiceRegistrar(NinjectServiceLocator parent, IKernel kernel)
         {
+            _parent = parent;
             _container = kernel;
             _container.Load(new INinjectModule[] { this });
+        }
+
+        public IServiceLocator GetLocator()
+        {
+            return _parent;
+        }
+
+        public TServiceLocator GetLocator<TServiceLocator>()
+            where TServiceLocator : class, IServiceLocator
+        {
+            return (_parent as TServiceLocator);
         }
 
         public void Register<Source>(Source instance)

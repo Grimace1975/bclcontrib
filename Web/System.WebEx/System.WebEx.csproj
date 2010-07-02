@@ -58,6 +58,9 @@
     <Compile Include="AssemblyRef.cs" />
     <Compile Include="Patterns\Caching\WebEnvironmentDebugStaticCacheProvider.cs" />
     <Compile Include="Patterns\Reporting\FlatFileCsvEmitterExtensions.cs" />
+    <Compile Include="Web.2\ISiteMapProvider.cs" />
+    <Compile Include="Web.2\IStaticSiteMapProviderEx.cs" />
+    <Compile Include="Web.2\SiteMapNodeSeoExtent.cs" />
     <Compile Include="Web\UI.3\Configuration\HtmlTextBoxConfigurationSet.cs" />
     <Compile Include="Web\UI.3\Configuration\HtmlTextBoxCssStyleConfiguration.cs" />
     <Compile Include="Web\UI.3\Configuration\HtmlTextBoxCssStyleConfigurationSet.cs" />

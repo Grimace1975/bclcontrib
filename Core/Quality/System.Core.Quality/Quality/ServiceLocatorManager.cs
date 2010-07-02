@@ -23,6 +23,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 #endregion
+using System.Linq;
+using System.Reflection;
 namespace System.Quality
 {
     /// <summary>
@@ -32,11 +34,15 @@ namespace System.Quality
     {
         private static readonly object _lock = new object();
         private static Func<IServiceLocator> _provider;
+        private static Action<IServiceRegistrar, IServiceLocator> _registration;
         private static IServiceLocator _serviceLocator;
 
-        public static void SetLocatorProvider(Func<IServiceLocator> provider)
+        public static void SetLocatorProvider(Func<IServiceLocator> provider) { SetLocatorProvider(provider, (Action<IServiceRegistrar, IServiceLocator>)null); }
+        public static void SetLocatorProvider(Func<IServiceLocator> provider, Assembly[] assemblies) { SetLocatorProvider(provider, (registrar, locator) => RegisterFromAssemblies(registrar, locator, assemblies)); }
+        public static void SetLocatorProvider(Func<IServiceLocator> provider, Action<IServiceRegistrar, IServiceLocator> registration)
         {
             _provider = provider;
+            _registration = registration;
         }
 
         public static IServiceLocator Current
@@ -48,9 +54,22 @@ namespace System.Quality
                 if (_serviceLocator == null)
                     lock (_lock)
                         if (_serviceLocator == null)
+                        {
                             _serviceLocator = _provider();
+                            if (_registration != null)
+                                _registration(_serviceLocator.GetRegistrar(), _serviceLocator);
+                        }
                 return _serviceLocator;
             }
+        }
+
+        public static void RegisterFromAssemblies(IServiceRegistrar registrar, IServiceLocator locator, Assembly[] assemblies)
+        {
+            var registrationType = typeof(IServiceRegistration);
+            assemblies.SelectMany(a => a.GetTypes())
+                .Where(t => (!t.IsInterface) && (!t.IsAbstract) && (t.GetInterfaces().Contains(registrationType)))
+                .ToList()
+                .ForEach(r => ((IServiceRegistration)locator.Resolve(r)).Register(registrar));
         }
     }
 }

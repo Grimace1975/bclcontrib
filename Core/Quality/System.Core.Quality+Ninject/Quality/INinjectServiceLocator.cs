@@ -31,6 +31,6 @@ namespace System.Quality
     /// </summary>
     public interface INinjectServiceLocator : IServiceLocator
     {
-        IKernel Container { get; set; }
+        IKernel Container { get; }
     }
 }

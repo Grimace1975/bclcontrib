@@ -32,7 +32,7 @@ namespace System.Web
     /// <summary>
     /// StaticSiteMapProviderEx
     /// </summary>
-    public partial class StaticSiteMapProviderEx : StaticSiteMapProvider
+    public partial class StaticSiteMapProviderEx : StaticSiteMapProvider, ISiteMapProvider
     {
         private IStaticSiteMapProviderExNodeStore _nodeStore;
         private ReaderWriterLockSlim _rwLock = new ReaderWriterLockSlim();
@@ -76,6 +76,8 @@ namespace System.Web
             return provider;
         }
 
+        public TNode FindSiteMapNode<TNode>(string rawUrl)
+            where TNode : SiteMapNode { return (TNode)FindSiteMapNode(rawUrl); }
         public override SiteMapNode FindSiteMapNode(string rawUrl)
         {
             if (rawUrl == null)
@@ -129,11 +131,15 @@ namespace System.Web
             return rawUrl.Substring(0, index).Split('/');
         }
 
+        public TNode FindSiteMapNode<TNode>(HttpContext context)
+            where TNode : SiteMapNode { return (TNode)FindSiteMapNode(context); }
         public override SiteMapNode FindSiteMapNode(HttpContext context)
         {
             return base.FindSiteMapNode(context);
         }
 
+        public TNode FindSiteMapNodeFromKey<TNode>(string key)
+            where TNode : SiteMapNode { return (TNode)FindSiteMapNodeFromKey(key); }
         public override SiteMapNode FindSiteMapNodeFromKey(string key)
         {
             // locks handled by BuildSiteMap
@@ -214,7 +220,7 @@ namespace System.Web
             finally { _rwLock.ExitWriteLock(); }
         }
 
-        public void Clear2()
+        void ISiteMapProvider.Clear()
         {
             Clear();
         }
@@ -227,5 +233,8 @@ namespace System.Web
         }
 
         public event EventHandler<EventArgs> SiteMapBuilt;
+
+        public TNode GetParentNode<TNode>(SiteMapNode node)
+            where TNode : SiteMapNode { return (TNode)GetParentNode(node); }
     }
 }

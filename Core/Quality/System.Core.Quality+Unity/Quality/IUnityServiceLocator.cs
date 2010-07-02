@@ -31,6 +31,6 @@ namespace System.Quality
     /// </summary>
     public interface IUnityServiceLocator : IServiceLocator
     {
-        IUnityContainer Container { get; set; }
+        IUnityContainer Container { get; }
     }
 }

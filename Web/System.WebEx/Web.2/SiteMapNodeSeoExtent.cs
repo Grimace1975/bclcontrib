@@ -23,14 +23,14 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 #endregion
-using StructureMap;
-namespace System.Quality
+namespace System.Web
 {
     /// <summary>
-    /// IStructureMapServiceLocator
+    /// SiteMapNodeSeoExtent
     /// </summary>
-    public interface IStructureMapServiceLocator : IServiceLocator
-    {
-        IContainer Container { get; }
-    }
+    public class SiteMapNodeSeoExtent
+	{
+		public string CanonicalUrl { get; set; }
+        public bool NoFollow { get; set; }
+	}
 }

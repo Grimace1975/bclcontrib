@@ -25,6 +25,7 @@ namespace System.Quality
     [Serializable]
     public class UnityServiceLocator : IUnityServiceLocator, IDisposable
     {
+        private IUnityContainer _container;
         private UnityServiceRegistrar _registrar;
 
         public UnityServiceLocator()
@@ -39,17 +40,17 @@ namespace System.Quality
 
         public void Dispose()
         {
-            if (Container != null)
+            if (_container != null)
             {
-                //Container.Dispose();
-                Container = null;
+                //_container.Dispose();
+                _container = null;
                 _registrar = null;
             }
         }
 
         public IServiceRegistrar GetRegistrar()
         {
-            return (_registrar = new UnityServiceRegistrar(Container));
+            return _registrar;
         }
 
         public TServiceRegistrar GetRegistrar<TServiceRegistrar>()
@@ -117,6 +118,14 @@ namespace System.Quality
                 Container.Teardown(instance);
         }
 
-        public IUnityContainer Container { get; set; }
+        public IUnityContainer Container
+        {
+            get { return _container; }
+            private set
+            {
+                _container = value;
+                _registrar = new UnityServiceRegistrar(this, value);
+            }
+        }
     }
 }

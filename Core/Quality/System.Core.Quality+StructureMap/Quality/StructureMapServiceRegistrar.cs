@@ -25,11 +25,24 @@ namespace System.Quality
 {
     public class StructureMapServiceRegistrar : Registry, IServiceRegistrar, IDisposable
     {
+        private StructureMapServiceLocator _parent;
         private IContainer _container;
 
-        public StructureMapServiceRegistrar(IContainer container)
+        public StructureMapServiceRegistrar(StructureMapServiceLocator parent, IContainer container)
         {
+            _parent = parent;
             _container = container;
+        }
+
+        public IServiceLocator GetLocator()
+        {
+            return _parent;
+        }
+
+        public TServiceLocator GetLocator<TServiceLocator>()
+            where TServiceLocator : class, IServiceLocator
+        {
+            return (_parent as TServiceLocator);
         }
 
         public void Dispose()

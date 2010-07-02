@@ -23,14 +23,27 @@ namespace System.Quality
 {
     internal sealed class UnityServiceRegistrar : IUnityServiceRegistrar, IDisposable
     {
+        private UnityServiceLocator _parent;
         private IUnityContainer _container;
 
-        public UnityServiceRegistrar(IUnityContainer container)
+        public UnityServiceRegistrar(UnityServiceLocator parent, IUnityContainer container)
         {
+            _parent = parent;
             _container = container;
         }
 
         public void Dispose() { }
+
+        public IServiceLocator GetLocator()
+        {
+            return _parent;
+        }
+
+        public TServiceLocator GetLocator<TServiceLocator>()
+            where TServiceLocator : class, IServiceLocator
+        {
+            return (_parent as TServiceLocator);
+        }
 
         public void Register<Source>(Source instance)
             where Source : class

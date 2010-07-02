@@ -30,6 +30,10 @@ namespace System.Quality
     /// </summary>
     public interface IServiceRegistrar
     {
+        IServiceLocator GetLocator();
+        TServiceLocator GetLocator<TServiceLocator>()
+            where TServiceLocator : class, IServiceLocator;
+        //
         void Register<Source>(Source instance)
             where Source : class;
         void Register<Source>(Func<Source> factoryMethod)

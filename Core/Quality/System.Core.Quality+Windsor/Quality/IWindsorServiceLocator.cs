@@ -31,6 +31,6 @@ namespace System.Quality
     /// </summary>
     public interface IWindsorServiceLocator : IServiceLocator
     {
-        IWindsorContainer Container { get; set; }
+        IWindsorContainer Container { get; }
     }
 }

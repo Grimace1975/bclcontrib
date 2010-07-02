@@ -27,6 +27,7 @@ namespace System.Quality
     [Serializable]
     public class StructureMapServiceLocator : IServiceLocator, IDisposable
     {
+        private IContainer _container;
         private StructureMapServiceRegistrar _registrar;
 
         public StructureMapServiceLocator()
@@ -39,17 +40,17 @@ namespace System.Quality
 
         public void Dispose()
         {
-            if (Container != null)
+            if (_container != null)
             {
-                Container.Dispose();
-                Container = null;
+                _container.Dispose();
+                _container = null;
                 _registrar = null;
             }
         }
 
         public IServiceRegistrar GetRegistrar()
         {
-            return (_registrar = new StructureMapServiceRegistrar(Container));
+            return _registrar;
         }
 
         public TServiceRegistrar GetRegistrar<TServiceRegistrar>()
@@ -119,6 +120,14 @@ namespace System.Quality
         public void TearDown<TService>(TService instance)
             where TService : class { }
 
-        public IContainer Container { get; set; }
+        public IContainer Container
+        {
+            get { return _container; }
+            private set
+            {
+                _container = value;
+                _registrar = new StructureMapServiceRegistrar(this, value);
+            }
+        }
     }
 }
