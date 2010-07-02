@@ -8,8 +8,8 @@
     <ProjectGuid>{C03A8167-F65E-4271-978C-E72914C9C311}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>System.CoreEx.Windsor</RootNamespace>
-    <AssemblyName>System.CoreEx.Windsor</AssemblyName>
+    <RootNamespace>System</RootNamespace>
+    <AssemblyName>System.Core.Quality+Windsor</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

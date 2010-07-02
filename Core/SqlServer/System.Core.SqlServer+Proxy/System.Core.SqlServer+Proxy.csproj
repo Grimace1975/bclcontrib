@@ -9,9 +9,9 @@
     <ProjectGuid>{2B46D015-F0A4-4B8D-AEEA-867392A21A8D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <NoStandardLibraries>false</NoStandardLibraries>
-    <AssemblyName>System.CoreEx.SqlServer.Proxy</AssemblyName>
+    <AssemblyName>System.Core.SqlServer+Proxy</AssemblyName>
     <FileAlignment>512</FileAlignment>
-    <RootNamespace>System.CoreEx.SqlServer.Proxy</RootNamespace>
+    <RootNamespace>System</RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>

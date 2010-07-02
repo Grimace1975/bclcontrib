@@ -8,8 +8,8 @@
     <ProjectGuid>{48DC2445-A460-4B42-B175-10B0924B248C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>System.CoreEx.StructureMap</RootNamespace>
-    <AssemblyName>System.CoreEx.StructureMap</AssemblyName>
+    <RootNamespace>System</RootNamespace>
+    <AssemblyName>System.Core.Quality+StructureMap</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

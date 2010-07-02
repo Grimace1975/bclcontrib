@@ -68,9 +68,25 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\System.CoreEx\System.CoreEx.csproj">
-      <Project>{21FC5068-FABA-4CC9-A9F5-95D299655422}</Project>
-      <Name>System.CoreEx</Name>
+    <ProjectReference Include="..\..\System.Core.Extentions\System.Core.Extentions.csproj">
+      <Project>{31D819FA-9DBB-480E-AC21-DA27C966BC2B}</Project>
+      <Name>System.Core.Extentions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\System.Core.Nattrib\System.Core.Nattrib.csproj">
+      <Project>{55D806D0-B6AF-4E92-B4DC-525F3676A6E5}</Project>
+      <Name>System.Core.Nattrib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\System.Core.ParseFormat\System.Core.ParseFormat.csproj">
+      <Project>{6EB37367-D677-4102-86B3-0848C2E41B5B}</Project>
+      <Name>System.Core.ParseFormat</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\System.Core.Text\System.Core.Text.csproj">
+      <Project>{9F1BC604-2D40-4D70-B88B-DAF1D64A468D}</Project>
+      <Name>System.Core.Text</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\System.Core2\System.Core2.csproj">
+      <Project>{7F64972D-477E-4F38-BC95-BD835D501146}</Project>
+      <Name>System.Core2</Name>
     </ProjectReference>
     <ProjectReference Include="..\System.Core.Patterns.Contracts\System.Core.Patterns.Contracts.csproj">
       <Project>{8A13DE10-C584-4789-BF17-565CAAD77A83}</Project>

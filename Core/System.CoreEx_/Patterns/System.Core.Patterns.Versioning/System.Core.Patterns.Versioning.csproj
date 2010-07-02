@@ -39,9 +39,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\System.CoreEx\System.CoreEx.csproj">
-      <Project>{21FC5068-FABA-4CC9-A9F5-95D299655422}</Project>
-      <Name>System.CoreEx</Name>
+    <ProjectReference Include="..\..\System.Core.Extentions\System.Core.Extentions.csproj">
+      <Project>{31D819FA-9DBB-480E-AC21-DA27C966BC2B}</Project>
+      <Name>System.Core.Extentions</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -167,18 +167,6 @@
     <Compile Include="Web\Routing\UrlRoutingModuleEx.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Core\Patterns\System.Core.Patterns.Caching\System.Core.Patterns.Caching.csproj">
-      <Project>{0A518821-B00D-4107-8A27-6159923AE7DB}</Project>
-      <Name>System.Core.Patterns.Caching</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Core\Patterns\System.Core.Patterns.Form\System.Core.Patterns.Form.csproj">
-      <Project>{6B537D17-7B39-44AA-804D-9AE27ADBCB6F}</Project>
-      <Name>System.Core.Patterns.Form</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Core\Patterns\System.Core.Patterns.Reporting\System.Core.Patterns.Reporting.csproj">
-      <Project>{CC67132C-C611-4684-94AD-A55FAE6348A5}</Project>
-      <Name>System.Core.Patterns.Reporting</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Core\Quality\System.Core.Quality\System.Core.Quality.csproj">
       <Project>{A44E9D89-BFF2-41A4-AADC-3C2BDFDAEEB1}</Project>
       <Name>System.Core.Quality</Name>

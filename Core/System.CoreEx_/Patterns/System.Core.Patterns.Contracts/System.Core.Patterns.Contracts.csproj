@@ -40,9 +40,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\System.CoreEx\System.CoreEx.csproj">
-      <Project>{21FC5068-FABA-4CC9-A9F5-95D299655422}</Project>
-      <Name>System.CoreEx</Name>
+    <ProjectReference Include="..\..\System.Core2\System.Core2.csproj">
+      <Project>{7F64972D-477E-4F38-BC95-BD835D501146}</Project>
+      <Name>System.Core2</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

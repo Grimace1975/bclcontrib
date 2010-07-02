@@ -9,9 +9,9 @@
     <ProjectGuid>{3E49BB33-F17D-4229-9D5E-1D6B2C933C9D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <NoStandardLibraries>false</NoStandardLibraries>
-    <AssemblyName>System.CoreEx.SqlServer</AssemblyName>
+    <AssemblyName>System.Core.SqlServer</AssemblyName>
     <FileAlignment>512</FileAlignment>
-    <RootNamespace>System.CoreEx.SqlServer</RootNamespace>
+    <RootNamespace>System</RootNamespace>
     <PermissionLevel>3788344</PermissionLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">

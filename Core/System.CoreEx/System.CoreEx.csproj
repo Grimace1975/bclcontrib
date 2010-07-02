@@ -31,6 +31,249 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Caching\Patterns\Caching\CacheCommand.cs">
+      <Link>Patterns\System.Core.Patterns.Caching\Patterns\Caching\CacheCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Caching\Patterns\Caching\CacheDependency.cs">
+      <Link>Patterns\System.Core.Patterns.Caching\Patterns\Caching\CacheDependency.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Caching\Patterns\Caching\CacheEx.cs">
+      <Link>Patterns\System.Core.Patterns.Caching\Patterns\Caching\CacheEx.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Caching\Patterns\Caching\CacheItemAddedCallback.cs">
+      <Link>Patterns\System.Core.Patterns.Caching\Patterns\Caching\CacheItemAddedCallback.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Caching\Patterns\Caching\CacheItemPriority.cs">
+      <Link>Patterns\System.Core.Patterns.Caching\Patterns\Caching\CacheItemPriority.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Caching\Patterns\Caching\CacheItemRemovedCallback.cs">
+      <Link>Patterns\System.Core.Patterns.Caching\Patterns\Caching\CacheItemRemovedCallback.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Caching\Patterns\Caching\CacheProviderBase.cs">
+      <Link>Patterns\System.Core.Patterns.Caching\Patterns\Caching\CacheProviderBase.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Caching\Patterns\Caching\DataCache.cs">
+      <Link>Patterns\System.Core.Patterns.Caching\Patterns\Caching\DataCache.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Caching\Patterns\Caching\DataCacheBuilder.cs">
+      <Link>Patterns\System.Core.Patterns.Caching\Patterns\Caching\DataCacheBuilder.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Caching\Patterns\Caching\DataCacheRegistrar.cs">
+      <Link>Patterns\System.Core.Patterns.Caching\Patterns\Caching\DataCacheRegistrar.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Caching\Patterns\Caching\DataCacheRegistration.cs">
+      <Link>Patterns\System.Core.Patterns.Caching\Patterns\Caching\DataCacheRegistration.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Caching\Patterns\Caching\DataCacheRegistrationLink.cs">
+      <Link>Patterns\System.Core.Patterns.Caching\Patterns\Caching\DataCacheRegistrationLink.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Caching\Patterns\Caching\ICache.cs">
+      <Link>Patterns\System.Core.Patterns.Caching\Patterns\Caching\ICache.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Caching\Patterns\Caching\StaticCacheProvider.cs">
+      <Link>Patterns\System.Core.Patterns.Caching\Patterns\Caching\StaticCacheProvider.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Caching\Patterns\Caching\zCoreEnvironmentCacheProvider.cs">
+      <Link>Patterns\System.Core.Patterns.Caching\Patterns\Caching\zCoreEnvironmentCacheProvider.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Contracts\Patterns\ContractHandler.cs">
+      <Link>Patterns\System.Core.Patterns.Contracts\Patterns\ContractHandler.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Contracts\Patterns\IContract.cs">
+      <Link>Patterns\System.Core.Patterns.Contracts\Patterns\IContract.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Contracts\Patterns\IContract2.cs">
+      <Link>Patterns\System.Core.Patterns.Contracts\Patterns\IContract2.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Form\Patterns\Form.1\FormBinderVectorMask.cs">
+      <Link>Patterns\System.Core.Patterns.Form\Patterns\Form.1\FormBinderVectorMask.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Form\Patterns\Form.1\FormClientCommand.cs">
+      <Link>Patterns\System.Core.Patterns.Form\Patterns\Form.1\FormClientCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Form\Patterns\Form.1\FormCommand.cs">
+      <Link>Patterns\System.Core.Patterns.Form\Patterns\Form.1\FormCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Form\Patterns\Form.1\FormFieldBinderMode.cs">
+      <Link>Patterns\System.Core.Patterns.Form\Patterns\Form.1\FormFieldBinderMode.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Form\Patterns\Form.1\FormFieldFetchMode.cs">
+      <Link>Patterns\System.Core.Patterns.Form\Patterns\Form.1\FormFieldFetchMode.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Form\Patterns\Form.1\FormFieldViewMode.cs">
+      <Link>Patterns\System.Core.Patterns.Form\Patterns\Form.1\FormFieldViewMode.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Form\Patterns\Form.1\IFormContext.cs">
+      <Link>Patterns\System.Core.Patterns.Form\Patterns\Form.1\IFormContext.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Form\Patterns\Form.1\IFormControl.cs">
+      <Link>Patterns\System.Core.Patterns.Form\Patterns\Form.1\IFormControl.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Form\Patterns\Form\Reference_\zSmartForm.cs">
+      <Link>Patterns\System.Core.Patterns.Form\Patterns\Form\Reference_\zSmartForm.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Form\Patterns\Form\Reference_\zSmartFormMetax.cs">
+      <Link>Patterns\System.Core.Patterns.Form\Patterns\Form\Reference_\zSmartFormMetax.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Form\Patterns\Form\SmartForm.cs">
+      <Link>Patterns\System.Core.Patterns.Form\Patterns\Form\SmartForm.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Form\Patterns\Form\SmartForm2.cs">
+      <Link>Patterns\System.Core.Patterns.Form\Patterns\Form\SmartForm2.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Form\Patterns\Form\SmartFormContracts\EmailSmartFormBodyBuilder.cs">
+      <Link>Patterns\System.Core.Patterns.Form\Patterns\Form\SmartFormContracts\EmailSmartFormBodyBuilder.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Form\Patterns\Form\SmartFormContracts\EmailSmartFormBodyBuilder2.cs">
+      <Link>Patterns\System.Core.Patterns.Form\Patterns\Form\SmartFormContracts\EmailSmartFormBodyBuilder2.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Form\Patterns\Form\SmartFormContracts\EmailSmartFormContract.cs">
+      <Link>Patterns\System.Core.Patterns.Form\Patterns\Form\SmartFormContracts\EmailSmartFormContract.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Form\Patterns\Form\SmartFormContracts\SmsSmartFormContract.cs">
+      <Link>Patterns\System.Core.Patterns.Form\Patterns\Form\SmartFormContracts\SmsSmartFormContract.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Form\Patterns\Form\SmartFormElements\ElementBase.cs">
+      <Link>Patterns\System.Core.Patterns.Form\Patterns\Form\SmartFormElements\ElementBase.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Form\Patterns\Form\SmartFormElements\ElementCollection.cs">
+      <Link>Patterns\System.Core.Patterns.Form\Patterns\Form\SmartFormElements\ElementCollection.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Form\Patterns\Form\SmartFormElements\ErrorElement.cs">
+      <Link>Patterns\System.Core.Patterns.Form\Patterns\Form\SmartFormElements\ErrorElement.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Form\Patterns\Form\SmartFormElements\LabelElement.cs">
+      <Link>Patterns\System.Core.Patterns.Form\Patterns\Form\SmartFormElements\LabelElement.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Form\Patterns\Form\SmartFormElements\TextBox2Element.cs">
+      <Link>Patterns\System.Core.Patterns.Form\Patterns\Form\SmartFormElements\TextBox2Element.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Form\Patterns\Form\SmartFormElements\TextBoxElement.cs">
+      <Link>Patterns\System.Core.Patterns.Form\Patterns\Form\SmartFormElements\TextBoxElement.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Form\Patterns\Form\SmartFormElements\UnitElement.cs">
+      <Link>Patterns\System.Core.Patterns.Form\Patterns\Form\SmartFormElements\UnitElement.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Form\Patterns\Form\SmartFormMeta.cs">
+      <Link>Patterns\System.Core.Patterns.Form\Patterns\Form\SmartFormMeta.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Form\Patterns\Form\SmartFormMetaXmlReader.cs">
+      <Link>Patterns\System.Core.Patterns.Form\Patterns\Form\SmartFormMetaXmlReader.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Form\Patterns\Form\SmartFormMetaXmlWriter.cs">
+      <Link>Patterns\System.Core.Patterns.Form\Patterns\Form\SmartFormMetaXmlWriter.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Reporting\Patterns\Reporting\FlatFileContext.cs">
+      <Link>Patterns\System.Core.Patterns.Reporting\Patterns\FlatFileContext.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Reporting\Patterns\Reporting\FlatFileCsvEmitter.cs">
+      <Link>Patterns\System.Core.Patterns.Reporting\Patterns\FlatFileCsvEmitter.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Reporting\Patterns\Reporting\FlatFileCsvEmitterExtensions.cs">
+      <Link>Patterns\System.Core.Patterns.Reporting\Patterns\FlatFileCsvEmitterExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Reporting\Patterns\Reporting\FlatFileField.cs">
+      <Link>Patterns\System.Core.Patterns.Reporting\Patterns\FlatFileField.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Reporting\Patterns\Reporting\FlatFileFieldCollection.cs">
+      <Link>Patterns\System.Core.Patterns.Reporting\Patterns\FlatFileFieldCollection.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Reporting\Patterns\Reporting\FlatFileFieldFormatter.cs">
+      <Link>Patterns\System.Core.Patterns.Reporting\Patterns\FlatFileFieldFormatter.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Reporting\Patterns\Reporting\FlatFileFilterMode.cs">
+      <Link>Patterns\System.Core.Patterns.Reporting\Patterns\FlatFileFilterMode.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Reporting\Patterns\Reporting\MappingExpression.cs">
+      <Link>Patterns\System.Core.Patterns.Reporting\Patterns\MappingExpression.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Reporting\Patterns\Reporting\PropertyMap.cs">
+      <Link>Patterns\System.Core.Patterns.Reporting\Patterns\PropertyMap.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Reporting\Patterns\Reporting\Reference_\Test.cs">
+      <Link>Patterns\System.Core.Patterns.Reporting\Patterns\Reference_\Test.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Reporting\Patterns\Reporting\TypeMap.cs">
+      <Link>Patterns\System.Core.Patterns.Reporting\Patterns\TypeMap.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Versioning\Patterns\Versioning\VersionManager.cs">
+      <Link>Patterns\System.Core.Patterns.Versioning\Patterns\Versioning\VersionManager.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Versioning\Patterns\Versioning\VersionTypeUriPart.cs">
+      <Link>Patterns\System.Core.Patterns.Versioning\Patterns\Versioning\VersionTypeUriPart.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns\Net\FtpClient.cs">
+      <Link>Patterns\System.Core.Patterns\Net\FtpClient.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns\Net\SftpClient.cs">
+      <Link>Patterns\System.Core.Patterns\Net\SftpClient.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns\Net\SmsClient.cs">
+      <Link>Patterns\System.Core.Patterns\Net\SmsClient.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns\Patterns\Schema+Culture\Configuration\CultureSchemaConfiguration.cs">
+      <Link>Patterns\System.Core.Patterns\Patterns\Schema+Culture\Configuration\CultureSchemaConfiguration.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns\Patterns\Schema+Culture\CultureSchema.cs">
+      <Link>Patterns\System.Core.Patterns\Patterns\Schema+Culture\CultureSchema.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns\Patterns\Schema+Culture\CultureUriPart.cs">
+      <Link>Patterns\System.Core.Patterns\Patterns\Schema+Culture\CultureUriPart.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns\Patterns\Schema+Html\AbsoluteUrlHtmlDecoder.cs">
+      <Link>Patterns\System.Core.Patterns\Patterns\Schema+Html\AbsoluteUrlHtmlDecoder.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns\Patterns\Schema+Html\AbsoluteUrlHtmlFormatter.cs">
+      <Link>Patterns\System.Core.Patterns\Patterns\Schema+Html\AbsoluteUrlHtmlFormatter.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns\Patterns\Schema+Html\Configuration\HtmlSchemaConfiguration.cs">
+      <Link>Patterns\System.Core.Patterns\Patterns\Schema+Html\Configuration\HtmlSchemaConfiguration.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns\Patterns\Schema+Html\HtmlSchema.cs">
+      <Link>Patterns\System.Core.Patterns\Patterns\Schema+Html\HtmlSchema.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns\Patterns\Schema+Html\MailToHtmlDecoder.cs">
+      <Link>Patterns\System.Core.Patterns\Patterns\Schema+Html\MailToHtmlDecoder.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns\Patterns\Schema+Html\MailToHtmlFormatter.cs">
+      <Link>Patterns\System.Core.Patterns\Patterns\Schema+Html\MailToHtmlFormatter.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns\Patterns\Schema+Uri\AnonymousUriPart.cs">
+      <Link>Patterns\System.Core.Patterns\Patterns\Schema+Uri\AnonymousUriPart.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns\Patterns\Schema+Uri\Configuration\UriPartConfiguration.cs">
+      <Link>Patterns\System.Core.Patterns\Patterns\Schema+Uri\Configuration\UriPartConfiguration.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns\Patterns\Schema+Uri\Configuration\UriPartConfigurationSet.cs">
+      <Link>Patterns\System.Core.Patterns\Patterns\Schema+Uri\Configuration\UriPartConfigurationSet.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns\Patterns\Schema+Uri\Configuration\UriSchemaConfiguration.cs">
+      <Link>Patterns\System.Core.Patterns\Patterns\Schema+Uri\Configuration\UriSchemaConfiguration.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns\Patterns\Schema+Uri\Configuration\UriVirtualConfiguration.cs">
+      <Link>Patterns\System.Core.Patterns\Patterns\Schema+Uri\Configuration\UriVirtualConfiguration.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns\Patterns\Schema+Uri\Configuration\UriVirtualConfigurationSet.cs">
+      <Link>Patterns\System.Core.Patterns\Patterns\Schema+Uri\Configuration\UriVirtualConfigurationSet.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns\Patterns\Schema+Uri\Reference_\zHttpUrl.cs">
+      <Link>Patterns\System.Core.Patterns\Patterns\Schema+Uri\Reference_\zHttpUrl.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns\Patterns\Schema+Uri\Reference_\zUriContentType.cs">
+      <Link>Patterns\System.Core.Patterns\Patterns\Schema+Uri\Reference_\zUriContentType.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns\Patterns\Schema+Uri\SecureUriPart.cs">
+      <Link>Patterns\System.Core.Patterns\Patterns\Schema+Uri\SecureUriPart.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns\Patterns\Schema+Uri\UriContext.cs">
+      <Link>Patterns\System.Core.Patterns\Patterns\Schema+Uri\UriContext.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns\Patterns\Schema+Uri\UriSchema.cs">
+      <Link>Patterns\System.Core.Patterns\Patterns\Schema+Uri\UriSchema.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns\Patterns\Schema+Uri\UriVirtualSchema.cs">
+      <Link>Patterns\System.Core.Patterns\Patterns\Schema+Uri\UriVirtualSchema.cs</Link>
+    </Compile>
     <Compile Include="..\System.CoreEx_\System.Core.Collections+Channel\Collections\Generic\Channel.cs">
       <Link>System.Core.Collections+Channel\Collections\Generic\Channel.cs</Link>
     </Compile>
@@ -785,6 +1028,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Patterns\System.Core.Patterns.Scheduling\Patterns\" />
     <Folder Include="System.Core.Text\System.Core.Routing\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

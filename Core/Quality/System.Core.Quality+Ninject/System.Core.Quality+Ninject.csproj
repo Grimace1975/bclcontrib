@@ -8,8 +8,8 @@
     <ProjectGuid>{03A4AE50-0401-4DDB-96E8-B90A5D64FA93}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>System.CoreEx.Ninject</RootNamespace>
-    <AssemblyName>System.CoreEx.Ninject</AssemblyName>
+    <RootNamespace>System</RootNamespace>
+    <AssemblyName>System.Core.Quality+Ninject</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

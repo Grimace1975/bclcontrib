@@ -8,8 +8,8 @@
     <ProjectGuid>{21FCE5EA-3C6D-43D7-9984-1278307AB77E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>System.CoreEx.Unity</RootNamespace>
-    <AssemblyName>System.CoreEx.Unity</AssemblyName>
+    <RootNamespace>System</RootNamespace>
+    <AssemblyName>System.Core.Quality+Unity</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

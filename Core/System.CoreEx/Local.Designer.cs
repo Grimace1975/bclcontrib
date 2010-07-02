@@ -61,6 +61,15 @@ namespace System {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ExceedRecurseCount.
+        /// </summary>
+        internal static string ExceedRecurseCount {
+            get {
+                return ResourceManager.GetString("ExceedRecurseCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Index must be between &apos;{0}&apos; and &apos;{1}&apos;..
         /// </summary>
         internal static string IndexOutOfRangeAB {
@@ -88,11 +97,92 @@ namespace System {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to InvalidDataSource.
+        /// </summary>
+        internal static string InvalidDataSource {
+            get {
+                return ResourceManager.GetString("InvalidDataSource", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
         internal static string InvalidIdA {
             get {
                 return ResourceManager.GetString("InvalidIdA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to InvalidUri.
+        /// </summary>
+        internal static string InvalidUri {
+            get {
+                return ResourceManager.GetString("InvalidUri", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to RedefineCacheDependency.
+        /// </summary>
+        internal static string RedefineCacheDependency {
+            get {
+                return ResourceManager.GetString("RedefineCacheDependency", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to RedefineDataSource.
+        /// </summary>
+        internal static string RedefineDataSource {
+            get {
+                return ResourceManager.GetString("RedefineDataSource", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to RedefineDataSourceCache [{0}], &apos;{1}&apos;.
+        /// </summary>
+        internal static string RedefineDataSourceCacheAB {
+            get {
+                return ResourceManager.GetString("RedefineDataSourceCacheAB", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Key &apos;{0}&apos; cannot contain scope characters..
+        /// </summary>
+        internal static string ScopeCharacterNotAllowedA {
+            get {
+                return ResourceManager.GetString("ScopeCharacterNotAllowedA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not a SmartForm type..
+        /// </summary>
+        internal static string TypeNotSmartForm {
+            get {
+                return ResourceManager.GetString("TypeNotSmartForm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UndefinedDataSourceRegistration [{0}].
+        /// </summary>
+        internal static string UndefinedDataSourceRegistrationA {
+            get {
+                return ResourceManager.GetString("UndefinedDataSourceRegistrationA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UndefinedDataSourceRegistration [{0}], &apos;{1}&apos;.
+        /// </summary>
+        internal static string UndefinedDataSourceRegistrationAB {
+            get {
+                return ResourceManager.GetString("UndefinedDataSourceRegistrationAB", resourceCulture);
             }
         }
         
