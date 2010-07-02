@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{6B537D17-7B39-44AA-804D-9AE27ADBCB6F}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>System</RootNamespace>
+    <AssemblyName>System.Core.Patterns.Form</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Local.Designer.cs">
+      <DependentUpon>Local.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Patterns\Form.1\FormBinderVectorMask.cs" />
+    <Compile Include="Patterns\Form.1\FormClientCommand.cs" />
+    <Compile Include="Patterns\Form.1\FormCommand.cs" />
+    <Compile Include="Patterns\Form.1\FormFieldBinderMode.cs" />
+    <Compile Include="Patterns\Form.1\FormFieldFetchMode.cs" />
+    <Compile Include="Patterns\Form.1\FormFieldViewMode.cs" />
+    <Compile Include="Patterns\Form.1\IFormContext.cs" />
+    <Compile Include="Patterns\Form.1\IFormControl.cs" />
+    <Compile Include="Patterns\Form\Reference_\zSmartForm.cs" />
+    <Compile Include="Patterns\Form\Reference_\zSmartFormMetax.cs" />
+    <Compile Include="Patterns\Form\SmartForm.cs" />
+    <Compile Include="Patterns\Form\SmartForm2.cs" />
+    <Compile Include="Patterns\Form\SmartFormContracts\EmailSmartFormBodyBuilder.cs" />
+    <Compile Include="Patterns\Form\SmartFormContracts\EmailSmartFormBodyBuilder2.cs" />
+    <Compile Include="Patterns\Form\SmartFormContracts\EmailSmartFormContract.cs" />
+    <Compile Include="Patterns\Form\SmartFormContracts\SmsSmartFormContract.cs" />
+    <Compile Include="Patterns\Form\SmartFormElements\ElementBase.cs" />
+    <Compile Include="Patterns\Form\SmartFormElements\ElementCollection.cs" />
+    <Compile Include="Patterns\Form\SmartFormElements\ErrorElement.cs" />
+    <Compile Include="Patterns\Form\SmartFormElements\LabelElement.cs" />
+    <Compile Include="Patterns\Form\SmartFormElements\TextBox2Element.cs" />
+    <Compile Include="Patterns\Form\SmartFormElements\TextBoxElement.cs" />
+    <Compile Include="Patterns\Form\SmartFormElements\UnitElement.cs" />
+    <Compile Include="Patterns\Form\SmartFormMeta.cs" />
+    <Compile Include="Patterns\Form\SmartFormMetaXmlReader.cs" />
+    <Compile Include="Patterns\Form\SmartFormMetaXmlWriter.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\System.CoreEx\System.CoreEx.csproj">
+      <Project>{21FC5068-FABA-4CC9-A9F5-95D299655422}</Project>
+      <Name>System.CoreEx</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\System.Core.Patterns.Contracts\System.Core.Patterns.Contracts.csproj">
+      <Project>{8A13DE10-C584-4789-BF17-565CAAD77A83}</Project>
+      <Name>System.Core.Patterns.Contracts</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Local.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Local.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

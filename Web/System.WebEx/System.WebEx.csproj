@@ -1,0 +1,203 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{97493363-7402-4E28-806C-7448AA5AC106}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>System.WebEx</RootNamespace>
+    <AssemblyName>System.WebEx</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.ServiceModel.Web">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Abstractions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Web.Extensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Web.Routing">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.XML" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyRef.cs" />
+    <Compile Include="Patterns\Caching\WebEnvironmentDebugStaticCacheProvider.cs" />
+    <Compile Include="Patterns\Reporting\FlatFileCsvEmitterExtensions.cs" />
+    <Compile Include="Web\UI.3\Configuration\HtmlTextBoxConfigurationSet.cs" />
+    <Compile Include="Web\UI.3\Configuration\HtmlTextBoxCssStyleConfiguration.cs" />
+    <Compile Include="Web\UI.3\Configuration\HtmlTextBoxCssStyleConfigurationSet.cs" />
+    <Compile Include="Web\UI.3\Configuration\HtmlTextBoxElementStyleConfiguration.cs" />
+    <Compile Include="Web\UI.3\Configuration\HtmlTextBoxElementStyleConfigurationSet.cs" />
+    <Compile Include="Web\UI.3\Configuration\HtmlTextBoxFontConfiguration.cs" />
+    <Compile Include="Web\UI.3\Configuration\HtmlTextBoxFontConfigurationSet.cs" />
+    <Compile Include="Web\UI.3\Configuration\HtmlTextBoxPluginConfiguration.cs" />
+    <Compile Include="Web\UI.3\Configuration\HtmlTextBoxPluginConfigurationSet.cs" />
+    <Compile Include="Web\UI.3\Configuration\HtmlTextBoxConfiguration.cs" />
+    <Compile Include="Web\UI.3\Configuration\HtmlTextBoxToolbarConfiguration.cs" />
+    <Compile Include="Web\UI.3\Configuration\HtmlTextBoxToolbarConfigurationSet.cs" />
+    <Compile Include="Web\UI.3\HtmlTextBoxCommands.cs" />
+    <Compile Include="Web.1\UI\WebControls.1\HtmlTextBoxEx.cs" />
+    <Compile Include="Web\UI.3\HtmlTextBoxContext.cs" />
+    <Compile Include="Web\Routing\WebFormRouteHandlerExtensions.cs" />
+    <Compile Include="Web\Routing\WebFormRouteHandler.cs" />
+    <Compile Include="Web\Routing\IRoutablePage.cs" />
+    <Compile Include="Web\Routing\RouteCollectionExtensions.cs" />
+    <Compile Include="Web\Routing\WebFormRouteHandler2.cs" />
+    <Compile Include="Patterns\Caching\DataStoreHttpExtensions.cs" />
+    <Compile Include="Patterns\Caching\WebEnvironmentCacheProvider.cs" />
+    <Compile Include="Patterns\Session\HttpSessionProviderBase.cs" />
+    <Compile Include="Primitives\Codecs\HtmlCodec.cs" />
+    <Compile Include="Primitives\TextProcess\ExpandTag.cs" />
+    <Compile Include="Web.1\UI\HtmlControls\HtmlAnchorEx.cs" />
+    <Compile Include="Web.1\UI\HtmlControls\HtmlButtonEx.cs" />
+    <Compile Include="Web.1\UI\HtmlControls\HtmlImageEx.cs" />
+    <Compile Include="Web.1\UI\HtmlControls\HtmlLinkEx.cs" />
+    <Compile Include="Web.1\UI\WebControls.1\CallbackEndpoint_.cs" />
+    <Compile Include="Web.1\UI\WebControls.1\CopyrightLiteral.cs" />
+    <Compile Include="Web.1\UI\WebControls\ButtonEx.cs" />
+    <Compile Include="Web.1\UI\WebControls\CheckBoxEx.cs" />
+    <Compile Include="Web.1\UI\WebControls\CheckBoxListEx.cs" />
+    <Compile Include="Web.1\UI\WebControls\DropDownListEx.cs" />
+    <Compile Include="Web.1\UI\WebControls\FileUploadEx.cs" />
+    <Compile Include="Web.1\UI\WebControls\HiddenFieldEx.cs" />
+    <Compile Include="Web.1\UI\WebControls\ImageButtonEx.cs" />
+    <Compile Include="Web.1\UI\WebControls\LabelEx.cs" />
+    <Compile Include="Web.1\UI\WebControls\ListBoxEx.cs" />
+    <Compile Include="Web.1\UI\WebControls\ListControlEx.cs" />
+    <Compile Include="Web.1\UI\WebControls\RadioButtonEx.cs" />
+    <Compile Include="Web.1\UI\WebControls\RadioButtonListEx.cs" />
+    <Compile Include="Web.1\UI\WebControls\TextBoxEx.cs" />
+    <Compile Include="Web.1\UI\WebControls\TextBoxEx2.cs" />
+    <Compile Include="Web\SessionState\SessionIDManagerEx.cs" />
+    <Compile Include="Web\SessionState\HttpSessionStateExtentions.cs" />
+    <Compile Include="Web\UI.1\HtmlBuilder+Button.cs" />
+    <Compile Include="Web\UI.1\HtmlBuilder+xFrame.cs" />
+    <Compile Include="Web\UI.1\HtmlBuilder+xForm.cs" />
+    <Compile Include="Web\UI.1\HtmlBuilder+Write.cs" />
+    <Compile Include="Web\UI.1\HtmlBuilder+Element.cs" />
+    <Compile Include="Web\UI.1\HtmlBuilder+SmartTag.cs" />
+    <Compile Include="Web\UI.1\HtmlBuilder+ElementHtml.cs" />
+    <Compile Include="Web\UI.1\HtmlBuilder+Html.cs" />
+    <Compile Include="Web\UI.1\HtmlBuilder+xWrite2.cs" />
+    <Compile Include="Web\UI.1\HtmlBuilder+xButton.cs" />
+    <Compile Include="Web\UI.1\HtmlTextWriterExtensions.cs" />
+    <Compile Include="Web\UI.2\WebControls\JscriptAndCookieChecker.cs" />
+    <Compile Include="Web\UI\ClientScript.cs" />
+    <Compile Include="Web\UI\ClientScriptBlockBase.cs" />
+    <Compile Include="Web\UI\WebControls\ClientScriptEmitter.cs" />
+    <Compile Include="Web\UI\LiteralClientScriptBlock.cs" />
+    <Compile Include="Web\UI\CachingUserControl.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reference_\zHttpContext_.cs" />
+    <Compile Include="Web\HttpError.cs" />
+    <Compile Include="Web\HttpErrorTrapModule.cs" />
+    <Compile Include="Web\UI.2\HttpPage.cs" />
+    <Compile Include="Web\UI.2\HttpPageToHtmlHeadMapper.cs" />
+    <Compile Include="Web\UI.1\HtmlAttribute.cs" />
+    <Compile Include="Web\UI.1\HtmlBuilder.cs" />
+    <Compile Include="Web\UI.1\HtmlBuilderDivTag.cs" />
+    <Compile Include="Web\UI.1\HtmlBuilderFormTag.cs" />
+    <Compile Include="Web\UI.1\HtmlBuilderOptionType.cs" />
+    <Compile Include="Web\UI.1\HtmlBuilderTableTag.cs" />
+    <Compile Include="Reference_\Unsorted_\HtmlFactory.cs" />
+    <Compile Include="Reference_\Unsorted_\HtmlFormatProvider2.cs" />
+    <Compile Include="Web\UI.1\HtmlTag.cs" />
+    <Compile Include="Web\UI.1\HtmlTextWriterEx.cs" />
+    <Compile Include="Reference_\Unsorted_\IFragmentedControl.cs" />
+    <Compile Include="Patterns\Schema\UriSchemaExtensions.cs" />
+    <Compile Include="Web.2\Routing\ISiteMapExRouteContext.cs" />
+    <Compile Include="Web.2\Routing\SiteMapExRoute.cs" />
+    <Compile Include="Web\HttpContextExtensions+UriSchema.cs" />
+    <Compile Include="Web\HttpContextExtensions.cs" />
+    <Compile Include="Web\HttpCompressModule.cs" />
+    <Compile Include="Web\HttpContextEx.cs" />
+    <Compile Include="Web\HttpResponseExtentions.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Web\SiteMapProviderExtensions.cs" />
+    <Compile Include="Web.2\SiteMapNodeZoneExtent.cs" />
+    <Compile Include="Web.2\StaticSiteMapProviderEx+Observer.cs" />
+    <Compile Include="Web.2\IUnconstrainSiteMapNode.cs" />
+    <Compile Include="Web.2\IStaticSiteMapProviderExNodeStore.cs" />
+    <Compile Include="Web.2\SiteMapLinkNode.cs" />
+    <Compile Include="Web.2\SiteMapNodeEx.cs" />
+    <Compile Include="Web.2\SiteMapNodeExExtensions.cs" />
+    <Compile Include="Web.2\SiteMapNodePartialProviderExtent.cs" />
+    <Compile Include="Web.2\StaticSiteMapProviderEx+ChildProvider.cs" />
+    <Compile Include="Web.2\StaticSiteMapProviderEx.cs" />
+    <Compile Include="Web.2\StaticSiteMapProviderEx+PartialProvider.cs" />
+    <Compile Include="Web.2\StaticSiteMapProviderEx+Scan.cs" />
+    <Compile Include="Web\HttpRequestExtensions.cs" />
+    <Compile Include="Web\Routing\RouteEx.cs" />
+    <Compile Include="Web\Routing\UrlRoutingModuleEx.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\Patterns\System.Core.Patterns.Caching\System.Core.Patterns.Caching.csproj">
+      <Project>{0A518821-B00D-4107-8A27-6159923AE7DB}</Project>
+      <Name>System.Core.Patterns.Caching</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Core\Patterns\System.Core.Patterns.Form\System.Core.Patterns.Form.csproj">
+      <Project>{6B537D17-7B39-44AA-804D-9AE27ADBCB6F}</Project>
+      <Name>System.Core.Patterns.Form</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Core\Patterns\System.Core.Patterns.Reporting\System.Core.Patterns.Reporting.csproj">
+      <Project>{CC67132C-C611-4684-94AD-A55FAE6348A5}</Project>
+      <Name>System.Core.Patterns.Reporting</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Core\Quality\System.Core.Quality\System.Core.Quality.csproj">
+      <Project>{A44E9D89-BFF2-41A4-AADC-3C2BDFDAEEB1}</Project>
+      <Name>System.Core.Quality</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Core\System.CoreEx\System.CoreEx.csproj">
+      <Project>{21FC5068-FABA-4CC9-A9F5-95D299655422}</Project>
+      <Name>System.CoreEx</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Services\System.ServiceModelEx\System.ServiceModelEx.csproj">
+      <Project>{5F66F935-1DFC-4E18-BCDA-EAC1600C4A3A}</Project>
+      <Name>System.ServiceModelEx</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

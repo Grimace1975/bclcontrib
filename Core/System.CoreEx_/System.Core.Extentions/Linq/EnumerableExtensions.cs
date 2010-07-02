@@ -1,0 +1,197 @@
+#region License
+/*
+The MIT License
+
+Copyright (c) 2008 Sky Morey
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+*/
+#endregion
+using System.Collections.Generic;
+using System.Collections;
+namespace System.Linq
+{
+    /// <summary>
+    /// EnumerableExtensions
+    /// </summary>
+    public static class EnumerableExtensions
+    {
+        public static IEnumerable<TSource> AsEnumerableSlim<TSource>(this IEnumerable source)
+        {
+            if (source == null)
+                throw new ArgumentNullException("source");
+            foreach (var item in source)
+                yield return (TSource)item;
+        }
+
+        public static void ForEachSlim<TSource>(this IEnumerable<TSource> source, Action<TSource> action)
+        {
+            if (source == null)
+                throw new ArgumentNullException("source");
+            foreach (TSource item in source)
+                action(item);
+        }
+
+        /// <summary>
+        /// Coalesces with the specified null value.
+        /// </summary>
+        /// <param name="nullValue">The null value.</param>
+        /// <param name="parameterArray">The parameter array.</param>
+        /// <returns>
+        /// First null value as defined by parameter nullValue.
+        /// </returns>
+        public static TSource Coalesce<TSource>(this IEnumerable<TSource> source, TSource nullValue)
+        {
+            if (source == null)
+                throw new ArgumentNullException("source");
+            foreach (TSource value in source)
+                if ((value != null) && (!value.Equals(nullValue)))
+                    return value;
+            return nullValue;
+        }
+
+        /// <summary>
+        /// Tries the get tightest match.
+        /// </summary>
+        /// <typeparam name="TValue">The type of the value.</typeparam>
+        /// <param name="id">The id.</param>
+        /// <param name="scope">The scope.</param>
+        /// <param name="hash">The hash.</param>
+        /// <param name="tightestValue">The tightest value.</param>
+        /// <param name="tightestValueLength">Length of the tightest value.</param>
+        /// <returns></returns>
+        public static bool TryGetTightestMatch<TSource>(this IEnumerable<TSource> source, string value, char scope, out TSource tightestValue)
+            where TSource : IValue<string>
+        {
+            if (value == null)
+                throw new ArgumentNullException("value");
+            // ensure url is proper by starting with a slash
+            if ((value.Length == 0) || (value[0] != scope))
+                throw new ArgumentException(string.Format(Local.InvalidIdA, value), "text");
+            // then remove all leading slashes
+            int firstNonSlashIndex = 0;
+            for (; (firstNonSlashIndex < value.Length) && (value[firstNonSlashIndex] == scope); firstNonSlashIndex++) ;
+            if ((firstNonSlashIndex > 0) && (firstNonSlashIndex < value.Length))
+                value = value.Substring(firstNonSlashIndex);
+            string matchText = value + scope;
+            // locate tightest virtual path match
+            tightestValue = default(TSource);
+            int tightestValueLength = 0;
+            foreach (TSource item in source)
+            {
+                string itemValue = item.Value;
+                int itemValueLength;
+                if ((value.StartsWith(itemValue + scope)) && ((itemValueLength = itemValue.Length) > tightestValueLength))
+                {
+                    tightestValue = item;
+                    tightestValueLength = itemValueLength;
+                }
+            }
+            return (tightestValueLength > 0);
+        }
+
+        public static bool TryGetTightestMatch<T, TSource>(this IEnumerable<TSource> source, T[] values, out TSource tightestValue)
+            where TSource : IValue<T[]>
+        {
+            if (values == null)
+                throw new ArgumentNullException("values");
+            // locate tightest virtual path match
+            tightestValue = default(TSource);
+            T[] tightestValues = null;
+            int tightestValuesLength = 0;
+            foreach (TSource item in source)
+            {
+                T[] itemValues = item.Value;
+                int itemValuesLength;
+                if ((EnumerableEx.CompareValues(itemValues, values, false)) && ((itemValuesLength = itemValues.Length) > tightestValuesLength))
+                {
+                    tightestValue = item;
+                    tightestValues = itemValues;
+                    tightestValuesLength = itemValuesLength;
+                }
+            }
+            return (tightestValuesLength > 0);
+        }
+
+        public static int MaxSkipNull(this IEnumerable<int> source, int nullValue)
+        {
+            if (source == null)
+                throw new ArgumentNullException("source");
+            int minValue = nullValue;
+            foreach (int value in source)
+                if ((value != nullValue) && ((minValue == nullValue) || (value > minValue)))
+                    minValue = value;
+            return minValue;
+        }
+
+        public static TSource MaxSkipNull<TSource>(this IEnumerable<TSource> source, TSource nullValue)
+            where TSource : IComparable<TSource>
+        {
+            if (source == null)
+                throw new ArgumentNullException("source");
+            TSource minValue = nullValue;
+            foreach (TSource value in source)
+                if ((value != null) && (!value.Equals(nullValue)) && ((minValue.Equals(nullValue)) || (value.CompareTo(minValue) > 0)))
+                    minValue = value;
+            return minValue;
+        }
+
+        /// <summary>
+        /// Mins the skip null.
+        /// </summary>
+        /// <param name="nullValue">The null value.</param>
+        /// <param name="parameterArray">The parameter array.</param>
+        /// <returns>
+        /// minumum value excluding null's as defined by parameter nullValue.
+        /// </returns>
+        public static int MinSkipNull(this IEnumerable<int> source, int nullValue)
+        {
+            if (source == null)
+                throw new ArgumentNullException("source");
+            int minValue = nullValue;
+            foreach (int value in source)
+                if ((value != nullValue) && ((minValue == nullValue) || (value < minValue)))
+                    minValue = value;
+            return minValue;
+        }
+
+        public static TSource MinSkipNull<TSource>(this IEnumerable<TSource> source, TSource nullValue)
+            where TSource : IComparable<TSource>
+        {
+            if (source == null)
+                throw new ArgumentNullException("source");
+            TSource minValue = nullValue;
+            foreach (TSource value in source)
+                if ((value != null) && (!value.Equals(nullValue)) && ((minValue.Equals(nullValue)) || (value.CompareTo(minValue) < 0)))
+                    minValue = value;
+            return minValue;
+        }
+
+        public static TSource FindWhileSkipNull<TSource>(this IEnumerable<TSource> source, TSource nullValue, Func<TSource, TSource, bool> finder)
+        {
+            if (source == null)
+                throw new ArgumentNullException("source");
+            TSource seedValue = nullValue;
+            foreach (TSource value in source)
+                if ((!value.Equals(nullValue)) && ((seedValue.Equals(nullValue)) || (finder(seedValue, value))))
+                    seedValue = value;
+            return seedValue;
+        }
+    }
+}

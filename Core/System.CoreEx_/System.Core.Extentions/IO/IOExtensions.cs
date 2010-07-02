@@ -1,0 +1,153 @@
+#region License
+/*
+The MIT License
+
+Copyright (c) 2008 Sky Morey
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+*/
+#endregion
+using System.Collections.Generic;
+using System.Text;
+using System.Xml;
+namespace System.IO
+{
+    /// <summary>
+    /// IOExtensions class
+    /// </summary>
+    public static class IOExtensions
+    {
+        /// <summary>
+        /// Reads the text stream provide and returns the results as a string.
+        /// </summary>
+        /// <param name="stream">The stream.</param>
+        /// <returns></returns>
+        public static string ReadAsTextStream(this Stream stream)
+        {
+            return ReadAsTextStream(stream, Encoding.UTF8);
+        }
+        /// <summary>
+        /// Reads the text stream provided and returns the result in a StringBuilder.
+        /// </summary>
+        /// <param name="stream">The stream.</param>
+        /// <param name="textbuilder">The textbuilder.</param>
+        /// <param name="encoding">The encoding.</param>
+        /// <returns></returns>
+        public static StringBuilder ReadAsTextStream(this Stream stream, StringBuilder b, Encoding encoding)
+        {
+            if (stream == null)
+                throw new ArgumentNullException("stream");
+            if (encoding == null)
+                throw new ArgumentNullException("encoding");
+            // rewind the stream to the beginning
+            if (stream.CanSeek)
+                stream.Seek(0, SeekOrigin.Begin);
+            using (var r = new StreamReader(stream, encoding))
+            {
+                char[] buffer = new char[8192];
+                int byteReadCount;
+                while ((byteReadCount = r.Read(buffer, 0, buffer.Length)) > 0)
+                    b.Append(buffer, 0, byteReadCount);
+            }
+            return b;
+        }
+        /// <summary>
+        /// Reads the text stream provided and returns the result in a string using the encoding specified.
+        /// </summary>
+        /// <param name="stream">The stream.</param>
+        /// <param name="encoding">The encoding.</param>
+        /// <returns></returns>
+        public static string ReadAsTextStream(this Stream stream, Encoding encoding)
+        {
+            if (stream == null)
+                throw new ArgumentNullException("stream");
+            if (encoding == null)
+                throw new ArgumentNullException("encoding");
+            // rewind the stream to the beginning
+            if (stream.CanSeek)
+                stream.Seek(0, SeekOrigin.Begin);
+            using (var streamReader = new StreamReader(stream, encoding))
+                return streamReader.ReadToEnd();
+        }
+
+        #region Serialize
+        /// <summary>
+        /// Reads the object.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <param name="contentType">Type of the content.</param>
+        /// <param name="text">The text.</param>
+        public static void ReadObject(object value, string contentType, string text)
+        {
+            ReadObject(value, contentType, new StringReader(text));
+        }
+        /// <summary>
+        /// Reads the object.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <param name="contentType">Type of the content.</param>
+        /// <param name="textReader">The text reader.</param>
+        public static void ReadObject(object value, string contentType, TextReader textReader)
+        {
+            switch (contentType)
+            {
+                case "text/xml":
+                    var xmlValue = (System.Xml.Serialization.IXmlSerializable)value;
+                    var r = XmlReader.Create(textReader);
+                    xmlValue.ReadXml(r);
+                    r.Close();
+                    return;
+                default:
+                    throw new InvalidOperationException();
+            }
+        }
+
+        /// <summary>
+        /// Writes the object.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <param name="contentType">Type of the content.</param>
+        /// <param name="textBuilder">The text builder.</param>
+        public static void WriteObject(object value, string contentType, StringBuilder textBuilder)
+        {
+            WriteObject(value, contentType, new StringWriter(textBuilder));
+        }
+        /// <summary>
+        /// Writes the object.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <param name="contentType">Type of the content.</param>
+        /// <param name="textWriter">The text writer.</param>
+        public static void WriteObject(object value, string contentType, TextWriter textWriter)
+        {
+            switch (contentType)
+            {
+                case "text/xml":
+                    var xmlValue = (System.Xml.Serialization.IXmlSerializable)value;
+                    var w = XmlWriter.Create(textWriter);
+                    xmlValue.WriteXml(w);
+                    w.Close();
+                    return;
+                default:
+                    throw new InvalidOperationException();
+            }
+        }
+        #endregion
+    }
+}

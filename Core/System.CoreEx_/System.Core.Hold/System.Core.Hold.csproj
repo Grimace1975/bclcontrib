@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{6ECC7265-B8E3-4A17-9FE7-4C1C799A5476}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>System.Core.Hold</RootNamespace>
+    <AssemblyName>System.Core.Hold</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="+Fluent\IConfigurable.cs" />
+    <Compile Include="+Fluent\IFluentInterfaceBase.cs" />
+    <Compile Include="3.TABLE\Collections\TableBase.cs" />
+    <Compile Include="3.TABLE\Collections\TableColumn.cs" />
+    <Compile Include="3.TABLE\Collections\TableColumnFlag.cs" />
+    <Compile Include="3.TABLE\Collections\TableSchema.cs" />
+    <Compile Include="3.TABLE\Collections\TableUpdateMode.cs" />
+    <Compile Include="3.TABLE\Text\CsvTableFormatter.cs" />
+    <Compile Include="3.TABLE\Text\HtmlTableFormatter.cs" />
+    <Compile Include="3.TABLE\Text\JsonTableFormatter.cs" />
+    <Compile Include="3.TABLE\Text\TableFormatterBase.cs" />
+    <Compile Include="3.TABLE\Text\TextTableFormatter.cs" />
+    <Compile Include="3.TABLE\Text\XmlTableFormatter.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Unsorted_\DataBinder.cs" />
+    <Compile Include="Unsorted_\GenericTypeHelper.cs" />
+    <Compile Include="Unsorted_\GnuPgp.cs" />
+    <Compile Include="Unsorted_\GnuPgpSettings.cs" />
+    <Compile Include="Unsorted_\_AtomSite\Extensions.cs" />
+    <Compile Include="Unsorted_\_AtomSite\FileHelper.cs" />
+    <Compile Include="Unsorted_\_AtomSite\WebHelper.cs" />
+    <Compile Include="Unsorted_\_Storage\IStorage.cs" />
+    <Compile Include="Unsorted_\_Storage\IStorageTransform.cs" />
+    <Compile Include="Unsorted_\_Storage\StorageUpdateOptions.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

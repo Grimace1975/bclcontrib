@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{A44E9D89-BFF2-41A4-AADC-3C2BDFDAEEB1}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>System</RootNamespace>
+    <AssemblyName>System.Quality</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Local.Designer.cs">
+      <DependentUpon>Local.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Quality.1\xDependencyResolutionException.cs" />
+    <Compile Include="Quality.1\xIServiceRegistration.cs" />
+    <Compile Include="Quality.1\zRegistration.cs" />
+    <Compile Include="Quality.1\zRegistrationFilters.cs" />
+    <Compile Include="Quality.1\zServiceRegistration.cs" />
+    <Compile Include="Quality.2\ITypeMockerWill.cs" />
+    <Compile Include="Quality.2\ITypeMocker.cs" />
+    <Compile Include="Quality.2\TypeMocker.cs" />
+    <Compile Include="Quality.2\TypeMockManager.cs" />
+    <Compile Include="Quality\IServiceLocator.cs" />
+    <Compile Include="Quality\IServiceRegistrar.cs" />
+    <Compile Include="Quality\ServiceLocator.cs" />
+    <Compile Include="Quality\ServiceLocatorExtensions.cs" />
+    <Compile Include="Quality\ServiceLocatorManager.cs" />
+    <Compile Include="Quality\ServiceResolutionException.cs" />
+    <Compile Include="Quality\Reference_\zResolveLifetime.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Local.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Local.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

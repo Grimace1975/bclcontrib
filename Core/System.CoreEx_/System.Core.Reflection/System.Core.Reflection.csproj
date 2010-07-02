@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{7A19F1E7-D65F-4D64-99C3-45344064FEF3}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>System.Core.Reflection</RootNamespace>
+    <AssemblyName>System.Core.Reflection</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reflection\IMemberAccessor.cs" />
+    <Compile Include="Reflection\IMemberGetter.cs" />
+    <Compile Include="Reflection\IMemberResolver.cs" />
+    <Compile Include="Reflection\Internal\DelegateFactory.cs" />
+    <Compile Include="Reflection\Internal\FieldAccessor.cs" />
+    <Compile Include="Reflection\Internal\FieldGetter.cs" />
+    <Compile Include="Reflection\Internal\LateBoundCtor.cs" />
+    <Compile Include="Reflection\Internal\LateBoundFieldGet.cs" />
+    <Compile Include="Reflection\Internal\LateBoundFieldSet.cs" />
+    <Compile Include="Reflection\Internal\LateBoundMethod.cs" />
+    <Compile Include="Reflection\Internal\LateBoundPropertyGet.cs" />
+    <Compile Include="Reflection\Internal\LateBoundPropertySet.cs" />
+    <Compile Include="Reflection\Internal\LateBoundValueTypeFieldSet.cs" />
+    <Compile Include="Reflection\Internal\LateBoundValueTypePropertySet.cs" />
+    <Compile Include="Reflection\Internal\MemberGetter.cs" />
+    <Compile Include="Reflection\Internal\MethodGetter.cs" />
+    <Compile Include="Reflection\Internal\PropertyAccessor.cs" />
+    <Compile Include="Reflection\Internal\PropertyGetter.cs" />
+    <Compile Include="Reflection\Internal\TypePair.cs" />
+    <Compile Include="Reflection\Internal\ValueTypeFieldAccessor.cs" />
+    <Compile Include="Reflection\Internal\ValueTypePropertyAccessor.cs" />
+    <Compile Include="Reflection\IValueResolver.cs" />
+    <Compile Include="Reflection\MemberInfoExtensions.cs" />
+    <Compile Include="Reflection\zResolutionContext.cs" />
+    <Compile Include="Reflection\zResolutionResult.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

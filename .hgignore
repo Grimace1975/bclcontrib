@@ -1,0 +1,6 @@
+relre:^TestResults/.*
+glob:*.suo
+glob:*/bin/*
+glob:*/obj/*
+glob:*/Bin/*
+glob:Bin/*
