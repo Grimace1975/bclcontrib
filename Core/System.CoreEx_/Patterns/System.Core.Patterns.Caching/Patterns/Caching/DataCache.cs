@@ -135,12 +135,14 @@ namespace System.Patterns.Caching
             return dataSourceRegistrar;
         }
 
+        
         /// <summary>
         /// Gets the data source.
         /// </summary>
         /// <param name="type">The type.</param>
         /// <param name="key">The key.</param>
         /// <returns></returns>
+        public static object GetData(DataCacheRegistration registration) { return GetData<object>(registration, string.Empty, null); }
         public static T GetData<T>(DataCacheRegistration registration) { return GetData<T>(registration, string.Empty, null); }
         /// <summary>
         /// Gets the data source.
@@ -149,6 +151,7 @@ namespace System.Patterns.Caching
         /// <param name="key">The key.</param>
         /// <param name="values">The value array.</param>
         /// <returns></returns>
+        public static object GetData(DataCacheRegistration registration, object[] values) { return GetData<object>(registration, string.Empty, values); }
         public static T GetData<T>(DataCacheRegistration registration, object[] values) { return GetData<T>(registration, string.Empty, values); }
         /// <summary>
         /// Gets the data source.
@@ -157,6 +160,7 @@ namespace System.Patterns.Caching
         /// <param name="key">The key.</param>
         /// <param name="headerId">The header id.</param>
         /// <returns></returns>
+        public static object GetData(DataCacheRegistration registration, string tag) { return GetData<object>(registration, tag, null); }
         public static T GetData<T>(DataCacheRegistration registration, string tag) { return GetData<T>(registration, tag, null); }
         /// <summary>
         /// Gets the data source.
@@ -164,6 +168,7 @@ namespace System.Patterns.Caching
         /// <param name="type">The type.</param>
         /// <param name="key">The key.</param>
         /// <returns></returns>
+        public static object GetData(Type type, string registrationId) { return GetData<object>(type, registrationId, string.Empty, null); }
         public static T GetData<T>(Type type, string registrationId) { return GetData<T>(type, registrationId, string.Empty, null); }
         /// <summary>
         /// Gets the data source.
@@ -172,6 +177,7 @@ namespace System.Patterns.Caching
         /// <param name="key">The key.</param>
         /// <param name="values">The value array.</param>
         /// <returns></returns>
+        public static object GetData(Type type, string registrationId, object[] values) { return GetData<object>(type, registrationId, string.Empty, values); }
         public static T GetData<T>(Type type, string registrationId, object[] values) { return GetData<T>(type, registrationId, string.Empty, values); }
         /// <summary>
         /// Gets the data source.
@@ -180,6 +186,7 @@ namespace System.Patterns.Caching
         /// <param name="key">The key.</param>
         /// <param name="headerId">The header id.</param>
         /// <returns></returns>
+        public static object GetData(Type type, string registrationId, string tag) { return GetData<object>(type, registrationId, tag, null); }
         public static T GetData<T>(Type type, string registrationId, string tag) { return GetData<T>(type, registrationId, tag, null); }
         /// <summary>
         /// Gets the data source.
@@ -190,6 +197,7 @@ namespace System.Patterns.Caching
         /// <param name="values">The value array.</param>
         /// <returns></returns>
         //:BIND: GetDataSource(Type, string, string, object[])
+        public static object GetData(DataCacheRegistration registration, string tag, object[] values) { return GetData<object>(registration, tag, values); }
         public static T GetData<T>(DataCacheRegistration registration, string tag, object[] values)
         {
             if (registration == null)
@@ -237,6 +245,7 @@ namespace System.Patterns.Caching
         /// <param name="values">The value array.</param>
         /// <returns></returns>
         //:BIND: GetDataSource(DataSourceRegistration, string, object[])
+        public static object GetData(Type type, string registrationId, string tag, object[] values) { return GetData<object>(type, registrationId, tag, values); }
         public static T GetData<T>(Type type, string registrationId, string tag, object[] values)
         {
             if (type == null)
