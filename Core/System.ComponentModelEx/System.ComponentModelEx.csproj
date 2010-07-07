@@ -41,7 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ComponentModel\DataAnnotations\EmailValidation.cs" />
+    <Compile Include="ComponentModel\DataAnnotations\DataTypeExAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\System.CoreEx\System.CoreEx.csproj">
