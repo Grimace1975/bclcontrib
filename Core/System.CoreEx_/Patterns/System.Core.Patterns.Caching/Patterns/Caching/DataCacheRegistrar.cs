@@ -235,16 +235,16 @@ namespace System.Patterns.Caching
         /// <param name="headerId">The header id.</param>
         /// <param name="values">The value array.</param>
         /// <returns></returns>
-        internal static object CreateData(DataCacheRegistration registration, string headerId, object[] values)
+        internal static T CreateData<T>(DataCacheRegistration registration, string tag, object[] values)
         {
             if (registration is DataCacheRegistrationLink)
                 throw new InvalidOperationException(Local.InvalidDataSource);
             // append header-list
-            var headerIdList = registration.Tags;
-            if (!headerIdList.Contains(headerId))
-                headerIdList.Add(headerId);
+            var tags = registration.Tags;
+            if (!tags.Contains(tag))
+                tags.Add(tag);
             // build data-source
-            return registration.Builder(headerId, values);
+            return (T)registration.Builder(tag, values);
         }
 
         /// <summary>

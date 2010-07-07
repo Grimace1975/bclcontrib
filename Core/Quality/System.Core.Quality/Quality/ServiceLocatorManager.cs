@@ -35,7 +35,7 @@ namespace System.Quality
         private static readonly object _lock = new object();
         private static Func<IServiceLocator> _provider;
         private static Action<IServiceRegistrar, IServiceLocator> _registration;
-        private static IServiceLocator _serviceLocator;
+        private static IServiceLocator _locator;
 
         public static void SetLocatorProvider(Func<IServiceLocator> provider) { SetLocatorProvider(provider, (Action<IServiceRegistrar, IServiceLocator>)null); }
         public static void SetLocatorProvider(Func<IServiceLocator> provider, Assembly[] assemblies) { SetLocatorProvider(provider, (registrar, locator) => RegisterFromAssemblies(registrar, locator, assemblies)); }
@@ -51,25 +51,52 @@ namespace System.Quality
             {
                 if (_provider == null)
                     throw new InvalidOperationException(Local.UndefinedServiceLocatorProvider);
-                if (_serviceLocator == null)
+                if (_locator == null)
                     lock (_lock)
-                        if (_serviceLocator == null)
+                        if (_locator == null)
                         {
-                            _serviceLocator = _provider();
+                            _locator = _provider();
+                            if (_locator == null)
+                                throw new InvalidOperationException();
+                            var registrar = _locator.GetRegistrar();
+                            RegisterSelfLocator(registrar, _locator);
                             if (_registration != null)
-                                _registration(_serviceLocator.GetRegistrar(), _serviceLocator);
+                                _registration(registrar, _locator);
                         }
-                return _serviceLocator;
+                return _locator;
             }
         }
 
-        public static void RegisterFromAssemblies(IServiceRegistrar registrar, IServiceLocator locator, Assembly[] assemblies)
+        public static void RegisterSelfLocator(IServiceRegistrar registrar, IServiceLocator locator)
+        {
+            registrar.Register<IServiceLocator>(locator);
+        }
+
+        public static void RegisterFromAssemblies(IServiceRegistrar registrar, IServiceLocator locator, Assembly[] assemblies) { RegisterFromAssemblies(registrar, locator, assemblies, null); }
+        public static void RegisterFromAssemblies(IServiceRegistrar registrar, IServiceLocator locator, Assembly[] assemblies, Predicate<Type> predicate)
         {
             var registrationType = typeof(IServiceRegistration);
             assemblies.SelectMany(a => a.GetTypes())
                 .Where(t => (!t.IsInterface) && (!t.IsAbstract) && (t.GetInterfaces().Contains(registrationType)))
+                .Where(t => (predicate == null) || (predicate(t)))
                 .ToList()
                 .ForEach(r => ((IServiceRegistration)locator.Resolve(r)).Register(registrar));
+        }
+
+        public static void RegisterFromAssembliesByNameConvention(IServiceRegistrar registrar, IServiceLocator locator, Assembly[] assemblies) { RegisterFromAssembliesByNameConvention(registrar, locator, assemblies, null); }
+        public static void RegisterFromAssembliesByNameConvention(IServiceRegistrar registrar, IServiceLocator locator, Assembly[] assemblies, Predicate<Type> predicate)
+        {
+            var interfaceTypes = assemblies.SelectMany(a => a.AsTypesEnumerator(t => t.IsInterface))
+                .Where(type => type.Name.StartsWith("I"));
+            foreach (var interfaceType in interfaceTypes)
+            {
+                string concreteName = interfaceType.Name.Substring(1);
+                interfaceType.Assembly.AsTypesEnumerator(interfaceType)
+                    .Where(t => t.Name == concreteName)
+                    .Where(t => (predicate == null) || (predicate(t)))
+                    .ToList()
+                    .ForEach(t => registrar.Register(interfaceType, t));
+            }
         }
     }
 }
