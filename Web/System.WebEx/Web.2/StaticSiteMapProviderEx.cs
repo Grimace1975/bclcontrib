@@ -178,7 +178,12 @@ namespace System.Web
                 observable.Subscribe(new Observer(this));
                 _rootNode = observable.GetRootNode();
                 // still in lock
-                OnSiteMapBuilt();
+                // if site map build fails then set to try next request
+                try
+                {
+                    OnSiteMapBuilt();
+                }
+                catch { _rootNode = null; }
             }
             finally
             {

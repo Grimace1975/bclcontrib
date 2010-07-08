@@ -112,7 +112,7 @@ namespace System.Web.Routing
 
             public override VirtualPathData GetVirtualPath(RequestContext requestContext, RouteValueDictionary values)
             {
-                return base.GetVirtualPath(requestContext, values);
+                return null; // base.GetVirtualPath(requestContext, values);
             }
         }
 

@@ -27,7 +27,7 @@ using System;
 using System.Web;
 using System.Collections;
 using System.Collections.Specialized;
-namespace Digital.Cms.Nodes
+namespace Digital.ContentManagement.Nodes
 {
 	public class SiteMapRootNode : SiteMapNodeEx
 	{

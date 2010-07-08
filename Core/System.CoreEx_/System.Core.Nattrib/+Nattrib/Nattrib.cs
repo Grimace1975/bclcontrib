@@ -47,6 +47,11 @@ namespace System
             return null;
         }
 
+        public static Nattrib Parse(object args)
+        {
+            return null;
+        }
+
         public IEnumerable<string> Names
         {
             get { return null; }

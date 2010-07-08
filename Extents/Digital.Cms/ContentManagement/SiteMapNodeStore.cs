@@ -34,9 +34,9 @@ using System.Collections.Generic;
 using System.Web.Caching;
 using System.Web;
 using System.Web.Routing;
-using Digital.Cms.Nodes;
+using Digital.ContentManagement.Nodes;
 using System.Primitives.TextPacks;
-namespace Digital.Cms
+namespace Digital.ContentManagement
 {
     public class SiteMapNodeStore<TRouteCreator> : IStaticSiteMapProviderExNodeStore
         where TRouteCreator : ISiteMapNodeStoreRouteCreator, new()

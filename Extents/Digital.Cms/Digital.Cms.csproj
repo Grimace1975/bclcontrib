@@ -46,14 +46,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Cms\ISiteMapNodeStoreRouteCreator.cs" />
-    <Compile Include="Cms\Nodes\SiteMapFormNode.cs" />
-    <Compile Include="Cms\Nodes\SiteMapListDetailNode.cs" />
-    <Compile Include="Cms\Nodes\SiteMapPageNode.cs" />
-    <Compile Include="Cms\Nodes\SiteMapRootNode.cs" />
-    <Compile Include="Cms\Nodes\SiteMapSectionNode.cs" />
-    <Compile Include="Cms\Nodes\SiteMapVirtualNode.cs" />
-    <Compile Include="Cms\SiteMapNodeStore.cs" />
+    <Compile Include="ContentManagement\ISiteMapNodeStoreRouteCreator.cs" />
+    <Compile Include="ContentManagement\Nodes\SiteMapFormNode.cs" />
+    <Compile Include="ContentManagement\Nodes\SiteMapListDetailNode.cs" />
+    <Compile Include="ContentManagement\Nodes\SiteMapPageNode.cs" />
+    <Compile Include="ContentManagement\Nodes\SiteMapRootNode.cs" />
+    <Compile Include="ContentManagement\Nodes\SiteMapSectionNode.cs" />
+    <Compile Include="ContentManagement\Nodes\SiteMapVirtualNode.cs" />
+    <Compile Include="ContentManagement\SiteMapNodeStore.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

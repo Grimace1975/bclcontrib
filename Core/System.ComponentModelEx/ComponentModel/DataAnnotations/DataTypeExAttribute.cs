@@ -11,7 +11,10 @@ namespace System.ComponentModel.DataAnnotations
         {
             if (!parserType.IsAssignableFrom(typeof(DataTypeParserBase)))
                 throw new ArgumentException("parserType");
+            Attrib = Nattrib.Parse(attrib);
         }
+
+        public Nattrib Attrib { get; private set; }
 
         public override bool IsValid(object value)
         {

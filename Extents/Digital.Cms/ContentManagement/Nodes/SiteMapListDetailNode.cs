@@ -27,43 +27,13 @@ using System;
 using System.Web;
 using System.Collections;
 using System.Collections.Specialized;
-namespace Digital.Cms.Nodes
+namespace Digital.ContentManagement.Nodes
 {
-	public class SiteMapPageNode : SiteMapNodeEx
+	public class SiteMapListDetailNode : SiteMapPageNode
 	{
-		public SiteMapPageNode(SiteMapProvider provider, string key, string url, string title)
+		public SiteMapListDetailNode(SiteMapProvider provider, string key, string url, string title)
 			: base(provider, key, url, title) { }
-		public SiteMapPageNode(SiteMapProvider provider, string key, string url, string title, string description, IList roles, NameValueCollection attributes, NameValueCollection explicitResourceKeys, string implicitResourceKey)
+		public SiteMapListDetailNode(SiteMapProvider provider, string key, string url, string title, string description, IList roles, NameValueCollection attributes, NameValueCollection explicitResourceKeys, string implicitResourceKey)
 			: base(provider, key, url, title, description, roles, attributes, explicitResourceKeys, implicitResourceKey) { }
-
-		/// <summary>
-		/// Gets or sets the page dynamism.
-		/// </summary>
-		/// <value>The page dynamism.</value>
-		public string PageDynamism { get; set; }
-
-		/// <summary>
-		/// Gets or sets the last modify date.
-		/// </summary>
-		/// <value>The last modify date.</value>
-		public DateTime? LastModifyDate { get; set; }
-
-		/// <summary>
-		/// Gets or sets the page priority.
-		/// </summary>
-		/// <value>The page priority.</value>
-		public double? PagePriority { get; set; }
-
-		/// <summary>
-		/// Gets or sets a value indicating whether [seo no follow].
-		/// </summary>
-		/// <value><c>true</c> if [seo no follow]; otherwise, <c>false</c>.</value>
-		public bool SeoNoFollow { get; set; }
-
-		/// <summary>
-		/// Gets or sets a value indicating whether [seo no index].
-		/// </summary>
-		/// <value><c>true</c> if [seo no index]; otherwise, <c>false</c>.</value>
-		public bool SeoNoIndex { get; set; }
 	}
 }

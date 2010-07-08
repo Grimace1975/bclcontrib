@@ -1,4 +1,4 @@
-﻿#region License
+#region License
 /*
 The MIT License
 
@@ -24,19 +24,16 @@ THE SOFTWARE.
 */
 #endregion
 using System;
-using System.Web.Routing;
-namespace Digital.Cms
+using System.Web;
+using System.Collections;
+using System.Collections.Specialized;
+namespace Digital.ContentManagement.Nodes
 {
-    public interface ISiteMapNodeStoreRouteCreator : IDisposable
-    {
-        Route CreateRoute(string url, string virtualize);
-    }
-
-    //private static Route CreateMapRoute(string url, object defaults, object constraints, string[] namespaces)
-    //{
-    //    if (url == null)
-    //        throw new ArgumentNullException("url");
-    //    var handler = new WebFormRouteHandler("~/ContentPage.aspx");
-    //    return new Route(url, null, null, new RouteValueDictionary(new { cid = "Home" }), handler);
-    //}
+	public class SiteMapSectionNode : SiteMapVirtualNode
+	{
+		public SiteMapSectionNode(SiteMapProvider provider, string key, string url, string title)
+			: base(provider, key, url, title) { }
+		public SiteMapSectionNode(SiteMapProvider provider, string key, string url, string title, string description, IList roles, NameValueCollection attributes, NameValueCollection explicitResourceKeys, string implicitResourceKey)
+			: base(provider, key, url, title, description, roles, attributes, explicitResourceKeys, implicitResourceKey) { }
+	}
 }

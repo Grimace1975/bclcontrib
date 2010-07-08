@@ -74,7 +74,7 @@ namespace System.Web.Routing
                         return func(nodeEx);
                     var route = nodeEx.Get<Route>();
                     if (route != null)
-                        route.GetVirtualPath(requestContext, values);
+                        return route.GetVirtualPath(requestContext, values);
                 }
             }
             return null;

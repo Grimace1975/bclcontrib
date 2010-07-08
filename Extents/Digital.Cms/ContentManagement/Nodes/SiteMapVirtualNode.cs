@@ -27,13 +27,15 @@ using System;
 using System.Web;
 using System.Collections;
 using System.Collections.Specialized;
-namespace Digital.Cms.Nodes
+namespace Digital.ContentManagement.Nodes
 {
-	public class SiteMapSectionNode : SiteMapVirtualNode
+	public class SiteMapVirtualNode : SiteMapNodeEx
 	{
-		public SiteMapSectionNode(SiteMapProvider provider, string key, string url, string title)
+		public SiteMapVirtualNode(SiteMapProvider provider, string key, string url, string title)
 			: base(provider, key, url, title) { }
-		public SiteMapSectionNode(SiteMapProvider provider, string key, string url, string title, string description, IList roles, NameValueCollection attributes, NameValueCollection explicitResourceKeys, string implicitResourceKey)
+		public SiteMapVirtualNode(SiteMapProvider provider, string key, string url, string title, string description, IList roles, NameValueCollection attributes, NameValueCollection explicitResourceKeys, string implicitResourceKey)
 			: base(provider, key, url, title, description, roles, attributes, explicitResourceKeys, implicitResourceKey) { }
+
+		public SiteMapNode Actual { get; set; }
 	}
 }
