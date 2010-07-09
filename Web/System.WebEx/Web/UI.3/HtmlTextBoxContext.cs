@@ -177,7 +177,8 @@ namespace System.Web.UI
                 configuration.CssStyles
                     .Cast<HtmlTextBoxCssStyleConfiguration>()
                     .SelectMany(c => c.Element.ToLowerInvariant().Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries), (e, k) => new { Element = k, Name = e.Name, Value = e.Value })
-                    .ForEachSlim(e =>
+                    .ToList()
+                    .ForEach(e =>
                     {
                         switch (e.Element)
                         {

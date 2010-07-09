@@ -57,6 +57,7 @@
     <Compile Include="Collections\ICollectionKey.cs" />
     <Compile Include="Collections\IValue.cs" />
     <Compile Include="Collections\SortDirection.cs" />
+    <Compile Include="Patterns\ReleaseManagement\Configuration\ReleaseManagementConfiguration.cs" />
     <Compile Include="zLocal.Designer.cs">
       <DependentUpon>zLocal.resx</DependentUpon>
       <AutoGen>True</AutoGen>

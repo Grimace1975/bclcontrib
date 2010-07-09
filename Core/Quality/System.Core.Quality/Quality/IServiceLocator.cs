@@ -39,7 +39,6 @@ namespace System.Quality
             where T : class;
         T Resolve<T>(string id)
             where T : class;
-        //
         object Resolve(Type type);
         //
         IList<T> ResolveAll<T>()

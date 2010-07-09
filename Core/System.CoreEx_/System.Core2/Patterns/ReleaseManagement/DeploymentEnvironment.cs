@@ -31,6 +31,7 @@ namespace System.Patterns.ReleaseManagement
     // [Wiki] http://en.wikipedia.org/wiki/Software_testing
 	public enum DeploymentEnvironment
 	{
+        Private,
 		Development,
 		AlphaTesting,
 		BetaTesting,

@@ -32,7 +32,7 @@ namespace System.Linq
     /// </summary>
     public static class EnumerableExtensions
     {
-        public static IEnumerable<TSource> AsEnumerableSlim<TSource>(this IEnumerable source)
+        public static IEnumerable<TSource> AsEnumerableYield<TSource>(this IEnumerable source)
         {
             if (source == null)
                 throw new ArgumentNullException("source");
@@ -40,12 +40,25 @@ namespace System.Linq
                 yield return (TSource)item;
         }
 
-        public static void ForEachSlim<TSource>(this IEnumerable<TSource> source, Action<TSource> action)
+        public static void ForEachYield<TSource>(this IEnumerable<TSource> source, Action<TSource> action)
         {
             if (source == null)
                 throw new ArgumentNullException("source");
             foreach (TSource item in source)
                 action(item);
+        }
+
+        public static IEnumerable<TSource> ForYield<TSource>(this IEnumerable<TSource> source, Func<TSource, TSource> initialize, Predicate<TSource> predicate, Func<TSource, TSource> next)
+        {
+            foreach (TSource item in source)
+            {
+                var value = initialize(item);
+                while (predicate(value))
+                {
+                    yield return value;
+                    value = next(value);
+                }
+            }
         }
 
         /// <summary>

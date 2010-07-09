@@ -45,6 +45,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Web\Mvc.1\Html\IHtmlTextBox.cs" />
     <Compile Include="Web\Mvc.1\Html\TextAreaExtensionsEx.cs" />
+    <Compile Include="Web\Mvc\ServiceLocatorControllerFactory.cs" />
     <Compile Include="Web\Mvc\MvcRouteHandlerExtensions.cs" />
     <Compile Include="Web\Mvc\RouteCollectionExtensions.cs" />
   </ItemGroup>

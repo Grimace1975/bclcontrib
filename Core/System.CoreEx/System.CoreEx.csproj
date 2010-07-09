@@ -961,6 +961,9 @@
     <Compile Include="..\System.CoreEx_\System.Core2\Patterns\Generic\SingletonFactoryWithCreate.cs">
       <Link>System.Core2\Patterns\Generic\SingletonFactoryWithCreate.cs</Link>
     </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core2\Patterns\ReleaseManagement\Configuration\ReleaseManagementConfiguration.cs">
+      <Link>System.Core2\Patterns\ReleaseManagement\Configuration\ReleaseManagementConfiguration.cs</Link>
+    </Compile>
     <Compile Include="..\System.CoreEx_\System.Core2\Patterns\ReleaseManagement\DeploymentEnvironment.cs">
       <Link>System.Core2\Patterns\ReleaseManagement\DeploymentEnvironment.cs</Link>
     </Compile>

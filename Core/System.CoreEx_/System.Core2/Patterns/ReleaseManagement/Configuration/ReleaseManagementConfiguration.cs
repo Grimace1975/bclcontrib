@@ -23,27 +23,29 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 #endregion
-using System.Collections.Generic;
-namespace System.Quality
+using System.Configuration;
+namespace System.Patterns.ReleaseManagement.Configuration
 {
     /// <summary>
-    /// ServiceLocator
+    /// ReleaseManagementConfiguration
     /// </summary>
-    public static class ServiceLocator
+	public class ReleaseManagementConfiguration : Patterns.Configuration.Configuration
     {
-        public static IServiceRegistrar GetRegistrar() { return ServiceLocatorManager.Current.GetRegistrar(); }
-        public static TServiceRegistrar GetRegistrar<TServiceRegistrar>()
-            where TServiceRegistrar : class, IServiceRegistrar { return ServiceLocatorManager.Current.GetRegistrar<TServiceRegistrar>(); }
-        //
-        public static T Resolve<T>()
-            where T : class { return ServiceLocatorManager.Current.Resolve<T>(); }
-        public static T Resolve<T>(string id, params object[] args)
-            where T : class { return ServiceLocatorManager.Current.Resolve<T>(id); }
-        public static object Resolve(Type type) { return ServiceLocatorManager.Current.Resolve(type); }
-        //
-        public static IEnumerable<T> ResolveAll<T>()
-            where T : class { return ServiceLocatorManager.Current.ResolveAll<T>(); }
-        public static TService Inject<TService>(TService instance)
-            where TService : class { return ServiceLocatorManager.Current.Inject<TService>(instance); }
+        public ReleaseManagementConfiguration()
+            : base() { }
+
+        [ConfigurationProperty("deploymentEnvironment", DefaultValue = DeploymentEnvironment.Live)]
+        public DeploymentEnvironment DeploymentEnvironment
+        {
+            get { return (DeploymentEnvironment)this["deploymentEnvironment"]; }
+            set { this["deploymentEnvironment"] = value; }
+        }
+
+        [ConfigurationProperty("developmentStage", DefaultValue = DevelopmentStage.Release)]
+        public DevelopmentStage DevelopmentStage
+        {
+            get { return (DevelopmentStage)this["developmentStage"]; }
+            set { this["developmentStage"] = value; }
+        }
     }
 }

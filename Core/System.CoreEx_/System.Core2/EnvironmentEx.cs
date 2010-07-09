@@ -24,15 +24,16 @@ THE SOFTWARE.
 */
 #endregion
 using System.Patterns.ReleaseManagement;
+using System.Patterns.ReleaseManagement.Configuration;
 namespace System
 {
     /// <summary>
     /// EnvironmentEx
     /// </summary>
-
     public static partial class EnvironmentEx
     {
-        private static DeploymentEnvironment s_deploymentEnvironment = DeploymentEnvironment.Development;
+        private static DeploymentEnvironment s_deploymentEnvironment = DeploymentEnvironment.Live;
+        private static DevelopmentStage s_developmentStage = DevelopmentStage.Release;
 
         static EnvironmentEx()
         {
@@ -60,6 +61,26 @@ namespace System
                 else
                     throw new InvalidOperationException("Mocked");
             }
+        }
+
+        public static DevelopmentStage DevelopmentStage
+        {
+            get { return (s_mock == null ? s_developmentStage : s_mock.DevelopmentStage); }
+            set
+            {
+                if (s_mock == null)
+                    s_developmentStage = value;
+                else
+                    throw new InvalidOperationException("Mocked");
+            }
+        }
+
+        public static void LoadFromConfiguration(ReleaseManagementConfiguration configuration)
+        {
+            if (configuration == null)
+                throw new ArgumentNullException("configuration");
+            DeploymentEnvironment = configuration.DeploymentEnvironment;
+            DevelopmentStage = configuration.DevelopmentStage;
         }
     }
 }

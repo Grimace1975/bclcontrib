@@ -1,4 +1,4 @@
-﻿#region License
+#region License
 /*
 The MIT License
 
@@ -23,27 +23,15 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 #endregion
-using System.Patterns.ReleaseManagement;
-namespace System
+using System.Web.Routing;
+using System.Quality;
+namespace System.Web.Mvc
 {
-    public static partial class EnvironmentEx
+    public class ServiceLocatorControllerFactory : DefaultControllerFactory
     {
-        /// <summary>
-        /// MockBase
-        /// </summary>
-        public abstract class MockBase
+        protected override IController GetControllerInstance(RequestContext requestContext, Type controllerType)
         {
-            protected MockBase() { }
-
-            public virtual DeploymentEnvironment DeploymentEnvironment
-            {
-                get { throw new NotImplementedException(); }
-            }
-
-            public virtual DevelopmentStage DevelopmentStage
-            {
-                get { throw new NotImplementedException(); }
-            }
+            return (IController)ServiceLocator.Resolve(controllerType);
         }
     }
 }
