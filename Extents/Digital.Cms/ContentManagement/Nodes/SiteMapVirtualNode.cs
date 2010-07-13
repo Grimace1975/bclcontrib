@@ -29,13 +29,19 @@ using System.Collections;
 using System.Collections.Specialized;
 namespace Digital.ContentManagement.Nodes
 {
-	public class SiteMapVirtualNode : SiteMapNodeEx
-	{
-		public SiteMapVirtualNode(SiteMapProvider provider, string key, string url, string title)
-			: base(provider, key, url, title) { }
-		public SiteMapVirtualNode(SiteMapProvider provider, string key, string url, string title, string description, IList roles, NameValueCollection attributes, NameValueCollection explicitResourceKeys, string implicitResourceKey)
-			: base(provider, key, url, title, description, roles, attributes, explicitResourceKeys, implicitResourceKey) { }
+    public class SiteMapVirtualNode : SiteMapPageNode
+    {
+        public SiteMapVirtualNode(SiteMapProvider provider, string key, string url, string title)
+            : base(provider, key, url, title) { }
+        public SiteMapVirtualNode(SiteMapProvider provider, string key, string url, string title, string description, IList roles, NameValueCollection attributes, NameValueCollection explicitResourceKeys, string implicitResourceKey)
+            : base(provider, key, url, title, description, roles, attributes, explicitResourceKeys, implicitResourceKey) { }
 
-		public SiteMapNode Actual { get; set; }
-	}
+        public SiteMapNode Actual { get; set; }
+
+        //public override string Url
+        //{
+        //    get { return Actual.Url; }
+        //    set { Actual.Url = value; }
+        //}
+    }
 }

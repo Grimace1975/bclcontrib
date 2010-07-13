@@ -132,6 +132,9 @@
   <data name="RedefineDataSourceCacheAB" xml:space="preserve">
     <value>RedefineDataSourceCache [{0}], '{1}'</value>
   </data>
+  <data name="RedefineIdA" xml:space="preserve">
+    <value>RedefineId '{0}'</value>
+  </data>
   <data name="ScopeCharacterNotAllowedA" xml:space="preserve">
     <value>Key '{0}' cannot contain scope characters.</value>
   </data>

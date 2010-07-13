@@ -23,8 +23,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 #endregion
+using System.Linq;
 using System.Collections.Generic;
 using System.Threading;
+using System.Reflection;
 namespace System.Patterns.Caching
 {
     /// <summary>
@@ -118,9 +120,9 @@ namespace System.Patterns.Caching
         static DataCache()
         {
             var registrar = GetRegistrar(typeof(DataCache));
-            registrar.AddData(Primitive.YesNo);
-            registrar.AddData(Primitive.Gender);
-            registrar.AddData(Primitive.Integer);
+            registrar.Register(Primitive.YesNo);
+            registrar.Register(Primitive.Gender);
+            registrar.Register(Primitive.Integer);
         }
 
         /// <summary>
@@ -135,7 +137,21 @@ namespace System.Patterns.Caching
             return dataSourceRegistrar;
         }
 
-        
+        public static void RegisterAllBelow(Type type)
+        {
+            var registrationType = typeof(DataCacheRegistration);
+            var registrar = GetRegistrar(type);
+            type.GetFields(BindingFlags.Static | BindingFlags.DeclaredOnly | BindingFlags.Public | BindingFlags.NonPublic)
+                .Where(f => f.FieldType.IsAssignableFrom(registrationType))
+                .Select(f => (DataCacheRegistration)f.GetValue(null))
+                .ToList()
+                .ForEach(r => registrar.Register(r));
+            // below
+            type.GetNestedTypes()
+                .ToList()
+                .ForEach(t => RegisterAllBelow(t));
+        }
+
         /// <summary>
         /// Gets the data source.
         /// </summary>

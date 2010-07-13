@@ -30,6 +30,8 @@ namespace System.Web
     /// </summary>
     public interface ISiteMapProvider
     {
+        SiteMapNode CurrentNode { get; }
+        SiteMapNode RootNode { get; }
         TNode FindSiteMapNode<TNode>(string rawUrl)
             where TNode : SiteMapNode;
         TNode FindSiteMapNode<TNode>(HttpContext context)

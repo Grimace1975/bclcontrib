@@ -163,38 +163,41 @@
     <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Form\Patterns\Form\SmartFormMetaXmlWriter.cs">
       <Link>Patterns\System.Core.Patterns.Form\Patterns\Form\SmartFormMetaXmlWriter.cs</Link>
     </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Reporting\Patterns\Reporting.1\MultiColumnLayout.cs">
+      <Link>Patterns\System.Core.Patterns.Reporting\Patterns\Reporting.1\MultiColumnLayout.cs</Link>
+    </Compile>
     <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Reporting\Patterns\Reporting\FlatFileContext.cs">
-      <Link>Patterns\System.Core.Patterns.Reporting\Patterns\FlatFileContext.cs</Link>
+      <Link>Patterns\System.Core.Patterns.Reporting\Patterns\Reporting\FlatFileContext.cs</Link>
     </Compile>
     <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Reporting\Patterns\Reporting\FlatFileCsvEmitter.cs">
-      <Link>Patterns\System.Core.Patterns.Reporting\Patterns\FlatFileCsvEmitter.cs</Link>
+      <Link>Patterns\System.Core.Patterns.Reporting\Patterns\Reporting\FlatFileCsvEmitter.cs</Link>
     </Compile>
     <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Reporting\Patterns\Reporting\FlatFileCsvEmitterExtensions.cs">
-      <Link>Patterns\System.Core.Patterns.Reporting\Patterns\FlatFileCsvEmitterExtensions.cs</Link>
+      <Link>Patterns\System.Core.Patterns.Reporting\Patterns\Reporting\FlatFileCsvEmitterExtensions.cs</Link>
     </Compile>
     <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Reporting\Patterns\Reporting\FlatFileField.cs">
-      <Link>Patterns\System.Core.Patterns.Reporting\Patterns\FlatFileField.cs</Link>
+      <Link>Patterns\System.Core.Patterns.Reporting\Patterns\Reporting\FlatFileField.cs</Link>
     </Compile>
     <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Reporting\Patterns\Reporting\FlatFileFieldCollection.cs">
-      <Link>Patterns\System.Core.Patterns.Reporting\Patterns\FlatFileFieldCollection.cs</Link>
+      <Link>Patterns\System.Core.Patterns.Reporting\Patterns\Reporting\FlatFileFieldCollection.cs</Link>
     </Compile>
     <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Reporting\Patterns\Reporting\FlatFileFieldFormatter.cs">
-      <Link>Patterns\System.Core.Patterns.Reporting\Patterns\FlatFileFieldFormatter.cs</Link>
+      <Link>Patterns\System.Core.Patterns.Reporting\Patterns\Reporting\FlatFileFieldFormatter.cs</Link>
     </Compile>
     <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Reporting\Patterns\Reporting\FlatFileFilterMode.cs">
-      <Link>Patterns\System.Core.Patterns.Reporting\Patterns\FlatFileFilterMode.cs</Link>
+      <Link>Patterns\System.Core.Patterns.Reporting\Patterns\Reporting\FlatFileFilterMode.cs</Link>
     </Compile>
     <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Reporting\Patterns\Reporting\MappingExpression.cs">
-      <Link>Patterns\System.Core.Patterns.Reporting\Patterns\MappingExpression.cs</Link>
+      <Link>Patterns\System.Core.Patterns.Reporting\Patterns\Reporting\MappingExpression.cs</Link>
     </Compile>
     <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Reporting\Patterns\Reporting\PropertyMap.cs">
-      <Link>Patterns\System.Core.Patterns.Reporting\Patterns\PropertyMap.cs</Link>
+      <Link>Patterns\System.Core.Patterns.Reporting\Patterns\Reporting\PropertyMap.cs</Link>
     </Compile>
     <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Reporting\Patterns\Reporting\Reference_\Test.cs">
       <Link>Patterns\System.Core.Patterns.Reporting\Patterns\Reference_\Test.cs</Link>
     </Compile>
     <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Reporting\Patterns\Reporting\TypeMap.cs">
-      <Link>Patterns\System.Core.Patterns.Reporting\Patterns\TypeMap.cs</Link>
+      <Link>Patterns\System.Core.Patterns.Reporting\Patterns\Reporting\TypeMap.cs</Link>
     </Compile>
     <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Versioning\Patterns\Versioning\VersionManager.cs">
       <Link>Patterns\System.Core.Patterns.Versioning\Patterns\Versioning\VersionManager.cs</Link>
@@ -930,6 +933,9 @@
     </Compile>
     <Compile Include="..\System.CoreEx_\System.Core2\EnvironmentEx.cs">
       <Link>System.Core2\EnvironmentEx.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core2\EXTENTIONS\Configuration\ConfigurationManagerEx.cs">
+      <Link>System.Core2\EXTENTIONS\Configuration\ConfigurationManagerEx.cs</Link>
     </Compile>
     <Compile Include="..\System.CoreEx_\System.Core2\EXTENTIONS\ConvertEx.cs">
       <Link>System.Core2\EXTENTIONS\ConvertEx.cs</Link>

@@ -61,11 +61,11 @@ namespace System {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Requested item &apos;{0}&apos; not defined..
+        ///   Looks up a localized string similar to &apos;{0}&apos; item &apos;{1}&apos; not defined..
         /// </summary>
-        internal static string UndefinedKeyA {
+        internal static string UndefinedItemAB {
             get {
-                return ResourceManager.GetString("UndefinedKeyA", resourceCulture);
+                return ResourceManager.GetString("UndefinedItemAB", resourceCulture);
             }
         }
     }

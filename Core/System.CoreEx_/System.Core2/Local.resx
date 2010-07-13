@@ -117,7 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="UndefinedKeyA" xml:space="preserve">
-    <value>Requested item '{0}' not defined.</value>
+  <data name="UndefinedItemAB" xml:space="preserve">
+    <value>'{0}' item '{1}' not defined.</value>
   </data>
 </root>

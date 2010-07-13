@@ -46,7 +46,7 @@ namespace System.Patterns.Caching
         /// <param name="type">The type.</param>
         /// <param name="registrar">The registrar.</param>
         /// <returns></returns>
-        public static bool TryGetInstance(Type anchorType, out DataCacheRegistrar registrar, bool createIfRequired)
+        internal static bool TryGetInstance(Type anchorType, out DataCacheRegistrar registrar, bool createIfRequired)
         {
             if (anchorType == null)
                 throw new ArgumentNullException("anchorType");
@@ -78,7 +78,7 @@ namespace System.Patterns.Caching
         /// <param name="type">The type.</param>
         internal DataCacheRegistrar(Type anchorType)
         {
-            _cacheKeyPrefix = "ds" + CoreEx.Scope + anchorType.ToString() + CoreEx.Scope;
+            _cacheKeyPrefix = "DC" + CoreEx.Scope + anchorType.ToString() + CoreEx.Scope;
             AnchorType = anchorType;
         }
 
@@ -94,10 +94,7 @@ namespace System.Patterns.Caching
         /// <param name="key">The key.</param>
         /// <param name="builder">The builder.</param>
         /// <param name="dependencies">The dependencies.</param>
-        public void AddData(string registrationId, DataCacheBuilder builder, params string[] dependencies)
-        {
-            AddData(new DataCacheRegistration(registrationId, new CacheCommand(null, 60), builder, dependencies));
-        }
+        public void Register(string registrationId, DataCacheBuilder builder, params string[] dependencies) { Register(new DataCacheRegistration(registrationId, new CacheCommand(null, 60), builder, dependencies)); }
         /// <summary>
         /// Adds the data source.
         /// </summary>
@@ -105,25 +102,19 @@ namespace System.Patterns.Caching
         /// <param name="minuteTimeout">The minute timeout.</param>
         /// <param name="builder">The builder.</param>
         /// <param name="dependencies">The dependencies.</param>
-        public void AddData(string registrationId, int minuteTimeout, DataCacheBuilder builder, params string[] dependencies)
-        {
-            AddData(new DataCacheRegistration(registrationId, new CacheCommand(null, minuteTimeout), builder, dependencies));
-        }
+        public void Register(string registrationId, int minuteTimeout, DataCacheBuilder builder, params string[] dependencies) { Register(new DataCacheRegistration(registrationId, new CacheCommand(null, minuteTimeout), builder, dependencies)); }
         /// <summary>
         /// Adds the data source.
         /// </summary>
         /// <param name="cacheCommand">The cache command.</param>
         /// <param name="builder">The builder.</param>
         /// <param name="dependencies">The dependencies.</param>
-        public void AddData(string registrationId, CacheCommand cacheCommand, DataCacheBuilder builder, params string[] dependencies)
-        {
-            AddData(new DataCacheRegistration(registrationId, cacheCommand, builder, dependencies));
-        }
+        public void Register(string registrationId, CacheCommand cacheCommand, DataCacheBuilder builder, params string[] dependencies) { Register(new DataCacheRegistration(registrationId, cacheCommand, builder, dependencies)); }
         /// <summary>
         /// Adds the data source.
         /// </summary>
         /// <param name="key">The key.</param>
-        public void AddData(DataCacheRegistration registration)
+        public void Register(DataCacheRegistration registration)
         {
             if (registration == null)
                 throw new ArgumentNullException("registration");
@@ -139,7 +130,7 @@ namespace System.Patterns.Caching
                 if (registrationId.IndexOf(CoreEx.Scope) > -1)
                     throw new ArgumentException(string.Format(Local.ScopeCharacterNotAllowedA, registrationId), "registration");
                 if (_setAsId.ContainsKey(registrationId))
-                    throw new ArgumentException(string.Format("RedefinedKey{0}", registrationId), "registration");
+                    throw new ArgumentException(string.Format(Local.RedefineIdA, registrationId), "registration");
                 _setAsId.Add(registrationId, registration);
                 _set.Add(registration);
                 registration.Registrar = this;

@@ -61,7 +61,7 @@ namespace System.Collections.Index
 				TValue value;
 				if (_hash.TryGetValue(key, out value))
 					return value;
-				throw new ArgumentException(string.Format(Local.UndefinedKeyA, key), "key");
+                throw new ArgumentException(string.Format(Local.UndefinedItemAB, "Dictionary", key), "key");
 			}
 			set
 			{

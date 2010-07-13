@@ -106,6 +106,15 @@ namespace System {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to RedefineId &apos;{0}&apos;.
+        /// </summary>
+        internal static string RedefineIdA {
+            get {
+                return ResourceManager.GetString("RedefineIdA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Key &apos;{0}&apos; cannot contain scope characters..
         /// </summary>
         internal static string ScopeCharacterNotAllowedA {

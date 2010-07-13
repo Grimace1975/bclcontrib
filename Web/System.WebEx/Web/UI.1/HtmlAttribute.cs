@@ -26,7 +26,7 @@ THE SOFTWARE.
 namespace System.Web.UI
 {
     /// <summary>
-    /// HtmlBuilder
+    /// HtmlAttribute
     /// </summary>
     public enum HtmlAttribute
     {
