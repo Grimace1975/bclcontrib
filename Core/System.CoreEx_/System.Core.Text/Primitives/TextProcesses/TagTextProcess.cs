@@ -4,7 +4,6 @@ namespace System.Primitives.TextProcesses
     /// <summary>
     /// Provides processing implementation for strings encoded using the format "[[key{parameter}parameter2]]".
     /// </summary>
-
     public class TagTextProcess : TextProcessBase
     {
         /// <summary>

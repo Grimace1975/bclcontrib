@@ -25,12 +25,15 @@ THE SOFTWARE.
 #endregion
 //[assembly: Instinct.Pattern.Environment.Attribute.FactoryConfiguration("dataType", typeof(System.Primitives.DataTypeBase))]
 using System.Patterns.Generic;
+#if !SqlServer
+using System.Quality;
+#endif
 namespace System.Primitives.DataTypes
 {
     /// <summary>
     /// DataTypeBase
     /// </summary>
-	public abstract partial class DataTypeBase : SingletonFactoryWithCreate<DataTypeBase>
+    public abstract partial class DataTypeBase : SimpleFactoryBase<DataTypeBase>
 	{
         internal static readonly Type DataTypeBaseType = typeof(DataTypeBase);
 
@@ -53,13 +56,13 @@ namespace System.Primitives.DataTypes
 		/// </summary>
 		/// <param name="key">The key.</param>
 		/// <returns></returns>
-		protected static DataTypeBase Create(string key)
+        protected static DataTypeBase Create<T>(IAppUnit appUnit)
+            where T : DataTypeBase
 		{
 #if !SqlServer
-            return null;
-            //return ServiceLocatorEx.Resolve<DataTypeBase>(ResolveLifetime.ApplicationUnit, key, new { typeA = "System.Primitives.DataTypes.{0}DataType, " + AssemblyRef.This });
+            return ServiceLocator.Resolve<T>();
 #else
-			return CreatePrime(key);
+			return default(T); //CreatePrime(key);
 #endif
 		}
 

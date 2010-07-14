@@ -23,10 +23,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 #endregion
-namespace System
+using System.Web.UI.HtmlControls;
+namespace System.Web.UI.Integrate
 {
-    public interface IAppUnit
+    public class GoogleSiteMap : HtmlContainerControl
     {
-        //Type ApplicationUnit { get; }
     }
 }

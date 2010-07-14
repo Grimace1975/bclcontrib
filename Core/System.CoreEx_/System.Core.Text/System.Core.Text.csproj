@@ -66,6 +66,10 @@
     <Compile Include="Text\TextSpanListExtentions.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Quality\System.Core.Quality\System.Core.Quality.csproj">
+      <Project>{A44E9D89-BFF2-41A4-AADC-3C2BDFDAEEB1}</Project>
+      <Name>System.Core.Quality</Name>
+    </ProjectReference>
     <ProjectReference Include="..\System.Core.Nattrib\System.Core.Nattrib.csproj">
       <Project>{55D806D0-B6AF-4E92-B4DC-525F3676A6E5}</Project>
       <Name>System.Core.Nattrib</Name>

@@ -42,7 +42,7 @@ namespace System.Web.UI
         {
             _writeCount++;
             if (attrib != null)
-                AddHtmlAttrib(attrib, null);
+                AddAttribute(attrib, null);
             _textWriter.AddAttributeIfUndefined(HtmlTextWriterAttribute.Type, "text/javascript");
             _textWriter.RenderBeginTag(HtmlTextWriterTag.Script);
             _textWriter.Write("//<!CDATA[[ <!--\n");
@@ -81,7 +81,7 @@ namespace System.Web.UI
                 else
                     lastDivState = null;
                 if (attrib.Count > 0)
-                    AddHtmlAttrib(attrib, null);
+                    AddAttribute(attrib, null);
             }
             else
             {
@@ -106,7 +106,7 @@ namespace System.Web.UI
                 throw new ArgumentNullException("url");
             _writeCount++;
             if (attrib != null)
-                AddHtmlAttrib(attrib, null);
+                AddAttribute(attrib, null);
             _textWriter.AddAttributeIfUndefined(HtmlTextWriterAttribute.Src, url);
             _textWriter.RenderBeginTag(HtmlTextWriterTag.Iframe);
             _textWriter.RenderEndTag();
@@ -133,7 +133,7 @@ namespace System.Web.UI
             {
                 textProcess = attrib.Slice<string>("textProcess");
                 if (attrib.Count > 0)
-                    AddHtmlAttrib(attrib, null);
+                    AddAttribute(attrib, null);
             }
             else
                 textProcess = string.Empty;
@@ -150,7 +150,7 @@ namespace System.Web.UI
         {
             _writeCount++;
             if (attrib != null)
-                AddHtmlAttrib(attrib, null);
+                AddAttribute(attrib, null);
             _textWriter.RenderBeginTag(HtmlTextWriterTag.H1);
             ElementPush(HtmlTag.H1, null);
             return this;
@@ -161,7 +161,7 @@ namespace System.Web.UI
         {
             _writeCount++;
             if (attrib != null)
-                AddHtmlAttrib(attrib, null);
+                AddAttribute(attrib, null);
             _textWriter.RenderBeginTag(System.Web.UI.HtmlTextWriterTag.H2);
             ElementPush(HtmlTag.H2, null);
             return this;
@@ -172,7 +172,7 @@ namespace System.Web.UI
         {
             _writeCount++;
             if (attrib != null)
-                AddHtmlAttrib(attrib, null);
+                AddAttribute(attrib, null);
             _textWriter.RenderBeginTag(System.Web.UI.HtmlTextWriterTag.H3);
             ElementPush(HtmlTag.H3, null);
             return this;
@@ -183,7 +183,7 @@ namespace System.Web.UI
         {
             _writeCount++;
             if (attrib != null)
-                AddHtmlAttrib(attrib, null);
+                AddAttribute(attrib, null);
             _textWriter.RenderBeginTag(System.Web.UI.HtmlTextWriterTag.P);
             ElementPush(HtmlTag.P, null);
             return this;
@@ -194,7 +194,7 @@ namespace System.Web.UI
         {
             _writeCount++;
             if (attrib != null)
-                AddHtmlAttrib(attrib, null);
+                AddAttribute(attrib, null);
             _textWriter.RenderBeginTag(HtmlTextWriterTag.Span);
             ElementPush(HtmlTag.Span, null);
             return this;
@@ -240,7 +240,7 @@ namespace System.Web.UI
         {
             _writeCount++;
             if (attrib != null)
-                AddHtmlAttrib(attrib, null);
+                AddAttribute(attrib, null);
             _textWriter.RenderBeginTag(HtmlTextWriterTag.Hr);
             _textWriter.RenderEndTag();
             return this;
@@ -255,7 +255,7 @@ namespace System.Web.UI
                 throw new ArgumentNullException("alt");
             _writeCount++;
             if (attrib != null)
-                AddHtmlAttrib(attrib, null);
+                AddAttribute(attrib, null);
             _textWriter.AddAttributeIfUndefined(System.Web.UI.HtmlTextWriterAttribute.Src, url);
             _textWriter.AddAttributeIfUndefined(System.Web.UI.HtmlTextWriterAttribute.Alt, alt);
             _textWriter.RenderBeginTag(System.Web.UI.HtmlTextWriterTag.Img);
@@ -280,7 +280,7 @@ namespace System.Web.UI
         {
             _writeCount++;
             if (attrib != null)
-                AddHtmlAttrib(attrib, null);
+                AddAttribute(attrib, null);
             _textWriter.AddAttributeIfUndefined(HtmlTextWriterAttribute.Src, HtmlTextWriterEx.TofuUri);
             _textWriter.RenderBeginTag(HtmlTextWriterTag.Img);
             _textWriter.RenderEndTag();
@@ -392,7 +392,7 @@ namespace System.Web.UI
             ElementPop(HtmlTag.Li, null, HtmlTag.__OlUl, null);
             _writeCount++;
             if (attrib != null)
-                AddHtmlAttrib(attrib, null);
+                AddAttribute(attrib, null);
             _textWriter.RenderBeginTag(HtmlTextWriterTag.Li);
             ElementPush(HtmlTag.Li, null);
             return this;
@@ -403,7 +403,7 @@ namespace System.Web.UI
         {
             _writeCount++;
             if (attrib != null)
-                AddHtmlAttrib(attrib, null);
+                AddAttribute(attrib, null);
             _textWriter.RenderBeginTag(HtmlTextWriterTag.Ol);
             ElementPush(HtmlTag.Ol, null);
             return this;
@@ -414,7 +414,7 @@ namespace System.Web.UI
         {
             _writeCount++;
             if (attrib != null)
-                AddHtmlAttrib(attrib, null);
+                AddAttribute(attrib, null);
             _textWriter.RenderBeginTag(HtmlTextWriterTag.Ul);
             ElementPush(HtmlTag.Ul, null);
             return this;
@@ -451,7 +451,7 @@ namespace System.Web.UI
             _writeCount++;
             _tableTag.Stage = HtmlBuilderTableTag.TableStage.Colgroup;
             if (attrib != null)
-                AddHtmlAttrib(attrib, null);
+                AddAttribute(attrib, null);
             _textWriter.RenderBeginTag(HtmlTextWriterTag.Colgroup);
             ElementPush(HtmlTag.Colgroup, null);
             return this;
@@ -468,7 +468,7 @@ namespace System.Web.UI
             {
                 caption = attrib.Slice<string>("caption");
                 if (attrib.Count > 0)
-                    AddHtmlAttrib(attrib, null);
+                    AddAttribute(attrib, null);
             }
             else
                 caption = string.Empty;
@@ -496,7 +496,7 @@ namespace System.Web.UI
             _writeCount++;
             _tableTag.Stage = HtmlBuilderTableTag.TableStage.Tbody;
             if (attrib != null)
-                AddHtmlAttrib(attrib, null);
+                AddAttribute(attrib, null);
             _textWriter.RenderBeginTag(HtmlTextWriterTag.Tbody);
             ElementPush(HtmlTag.Tbody, null);
             return this;
@@ -510,7 +510,7 @@ namespace System.Web.UI
             _tableTag.ColumnIndex++;
             ElementPop(HtmlTag.Td, null, HtmlTag.Tr, null);
             _writeCount++;
-            _tableTag.AddHtmlAttrib(this, _textWriter, HtmlTag.Td, attrib);
+            _tableTag.AddAttribute(this, _textWriter, HtmlTag.Td, attrib);
             _textWriter.RenderBeginTag(HtmlTextWriterTag.Td);
             ElementPush(HtmlTag.Td, _writeCount);
             return this;
@@ -527,7 +527,7 @@ namespace System.Web.UI
             _writeCount++;
             _tableTag.Stage = HtmlBuilderTableTag.TableStage.TheadTfoot;
             if (attrib != null)
-                AddHtmlAttrib(attrib, null);
+                AddAttribute(attrib, null);
             _textWriter.RenderBeginTag(HtmlTextWriterTag.Tfoot);
             ElementPush(HtmlTag.Tfoot, null);
             return this;
@@ -541,7 +541,7 @@ namespace System.Web.UI
             _tableTag.ColumnIndex++;
             ElementPop(HtmlTag.Th, null, HtmlTag.Tr, null);
             _writeCount++;
-            _tableTag.AddHtmlAttrib(this, _textWriter, HtmlTag.Th, attrib);
+            _tableTag.AddAttribute(this, _textWriter, HtmlTag.Th, attrib);
             _textWriter.RenderBeginTag(System.Web.UI.HtmlTextWriterTag.Th);
             ElementPush(HtmlTag.Th, _writeCount);
             return this;
@@ -558,7 +558,7 @@ namespace System.Web.UI
             _writeCount++;
             _tableTag.Stage = HtmlBuilderTableTag.TableStage.TheadTfoot;
             if (attrib != null)
-                AddHtmlAttrib(attrib, null);
+                AddAttribute(attrib, null);
             _textWriter.RenderBeginTag(HtmlTextWriterTag.Thead);
             ElementPush(HtmlTag.Thead, null);
             return this;
@@ -573,7 +573,7 @@ namespace System.Web.UI
             _tableTag.ColumnIndex = 0;
             ElementPop(HtmlTag.Tr, null, HtmlTag.Table, null);
             _writeCount++;
-            _tableTag.AddHtmlAttrib(this, _textWriter, HtmlTag.Tr, attrib);
+            _tableTag.AddAttribute(this, _textWriter, HtmlTag.Tr, attrib);
             _textWriter.RenderBeginTag(HtmlTextWriterTag.Tr);
             ElementPush(HtmlTag.Tr, null);
             return this;
@@ -586,7 +586,7 @@ namespace System.Web.UI
                 throw new InvalidOperationException("Local.UndefinedHtmlTable");
             _writeCount++;
             if (attrib != null)
-                AddHtmlAttrib(attrib, null);
+                AddAttribute(attrib, null);
             _textWriter.RenderBeginTag(HtmlTextWriterTag.Col);
             _textWriter.RenderEndTag();
             return this;
@@ -663,7 +663,7 @@ namespace System.Web.UI
         {
             _writeCount++;
             if (attrib != null)
-                AddHtmlAttrib(attrib, null);
+                AddAttribute(attrib, null);
             _textWriter.RenderBeginTag(HtmlTextWriterTag.Button);
             ElementPush(HtmlTag.Button, null);
             return this;
@@ -682,7 +682,7 @@ namespace System.Web.UI
                 legend = attrib.Slice<string>("legend");
                 legendAccessKey = attrib.Slice<string>("legendaccesskey");
                 if (attrib.Count > 0)
-                    AddHtmlAttrib(attrib, null);
+                    AddAttribute(attrib, null);
             }
             else
             {
@@ -717,7 +717,7 @@ namespace System.Web.UI
                 _formName = attrib.Slice("name", "Form");
                 method = attrib.Slice("method", "POST");
                 if (attrib.Count > 0)
-                    AddHtmlAttrib(attrib, null);
+                    AddAttribute(attrib, null);
             }
             else
             {
@@ -756,7 +756,7 @@ namespace System.Web.UI
                 throw new InvalidOperationException("Local.UndefinedHtmlForm");
             _writeCount++;
             if (attrib != null)
-                AddHtmlAttrib(attrib, null);
+                AddAttribute(attrib, null);
             _textWriter.AddAttributeIfUndefined(HtmlTextWriterAttribute.For, forName);
             _textWriter.RenderBeginTag(HtmlTextWriterTag.Label);
             ElementPush(HtmlTag.Label, null);
@@ -772,7 +772,7 @@ namespace System.Web.UI
                 throw new InvalidOperationException("Local.UndefinedHtmlForm");
             _writeCount++;
             if (attrib != null)
-                AddHtmlAttrib(attrib, null);
+                AddAttribute(attrib, null);
             _textWriter.AddAttribute("Label", name);
             _textWriter.RenderBeginTag("Optgroup");
             ElementPush("Optgroup", null);
@@ -788,7 +788,7 @@ namespace System.Web.UI
                 throw new InvalidOperationException("Local.UndefinedHtmlForm");
             _writeCount++;
             if (attrib != null)
-                AddHtmlAttrib(attrib, null);
+                AddAttribute(attrib, null);
             _textWriter.AddAttributeIfUndefined(HtmlTextWriterAttribute.Value, value);
             _textWriter.RenderBeginTag(HtmlTextWriterTag.Option);
             ElementPush(HtmlTag.Option, null);
@@ -817,7 +817,7 @@ namespace System.Web.UI
                         _textWriter.AddAttributeIfUndefined(HtmlTextWriterAttribute.Size, size.Substring(0, size.Length - 1));
                 }
                 if (attrib.Count > 0)
-                    AddHtmlAttrib(attrib, null);
+                    AddAttribute(attrib, null);
             }
             _textWriter.AddAttributeIfUndefined(HtmlTextWriterAttribute.Id, name);
             _textWriter.AddAttributeIfUndefined(HtmlTextWriterAttribute.Name, name);
@@ -858,7 +858,7 @@ namespace System.Web.UI
                         _textWriter.AddAttributeIfUndefined(HtmlTextWriterAttribute.Rows, rows.Substring(0, rows.Length - 1));
                 }
                 if (attrib.Count > 0)
-                    AddHtmlAttrib(attrib, null);
+                    AddAttribute(attrib, null);
             }
             _textWriter.AddAttributeIfUndefined(HtmlTextWriterAttribute.Id, name);
             _textWriter.AddAttributeIfUndefined(HtmlTextWriterAttribute.Name, name);
@@ -923,7 +923,7 @@ namespace System.Web.UI
                         _textWriter.AddAttributeIfUndefined(HtmlTextWriterAttribute.Size, size.Substring(0, size.Length - 1));
                 }
                 if (attrib.Count > 0)
-                    AddHtmlAttrib(attrib, null);
+                    AddAttribute(attrib, null);
             }
             else
                 type = "text";

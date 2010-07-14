@@ -34,7 +34,7 @@ namespace System.Web.UI
                 throw new ArgumentNullException("text");
             _writeCount++;
             if (attrib != null)
-                AddHtmlAttrib(attrib, new[] { "onclick" });
+                AddAttribute(attrib, new[] { "onclick" });
             if (!string.IsNullOrEmpty(commandEvent))
                 _textWriter.AddAttributeIfUndefined(HtmlTextWriterAttribute.Onclick, commandEvent);
             _textWriter.RenderBeginTag(HtmlTextWriterTag.Button);
@@ -50,7 +50,7 @@ namespace System.Web.UI
                 throw new ArgumentNullException("text");
             _writeCount++;
             if (attrib != null)
-                AddHtmlAttrib(attrib, new[] { "onclick", "value" });
+                AddAttribute(attrib, new[] { "onclick", "value" });
             if (!string.IsNullOrEmpty(commandEvent))
                 _textWriter.AddAttributeIfUndefined(HtmlTextWriterAttribute.Onclick, commandEvent);
             _textWriter.AddAttributeIfUndefined(HtmlTextWriterAttribute.Value, text);
@@ -73,10 +73,10 @@ namespace System.Web.UI
                 {
                     onClickEvent = attrib.Slice<string>("onclick");
                     if (attrib.Count > 0)
-                        AddHtmlAttrib(attrib, null);
+                        AddAttribute(attrib, null);
                 }
                 if (imageAttrib != null)
-                    AddHtmlAttrib(imageAttrib, null);
+                    AddAttribute(imageAttrib, null);
             }
             _textWriter.AddAttributeIfUndefined(HtmlTextWriterAttribute.Alt, (alt ?? string.Empty));
             if (!string.IsNullOrEmpty(alt))
@@ -101,7 +101,7 @@ namespace System.Web.UI
             {
                 imageAttrib = attrib.Slice<Nattrib>("image");
                 if (attrib.Count > 0)
-                    AddHtmlAttrib(attrib, null);
+                    AddAttribute(attrib, null);
             }
             else
                 imageAttrib = null;
@@ -109,7 +109,7 @@ namespace System.Web.UI
                 _textWriter.AddAttributeIfUndefined((true ? HtmlTextWriterAttribute.Onclick : HtmlTextWriterAttribute.Href), command);
             _textWriter.RenderBeginTag(HtmlTextWriterTag.A);
             if (imageAttrib != null)
-                AddHtmlAttrib(imageAttrib, null);
+                AddAttribute(imageAttrib, null);
             _textWriter.AddAttributeIfUndefined(HtmlTextWriterAttribute.Src, url);
             _textWriter.AddAttributeIfUndefined(HtmlTextWriterAttribute.Alt, (alt ?? string.Empty));
             if (!string.IsNullOrEmpty(alt))
@@ -125,7 +125,7 @@ namespace System.Web.UI
         {
             _writeCount++;
             if (attrib != null)
-                AddHtmlAttrib(attrib, null);
+                AddAttribute(attrib, null);
             if (!string.IsNullOrEmpty(command))
                 _textWriter.AddAttributeIfUndefined((true ? HtmlTextWriterAttribute.Onclick : HtmlTextWriterAttribute.Href), command);
             if (!string.IsNullOrEmpty(text))

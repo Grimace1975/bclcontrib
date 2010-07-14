@@ -276,7 +276,7 @@ THE SOFTWARE.
 //        //            if ((attrib != null) && (attrib.Count > 0))
 //        //            {
 //        //                commandEvent = KernelText.Axb(attrib.Slice("onclick"), ";", commandEvent);
-//        //                AddHtmlAttrib(attrib, null);
+//        //                AddAttribute(attrib, null);
 //        //            }
 //        //            if (commandEvent.Length > 0)
 //        //            {
@@ -442,7 +442,7 @@ THE SOFTWARE.
 //        //            m_writeCount++;
 //        //            if ((attrib != null) && (attrib.Count > 0))
 //        //            {
-//        //                AddHtmlAttrib(attrib, null);
+//        //                AddAttribute(attrib, null);
 //        //            }
 //        //            if (commandEvent.Length > 0)
 //        //            {
@@ -648,9 +648,9 @@ THE SOFTWARE.
 //        //                if (attrib.Count > 0)
 //        //                {
 //        //                    onClickEvent = attrib.Slice("onclick");
-//        //                    AddHtmlAttrib(attrib, null);
+//        //                    AddAttribute(attrib, null);
 //        //                }
-//        //                AddHtmlAttrib(imageAttrib);
+//        //                AddAttribute(imageAttrib);
 //        //            }
 //        //            m_textWriter.AddAttributeIfUndefined(System.Web.UI.HtmlTextWriterAttribute.Alt, alt);
 //        //            if (alt.Length > 0)
@@ -861,7 +861,7 @@ THE SOFTWARE.
 //        //                imageAttrib = attrib.Slice<Attrib>("image");
 //        //                if (attrib.Count > 0)
 //        //                {
-//        //                    AddHtmlAttrib(attrib, null);
+//        //                    AddAttribute(attrib, null);
 //        //                }
 //        //            }
 //        //            else
@@ -875,7 +875,7 @@ THE SOFTWARE.
 //        //            m_textWriter.RenderBeginTag(System.Web.UI.HtmlTextWriterTag.A);
 //        //            if ((imageAttrib != null) && (imageAttrib.Count > 0))
 //        //            {
-//        //                AddHtmlAttrib(imageAttrib);
+//        //                AddAttribute(imageAttrib);
 //        //            }
 //        //            m_textWriter.AddAttributeIfUndefined(System.Web.UI.HtmlTextWriterAttribute.Src, url);
 //        //            m_textWriter.AddAttributeIfUndefined(System.Web.UI.HtmlTextWriterAttribute.Alt, alt);
@@ -1082,7 +1082,7 @@ THE SOFTWARE.
 //        //                imageAttrib = attrib.Slice<Attrib>("image");
 //        //                if (attrib.Count > 0)
 //        //                {
-//        //                    AddHtmlAttrib(attrib, null);
+//        //                    AddAttribute(attrib, null);
 //        //                }
 //        //            }
 //        //            else
@@ -1093,7 +1093,7 @@ THE SOFTWARE.
 //        //            m_textWriter.RenderBeginTag(System.Web.UI.HtmlTextWriterTag.A);
 //        //            if ((imageAttrib != null) && (imageAttrib.Count > 0))
 //        //            {
-//        //                AddHtmlAttrib(imageAttrib);
+//        //                AddAttribute(imageAttrib);
 //        //            }
 //        //            m_textWriter.AddAttributeIfUndefined(System.Web.UI.HtmlTextWriterAttribute.Src, url);
 //        //            m_textWriter.AddAttributeIfUndefined(System.Web.UI.HtmlTextWriterAttribute.Alt, alt);
@@ -1260,7 +1260,7 @@ THE SOFTWARE.
 //        //            m_writeCount++;
 //        //            if ((attrib != null) && (attrib.Count > 0))
 //        //            {
-//        //                AddHtmlAttrib(attrib, null);
+//        //                AddAttribute(attrib, null);
 //        //            }
 //        //            m_textWriter.AddAttributeIfUndefined(System.Web.UI.HtmlTextWriterAttribute.Href, commandUrl);
 //        //            if (text.Length > 0)
@@ -1289,7 +1289,7 @@ THE SOFTWARE.
 //        //            m_writeCount++;
 //        //            if ((attrib != null) && (attrib.Count > 0))
 //        //            {
-//        //                AddHtmlAttrib(attrib, null);
+//        //                AddAttribute(attrib, null);
 //        //            }
 //        //            if (commandEvent.Length > 0)
 //        //            {

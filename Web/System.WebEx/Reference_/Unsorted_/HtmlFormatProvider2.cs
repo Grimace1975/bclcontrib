@@ -20,7 +20,7 @@
 //        /// <param name="url">The URL.</param>
 //        public virtual void FormatExternalLink(HtmlBuilder z, ref string url)
 //        {
-//            z.AddHtmlAttrib(HtmlAttrib.Target, "_blank");
+//            z.AddAttribute(HtmlAttrib.Target, "_blank");
 //        }
 //    }
 //}

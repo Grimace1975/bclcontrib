@@ -87,6 +87,10 @@
     <Compile Include="StringExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Quality\System.Core.Quality\System.Core.Quality.csproj">
+      <Project>{A44E9D89-BFF2-41A4-AADC-3C2BDFDAEEB1}</Project>
+      <Name>System.Core.Quality</Name>
+    </ProjectReference>
     <ProjectReference Include="..\System.Core.Extentions\System.Core.Extentions.csproj">
       <Project>{31D819FA-9DBB-480E-AC21-DA27C966BC2B}</Project>
       <Name>System.Core.Extentions</Name>

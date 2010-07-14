@@ -74,13 +74,5 @@ namespace System
                     throw new InvalidOperationException("Mocked");
             }
         }
-
-        public static void LoadFromConfiguration(ReleaseManagementConfiguration configuration)
-        {
-            if (configuration == null)
-                throw new ArgumentNullException("configuration");
-            DeploymentEnvironment = configuration.DeploymentEnvironment;
-            DevelopmentStage = configuration.DevelopmentStage;
-        }
     }
 }

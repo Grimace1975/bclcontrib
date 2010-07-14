@@ -25,8 +25,8 @@ THE SOFTWARE.
 #endregion
 namespace System
 {
-    public interface IAppUnit
+    public class DefaultAppUnit : IAppUnit
     {
-        //Type ApplicationUnit { get; }
+        public static readonly Type Type = typeof(DefaultAppUnit);
     }
 }

@@ -931,8 +931,14 @@
     <Compile Include="..\System.CoreEx_\System.Core2\CoreEx.cs">
       <Link>System.Core2\CoreEx.cs</Link>
     </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core2\DefaultAppUnit.cs">
+      <Link>System.Core2\DefaultAppUnit.cs</Link>
+    </Compile>
     <Compile Include="..\System.CoreEx_\System.Core2\EnvironmentEx.cs">
       <Link>System.Core2\EnvironmentEx.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core2\EnvironmentExMapper.cs">
+      <Link>System.Core2\EnvironmentExMapper.cs</Link>
     </Compile>
     <Compile Include="..\System.CoreEx_\System.Core2\EXTENTIONS\Configuration\ConfigurationManagerEx.cs">
       <Link>System.Core2\EXTENTIONS\Configuration\ConfigurationManagerEx.cs</Link>
@@ -964,8 +970,8 @@
     <Compile Include="..\System.CoreEx_\System.Core2\Patterns\Disposeable.cs">
       <Link>System.Core2\Patterns\Disposeable.cs</Link>
     </Compile>
-    <Compile Include="..\System.CoreEx_\System.Core2\Patterns\Generic\SingletonFactoryWithCreate.cs">
-      <Link>System.Core2\Patterns\Generic\SingletonFactoryWithCreate.cs</Link>
+    <Compile Include="..\System.CoreEx_\System.Core2\Patterns\Generic\SimpleFactoryBase.cs">
+      <Link>System.Core2\Patterns\Generic\SimpleFactoryBase.cs</Link>
     </Compile>
     <Compile Include="..\System.CoreEx_\System.Core2\Patterns\ReleaseManagement\Configuration\ReleaseManagementConfiguration.cs">
       <Link>System.Core2\Patterns\ReleaseManagement\Configuration\ReleaseManagementConfiguration.cs</Link>
@@ -1038,6 +1044,12 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Local.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Quality\System.Core.Quality\System.Core.Quality.csproj">
+      <Project>{A44E9D89-BFF2-41A4-AADC-3C2BDFDAEEB1}</Project>
+      <Name>System.Core.Quality</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Patterns\System.Core.Patterns.Scheduling\Patterns\" />

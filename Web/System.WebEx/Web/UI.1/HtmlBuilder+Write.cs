@@ -29,7 +29,7 @@ namespace System.Web.UI
     {
         public void Write(string value)
         {
-            if (string.IsNullOrEmpty(value))
+            if (!string.IsNullOrEmpty(value))
             {
                 _writeCount++;
                 _textWriter.Write(value);
@@ -38,7 +38,7 @@ namespace System.Web.UI
         public void Write(object value)
         {
             string textValue = (value as string);
-            if (string.IsNullOrEmpty(textValue))
+            if (!string.IsNullOrEmpty(textValue))
             {
                 _writeCount++;
                 _textWriter.Write(textValue);
@@ -46,12 +46,12 @@ namespace System.Web.UI
         }
         public void Write(string value, string defaultValue)
         {
-            if (string.IsNullOrEmpty(value))
+            if (!string.IsNullOrEmpty(value))
             {
                 _writeCount++;
                 _textWriter.Write(value);
             }
-            else if (string.IsNullOrEmpty(defaultValue))
+            else if (!string.IsNullOrEmpty(defaultValue))
             {
                 _writeCount++;
                 _textWriter.Write(defaultValue);
@@ -60,12 +60,12 @@ namespace System.Web.UI
         public void Write(object value, string defaultValue)
         {
             string textValue = (value as string);
-            if (string.IsNullOrEmpty(textValue))
+            if (!string.IsNullOrEmpty(textValue))
             {
                 _writeCount++;
                 _textWriter.Write(textValue);
             }
-            else if (string.IsNullOrEmpty(defaultValue))
+            else if (!string.IsNullOrEmpty(defaultValue))
             {
                 _writeCount++;
                 _textWriter.Write(defaultValue);
@@ -80,7 +80,7 @@ namespace System.Web.UI
 
         public void WriteLine(string value)
         {
-            if (string.IsNullOrEmpty(value))
+            if (!string.IsNullOrEmpty(value))
             {
                 _writeCount++;
                 _textWriter.Write(value);
@@ -90,7 +90,7 @@ namespace System.Web.UI
         public void WriteLine(object value)
         {
             string textValue = (value as string);
-            if (string.IsNullOrEmpty(textValue))
+            if (!string.IsNullOrEmpty(textValue))
             {
                 _writeCount++;
                 _textWriter.Write(textValue);
@@ -99,13 +99,13 @@ namespace System.Web.UI
         }
         public void WriteLine(string value, string defaultValue)
         {
-            if (string.IsNullOrEmpty(value))
+            if (!string.IsNullOrEmpty(value))
             {
                 _writeCount++;
                 _textWriter.Write(value);
                 _textWriter.WriteBreak();
             }
-            else if (string.IsNullOrEmpty(defaultValue))
+            else if (!string.IsNullOrEmpty(defaultValue))
             {
                 _writeCount++;
                 _textWriter.Write(defaultValue);
@@ -115,13 +115,13 @@ namespace System.Web.UI
         public void WriteLine(object value, string defaultValue)
         {
             string textValue = (value as string);
-            if (string.IsNullOrEmpty(textValue))
+            if (!string.IsNullOrEmpty(textValue))
             {
                 _writeCount++;
                 _textWriter.Write(textValue);
                 _textWriter.WriteBreak();
             }
-            else if (string.IsNullOrEmpty(defaultValue))
+            else if (!string.IsNullOrEmpty(defaultValue))
             {
                 _writeCount++;
                 _textWriter.Write(defaultValue);
@@ -131,7 +131,7 @@ namespace System.Web.UI
 
         public void WriteText(string value)
         {
-            if (string.IsNullOrEmpty(value))
+            if (!string.IsNullOrEmpty(value))
             {
                 _writeCount++;
                 _textWriter.WriteEncodedText(value);
@@ -140,7 +140,7 @@ namespace System.Web.UI
         public void WriteText(object value)
         {
             string textValue = (value as string);
-            if (string.IsNullOrEmpty(textValue))
+            if (!string.IsNullOrEmpty(textValue))
             {
                 _writeCount++;
                 _textWriter.WriteEncodedText(textValue);
@@ -148,12 +148,12 @@ namespace System.Web.UI
         }
         public void WriteText(string value, string defaultValue)
         {
-            if (string.IsNullOrEmpty(value))
+            if (!string.IsNullOrEmpty(value))
             {
                 _writeCount++;
                 _textWriter.WriteEncodedText(value);
             }
-            else if (string.IsNullOrEmpty(defaultValue))
+            else if (!string.IsNullOrEmpty(defaultValue))
             {
                 _writeCount++;
                 _textWriter.WriteEncodedText(defaultValue);
@@ -162,12 +162,12 @@ namespace System.Web.UI
         public void WriteText(object value, string defaultValue)
         {
             string textValue = (value as string);
-            if (string.IsNullOrEmpty(textValue))
+            if (!string.IsNullOrEmpty(textValue))
             {
                 _writeCount++;
                 _textWriter.WriteEncodedText(textValue);
             }
-            else if (string.IsNullOrEmpty(defaultValue))
+            else if (!string.IsNullOrEmpty(defaultValue))
             {
                 _writeCount++;
                 _textWriter.WriteEncodedText(defaultValue);
@@ -176,7 +176,7 @@ namespace System.Web.UI
 
         public void WriteTextLine(string value)
         {
-            if (string.IsNullOrEmpty(value))
+            if (!string.IsNullOrEmpty(value))
             {
                 _writeCount++;
                 _textWriter.WriteEncodedText(value);
@@ -186,7 +186,7 @@ namespace System.Web.UI
         public void WriteTextLine(object value)
         {
             string textValue = (value as string);
-            if (string.IsNullOrEmpty(textValue))
+            if (!string.IsNullOrEmpty(textValue))
             {
                 _writeCount++;
                 _textWriter.WriteEncodedText(textValue);
@@ -195,13 +195,13 @@ namespace System.Web.UI
         }
         public void WriteTextLine(string value, string defaultValue)
         {
-            if (string.IsNullOrEmpty(value))
+            if (!string.IsNullOrEmpty(value))
             {
                 _writeCount++;
                 _textWriter.WriteEncodedText(value);
                 _textWriter.WriteBreak();
             }
-            else if (string.IsNullOrEmpty(defaultValue))
+            else if (!string.IsNullOrEmpty(defaultValue))
             {
                 _writeCount++;
                 _textWriter.WriteEncodedText(defaultValue);
@@ -211,13 +211,13 @@ namespace System.Web.UI
         public void WriteTextLine(object value, string defaultValue)
         {
             string textValue = (value as string);
-            if (string.IsNullOrEmpty(textValue))
+            if (!string.IsNullOrEmpty(textValue))
             {
                 _writeCount++;
                 _textWriter.WriteEncodedText(textValue);
                 _textWriter.WriteBreak();
             }
-            else if (string.IsNullOrEmpty(defaultValue))
+            else if (!string.IsNullOrEmpty(defaultValue))
             {
                 _writeCount++;
                 _textWriter.WriteEncodedText(defaultValue);

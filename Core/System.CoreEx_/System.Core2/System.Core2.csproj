@@ -57,7 +57,10 @@
     <Compile Include="Collections\ICollectionKey.cs" />
     <Compile Include="Collections\IValue.cs" />
     <Compile Include="Collections\SortDirection.cs" />
+    <Compile Include="EnvironmentExMapper.cs" />
+    <Compile Include="DefaultAppUnit.cs" />
     <Compile Include="EXTENTIONS\Configuration\ConfigurationManagerEx.cs" />
+    <Compile Include="Patterns\Generic\SimpleFactoryBase.cs" />
     <Compile Include="Patterns\ReleaseManagement\Configuration\ReleaseManagementConfiguration.cs" />
     <Compile Include="zLocal.Designer.cs">
       <DependentUpon>zLocal.resx</DependentUpon>
@@ -72,7 +75,7 @@
     <Compile Include="Patterns\Configuration\ConfigurationSection.cs" />
     <Compile Include="Patterns\Configuration\ConfigurationSet.cs" />
     <Compile Include="Patterns\Disposeable.cs" />
-    <Compile Include="Patterns\Generic\SingletonFactoryWithCreate.cs" />
+    <Compile Include="Patterns\Generic\SimpleSingletonFactoryBase.cs" />
     <Compile Include="Patterns\ReleaseManagement\DeploymentEnvironment.cs" />
     <Compile Include="Patterns\ReleaseManagement\DevelopmentStage.cs" />
     <Compile Include="Primitives\CodecEnum.cs" />
@@ -113,6 +116,12 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Local.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Quality\System.Core.Quality\System.Core.Quality.csproj">
+      <Project>{A44E9D89-BFF2-41A4-AADC-3C2BDFDAEEB1}</Project>
+      <Name>System.Core.Quality</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

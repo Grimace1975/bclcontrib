@@ -213,11 +213,17 @@
     <Compile Include="..\..\System.CoreEx_\System.Core2\CoreEx.cs">
       <Link>System.CoreEx+\System.Core.Core2\CoreEx.cs</Link>
     </Compile>
+    <Compile Include="..\..\System.CoreEx_\System.Core2\DefaultAppUnit.cs">
+      <Link>System.CoreEx+\System.Core.Core2\DefaultAppUnit.cs</Link>
+    </Compile>
     <Compile Include="..\..\System.CoreEx_\System.Core2\EXTENTIONS\ConvertEx.cs">
       <Link>System.CoreEx+\System.Core.Core2\EXTENTIONS\ConvertEx.cs</Link>
     </Compile>
-    <Compile Include="..\..\System.CoreEx_\System.Core2\Patterns\Generic\SingletonFactoryWithCreate.cs">
-      <Link>System.CoreEx+\System.Core.Core2\Patterns\Generic\SingletonFactoryWithCreate.cs</Link>
+    <Compile Include="..\..\System.CoreEx_\System.Core2\IAppUnit.cs">
+      <Link>System.CoreEx+\System.Core.Core2\IAppUnit.cs</Link>
+    </Compile>
+    <Compile Include="..\..\System.CoreEx_\System.Core2\Patterns\Generic\SimpleFactoryBase.cs">
+      <Link>System.CoreEx+\System.Core.Core2\Patterns\Generic\SimpleFactoryBase.cs</Link>
     </Compile>
     <Compile Include="..\..\System.CoreEx_\System.Core2\Range.cs">
       <Link>System.CoreEx+\System.Core.Core2\Range.cs</Link>

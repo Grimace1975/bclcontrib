@@ -23,10 +23,21 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 #endregion
+using System.Patterns.ReleaseManagement;
+using System.Patterns.ReleaseManagement.Configuration;
 namespace System
 {
-    public interface IAppUnit
+    /// <summary>
+    /// EnvironmentEx
+    /// </summary>
+    public static class EnvironmentExMapper
     {
-        //Type ApplicationUnit { get; }
+        public static void LoadFromConfiguration(ReleaseManagementConfiguration configuration)
+        {
+            if (configuration == null)
+                throw new ArgumentNullException("configuration");
+            EnvironmentEx.DeploymentEnvironment = configuration.DeploymentEnvironment;
+            EnvironmentEx.DevelopmentStage = configuration.DevelopmentStage;
+        }
     }
 }

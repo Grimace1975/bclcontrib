@@ -24,6 +24,7 @@ THE SOFTWARE.
 */
 #endregion
 using System.Collections.Generic;
+using System.Quality;
 //[assembly: Instinct.Pattern.Environment.Attribute.FactoryConfiguration("smartForm", typeof(System.Patterns.IContract))]
 namespace System.Patterns.Forms
 {
@@ -39,17 +40,17 @@ namespace System.Patterns.Forms
         /// <summary>
         /// Contract
         /// </summary>
-        public class Contract : Patterns.Generic.SingletonFactoryWithCreate<Patterns.IContract>
+        public class Contract : Patterns.Generic.SimpleFactoryBase<IContract>
         {
             /// <summary>
             /// Creates the specified key.
             /// </summary>
             /// <param name="key">The key.</param>
             /// <returns></returns>
-            protected static Patterns.IContract Create(string key)
+            protected static IContract Create<T>(IAppUnit appUnit)
+                where T : class, IContract
             {
-                return null;
-                //return ServiceLocator.Resolve<Patterns.IContract>(ResolveLifetime.ApplicationUnit, key, new { typeA = "System.Primitives.SmartFormContracts.{0}SmartFormContract, " + AssemblyRef.This });
+                return ServiceLocator.Resolve<T>();
             }
         }
         #endregion

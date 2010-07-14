@@ -188,7 +188,7 @@ THE SOFTWARE.
 //        //                }
 //        //                else
 //        //                {
-//        //                    AddHtmlAttrib(attrib, null);
+//        //                    AddAttribute(attrib, null);
 //        //                    m_textWriter.RenderBeginTag(System.Web.UI.HtmlTextWriterTag.Span);
 //        //                    m_textWriter.Write(value);
 //        //                    m_textWriter.RenderEndTag();
@@ -220,7 +220,7 @@ THE SOFTWARE.
 //        //                }
 //        //                else
 //        //                {
-//        //                    AddHtmlAttrib(attrib, null);
+//        //                    AddAttribute(attrib, null);
 //        //                    m_textWriter.RenderBeginTag(System.Web.UI.HtmlTextWriterTag.Span);
 //        //                    m_textWriter.WriteEncodedText(value);
 //        //                    m_textWriter.RenderEndTag();

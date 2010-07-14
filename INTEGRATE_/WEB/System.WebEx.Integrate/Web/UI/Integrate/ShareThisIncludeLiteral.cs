@@ -23,10 +23,17 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 #endregion
-namespace System
+namespace System.Web.UI.Integrate
 {
-    public interface IAppUnit
+    /// <summary>
+    /// ShareThisIncludeLiteral
+    /// </summary>
+    public class ShareThisIncludeLiteral : ShareThisInclude
     {
-        //Type ApplicationUnit { get; }
+        /// <summary>
+        /// Gets or sets the literal.
+        /// </summary>
+        /// <value>The literal.</value>
+        public string Literal { get; set; }
     }
 }

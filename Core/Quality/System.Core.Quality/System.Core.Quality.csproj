@@ -55,18 +55,13 @@
     <Compile Include="Quality\ServiceResolutionException.cs" />
     <Compile Include="Quality\Reference_\zResolveLifetime.cs" />
     <Compile Include="Quality\IServiceRegistration.cs" />
+    <Compile Include="Reflection\AssemblyExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Local.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Local.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\System.CoreEx\System.CoreEx.csproj">
-      <Project>{21FC5068-FABA-4CC9-A9F5-95D299655422}</Project>
-      <Name>System.CoreEx</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

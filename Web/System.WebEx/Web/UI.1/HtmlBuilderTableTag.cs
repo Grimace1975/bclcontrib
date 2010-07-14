@@ -75,7 +75,7 @@ namespace System.Web.UI
             }
         }
 
-        protected internal virtual void AddHtmlAttrib(HtmlBuilder b, HtmlTextWriterEx w, HtmlTag tag, Nattrib attrib)
+        protected internal virtual void AddAttribute(HtmlBuilder b, HtmlTextWriterEx w, HtmlTag tag, Nattrib attrib)
         {
             bool isSelected;
             string appendStyle;
@@ -92,7 +92,7 @@ namespace System.Web.UI
                 if (tag == HtmlTag.Tr)
                     IsTrHeader = attrib.Slice<bool>("header");
                 if (attrib.Count > 0)
-                    b.AddHtmlAttrib(attrib, null);
+                    b.AddAttribute(attrib, null);
             }
             else
             {

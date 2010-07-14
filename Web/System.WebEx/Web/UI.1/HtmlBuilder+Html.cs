@@ -49,6 +49,35 @@ namespace System.Web.UI
                 throw new ArgumentException(string.Format("Local.InvalidHtmlAttribA", attribute.ToString()), "attribute");
         }
 
+        //public void AddAttribute(params string[] args) { AddAttribute(Nattrib.Parse(args), null); }
+        public void AddAttribute(Nattrib attrib, string[] throwOnAttributes)
+        {
+            if (attrib == null)
+                throw new ArgumentNullException("attrib");
+            //foreach (string key in attrib.KeyEnum)
+            //{
+            //    string value = attrib[key];
+            //    int htmlAttrib;
+            //    if (s_htmlAttribEnumInt32Parser.TryGetValue(key, out htmlAttrib) == true)
+            //    {
+            //        AddAttribute((HtmlAttrib)htmlAttrib, value);
+            //        continue;
+            //    }
+            //    else if (key.Length > 0)
+            //    {
+            //        m_writeCount++;
+            //        if (key.StartsWith("style", System.StringComparison.InvariantCultureIgnoreCase) == false)
+            //        {
+            //            m_textWriter.AddAttribute(key, value);
+            //            continue;
+            //        }
+            //        m_textWriter.AddStyleAttribute(key.Substring(5), value);
+            //        continue;
+            //    }
+            //    throw new ArgumentException(string.Format(Local.InvalidHtmlAttribA, key), "attrib");
+            //}
+        }
+
         public void AddTextWriterAttribute(string name, string value)
         {
             _writeCount++;
@@ -78,7 +107,7 @@ namespace System.Web.UI
                 throw new ArgumentException(string.Format("Local.InvalidHtmlTagA", tag.ToString()), "tag");
             _writeCount++;
             if (attrib != null)
-                AddHtmlAttrib(attrib, null);
+                AddAttribute(attrib, null);
             _textWriter.RenderBeginTag((HtmlTextWriterTag)tag);
             return this;
         }
@@ -89,7 +118,7 @@ namespace System.Web.UI
                 throw new ArgumentNullException("tag");
             _writeCount++;
             if (attrib != null)
-                AddHtmlAttrib(attrib, null);
+                AddAttribute(attrib, null);
             _textWriter.RenderBeginTag(tag);
             return this;
         }
@@ -101,7 +130,7 @@ namespace System.Web.UI
                 throw new ArgumentException(string.Format("Local.InvalidHtmlTagA", tag.ToString()), "tag");
             _writeCount++;
             if (attrib != null)
-                AddHtmlAttrib(attrib, null);
+                AddAttribute(attrib, null);
             _textWriter.RenderBeginTag((HtmlTextWriterTag)tag);
             _textWriter.RenderEndTag();
             return this;
@@ -114,7 +143,7 @@ namespace System.Web.UI
                 throw new ArgumentNullException("tag");
             _writeCount++;
             if (attrib != null)
-                AddHtmlAttrib(attrib, null);
+                AddAttribute(attrib, null);
             _textWriter.RenderBeginTag(tag);
             _textWriter.RenderEndTag();
             return this;

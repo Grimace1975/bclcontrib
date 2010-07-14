@@ -17,6 +17,7 @@ xcopy Extents\Digital.Cms\bin\Release\Digital.Cms.* bin\ /Q /R /H /Y
 xcopy Services\System.ServiceModelEx\bin\Release\System.ServiceModelEx.* bin\ /Q /R /H /Y
 xcopy Web\System.Web.MvcEx\bin\Release\System.Web.MvcEx.* bin\ /Q /R /H /Y
 xcopy Web\System.WebEx\bin\Release\System.WebEx.* bin\ /Q /R /H /Y
+xcopy INTEGRATE_\WEB\System.WebEx.Integrate\bin\System.WebEx.Integrate.* bin\INTEGRATE_\ /Q /R /H /Y
 
 :: Debug
 xcopy Abstractions\System.Abstractions\bin\Debug\System.Abstractions.* bin\Debug\ /Q /R /H /Y
@@ -36,11 +37,11 @@ xcopy Extents\Digital.Cms\bin\Debug\Digital.Cms.* bin\Debug\ /Q /R /H /Y
 xcopy Services\System.ServiceModelEx\bin\Debug\System.ServiceModelEx.* bin\Debug\ /Q /R /H /Y
 xcopy Web\System.Web.MvcEx\bin\Debug\System.Web.MvcEx.* bin\Debug\ /Q /R /H /Y
 xcopy Web\System.WebEx\bin\Debug\System.WebEx.* bin\Debug\ /Q /R /H /Y
-
+xcopy INTEGRATE_\WEB\System.WebEx.Integrate\bin\Debug\System.WebEx.Integrate.* bin\Debug\INTEGRATE_\ /Q /R /H /Y
 
 ::
 robocopy Bin\Debug\ "C:\_APPLICATION\AFIWEB\Library_\Reference Assemblies\BclContrib" /MIR /TEE
 ::
-::robocopy Bin\ "C:\_APPLICATION\CITYOPWEB\Library_\Reference Assemblies\BclContrib" /MIR /TEE
+robocopy Bin\ "C:\_APPLICATION\CITYOPWEB\Library_\Reference Assemblies\BclContrib" /MIR /TEE
 ::robocopy Bin\Debug\ "C:\_APPLICATION\CITYOPWEB\Library_\Reference Assemblies\BclContrib" /MIR /TEE
 

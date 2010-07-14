@@ -67,7 +67,7 @@ namespace System.Quality
             }
         }
 
-        public static void RegisterSelfLocator(IServiceRegistrar registrar, IServiceLocator locator)
+        private static void RegisterSelfLocator(IServiceRegistrar registrar, IServiceLocator locator)
         {
             registrar.Register<IServiceLocator>(locator);
         }

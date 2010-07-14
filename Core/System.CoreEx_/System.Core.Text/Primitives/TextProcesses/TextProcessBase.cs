@@ -25,23 +25,23 @@ THE SOFTWARE.
 #endregion
 //[assembly: Instinct.Pattern.Environment.Attribute.FactoryConfiguration("textProcess", typeof(Instinct.Primitive.TextProcessBase))]
 using System.Patterns.Generic;
+using System.Quality;
 namespace System.Primitives
 {
     /// <summary>
     /// Abstract class used as a base for all text merging types in Instinct.
     /// </summary>
-
-    public abstract class TextProcessBase : SingletonFactoryWithCreate<TextProcessBase>, ITextProcess
+    public abstract class TextProcessBase : SimpleFactoryBase<TextProcessBase>, ITextProcess
     {
         /// <summary>
         /// Creates the specified key.
         /// </summary>
         /// <param name="key">The key.</param>
         /// <returns></returns>
-        protected static TextProcessBase Create(string key)
+        protected static TextProcessBase Create<T>(IAppUnit appUnit)
+            where T : TextProcessBase
         {
-            return null;
-            //return ServiceLocatorEx.Resolve<TextProcessBase>(ResolveLifetime.ApplicationUnit, key, new { typeA = "System.Primitives.TextProcesses.{0}TextProcess, " + AssemblyRef.This });
+            return ServiceLocator.Resolve<T>();
         }
 
         /// <summary>

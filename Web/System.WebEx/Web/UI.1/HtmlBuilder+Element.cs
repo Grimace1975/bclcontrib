@@ -99,35 +99,6 @@ namespace System.Web.UI
             get { return _tableTag; }
         }
 
-        public void AddHtmlAttrib(params string[] args) { AddHtmlAttrib(Nattrib.Parse(args), null); }
-        public void AddHtmlAttrib(Nattrib attrib, string[] throwOnAttributes)
-        {
-            if (attrib == null)
-                throw new ArgumentNullException("attrib");
-            //foreach (string key in attrib.KeyEnum)
-            //{
-            //    string value = attrib[key];
-            //    int htmlAttrib;
-            //    if (s_htmlAttribEnumInt32Parser.TryGetValue(key, out htmlAttrib) == true)
-            //    {
-            //        AddHtmlAttrib((HtmlAttrib)htmlAttrib, value);
-            //        continue;
-            //    }
-            //    else if (key.Length > 0)
-            //    {
-            //        m_writeCount++;
-            //        if (key.StartsWith("style", System.StringComparison.InvariantCultureIgnoreCase) == false)
-            //        {
-            //            m_textWriter.AddAttribute(key, value);
-            //            continue;
-            //        }
-            //        m_textWriter.AddStyleAttribute(key.Substring(5), value);
-            //        continue;
-            //    }
-            //    throw new ArgumentException(string.Format(Local.InvalidHtmlAttribA, key), "attrib");
-            //}
-        }
-
         public void ElementPop(HtmlTag tag, string valueIfUnknown, HtmlTag stopTag, string stopValueIfUnknown)
         {
             var stackTag = HtmlTag.__Undefined;
@@ -261,7 +232,7 @@ namespace System.Web.UI
                                 case HtmlBuilderTableTag.TableTrCloseMethod.Td:
                                     for (int tdIndex = 1; tdIndex < tdCount; tdIndex++)
                                     {
-                                        _tableTag.AddHtmlAttrib(this, _textWriter, HtmlTag.Td, null);
+                                        _tableTag.AddAttribute(this, _textWriter, HtmlTag.Td, null);
                                         _textWriter.RenderBeginTag(HtmlTextWriterTag.Td);
                                         string nullTdBody3 = _tableTag.NullTdBody;
                                         if (nullTdBody3.Length > 0)
@@ -274,7 +245,7 @@ namespace System.Web.UI
                                     {
                                         if (tdCount > 1)
                                             _textWriter.AddAttribute(HtmlTextWriterAttribute.Colspan, tdCount.ToString());
-                                        _tableTag.AddHtmlAttrib(this, _textWriter, HtmlTag.Td, null);
+                                        _tableTag.AddAttribute(this, _textWriter, HtmlTag.Td, null);
                                         _textWriter.RenderBeginTag(HtmlTextWriterTag.Td);
                                         string nullTdBody4 = _tableTag.NullTdBody;
                                         if (nullTdBody4.Length > 0)
