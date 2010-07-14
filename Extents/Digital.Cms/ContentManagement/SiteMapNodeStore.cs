@@ -126,7 +126,7 @@ namespace Digital.ContentManagement
                                 while (r.Read())
                                 {
                                     var node = CreateSiteMapNodeFromDataReader(nodes, pageOrdinal, r, ref hiddenRootTreeId);
-                                    observer.OnNext(new StaticSiteMapProviderEx.NodeToAdd { Node = node, ParentNode = GetParentNodeFromDataReader(nodes, pageOrdinal, r) });
+                                    observer.OnNext(new StaticSiteMapProviderEx.NodeToAdd { Node = node, ParentNode = GetParentNodeFromDataReader(nodes, pageOrdinal, r, false) });
                                 }
                             }
                             observer.OnCompleted();
@@ -236,6 +236,9 @@ namespace Digital.ContentManagement
                         throw new InvalidOperationException();
                 }
                 node.Visible = visible;
+                // content
+                var sectionNode = GetParentNodeFromDataReader(nodes, ordinal, r, true);
+                node.Set<SiteMapNodeContentExtent>(new SiteMapNodeContentExtent { Key = key, TreeId = treeId, SectionNode = sectionNode });
                 var contentNode = (node as SiteMapPageNode);
                 if (contentNode != null)
                 {
@@ -253,7 +256,7 @@ namespace Digital.ContentManagement
                 return route;
             }
 
-            private SiteMapNode GetParentNodeFromDataReader(Dictionary<string, SiteMapNodeEx> nodes, PageOrdinal ordinal, IDataReader r)
+            private SiteMapNode GetParentNodeFromDataReader(Dictionary<string, SiteMapNodeEx> nodes, PageOrdinal ordinal, IDataReader r, bool findSection)
             {
                 if (r.IsDBNull(ordinal.TreeId))
                     throw new ProviderException("Missing parent ID");
@@ -263,10 +266,10 @@ namespace Digital.ContentManagement
                     return _rootNode;
                 // Make sure the parent ID is valid
                 SiteMapNodeEx value;
-                parentTreeId = parentTreeId.Substring(0, parentTreeId.Length - 4);
+                parentTreeId = parentTreeId.Substring(0, (!findSection ? parentTreeId.Length - 4 : 4));
                 if (!nodes.TryGetValue(parentTreeId, out value)) { }
                 //throw new ProviderException("Invalid parent ID");
-                return value;
+                return (!findSection ? value : value as SiteMapSectionNode);
             }
         }
         #endregion

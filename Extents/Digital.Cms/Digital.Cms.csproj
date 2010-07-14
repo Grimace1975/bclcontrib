@@ -54,6 +54,7 @@
     <Compile Include="ContentManagement\Nodes\SiteMapSectionNode.cs" />
     <Compile Include="ContentManagement\Nodes\SiteMapVirtualNode.cs" />
     <Compile Include="ContentManagement\SiteMapNodeStore.cs" />
+    <Compile Include="ContentManagement\SiteMapNodeContentExtent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
