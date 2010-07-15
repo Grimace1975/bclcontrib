@@ -54,6 +54,11 @@ namespace System.Web
             get { return ((_extents != null) && (_extents.Count > 0)); }
         }
 
+        public bool HasExtent<T>()
+        {
+            return (_extents != null) && (_extents.ContainsKey(typeof(T)));
+        }
+
         public void Set<T>(T value)
         {
             if (_extents == null)

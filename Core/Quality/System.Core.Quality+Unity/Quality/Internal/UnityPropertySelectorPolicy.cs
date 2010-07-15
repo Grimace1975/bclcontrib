@@ -23,20 +23,25 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 #endregion
-using System.Web.Routing;
-using System.Quality;
-namespace System.Web.Mvc
+using System.Linq;
+using System.Reflection;
+using Microsoft.Practices.Unity.ObjectBuilder;
+using Microsoft.Practices.ObjectBuilder2;
+namespace System.Quality.Internal
 {
     /// <summary>
-    /// ServiceLocatorControllerFactory
+    /// UnityPropertySelectorPolicy
     /// </summary>
-    public class ServiceLocatorControllerFactory : DefaultControllerFactory
+    public class UnityPropertySelectorPolicy : DefaultUnityPropertySelectorPolicy
     {
-        private static readonly Type s_skipServiceLocatorControllerFactoryType = typeof(ISkipServiceLocatorControllerFactory);
-
-        protected override IController GetControllerInstance(RequestContext requestContext, Type controllerType)
+        protected override IDependencyResolverPolicy CreateResolver(PropertyInfo property)
         {
-            return (!controllerType.IsAssignableFrom(s_skipServiceLocatorControllerFactoryType) ? (IController)ServiceLocator.Resolve(controllerType) : base.GetControllerInstance(requestContext, controllerType));
+            var dependencies = property.GetCustomAttributes(typeof(DependencyAttribute), false)
+                .OfType<DependencyAttribute>()
+                .ToList();
+            if (dependencies.Count == 0)
+                return base.CreateResolver(property);
+            return new NamedTypeDependencyResolverPolicy(property.PropertyType, dependencies[0].Name);
         }
     }
 }

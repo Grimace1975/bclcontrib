@@ -23,12 +23,13 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 #endregion
+using System.Patterns.Generic;
 namespace System.Primitives.DataTypes
 {
     /// <summary>
     /// DataTypeParserBase
     /// </summary>
-    public abstract class DataTypeParserBase : IDataTypeParser
+    public abstract class DataTypeParserBase : SimpleFactoryBase<DataTypeParserBase>, IDataTypeParser
     {
         public DataTypeParserBase()
             : this(string.Empty, string.Empty) { }

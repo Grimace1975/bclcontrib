@@ -23,20 +23,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 #endregion
-using System.Web.Routing;
-using System.Quality;
 namespace System.Web.Mvc
 {
     /// <summary>
-    /// ServiceLocatorControllerFactory
+    /// ISkipServiceLocatorControllerFactory
     /// </summary>
-    public class ServiceLocatorControllerFactory : DefaultControllerFactory
-    {
-        private static readonly Type s_skipServiceLocatorControllerFactoryType = typeof(ISkipServiceLocatorControllerFactory);
-
-        protected override IController GetControllerInstance(RequestContext requestContext, Type controllerType)
-        {
-            return (!controllerType.IsAssignableFrom(s_skipServiceLocatorControllerFactoryType) ? (IController)ServiceLocator.Resolve(controllerType) : base.GetControllerInstance(requestContext, controllerType));
-        }
-    }
+    public interface ISkipServiceLocatorControllerFactory { }
 }

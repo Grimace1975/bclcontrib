@@ -20,6 +20,7 @@
 #endregion
 using System.Collections.Generic;
 using Microsoft.Practices.Unity;
+using System.Quality.Internal;
 namespace System.Quality
 {
     [Serializable]
@@ -36,6 +37,7 @@ namespace System.Quality
             if (container == null)
                 throw new ArgumentNullException("container", "The specified Unity container cannot be null.");
             Container = container;
+            Container.AddNewExtension<UnityStrategiesExtension>();
         }
 
         public void Dispose()

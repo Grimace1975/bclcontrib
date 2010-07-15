@@ -25,14 +25,16 @@ THE SOFTWARE.
 #endregion
 using System.Web.UI.HtmlControls;
 using System.Text;
+using System.Quality;
 using System.Collections.Generic;
 using System.Patterns.ReleaseManagement;
 namespace System.Web.UI.Integrate
 {
     using UIClientScript = ClientScript;
-    using System.Quality;
-    using Microsoft.Practices.Unity;
 
+    /// <summary>
+    /// ShareThis
+    /// </summary>
     public class ShareThis : HtmlContainerControl
     {
         private static Type s_type = typeof(ShareThis);

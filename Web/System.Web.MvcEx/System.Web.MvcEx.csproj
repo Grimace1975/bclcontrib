@@ -32,6 +32,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -43,8 +44,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Web\Mvc.1\UrlHelperExtensions.cs" />
+    <Compile Include="Web\Mvc.1\Html\LinkExtensionsEx.cs" />
     <Compile Include="Web\Mvc.1\Html\IHtmlTextBox.cs" />
     <Compile Include="Web\Mvc.1\Html\TextAreaExtensionsEx.cs" />
+    <Compile Include="Web\Mvc\ISkipServiceLocatorControllerFactory.cs" />
     <Compile Include="Web\Mvc\ServiceLocatorControllerFactory.cs" />
     <Compile Include="Web\Mvc\MvcRouteHandlerExtensions.cs" />
     <Compile Include="Web\Mvc\RouteCollectionExtensions.cs" />

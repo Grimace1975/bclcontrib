@@ -23,10 +23,21 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 #endregion
-using System.Web.UI.HtmlControls;
-namespace System.Web.UI.Integrate
+using Microsoft.Practices.Unity;
+using Microsoft.Practices.ObjectBuilder2;
+namespace System.Quality.Internal
 {
-    public class GoogleSiteMap : HtmlContainerControl
+    /// <summary>
+    /// UnityStrategiesExtension
+    /// </summary>
+    public class UnityStrategiesExtension : UnityContainerExtension
     {
+        protected override void Initialize()
+        {
+            var policies = Context.Policies;
+            policies.SetDefault<IConstructorSelectorPolicy>(new UnityConstructorSelectorPolicy());
+            policies.SetDefault<IPropertySelectorPolicy>(new UnityPropertySelectorPolicy());
+            policies.SetDefault<IMethodSelectorPolicy>(new UnityMethodSelectorPolicy());
+        }
     }
 }

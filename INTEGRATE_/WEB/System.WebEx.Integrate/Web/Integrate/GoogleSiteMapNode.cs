@@ -23,20 +23,32 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 #endregion
-using System.Web.Routing;
-using System.Quality;
-namespace System.Web.Mvc
+namespace System.Web.Integrate
 {
     /// <summary>
-    /// ServiceLocatorControllerFactory
+    /// GoogleSiteMapNode
     /// </summary>
-    public class ServiceLocatorControllerFactory : DefaultControllerFactory
+    public struct GoogleSiteMapNode
     {
-        private static readonly Type s_skipServiceLocatorControllerFactoryType = typeof(ISkipServiceLocatorControllerFactory);
-
-        protected override IController GetControllerInstance(RequestContext requestContext, Type controllerType)
-        {
-            return (!controllerType.IsAssignableFrom(s_skipServiceLocatorControllerFactoryType) ? (IController)ServiceLocator.Resolve(controllerType) : base.GetControllerInstance(requestContext, controllerType));
-        }
+        /// <summary>
+        /// Gets or sets the URL.
+        /// </summary>
+        /// <value>The URL.</value>
+        public string Url { get; set; }
+        /// <summary>
+        /// Gets or sets the page dynamism.
+        /// </summary>
+        /// <value>The page dynamism.</value>
+        public string PageDynamism { get; set; }
+        /// <summary>
+        /// Gets or sets the last modify date.
+        /// </summary>
+        /// <value>The last modify date.</value>
+        public DateTime? LastModifyDate { get; set; }
+        /// <summary>
+        /// Gets or sets the page priority.
+        /// </summary>
+        /// <value>The page priority.</value>
+        public double? PagePriority { get; set; }
     }
 }
