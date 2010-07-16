@@ -42,7 +42,7 @@ namespace System.Web.Routing
         }
 
         public override RouteData GetRouteData(HttpContextBase httpContext)
-        {            
+        {
             var httpRequest = httpContext.Request;
             // virtualPath modeled from Route::GetRouteData
             string virtualPath = httpRequest.AppRelativeCurrentExecutionFilePath.Substring(1) + httpRequest.PathInfo;
@@ -76,6 +76,27 @@ namespace System.Web.Routing
                     if (route != null)
                         return route.GetVirtualPath(requestContext, values);
                 }
+            }
+            return ScanAllBelow(SiteMap.RootNode, requestContext, values);
+        }
+
+        private VirtualPathData ScanAllBelow(SiteMapNode node, RequestContext requestContext, RouteValueDictionary values)
+        {
+            var nodeEx = (node as SiteMapNodeEx);
+            if (nodeEx != null)
+            {
+                var func = nodeEx.Get<Func<SiteMapNodeEx, VirtualPathData>>();
+                if (func != null)
+                    return func(nodeEx);
+                var route = nodeEx.Get<Route>();
+                if (route != null)
+                    return route.GetVirtualPath(requestContext, values);
+            }
+            foreach (SiteMapNode childNode in node.ChildNodes)
+            {
+                var data = ScanAllBelow(childNode, requestContext, values);
+                if (data != null)
+                    return data;
             }
             return null;
         }

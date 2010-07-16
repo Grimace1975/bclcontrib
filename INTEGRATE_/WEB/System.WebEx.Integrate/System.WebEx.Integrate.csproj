@@ -40,6 +40,7 @@
       <HintPath>..\..\..\Bin\Quality\Library_\unity\Microsoft.Practices.Unity.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -52,6 +53,14 @@
       <HintPath>..\..\..\Bin\System.CoreEx.dll</HintPath>
     </Reference>
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.Abstractions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.MvcEx, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Bin\System.Web.MvcEx.dll</HintPath>
+    </Reference>
     <Reference Include="System.WebEx, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Bin\System.WebEx.dll</HintPath>
@@ -65,9 +74,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Primitives\TextProcess\Integrate\FlashTag.cs" />
     <Compile Include="Primitives\TextProcess\Integrate\VideoTag.cs" />
+    <Compile Include="Web\Integrate\GoogleSiteMapObserver.cs" />
     <Compile Include="Web\Integrate\GoogleSiteMapNode.cs" />
-    <Compile Include="Web\Integrate\GoogleSiteMapObservableHandlerBase.cs" />
     <Compile Include="Web\Integrate\GoogleSiteMapHandler.cs" />
+    <Compile Include="Web\Mvc\Integrate\GoogleSiteMapResult.cs" />
     <Compile Include="Web\UI\Integrate\ShareThisObjectMeta.cs" />
     <Compile Include="Web\UI\Integrate\ShareThisObjectLiteral.cs" />
     <Compile Include="Web\UI\Integrate\ShareThisObject.cs" />

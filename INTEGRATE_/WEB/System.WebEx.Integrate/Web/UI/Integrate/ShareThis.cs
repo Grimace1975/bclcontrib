@@ -145,10 +145,10 @@ namespace System.Web.UI.Integrate
             if (Include == null)
                 throw new ArgumentNullException("Include");
             base.OnPreRender(e);
-            // include
-            var manager = Page.ClientScript;
-            if (!manager.IsClientScriptIncludeRegistered(s_type, string.Empty))
-                manager.RegisterClientScriptInclude(s_type, string.Empty, GetIncludeUriString());
+            //// include
+            //var manager = Page.ClientScript;
+            //if (!manager.IsClientScriptIncludeRegistered(s_type, ID))
+            //    manager.RegisterClientScriptInclude(s_type, ID, GetIncludeUriString());
         }
 
         protected override void Render(HtmlTextWriter w)
@@ -209,20 +209,12 @@ namespace System.Web.UI.Integrate
             }
             //
             var include = Include;
-            if (string.IsNullOrEmpty(include.Publisher))
-                throw new InvalidOperationException("'Publisher' cannot be null");
-            if (string.IsNullOrEmpty(include.Type))
-                throw new InvalidOperationException("'Type' cannot be null");
+            //if (string.IsNullOrEmpty(include.Publisher))
+            //    throw new InvalidOperationException("'Publisher' cannot be null");
+            //if (string.IsNullOrEmpty(include.Type))
+            //    throw new InvalidOperationException("'Type' cannot be null");
             return SerializeIncludeToUriString(include);
         }
-
-        //private void SetValue(Dictionary<string, string> attrib, string key, string value)
-        //{
-        //    if (!string.IsNullOrEmpty(value))
-        //        attrib[key] = value;
-        //    else if (attrib.ContainsKey(key))
-        //        attrib.Remove(key);
-        //}
 
         #region Serializers
         public static string SerializeIncludeToUriString(ShareThisInclude include)

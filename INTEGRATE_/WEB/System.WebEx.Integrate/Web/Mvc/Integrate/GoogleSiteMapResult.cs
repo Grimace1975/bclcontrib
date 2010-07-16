@@ -23,42 +23,27 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 #endregion
-using System.Xml.Linq;
-using System.Security;
+using System.Web.Integrate;
 using Digital.ContentManagement.Nodes;
-namespace System.Web.Integrate
+namespace System.Web.Mvc.Integrate
 {
     /// <summary>
-    /// GoogleSiteMapHandler
+    /// GoogleSiteMapResult
     /// </summary>
-    public class GoogleSiteMapHandler : IObservable<GoogleSiteMapNode>, IHttpHandler
+    public class GoogleSiteMapResult : ObservableResult<GoogleSiteMapNode>
     {
         private SiteMapNode _rootNode;
 
-        public GoogleSiteMapHandler()
+        public GoogleSiteMapResult()
             : this(SiteMap.RootNode) { }
-        public GoogleSiteMapHandler(SiteMapNode rootNode)
+        public GoogleSiteMapResult(SiteMapNode rootNode)
+            : base(r => new GoogleSiteMapObserver(r.Output))
         {
             _rootNode = rootNode;
             ContentType = "text/xml";
         }
 
-        public void ProcessRequest(HttpContext context)
-        {
-            var r = context.Response;
-            if (!string.IsNullOrEmpty(ContentType))
-                r.ContentType = ContentType;
-            Subscribe(new GoogleSiteMapObserver(r.Output));
-        }
-
-        public string ContentType { get; set; }
-
-        public bool IsReusable
-        {
-            get { return true; }
-        }
-
-        public IDisposable Subscribe(IObserver<GoogleSiteMapNode> observer)
+        public override IDisposable Subscribe(IObserver<GoogleSiteMapNode> observer)
         {
             if (observer == null)
                 throw new ArgumentNullException("observer");

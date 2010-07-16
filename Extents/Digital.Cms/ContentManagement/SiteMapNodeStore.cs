@@ -98,6 +98,8 @@ namespace Digital.ContentManagement
 
             public override IDisposable Subscribe(IObserver<StaticSiteMapProviderEx.NodeToAdd> observer)
             {
+                if (observer == null)
+                    throw new ArgumentNullException("observer");
                 if (string.IsNullOrEmpty(_connect))
                     throw new ProviderException("Empty connection string");
                 var nodes = new Dictionary<string, SiteMapNodeEx>(16);

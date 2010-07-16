@@ -23,20 +23,32 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 #endregion
-using System.Web.Routing;
-using System.Quality;
 namespace System.Web.Mvc
 {
     /// <summary>
-    /// ServiceLocatorControllerFactory
+    /// ObservableResult
     /// </summary>
-    public class ServiceLocatorControllerFactory : DefaultControllerFactory
+    public abstract class ObservableResult<T> : ActionResult, IObservable<T>
     {
-        private static readonly Type s_wantToSkipServiceLocatorControllerFactoryType = typeof(IWantToSkipServiceLocatorControllerFactory);
+        private Func<HttpResponseBase, IObserver<T>> _observer;
 
-        protected override IController GetControllerInstance(RequestContext requestContext, Type controllerType)
+        public ObservableResult(Func<HttpResponseBase, IObserver<T>> observer)
         {
-            return (!controllerType.IsAssignableFrom(s_wantToSkipServiceLocatorControllerFactoryType) ? (IController)ServiceLocator.Resolve(controllerType) : base.GetControllerInstance(requestContext, controllerType));
+            _observer = observer;
         }
+
+        public abstract IDisposable Subscribe(IObserver<T> observer);
+
+        public override void ExecuteResult(ControllerContext context)
+        {
+            var r = context.HttpContext.Response;
+            r.Clear();
+            r.Cache.SetCacheability(HttpCacheability.NoCache);
+            if (!string.IsNullOrEmpty(ContentType))
+                r.ContentType = ContentType;
+            Subscribe(_observer(r));
+        }
+
+        public string ContentType { get; set; }
     }
 }

@@ -26,7 +26,7 @@ THE SOFTWARE.
 namespace System.Web.Mvc
 {
     /// <summary>
-    /// ISkipServiceLocatorControllerFactory
+    /// IWantToSkipServiceLocatorControllerFactory
     /// </summary>
-    public interface ISkipServiceLocatorControllerFactory { }
+    public interface IWantToSkipServiceLocatorControllerFactory { }
 }

@@ -37,6 +37,9 @@
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.Abstractions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
     <Reference Include="System.Web.Mvc, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Web.Routing">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -48,7 +51,8 @@
     <Compile Include="Web\Mvc.1\Html\LinkExtensionsEx.cs" />
     <Compile Include="Web\Mvc.1\Html\IHtmlTextBox.cs" />
     <Compile Include="Web\Mvc.1\Html\TextAreaExtensionsEx.cs" />
-    <Compile Include="Web\Mvc\ISkipServiceLocatorControllerFactory.cs" />
+    <Compile Include="Web\Mvc.2\ObservableResult.cs" />
+    <Compile Include="Web\Mvc\IWantToSkipServiceLocatorControllerFactory.cs" />
     <Compile Include="Web\Mvc\ServiceLocatorControllerFactory.cs" />
     <Compile Include="Web\Mvc\MvcRouteHandlerExtensions.cs" />
     <Compile Include="Web\Mvc\RouteCollectionExtensions.cs" />
@@ -57,6 +61,10 @@
     <ProjectReference Include="..\..\Core\Quality\System.Core.Quality\System.Core.Quality.csproj">
       <Project>{A44E9D89-BFF2-41A4-AADC-3C2BDFDAEEB1}</Project>
       <Name>System.Core.Quality</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Core\System.CoreEx\System.CoreEx.csproj">
+      <Project>{21FC5068-FABA-4CC9-A9F5-95D299655422}</Project>
+      <Name>System.CoreEx</Name>
     </ProjectReference>
     <ProjectReference Include="..\System.WebEx\System.WebEx.csproj">
       <Project>{97493363-7402-4E28-806C-7448AA5AC106}</Project>
