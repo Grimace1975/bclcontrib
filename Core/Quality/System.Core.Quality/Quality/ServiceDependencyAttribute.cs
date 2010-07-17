@@ -27,14 +27,14 @@ using System.Collections.Generic;
 namespace System.Quality
 {
     [AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
-    public sealed class DependencyAttribute : Attribute
+    public sealed class ServiceDependencyAttribute : Attribute
     {
         private readonly string _name;
 
-        public DependencyAttribute()
+        public ServiceDependencyAttribute()
             : this(null) { }
 
-        public DependencyAttribute(string name)
+        public ServiceDependencyAttribute(string name)
         {
             _name = name;
         }

@@ -23,25 +23,16 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 #endregion
-using System.Linq;
-using System.Reflection;
-using Microsoft.Practices.Unity.ObjectBuilder;
-using Microsoft.Practices.ObjectBuilder2;
-namespace System.Quality.Internal
+using System.Text;
+namespace System.Web.UI
 {
     /// <summary>
-    /// UnityMethodSelectorPolicy
+    /// ClientScriptItemBase
     /// </summary>
-    public class UnityMethodSelectorPolicy : DefaultUnityMethodSelectorPolicy
+    public abstract class ClientScriptItemBase
     {
-        protected override IDependencyResolverPolicy CreateResolver(ParameterInfo parameter)
-        {
-            var dependencies = parameter.GetCustomAttributes(false)
-                .OfType<ServiceDependencyAttribute>()
-                .ToList();
-            if (dependencies.Count == 0)
-                return base.CreateResolver(parameter);
-            return new NamedTypeDependencyResolverPolicy(parameter.ParameterType, dependencies[0].Name);
-        }
+        public ClientScriptItemBase() { }
+
+        public abstract void Render(StringBuilder b);
     }
 }

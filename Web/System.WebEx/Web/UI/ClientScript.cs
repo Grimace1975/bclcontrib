@@ -28,74 +28,11 @@ using System.Text;
 using System.Globalization;
 namespace System.Web.UI
 {
-    public interface IClientScript
-    {
-        void AddBlock(ClientScriptBlockBase block);
-        void AddBlock(string literal);
-        void AddBlock(params object[] blocks);
-        Dictionary<string, ClientScriptBlockBase> Blocks { get; }
-        void RegisterStartupScript(ClientScriptManager clientScript);
-    }
-
     /// <summary>
     /// ClientScript
     /// </summary>
-    public class ClientScript // : Pattern.Generic.Singleton<ClientScript>
+    public static class ClientScript
     {
-        private Dictionary<string, ClientScriptBlockBase> _blocks = new Dictionary<string, ClientScriptBlockBase>();
-
-        protected ClientScript()
-            : base() { }
-
-        public void AddBlock(ClientScriptBlockBase block)
-        {
-            _blocks[_blocks.Count.ToString()] = block;
-        }
-        public void AddBlock(string literal)
-        {
-            _blocks[_blocks.Count.ToString()] = new LiteralClientScriptBlock(literal);
-        }
-        public void AddBlock(params object[] blocks)
-        {
-            foreach (object block in blocks)
-            {
-                if (block == null)
-                    continue;
-                string literal = (block as string);
-                if (literal != null)
-                {
-                    _blocks[_blocks.Count.ToString()] = new LiteralClientScriptBlock(literal);
-                    continue;
-                }
-                var blockAsBlock = (block as ClientScriptBlockBase);
-                if (blockAsBlock != null)
-                {
-                    _blocks[_blocks.Count.ToString()] = blockAsBlock;
-                    continue;
-                }
-                throw new InvalidOperationException();
-            }
-        }
-
-        public Dictionary<string, ClientScriptBlockBase> Blocks
-        {
-            get { return _blocks; }
-        }
-
-        public void RegisterStartupScript(ClientScriptManager clientScript)
-        {
-            if (_blocks.Count > 0)
-            {
-                var b = new StringBuilder(@"<script type=""text/javascript"">
-//<![CDATA[");
-                foreach (var block in _blocks.Values)
-                    block.Render(b);
-                b.AppendLine(@"//]]>
-</script>");
-                clientScript.RegisterStartupScript(typeof(ClientScript), string.Empty, b.ToString(), false);
-            }
-        }
-
         #region Encode
         /// <summary>
         /// Encodes the bool.

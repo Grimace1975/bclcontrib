@@ -59,7 +59,6 @@ namespace System.Web.UI.Integrate
             return (_scriptManager != null);
         }
 
-
         public void Clear()
         {
             _textBuilder.Length = 0;

@@ -37,7 +37,7 @@ namespace System.Quality.Internal
         protected override IDependencyResolverPolicy CreateResolver(ParameterInfo parameter)
         {
             var dependencies = parameter.GetCustomAttributes(false)
-                .OfType<DependencyAttribute>()
+                .OfType<ServiceDependencyAttribute>()
                 .ToList();
             if (dependencies.Count == 0)
                 return base.CreateResolver(parameter);

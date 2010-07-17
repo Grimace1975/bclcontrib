@@ -35,8 +35,8 @@ namespace System.Patterns.Generic
     public abstract class SimpleFactoryBase<TBase>
         where TBase : class
     {
-        private static readonly MethodInfo s_getMethodInfo = typeof(TBase).GetMethod("Get", BindingFlags.Public | BindingFlags.Static, null, null, null);
-        private static readonly MethodInfo s_get2MethodInfo = typeof(TBase).GetMethod("Get", BindingFlags.Public | BindingFlags.Static, null, new[] { typeof(string) }, null);
+        private static readonly MethodInfo s_getMethodInfo = typeof(TBase).GetGenericMethod("Get", new[] { typeof(TBase) }, null);
+        private static readonly MethodInfo s_get2MethodInfo = typeof(TBase).GetGenericMethod("Get", new[] { typeof(TBase), typeof(IAppUnit) }, new[] { typeof(string) });
         private static readonly MethodInfo s_createMethodInfo = typeof(TBase).GetMethod("Create", BindingFlags.NonPublic | BindingFlags.Static, null, new[] { typeof(Type) }, null);
 
         protected class DelegateFactoryByAppUnit<T, TAppUnit>
@@ -54,7 +54,7 @@ namespace System.Patterns.Generic
         public static T Get<T, TAppUnit>()
             where T : TBase
             where TAppUnit : IAppUnit { return DelegateFactoryByAppUnit<T, TAppUnit>.Value; }
-        public static TBase Get<TAppUnit>(string key)
+        public static TBase Get<TAppUnit>(string id)
             where TAppUnit : IAppUnit
         {
             throw new NotSupportedException();
@@ -62,7 +62,7 @@ namespace System.Patterns.Generic
 
         public static TBase Get<TAppUnit>(Type type)
             where TAppUnit : IAppUnit { return (TBase)s_getMethodInfo.MakeGenericMethod(type, typeof(TAppUnit)).Invoke(null, null); }
-        public static TBase Get(string key) { return (TBase)s_get2MethodInfo.MakeGenericMethod(DefaultAppUnit.Type).Invoke(null, null); }
+        public static TBase Get(string id) { return (TBase)s_get2MethodInfo.MakeGenericMethod(DefaultAppUnit.Type).Invoke(null, null); }
         public static TBase Get(Type type) { return (TBase)s_getMethodInfo.MakeGenericMethod(type, DefaultAppUnit.Type).Invoke(null, null); }
     }
 }

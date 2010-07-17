@@ -231,6 +231,9 @@
     <Compile Include="..\..\System.CoreEx_\System.Core2\TryFunc.cs">
       <Link>System.CoreEx+\System.Core.Core2\TryFunc.cs</Link>
     </Compile>
+    <Compile Include="..\..\System.CoreEx_\System.Core2\TypeExtensions.cs">
+      <Link>System.CoreEx+\System.Core.Core2\TypeExtensions.cs</Link>
+    </Compile>
     <Compile Include="..\..\System.DataEx\Data\SqlClient\SqlConvert.cs">
       <Link>System.DataEx+\Data\SqlClient\SqlConvert.cs</Link>
     </Compile>

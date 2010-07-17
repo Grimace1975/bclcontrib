@@ -27,12 +27,21 @@ using System.Text;
 namespace System.Web.UI
 {
     /// <summary>
-    /// ClientScriptBlockBase
+    /// LiteralClientScriptItem
     /// </summary>
-    public abstract class ClientScriptBlockBase
+    public class LiteralClientScriptItem : ClientScriptItemBase
     {
-        public ClientScriptBlockBase() { }
+        private string _literal;
 
-        public abstract void Render(StringBuilder b);
+        public LiteralClientScriptItem(string literal)
+            : base()
+        {
+            _literal = literal;
+        }
+
+        public override void Render(StringBuilder b)
+        {
+            b.Append(_literal);
+        }
     }
 }

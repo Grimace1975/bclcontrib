@@ -27,21 +27,24 @@ using System.Text;
 namespace System.Web.UI
 {
     /// <summary>
-    /// LiteralClientScriptBlock
+    /// IncludeClientScriptItem
     /// </summary>
-    public class LiteralClientScriptBlock : ClientScriptBlockBase
+    public class IncludeClientScriptItem : ClientScriptItemBase
     {
-        private string _literal;
+        private string _type;
+        private string _uri;
 
-        public LiteralClientScriptBlock(string literal)
-            : base()
+        public IncludeClientScriptItem(string uri)
+            : this(uri, "text/javascript") { }
+        public IncludeClientScriptItem(string uri, string type)
         {
-            _literal = literal;
+            _type = "text/javascript";
+            _uri = uri;
         }
 
         public override void Render(StringBuilder b)
         {
-            b.Append(_literal);
+            b.AppendFormat("<script type=\"{0}\" src=\"{1}\"></script>", _type, _uri);
         }
     }
 }

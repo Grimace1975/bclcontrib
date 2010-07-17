@@ -36,8 +36,8 @@ namespace System.Quality.Internal
     {
         protected override IDependencyResolverPolicy CreateResolver(PropertyInfo property)
         {
-            var dependencies = property.GetCustomAttributes(typeof(DependencyAttribute), false)
-                .OfType<DependencyAttribute>()
+            var dependencies = property.GetCustomAttributes(typeof(ServiceDependencyAttribute), false)
+                .OfType<ServiceDependencyAttribute>()
                 .ToList();
             if (dependencies.Count == 0)
                 return base.CreateResolver(property);

@@ -1,5 +1,4 @@
-﻿// from automapper
-namespace System.Reflection
+﻿namespace System.Reflection
 {
     public static class MemberInfoExtensions
     {

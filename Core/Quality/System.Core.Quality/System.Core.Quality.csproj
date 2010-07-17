@@ -47,7 +47,7 @@
     <Compile Include="Quality.1\ITypeMocker.cs" />
     <Compile Include="Quality.1\TypeMocker.cs" />
     <Compile Include="Quality.1\TypeMockManager.cs" />
-    <Compile Include="Quality\DependencyAttribute.cs" />
+    <Compile Include="Quality\ServiceDependencyAttribute.cs" />
     <Compile Include="Quality\IServiceLocator.cs" />
     <Compile Include="Quality\IServiceRegistrar.cs" />
     <Compile Include="Quality\ServiceLocator.cs" />

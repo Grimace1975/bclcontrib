@@ -78,21 +78,21 @@
     <Compile Include="Web\Integrate\GoogleSiteMapNode.cs" />
     <Compile Include="Web\Integrate\GoogleSiteMapHandler.cs" />
     <Compile Include="Web\Mvc\Integrate\GoogleSiteMapResult.cs" />
-    <Compile Include="Web\UI\Integrate\ShareThisObjectMeta.cs" />
-    <Compile Include="Web\UI\Integrate\ShareThisObjectLiteral.cs" />
-    <Compile Include="Web\UI\Integrate\ShareThisObject.cs" />
-    <Compile Include="Web\UI\Integrate\ShareThisInclude.cs" />
-    <Compile Include="Web\UI\Integrate\ShareThisIncludeLiteral.cs" />
-    <Compile Include="Web\UI\Integrate\FacebookFeature.cs" />
-    <Compile Include="Web\UI\Integrate\FacebookSharedContent.cs" />
-    <Compile Include="Web\UI\Integrate\FlashBlock.cs" />
-    <Compile Include="Web\UI\Integrate\GoogleAnalyticsTracker.cs" />
-    <Compile Include="Web\UI\Integrate\GoogleMap.cs" />
-    <Compile Include="Web\UI\Integrate\HitsLink.cs" />
-    <Compile Include="Web\UI\Integrate\ShareThis.cs" />
-    <Compile Include="Web\UI\Integrate\SiteCatalyst.cs" />
-    <Compile Include="Web\UI\Integrate\SiteCatalystx.cs" />
-    <Compile Include="Web\UI\Integrate\VideoBlock.cs" />
+    <Compile Include="Web\UI\Integrate+ShareThis\ShareThisObjectMeta.cs" />
+    <Compile Include="Web\UI\Integrate+ShareThis\ShareThisObjectLiteral.cs" />
+    <Compile Include="Web\UI\Integrate+ShareThis\ShareThisObject.cs" />
+    <Compile Include="Web\UI\Integrate+ShareThis\ShareThisInclude.cs" />
+    <Compile Include="Web\UI\Integrate+ShareThis\ShareThisIncludeLiteral.cs" />
+    <Compile Include="Web\UI\Integrate+FacebookHold\FacebookFeature.cs" />
+    <Compile Include="Web\UI\Integrate+FacebookHold\FacebookSharedContent.cs" />
+    <Compile Include="Web\UI\Integrate+Hold\FlashBlock.cs" />
+    <Compile Include="Web\UI\Integrate+Google\GoogleAnalyticsTracker.cs" />
+    <Compile Include="Web\UI\Integrate+Google\GoogleMapHold.cs" />
+    <Compile Include="Web\UI\Integrate+Hold\HitsLink.cs" />
+    <Compile Include="Web\UI\Integrate+ShareThis\ShareThis.cs" />
+    <Compile Include="Web\UI\Integrate+Hold\SiteCatalyst.cs" />
+    <Compile Include="Web\UI\Integrate+Hold\SiteCatalystx.cs" />
+    <Compile Include="Web\UI\Integrate+Hold\VideoBlock.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

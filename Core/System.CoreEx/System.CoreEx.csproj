@@ -37,6 +37,9 @@
     <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Caching\Patterns\Caching\CacheDependency.cs">
       <Link>Patterns\System.Core.Patterns.Caching\Patterns\Caching\CacheDependency.cs</Link>
     </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Caching\Patterns\Caching\CacheEx+Touch.cs">
+      <Link>Patterns\System.Core.Patterns.Caching\Patterns\Caching\CacheEx+Touch.cs</Link>
+    </Compile>
     <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Caching\Patterns\Caching\CacheEx.cs">
       <Link>Patterns\System.Core.Patterns.Caching\Patterns\Caching\CacheEx.cs</Link>
     </Compile>
@@ -802,6 +805,9 @@
     <Compile Include="..\System.CoreEx_\System.Core.Reflection\Reflection\MemberInfoExtensions.cs">
       <Link>System.Core.Reflection\Reflection\MemberInfoExtensions.cs</Link>
     </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Reflection\Reflection\MethodInfoExtensions.cs">
+      <Link>System.Core.Reflection\Reflection\MethodInfoExtensions.cs</Link>
+    </Compile>
     <Compile Include="..\System.CoreEx_\System.Core.Reflection\Reflection\zResolutionContext.cs">
       <Link>System.Core.Reflection\Reflection\zResolutionContext.cs</Link>
     </Compile>
@@ -1020,6 +1026,9 @@
     </Compile>
     <Compile Include="..\System.CoreEx_\System.Core2\TypeCodeObject.cs">
       <Link>System.Core2\TypeCodeObject.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core2\TypeExtensions.cs">
+      <Link>System.Core2\TypeExtensions.cs</Link>
     </Compile>
     <Compile Include="..\System.CoreEx_\System.Core2\WeakReference.cs">
       <Link>System.Core2\WeakReference.cs</Link>

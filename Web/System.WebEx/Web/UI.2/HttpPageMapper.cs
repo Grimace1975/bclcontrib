@@ -27,9 +27,9 @@ using System.Web.UI.HtmlControls;
 namespace System.Web.UI
 {
     /// <summary>
-    /// HttpPageToHtmlHeadMapper
+    /// HttpPageMapperExtentions
     /// </summary>
-    public class HttpPageToHtmlHeadMapper
+    public static class HttpPageMapperExtentions
     {
         public class HeaderControlId
         {
@@ -42,14 +42,18 @@ namespace System.Web.UI
             public const string Description = "HtmlHeadDescription";
         }
 
-        public static void Map(HttpPage httpPage, HttpResponse response)
+        public static void MapToHttpResponse(this HttpPage page, HttpResponse response)
         {
-            switch (httpPage.CachingApproach)
+            if (page == null)
+                throw new ArgumentNullException("page");
+            if (response == null)
+                throw new ArgumentNullException("response");
+            switch (page.CachingApproach)
             {
                 case HttpPage.HttpPageCachingApproach.Default:
                     break;
                 case HttpPage.HttpPageCachingApproach.LastModifyDateWithoutCaching:
-                    DateTime? lastModifyDate = httpPage.LastModifyDate;
+                    var lastModifyDate = page.LastModifyDate;
                     if (lastModifyDate != null)
                     {
                         //NOTE: adding headers instead of Response.Cache because issues with NoCache and Last-Modified header
@@ -69,16 +73,23 @@ namespace System.Web.UI
             }
         }
 
-        public static void Map(HttpPage.HttpHead httpHead, HtmlHead htmlHead)
+        public static void MapToHtmlHead(this HttpPage page, HtmlHead htmlHead)
         {
+            if (page == null)
+                throw new ArgumentNullException("page");
+            if (htmlHead == null)
+                throw new ArgumentNullException("htmlHead");
+            var pageHead = page.Head;
+            if (pageHead == null)
+                throw new NullReferenceException("page.Head");
             var htmlHeadControls = htmlHead.Controls;
             HtmlLink htmlLink;
             string text;
             // no-index
-            if (httpHead.NoIndex)
+            if (pageHead.NoIndex)
                 htmlHeadControls.Add(new HtmlMeta { Name = "robots", Content = "noindex" });
             // icon
-            if (!string.IsNullOrEmpty(text = httpHead.IconUri))
+            if (!string.IsNullOrEmpty(text = pageHead.IconUri))
             {
                 if (string.Compare(text, "/favicon.ico", StringComparison.InvariantCultureIgnoreCase) != 0)
                     throw new InvalidOperationException("InvalidHttpHeadIcon");
@@ -94,10 +105,10 @@ namespace System.Web.UI
                 htmlHeadControls.Add(htmlLink);
             }
             // search
-            if (!string.IsNullOrEmpty(text = httpHead.Search))
+            if (!string.IsNullOrEmpty(text = pageHead.Search))
             {
                 htmlLink = new HtmlLink { ID = HeaderControlId.Search, Href = text };
-                string title = httpHead.SearchTitle;
+                var title = pageHead.SearchTitle;
                 if (!string.IsNullOrEmpty(title))
                     htmlLink.Attributes["title"] = title;
                 htmlLink.Attributes["rel"] = "search";
@@ -105,15 +116,15 @@ namespace System.Web.UI
                 htmlHeadControls.Add(htmlLink);
             }
             // rss/atom
-            var syndications = httpHead.Syndications;
+            var syndications = pageHead.Syndications;
             if (syndications != null)
             {
-                string id = string.Empty;
+                var id = string.Empty;
                 for (int syndicationIndex = 1; syndicationIndex < syndications.Length; syndicationIndex++)
                 {
                     var syndication = syndications[syndicationIndex];
                     htmlLink = new HtmlLink { ID = HeaderControlId.Syndication + id, Href = syndication.Uri };
-                    string title = syndication.Title;
+                    var title = syndication.Title;
                     if (!string.IsNullOrEmpty(title))
                         htmlLink.Attributes["title"] = title;
                     htmlLink.Attributes["rel"] = "alternate";
@@ -123,26 +134,48 @@ namespace System.Web.UI
                 }
             }
             // page title
-            if (!string.IsNullOrEmpty(text = httpHead.Title))
+            if (!string.IsNullOrEmpty(text = pageHead.Title))
                 htmlHeadControls.Add(new HtmlTitle { ID = HeaderControlId.Title, Text = text });
             // page keyword
-            if (!string.IsNullOrEmpty(text = httpHead.Keywords))
+            if (!string.IsNullOrEmpty(text = pageHead.Keywords))
                 htmlHeadControls.Add(new HtmlMeta { ID = HeaderControlId.Keyword, Name = "keywords", Content = text });
             // page description
-            if (!string.IsNullOrEmpty(text = httpHead.Description))
+            if (!string.IsNullOrEmpty(text = pageHead.Description))
                 htmlHeadControls.Add(new HtmlMeta() { ID = HeaderControlId.Description, Name = "description", Content = text });
             // add search tag
-            if (!string.IsNullOrEmpty(text = httpHead.Tag))
+            if (!string.IsNullOrEmpty(text = pageHead.Tag))
                 htmlHeadControls.Add(new HtmlMeta { ID = "Tag", Name = "tag", Content = text });
             // author
-            if (!string.IsNullOrEmpty(text = httpHead.Author))
+            if (!string.IsNullOrEmpty(text = pageHead.Author))
                 htmlHeadControls.Add(new HtmlMeta { ID = "Author", Name = "author", Content = text });
             // copyright
-            if (!string.IsNullOrEmpty(text = httpHead.Copyright))
+            if (!string.IsNullOrEmpty(text = pageHead.Copyright))
                 htmlHeadControls.Add(new HtmlMeta { ID = "Copyright", Name = "copyright", Content = text });
             // developer
-            if (!string.IsNullOrEmpty(text = httpHead.Developer))
+            if (!string.IsNullOrEmpty(text = pageHead.Developer))
                 htmlHeadControls.Add(new HtmlMeta { ID = "Developer", Name = "developer", Content = text });
+        }
+
+        public static void MapToHttpPage(this IHttpPageMetatag pageMetatag, HttpPage page) { MapToHttpPage(pageMetatag, page, false); }
+        public static void MapToHttpPage(this IHttpPageMetatag pageMetatag, HttpPage page, bool forceMapping)
+        {
+            if (pageMetatag == null)
+                throw new ArgumentNullException("metatag");
+            if (page == null)
+                throw new ArgumentNullException("page");
+            var pageHead = page.Head;
+            if (pageHead == null)
+                throw new NullReferenceException("page.Head");
+            //
+            string text;
+            if (!string.IsNullOrEmpty(text = pageMetatag.Description) || (forceMapping))
+                pageHead.Description = text;
+            if (!string.IsNullOrEmpty(text = pageMetatag.Keywords) || (forceMapping))
+                pageHead.Keywords = text;
+            if (!string.IsNullOrEmpty(text = pageMetatag.Title) || (forceMapping))
+                pageHead.Title = text;
+            if (!string.IsNullOrEmpty(text = pageMetatag.Tag) || (forceMapping))
+                pageHead.Tag = text;
         }
     }
 }

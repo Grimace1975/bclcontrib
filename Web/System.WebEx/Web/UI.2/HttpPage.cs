@@ -43,7 +43,7 @@ namespace System.Web.UI
             public WebSyndicationFormat Format { get; set; }
         }
 
-        public class HttpHead
+        public class HttpHead : IHttpPageMetatag
         {
             public bool NoIndex { get; set; }
             public string Title { get; set; }

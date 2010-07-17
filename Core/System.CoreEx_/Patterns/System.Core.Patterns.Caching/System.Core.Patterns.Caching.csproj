@@ -49,6 +49,7 @@
     <Compile Include="Patterns\Caching\CacheProviderBase.cs" />
     <Compile Include="Patterns\Caching\CacheItemAddedCallback.cs" />
     <Compile Include="Patterns\Caching\CacheItemRemovedCallback.cs" />
+    <Compile Include="Patterns\Caching\CacheEx+Touch.cs" />
     <Compile Include="Patterns\Caching\DataCache.cs" />
     <Compile Include="Patterns\Caching\DataCacheBuilder.cs" />
     <Compile Include="Patterns\Caching\DataCacheRegistrar.cs" />
@@ -66,6 +67,10 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\System.Core.Extentions\System.Core.Extentions.csproj">
+      <Project>{31D819FA-9DBB-480E-AC21-DA27C966BC2B}</Project>
+      <Name>System.Core.Extentions</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\System.Core2\System.Core2.csproj">
       <Project>{7F64972D-477E-4F38-BC95-BD835D501146}</Project>
       <Name>System.Core2</Name>

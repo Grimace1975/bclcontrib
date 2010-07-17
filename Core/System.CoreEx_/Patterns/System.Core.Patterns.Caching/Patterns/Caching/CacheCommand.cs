@@ -39,6 +39,8 @@ namespace System.Patterns.Caching
         /// Initializes a new instance of the <see cref="CacheCommand"/> class.
         /// </summary>
         /// <param name="key">The key.</param>
+        public CacheCommand()
+            : this(null) { }
         public CacheCommand(string key)
         {
             Key = key;
@@ -71,8 +73,8 @@ namespace System.Patterns.Caching
             get { return _key; }
             set
             {
-                if (string.IsNullOrEmpty(value))
-                    throw new ArgumentNullException("value");
+                //if (string.IsNullOrEmpty(value))
+                //    throw new ArgumentNullException("value");
                 _key = value;
             }
         }

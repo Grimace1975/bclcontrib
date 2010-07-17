@@ -62,6 +62,7 @@
     <Compile Include="EXTENTIONS\Configuration\ConfigurationManagerEx.cs" />
     <Compile Include="Patterns\Generic\SimpleFactoryBase.cs" />
     <Compile Include="Patterns\ReleaseManagement\Configuration\ReleaseManagementConfiguration.cs" />
+    <Compile Include="TypeExtensions.cs" />
     <Compile Include="zLocal.Designer.cs">
       <DependentUpon>zLocal.resx</DependentUpon>
       <AutoGen>True</AutoGen>

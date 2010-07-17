@@ -45,6 +45,7 @@ namespace System.Web.UI.Integrate
         {
             DeploymentTarget = DeploymentEnvironment.Live;
             Include = new ShareThisInclude();
+            Inject = true;
         }
 
         public DeploymentEnvironment DeploymentTarget { get; set; }
@@ -55,8 +56,9 @@ namespace System.Web.UI.Integrate
 
         public bool Inject { get; set; }
 
-        [Dependency]
-        public IClientScript ClientScript { get; set; }
+        [Microsoft.Practices.Unity.Dependency]
+        [ServiceDependency]
+        public IClientScriptManager ClientScriptManager { get; set; }
 
         /// <summary>
         /// Gets or sets the button text.
@@ -145,10 +147,9 @@ namespace System.Web.UI.Integrate
             if (Include == null)
                 throw new ArgumentNullException("Include");
             base.OnPreRender(e);
-            //// include
-            //var manager = Page.ClientScript;
-            //if (!manager.IsClientScriptIncludeRegistered(s_type, ID))
-            //    manager.RegisterClientScriptInclude(s_type, ID, GetIncludeUriString());
+            // include
+            if (ClientScriptManager != null)
+                ClientScriptManager.EnsureItem<HtmlHead>(ID, () => new IncludeClientScriptItem(GetIncludeUriString()));
         }
 
         protected override void Render(HtmlTextWriter w)
@@ -157,9 +158,9 @@ namespace System.Web.UI.Integrate
                 throw new ArgumentNullException("Object");
             // object
             _scriptBody = GetObjectString();
-            if (ClientScript != null)
+            if (ClientScriptManager != null)
             {
-                ClientScript.AddBlock(_scriptBody);
+                ClientScriptManager.AddRange(_scriptBody);
                 _scriptBody = null;
             }
             //if (EnvironmentEx.DeploymentEnvironment == DeploymentTarget)
@@ -203,16 +204,14 @@ namespace System.Web.UI.Integrate
             if (includeLiteral != null)
             {
                 var value = includeLiteral.Literal;
-                if (value.IndexOf(";button=", StringComparison.OrdinalIgnoreCase) == -1)
+                if (value.IndexOf("&amp;button=", StringComparison.OrdinalIgnoreCase) == -1)
                     value += "&amp;button=false";
                 return value;
             }
             //
             var include = Include;
-            //if (string.IsNullOrEmpty(include.Publisher))
-            //    throw new InvalidOperationException("'Publisher' cannot be null");
-            //if (string.IsNullOrEmpty(include.Type))
-            //    throw new InvalidOperationException("'Type' cannot be null");
+            if (string.IsNullOrEmpty(include.Type))
+                throw new InvalidOperationException("'Type' cannot be null");
             return SerializeIncludeToUriString(include);
         }
 
@@ -221,7 +220,9 @@ namespace System.Web.UI.Integrate
         {
             // todo: build urlserialize here
             var b = new StringBuilder();
-            b.Append(string.Format("http://w.sharethis.com/button/sharethis.js#publisher={0}&amp;type={1}&amp;button=false", Uri.EscapeDataString(include.Publisher), Uri.EscapeDataString(include.Type)));
+            b.Append(string.Format("http://w.sharethis.com/button/sharethis.js#type={0}", Uri.EscapeDataString(include.Type)));
+            if (!string.IsNullOrEmpty(include.Publisher))
+                b.Append("&amp;publisher=" + Uri.EscapeDataString(include.Publisher));
             if (!string.IsNullOrEmpty(include.ButtonText))
                 b.Append("&amp;buttonText=" + Uri.EscapeDataString(include.ButtonText));
             if (!string.IsNullOrEmpty(include.HeaderBackgroundColor))
@@ -236,6 +237,7 @@ namespace System.Web.UI.Integrate
                 b.Append("&amp;send_services=" + Uri.EscapeDataString(include.SendServices));
             //foreach (var keyValue in _javascriptAttribs)
             //    b.Append("&amp;" + keyValue.Key + "=" + Uri.EscapeDataString(keyValue.Value));
+            b.Append("&amp;button=false");
             return b.ToString();
         }
 

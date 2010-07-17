@@ -39,6 +39,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reflection\AssemblyExtensions.cs" />
+    <Compile Include="Reflection\MethodInfoExtensions.cs" />
     <Compile Include="Reflection\IMemberAccessor.cs" />
     <Compile Include="Reflection\IMemberGetter.cs" />
     <Compile Include="Reflection\IMemberResolver.cs" />

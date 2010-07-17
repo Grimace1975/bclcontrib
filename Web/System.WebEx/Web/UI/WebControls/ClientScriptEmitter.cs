@@ -24,6 +24,8 @@ THE SOFTWARE.
 */
 #endregion
 using System.Text;
+using System.Quality;
+using System.Collections.Generic;
 namespace System.Web.UI.WebControls
 {
     /// <summary>
@@ -31,14 +33,41 @@ namespace System.Web.UI.WebControls
     /// </summary>
     public class ClientScriptEmitter : Control
     {
-        private ClientScript _clientScript = null; //ClientScript.Instance;
-
         public ClientScriptEmitter()
-            : base() { }
+            : base()
+        {
+            Inject = true;
+        }
+
+        public bool Inject { get; set; }
+
+        [Microsoft.Practices.Unity.Dependency]
+        [ServiceDependency]
+        public IClientScriptManager ClientScriptManager { get; set; }
+
+        public Type Shard { get; set; }
+
+        protected override void OnPreRender(EventArgs e)
+        {
+            if (Inject)
+            {
+                ServiceLocator.Inject(this);
+                if (ClientScriptManager == null)
+                    throw new InvalidOperationException("ClientScriptManager required");
+            }
+        }
 
         protected override void Render(HtmlTextWriter w)
         {
-            var blocks = _clientScript.Blocks;
+            if (ClientScriptManager == null)
+                throw new InvalidOperationException("ClientScriptManager required");
+            var repository = ClientScriptManager.GetRepository(Shard ?? typeof(IClientScriptManager));
+            RenderBlocks(w, repository.Includes, false);
+            RenderBlocks(w, repository.Items, true);
+        }
+
+        private static void RenderBlocks(HtmlTextWriter w, Dictionary<string, ClientScriptItemBase> blocks, bool addScriptTags)
+        {
             if (blocks.Count > 0)
             {
                 var b = new StringBuilder();
@@ -46,12 +75,17 @@ namespace System.Web.UI.WebControls
                     block.Render(b);
                 blocks.Clear();
                 //
-                w.AddAttribute(HtmlTextWriterAttribute.Type, "text/javascript");
-                w.RenderBeginTag(HtmlTextWriterTag.Script);
-                w.WriteLine("//<![CDATA[");
-                w.Write(b.ToString());
-                w.WriteLine("//]]>");
-                w.RenderEndTag();
+                if (addScriptTags)
+                {
+                    w.AddAttribute(HtmlTextWriterAttribute.Type, "text/javascript");
+                    w.RenderBeginTag(HtmlTextWriterTag.Script);
+                    w.WriteLine("//<![CDATA[");
+                    w.Write(b.ToString());
+                    w.WriteLine("//]]>");
+                    w.RenderEndTag();
+                }
+                else
+                    w.Write(b.ToString());
             }
         }
     }

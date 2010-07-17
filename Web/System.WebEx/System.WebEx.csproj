@@ -31,6 +31,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Practices.Unity, Version=2.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Core\Quality\Library_\unity\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core">
@@ -61,6 +65,7 @@
     <Compile Include="Web.2\ISiteMapProvider.cs" />
     <Compile Include="Web.2\IStaticSiteMapProviderEx.cs" />
     <Compile Include="Web.2\SiteMapNodeSeoExtent.cs" />
+    <Compile Include="Web\UI.2\IHttpPageMetatag.cs" />
     <Compile Include="Web\UI.3\Configuration\HtmlTextBoxConfigurationSet.cs" />
     <Compile Include="Web\UI.3\Configuration\HtmlTextBoxCssStyleConfiguration.cs" />
     <Compile Include="Web\UI.3\Configuration\HtmlTextBoxCssStyleConfigurationSet.cs" />
@@ -121,9 +126,13 @@
     <Compile Include="Web\UI.1\HtmlTextWriterExtensions.cs" />
     <Compile Include="Web\UI.2\WebControls\JscriptAndCookieChecker.cs" />
     <Compile Include="Web\UI\ClientScript.cs" />
-    <Compile Include="Web\UI\ClientScriptBlockBase.cs" />
+    <Compile Include="Web\UI\ClientScriptItemBase.cs" />
+    <Compile Include="Web\UI\ClientScriptManagerEx.cs" />
+    <Compile Include="Web\UI\AspFormsClientScriptManager.cs" />
+    <Compile Include="Web\UI\ClientScriptRepository.cs" />
+    <Compile Include="Web\UI\IncludeClientScriptItem.cs" />
     <Compile Include="Web\UI\WebControls\ClientScriptEmitter.cs" />
-    <Compile Include="Web\UI\LiteralClientScriptBlock.cs" />
+    <Compile Include="Web\UI\LiteralClientScriptItem.cs" />
     <Compile Include="Web\UI\CachingUserControl.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
@@ -131,7 +140,7 @@
     <Compile Include="Web\HttpError.cs" />
     <Compile Include="Web\HttpErrorTrapModule.cs" />
     <Compile Include="Web\UI.2\HttpPage.cs" />
-    <Compile Include="Web\UI.2\HttpPageToHtmlHeadMapper.cs" />
+    <Compile Include="Web\UI.2\HttpPageMapper.cs" />
     <Compile Include="Web\UI.1\HtmlAttribute.cs" />
     <Compile Include="Web\UI.1\HtmlBuilder.cs" />
     <Compile Include="Web\UI.1\HtmlBuilderDivTag.cs" />

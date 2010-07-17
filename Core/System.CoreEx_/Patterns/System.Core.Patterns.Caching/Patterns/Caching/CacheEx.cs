@@ -30,7 +30,7 @@ namespace System.Patterns.Caching
     /// provides by a given Application Type (WebApplication, etc) and the generic implementation used. Also
     /// provides a basic facade pattern over the implicit ASP.NET Caching mechanism.
     /// </summary>
-    public class CacheEx
+    public partial class CacheEx
     {
         /// <summary>
         /// Provides <see cref="System.DateTime"/> instance to be used when no absolute expiration value to be set.
@@ -235,28 +235,6 @@ namespace System.Patterns.Caching
             if (cacheCommand == null)
                 throw new ArgumentNullException("cacheCommand");
             return s_cacheProvider.Remove(_salt == null ? cacheCommand.Key : _salt + cacheCommand.Key);
-        }
-
-        /// <summary>
-        /// Touches the specified key.
-        /// </summary>
-        /// <param name="key">The key.</param>
-        public void Touch(string key)
-        {
-            if (s_cacheProvider == null)
-                throw new ArgumentNullException();
-            s_cacheProvider.Touch(key);
-        }
-        /// <summary>
-        /// Touches the specified key array.
-        /// </summary>
-        /// <param name="keys">The keys.</param>
-        public void Touch(params string[] keys)
-        {
-            if (s_cacheProvider == null)
-                throw new ArgumentNullException();
-            foreach (string key in keys)
-                s_cacheProvider.Touch(key);
         }
 
         public static CacheEx GetNamespace(object[] values)
