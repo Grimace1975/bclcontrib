@@ -64,7 +64,14 @@ namespace System.Patterns.Caching
                 return;
             foreach (var key in keys)
                 lock (s_filesLock)
-                    File.WriteAllText(GetTouchFullPath(folder, key), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "\r\n");
+                {
+                    var filePath = GetTouchFullPath(folder, key);
+                    try
+                    {
+                        File.WriteAllText(filePath, DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "\r\n");
+                    }
+                    catch { };
+                }
         }
 
         public static string GetTouchFullPath(string folder, string key)
@@ -90,8 +97,12 @@ namespace System.Patterns.Caching
                 foreach (var key in keys)
                 {
                     var filePath = GetTouchFullPath(folder, key);
-                    if (!File.Exists(filePath))
-                        File.WriteAllText(filePath, DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "\r\n");
+                    try
+                    {
+                        if (!File.Exists(filePath))
+                            File.WriteAllText(filePath, DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "\r\n");
+                    }
+                    catch { };
                 }
         }
     }
