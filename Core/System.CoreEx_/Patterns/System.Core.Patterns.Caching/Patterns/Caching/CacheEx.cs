@@ -252,5 +252,27 @@ namespace System.Patterns.Caching
             valuesAsText[valuesAsText.Length - 1] = null;
             return new CacheEx(string.Join(CoreEx.Scope, valuesAsText));
         }
+
+        /// <summary>
+        /// Touches the specified key.
+        /// </summary>
+        /// <param name="key">The key.</param>
+        public void Touch(string key)
+        {
+            if (s_cacheProvider == null)
+                throw new ArgumentNullException();
+            s_cacheProvider.Touch(key);
+        }
+        /// <summary>
+        /// Touches the specified key array.
+        /// </summary>
+        /// <param name="keys">The keys.</param>
+        public void Touch(params string[] keys)
+        {
+            if (s_cacheProvider == null)
+                throw new ArgumentNullException();
+            foreach (string key in keys)
+                s_cacheProvider.Touch(key);
+        }
     }
 }

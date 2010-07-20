@@ -32,6 +32,7 @@ namespace System.Web.UI
     /// </summary>
     public interface IClientScriptManager
     {
+        void EnsureItem(string id, Func<ClientScriptItemBase> item);
         void EnsureItem<TShard>(string id, Func<ClientScriptItemBase> item);
         void AddRange(ClientScriptItemBase item);
         void AddRange(string literal);
@@ -42,6 +43,7 @@ namespace System.Web.UI
         IClientScriptRepository GetRepository<TShard>();
         IClientScriptRepository GetRepository(Type shard);
         void SetRepository<TShard>(IClientScriptRepository repository);
+        void SetRepository(Type type, IClientScriptRepository repository);
     }
 
     /// <summary>
@@ -49,33 +51,49 @@ namespace System.Web.UI
     /// </summary>
     public class ClientScriptManagerEx : IClientScriptManager
     {
-        private static readonly MethodInfo s_getRepositoryMethodInfo = typeof(ClientScriptManagerEx).GetGenericMethod("GetRepository");
+        private static readonly Type s_type = typeof(IClientScriptManager);
+        private static readonly Type s_htmlHeadType = typeof(System.Web.UI.HtmlControls.HtmlHead);
+        private IClientScriptRepository _defaultRepository = new ClientScriptRepository();
+        private IClientScriptRepository _htmlHeadRepository = new ClientScriptRepository();
+        private Dictionary<Type, IClientScriptRepository> _repositories;
 
         public ClientScriptManagerEx() { }
 
-        protected class Repositories<TShard>
+        public void EnsureItem(string id, Func<ClientScriptItemBase> item) { _defaultRepository.EnsureItem(id, item); }
+        public void EnsureItem<TShard>(string id, Func<ClientScriptItemBase> item) { GetRepository(typeof(TShard)).EnsureItem(id, item); }
+        public void AddRange(ClientScriptItemBase item) { _defaultRepository.AddRange(item); }
+        public void AddRange(string literal) { _defaultRepository.AddRange(literal); }
+        public void AddRange(params object[] items) { _defaultRepository.AddRange(items); }
+        public void AddRange<TShard>(ClientScriptItemBase item) { GetRepository(typeof(TShard)).AddRange(item); }
+        public void AddRange<TShard>(string literal) { GetRepository(typeof(TShard)).AddRange(literal); }
+        public void AddRange<TShard>(params object[] items) { GetRepository(typeof(TShard)).AddRange(items); }
+
+        public IClientScriptRepository GetRepository<TShard>() { return GetRepository(typeof(TShard)); }
+        public IClientScriptRepository GetRepository(Type shard)
         {
-            public static IClientScriptRepository Repository = new ClientScriptRepository();
+            if (shard == s_type)
+                return _defaultRepository;
+            if (shard == s_htmlHeadType)
+                return _htmlHeadRepository;
+            // repositories
+            if (_repositories == null)
+                _repositories = new Dictionary<Type, IClientScriptRepository>();
+            IClientScriptRepository repository;
+            if (!_repositories.TryGetValue(shard, out repository))
+                _repositories.Add(shard, (repository = new ClientScriptRepository()));
+            return repository;
         }
-
-        public void EnsureItem<TShard>(string id, Func<ClientScriptItemBase> item) { Repositories<IClientScriptManager>.Repository.EnsureItem(id, item); }
-        public void AddRange(ClientScriptItemBase item) { Repositories<IClientScriptManager>.Repository.AddRange(item); }
-        public void AddRange(string literal) { Repositories<IClientScriptManager>.Repository.AddRange(literal); }
-        public void AddRange(params object[] items) { Repositories<IClientScriptManager>.Repository.AddRange(items); }
-        public void AddRange<TShard>(ClientScriptItemBase item) { Repositories<TShard>.Repository.AddRange(item); }
-        public void AddRange<TShard>(string literal) { Repositories<TShard>.Repository.AddRange(literal); }
-        public void AddRange<TShard>(params object[] items) { Repositories<TShard>.Repository.AddRange(items); }
-
-        public IClientScriptRepository GetRepository<TShard>()
+        public void SetRepository<TShard>(IClientScriptRepository repository) { SetRepository(typeof(TShard), repository); }
+        public void SetRepository(Type shard, IClientScriptRepository repository)
         {
-            return Repositories<TShard>.Repository;
-        }
-
-        public IClientScriptRepository GetRepository(Type shard) { return (IClientScriptRepository)s_getRepositoryMethodInfo.MakeGenericMethod(shard).Invoke(this, null); }
-
-        public void SetRepository<TShard>(IClientScriptRepository repository)
-        {
-            Repositories<TShard>.Repository = repository;
+            if (shard == s_type)
+                _defaultRepository = repository;
+            if (shard == s_htmlHeadType)
+                _htmlHeadRepository = repository;
+            // repositories
+            if (_repositories == null)
+                _repositories = new Dictionary<Type, IClientScriptRepository>();
+            _repositories[shard] = repository;
         }
     }
 }

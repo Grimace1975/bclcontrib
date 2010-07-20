@@ -24,6 +24,8 @@ THE SOFTWARE.
 */
 #endregion
 using System.Patterns.Session;
+using System.Patterns.Generic;
+using System.Collections.Generic;
 namespace System.Web
 {
     /// <summary>
@@ -33,17 +35,49 @@ namespace System.Web
     {
         private static readonly object s_sessionExProviderKey = new object();
 
+        public static bool HasExtent<T>(this HttpContext httpContext)
+        {
+            if (httpContext == null)
+                throw new ArgumentNullException("httpContext");
+            return httpContext.Items.Contains(typeof(T));
+        }
+        public static bool HasExtent(this HttpContext httpContext, Type type)
+        {
+            if (httpContext == null)
+                throw new ArgumentNullException("httpContext");
+            return httpContext.Items.Contains(type);
+        }
+
+        public static void Clear<T>(this HttpContext httpContext)
+        {
+            if (httpContext == null)
+                throw new ArgumentNullException("httpContext");
+            httpContext.Items[typeof(T)] = null;
+        }
+        public static void Clear(this HttpContext httpContext, Type type)
+        {
+            if (httpContext == null)
+                throw new ArgumentNullException("httpContext");
+            httpContext.Items[type] = null;
+        }
+
         public static T Get<T>(this HttpContext httpContext)
         {
             if (httpContext == null)
                 throw new ArgumentNullException("httpContext");
             return (T)httpContext.Items[typeof(T)];
         }
-        public static T Get<T>(this HttpContextBase httpContext)
+        public static IEnumerable<T> GetMany<T>(this HttpContext httpContext)
         {
             if (httpContext == null)
                 throw new ArgumentNullException("httpContext");
-            return (T)httpContext.Items[typeof(T)];
+            return (IEnumerable<T>)httpContext.Items[typeof(IEnumerable<T>)];
+        }
+        public static object Get(this HttpContext httpContext, Type type)
+        {
+            if (httpContext == null)
+                throw new ArgumentNullException("httpContext");
+            return httpContext.Items[type];
         }
 
         public static void Set<T>(this HttpContext httpContext, T value)
@@ -52,11 +86,81 @@ namespace System.Web
                 throw new ArgumentNullException("httpContext");
             httpContext.Items[typeof(T)] = value;
         }
+        public static void SetMany<T>(this HttpContext httpContext, IEnumerable<T> value)
+        {
+            if (httpContext == null)
+                throw new ArgumentNullException("httpContext");
+            httpContext.Items[typeof(IEnumerable<T>)] = value;
+        }
+        public static void Set(this HttpContext httpContext, Type type, object value)
+        {
+            if (httpContext == null)
+                throw new ArgumentNullException("httpContext");
+            httpContext.Items[type] = value;
+        }
+
+        public static bool HasExtent<T>(this HttpContextBase httpContext)
+        {
+            if (httpContext == null)
+                throw new ArgumentNullException("httpContext");
+            return httpContext.Items.Contains(typeof(T));
+        }
+        public static bool HasExtent(this HttpContextBase httpContext, Type type)
+        {
+            if (httpContext == null)
+                throw new ArgumentNullException("httpContext");
+            return httpContext.Items.Contains(type);
+        }
+
+        public static void Clear<T>(this HttpContextBase httpContext)
+        {
+            if (httpContext == null)
+                throw new ArgumentNullException("httpContext");
+            httpContext.Items[typeof(T)] = null;
+        }
+        public static void Clear(this HttpContextBase httpContext, Type type)
+        {
+            if (httpContext == null)
+                throw new ArgumentNullException("httpContext");
+            httpContext.Items[type] = null;
+        }
+
+        public static T Get<T>(this HttpContextBase httpContext)
+        {
+            if (httpContext == null)
+                throw new ArgumentNullException("httpContext");
+            return (T)httpContext.Items[typeof(T)];
+        }
+        public static IEnumerable<T> GetMany<T>(this HttpContextBase httpContext)
+        {
+            if (httpContext == null)
+                throw new ArgumentNullException("httpContext");
+            return (IEnumerable<T>)httpContext.Items[typeof(IEnumerable<T>)];
+        }
+        public static object Get(this HttpContextBase httpContext, Type type)
+        {
+            if (httpContext == null)
+                throw new ArgumentNullException("httpContext");
+            return httpContext.Items[type];
+        }
+
         public static void Set<T>(this HttpContextBase httpContext, T value)
         {
             if (httpContext == null)
                 throw new ArgumentNullException("httpContext");
             httpContext.Items[typeof(T)] = value;
+        }
+        public static void SetMany<T>(this HttpContextBase httpContext, IEnumerable<T> value)
+        {
+            if (httpContext == null)
+                throw new ArgumentNullException("httpContext");
+            httpContext.Items[typeof(IEnumerable<T>)] = value;
+        }
+        public static void Set(this HttpContextBase httpContext, Type type, object value)
+        {
+            if (httpContext == null)
+                throw new ArgumentNullException("httpContext");
+            httpContext.Items[type] = value;
         }
 
         public static void SetSessionExProvider(this HttpContext httpContext, HttpSessionExProviderBase sessionExProvider)

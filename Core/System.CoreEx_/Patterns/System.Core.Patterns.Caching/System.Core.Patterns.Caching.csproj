@@ -49,7 +49,7 @@
     <Compile Include="Patterns\Caching\CacheProviderBase.cs" />
     <Compile Include="Patterns\Caching\CacheItemAddedCallback.cs" />
     <Compile Include="Patterns\Caching\CacheItemRemovedCallback.cs" />
-    <Compile Include="Patterns\Caching\CacheEx+Touch.cs" />
+    <Compile Include="Patterns\Caching\CacheFileTouch.cs" />
     <Compile Include="Patterns\Caching\DataCache.cs" />
     <Compile Include="Patterns\Caching\DataCacheBuilder.cs" />
     <Compile Include="Patterns\Caching\DataCacheRegistrar.cs" />

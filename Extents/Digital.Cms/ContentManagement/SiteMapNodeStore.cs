@@ -24,6 +24,7 @@ THE SOFTWARE.
 */
 #endregion
 using System;
+using System.Linq;
 using System.Collections.Specialized;
 using System.Configuration.Provider;
 using System.Web.Configuration;
@@ -194,33 +195,29 @@ namespace Digital.ContentManagement
                         hiddenRootTreeId = null;
                 }
                 // make url
-                string uri = null;
                 SiteMapNodeEx node;
                 switch (type)
                 {
                     case "X-Section":
-                        uri = "/" + id;
-                        node = new SiteMapSectionNode(_provider, uid, uri, name);
-                        node.Set<Route>(StampRoute(uid, _routeCreator.CreateRoute(id, virtualize)));
+                        node = new SiteMapSectionNode(_provider, uid, "/" + id, name);
+                        SetRouteInNode(node, _routeCreator.CreateRoutes(node, id, virtualize), uid);
                         break;
                     case "E-Form":
-                        uri = "/" + id;
-                        node = new SiteMapFormNode(_provider, uid, uri, name);
-                        node.Set<Route>(StampRoute(uid, _routeCreator.CreateRoute(id, virtualize)));
+                        node = new SiteMapFormNode(_provider, uid, "/" + id, name);
                         node.Set<SiteMapNodePartialProviderExtent>(new SiteMapNodePartialProviderExtent());
+                        SetRouteInNode(node, _routeCreator.CreateRoutes(node, id, virtualize), uid);
                         break;
                     case "E-ListDetail":
-                        uri = "/" + id;
-                        node = new SiteMapListDetailNode(_provider, uid, uri, name);
-                        node.Set<Route>(StampRoute(uid, _routeCreator.CreateRoute(id, virtualize)));
+                        node = new SiteMapListDetailNode(_provider, uid, "/" + id, name);
                         node.Set<SiteMapNodePartialProviderExtent>(new SiteMapNodePartialProviderExtent());
+                        SetRouteInNode(node, _routeCreator.CreateRoutes(node, id, virtualize), uid);
                         break;
                     case "X-Link":
-                        uri = "/" + StringEx.Axb(sectionId, "/", id);
+                        id = StringEx.Axb(sectionId, "/", id);
                         string linkUri;
                         if (!attrib.TryGetValue("LinkUri", out linkUri))
                             linkUri = "/";
-                        node = new SiteMapLinkNode(_provider, uid, uri, name) { LinkUri = linkUri };
+                        node = new SiteMapLinkNode(_provider, uid, "/" + id, name) { LinkUri = linkUri };
                         node.Set<Func<SiteMapNodeEx, RouteData>>((nodeEx) =>
                         {
                             var linkNodeEx = (nodeEx as SiteMapLinkNode);
@@ -230,9 +227,9 @@ namespace Digital.ContentManagement
                         });
                         break;
                     case "X-Content":
-                        uri = "/" + StringEx.Axb(sectionId, "/", id);
-                        node = new SiteMapPageNode(_provider, uid, uri, name);
-                        node.Set<Route>(StampRoute(uid, _routeCreator.CreateRoute(StringEx.Axb(sectionId, "/", id), virtualize)));
+                        id = StringEx.Axb(sectionId, "/", id);
+                        node = new SiteMapPageNode(_provider, uid, "/" + id, name);
+                        SetRouteInNode(node, _routeCreator.CreateRoutes(node, id, virtualize), uid);
                         break;
                     default:
                         throw new InvalidOperationException();
@@ -252,10 +249,14 @@ namespace Digital.ContentManagement
                 return node;
             }
 
-            private Route StampRoute(string uid, Route route)
+            private void SetRouteInNode(SiteMapNodeEx node, IEnumerable<Route> routes, string dynamicId)
             {
-                route.DataTokens["cid"] = uid;
-                return route;
+                DynamicRoute.SetDynamicId(routes, dynamicId);
+                int routes2 = routes.Count();
+                if (routes2 == 1)
+                    node.Set<Route>(routes.Single());
+                else if (routes2 > 0)
+                    node.SetMany<Route>(routes);
             }
 
             private SiteMapNode GetParentNodeFromDataReader(Dictionary<string, SiteMapNodeEx> nodes, PageOrdinal ordinal, IDataReader r, bool findSection)

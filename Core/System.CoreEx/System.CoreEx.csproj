@@ -37,11 +37,11 @@
     <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Caching\Patterns\Caching\CacheDependency.cs">
       <Link>Patterns\System.Core.Patterns.Caching\Patterns\Caching\CacheDependency.cs</Link>
     </Compile>
-    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Caching\Patterns\Caching\CacheEx+Touch.cs">
-      <Link>Patterns\System.Core.Patterns.Caching\Patterns\Caching\CacheEx+Touch.cs</Link>
-    </Compile>
     <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Caching\Patterns\Caching\CacheEx.cs">
       <Link>Patterns\System.Core.Patterns.Caching\Patterns\Caching\CacheEx.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Caching\Patterns\Caching\CacheFileTouch.cs">
+      <Link>Patterns\System.Core.Patterns.Caching\Patterns\Caching\CacheFileTouch.cs</Link>
     </Compile>
     <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Caching\Patterns\Caching\CacheItemAddedCallback.cs">
       <Link>Patterns\System.Core.Patterns.Caching\Patterns\Caching\CacheItemAddedCallback.cs</Link>
@@ -975,6 +975,9 @@
     </Compile>
     <Compile Include="..\System.CoreEx_\System.Core2\Patterns\Disposeable.cs">
       <Link>System.Core2\Patterns\Disposeable.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core2\Patterns\Generic\ExtentsRepository.cs">
+      <Link>System.Core2\Patterns\Generic\ExtentsRepository.cs</Link>
     </Compile>
     <Compile Include="..\System.CoreEx_\System.Core2\Patterns\Generic\SimpleFactoryBase.cs">
       <Link>System.Core2\Patterns\Generic\SimpleFactoryBase.cs</Link>

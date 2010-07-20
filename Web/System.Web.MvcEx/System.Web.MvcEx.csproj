@@ -47,15 +47,21 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Web\Mvc.1\UrlHelperExtensions.cs" />
-    <Compile Include="Web\Mvc.1\Html\LinkExtensionsEx.cs" />
-    <Compile Include="Web\Mvc.1\Html\IHtmlTextBox.cs" />
-    <Compile Include="Web\Mvc.1\Html\TextAreaExtensionsEx.cs" />
-    <Compile Include="Web\Mvc.2\ObservableResult.cs" />
-    <Compile Include="Web\Mvc\IWantToSkipServiceLocatorControllerFactory.cs" />
-    <Compile Include="Web\Mvc\ServiceLocatorControllerFactory.cs" />
-    <Compile Include="Web\Mvc\MvcRouteHandlerExtensions.cs" />
-    <Compile Include="Web\Mvc\RouteCollectionExtensions.cs" />
+    <Compile Include="Web\Mvc+Dynamic\HtmlHelperEx.cs" />
+    <Compile Include="Web\Mvc+Dynamic\UrlHelperEx.cs" />
+    <Compile Include="Web\Mvc+Dynamic\UrlHelperExtensions.cs" />
+    <Compile Include="Web\Mvc+Dynamic\Html\LinkExtensionsEx.cs" />
+    <Compile Include="Web\Mvc+HtmlTextBox\Html\IHtmlTextBox.cs" />
+    <Compile Include="Web\Mvc+HtmlTextBox\Html\TextAreaExtensionsEx.cs" />
+    <Compile Include="Web\Mvc\ObservableResult.cs" />
+    <Compile Include="Web\Mvc+Dynamic\DynamicRedirectToRouteResult.cs" />
+    <Compile Include="Web\Mvc\PathHelpers.cs" />
+    <Compile Include="Web\Mvc+Dynamic\ControllerExtensions.cs" />
+    <Compile Include="Web\Mvc+Quality\IWantToSkipServiceLocatorControllerFactory.cs" />
+    <Compile Include="Web\Mvc+Dynamic\RouteValuesHelpers.cs" />
+    <Compile Include="Web\Mvc+Quality\ServiceLocatorControllerFactory.cs" />
+    <Compile Include="Web\Mvc+Route\MvcRouteHandlerExtensions.cs" />
+    <Compile Include="Web\Mvc+Route\RouteCollectionExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Core\Quality\System.Core.Quality\System.Core.Quality.csproj">

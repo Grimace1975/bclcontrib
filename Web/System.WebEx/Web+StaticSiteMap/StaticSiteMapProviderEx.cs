@@ -27,12 +27,13 @@ using System.Threading;
 using System.Configuration.Provider;
 using System.Collections.Specialized;
 using System.Reflection;
+using System.Web.Routing;
 namespace System.Web
 {
     /// <summary>
     /// StaticSiteMapProviderEx
     /// </summary>
-    public partial class StaticSiteMapProviderEx : StaticSiteMapProvider, ISiteMapProvider
+    public partial class StaticSiteMapProviderEx : StaticSiteMapProvider, ISiteMapProvider, IDynamicRoutingContext
     {
         private IStaticSiteMapProviderExNodeStore _nodeStore;
         private ReaderWriterLockSlim _rwLock = new ReaderWriterLockSlim();
@@ -241,5 +242,19 @@ namespace System.Web
 
         public TNode GetParentNode<TNode>(SiteMapNode node)
             where TNode : SiteMapNode { return (TNode)GetParentNode(node); }
+
+        #region DynamicRoutingContext
+
+        IDynamicNode IDynamicRoutingContext.FindNode(string path)
+        {
+            return (FindSiteMapNode(path) as IDynamicNode);
+        }
+
+        IDynamicNode IDynamicRoutingContext.FindNodeById(string id)
+        {
+            return (FindSiteMapNodeFromKey(id) as IDynamicNode);
+        }
+
+        #endregion
     }
 }

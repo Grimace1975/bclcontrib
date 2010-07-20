@@ -28,31 +28,9 @@ using System.Linq;
 using System.IO;
 namespace System.Patterns.Caching
 {
-    public partial class CacheEx
+    public partial class CacheFileTouch
     {
         private static readonly object s_filesLock = new object();
-
-        /// <summary>
-        /// Touches the specified key.
-        /// </summary>
-        /// <param name="key">The key.</param>
-        public void Touch(string key)
-        {
-            if (s_cacheProvider == null)
-                throw new ArgumentNullException();
-            s_cacheProvider.Touch(key);
-        }
-        /// <summary>
-        /// Touches the specified key array.
-        /// </summary>
-        /// <param name="keys">The keys.</param>
-        public void Touch(params string[] keys)
-        {
-            if (s_cacheProvider == null)
-                throw new ArgumentNullException();
-            foreach (string key in keys)
-                s_cacheProvider.Touch(key);
-        }
 
         /// <summary>
         /// Touches the specified key array.
@@ -79,11 +57,11 @@ namespace System.Patterns.Caching
             return folder.EnsureEndsWith("\\") + key + ".txt";
         }
 
-        public static CacheDependency GetFileCacheDependency(string folder, params string[] keys)
+        public static CacheDependency CreateCacheDependency(string folder, params string[] keys)
         {
             if ((keys == null) || (keys.Length == 0))
                 throw new ArgumentNullException("keys");
-            EnsureFileCacheDependency(folder, keys);
+            EnsureCacheDependency(folder, keys);
             return new CacheDependency
             {
                 FilePaths = keys.Select(k => GetTouchFullPath(folder, k))
@@ -91,7 +69,7 @@ namespace System.Patterns.Caching
             };
         }
 
-        private static void EnsureFileCacheDependency(string folder, string[] keys)
+        private static void EnsureCacheDependency(string folder, string[] keys)
         {
             lock (s_filesLock)
                 foreach (var key in keys)

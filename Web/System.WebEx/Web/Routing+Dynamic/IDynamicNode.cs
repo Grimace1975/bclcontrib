@@ -23,34 +23,14 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 #endregion
+using System.Patterns.Generic;
 namespace System.Web.Routing
 {
     /// <summary>
-    /// ISiteMapExRouteContext
+    /// IDynamicNode
     /// </summary>
-    public interface ISiteMapExRouteContext
+    public interface IDynamicNode
     {
-        //Uri GetRequestUri(HttpContextBase httpContext);
-    }
-
-    /// <summary>
-    /// SiteMapExRouteContext
-    /// </summary>
-    public class SiteMapExRouteContext : ISiteMapExRouteContext
-    {
-    //    public UriSchema UriSchema { get; set; }
-
-    //    private UriContext RequestUriContext { get; set; }
-
-    //    public Uri GetRequestUri(HttpContextBase httpContext)
-    //    {
-    //        RequestUriContext = UriSchema.ParseUri(httpContext.Request);
-    //        return RequestUriContext.Uri;
-    //    }
-
-        public Uri GetRequest(HttpContextBase httpContext)
-        {
-            return httpContext.Request.Url; // httpContext.ParseRequestUri().Uri;
-        }
+        string Title { get; }
     }
 }

@@ -60,6 +60,7 @@
     <Compile Include="EnvironmentExMapper.cs" />
     <Compile Include="DefaultAppUnit.cs" />
     <Compile Include="EXTENTIONS\Configuration\ConfigurationManagerEx.cs" />
+    <Compile Include="Patterns\Generic\ExtentsRepository.cs" />
     <Compile Include="Patterns\Generic\SimpleFactoryBase.cs" />
     <Compile Include="Patterns\ReleaseManagement\Configuration\ReleaseManagementConfiguration.cs" />
     <Compile Include="TypeExtensions.cs" />

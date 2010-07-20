@@ -23,14 +23,17 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 #endregion
-using System;
-using System.Web.Routing;
-using System.Collections.Generic;
-using System.Web;
-namespace Digital.ContentManagement
+using System.Patterns.Generic;
+namespace System.Web.Routing
 {
-    public interface ISiteMapNodeStoreRouteCreator : IDisposable
+    /// <summary>
+    /// IDynamicRoutingContextExtensions
+    /// </summary>
+    public static class IDynamicRoutingContextExtensions
     {
-        IEnumerable<Route> CreateRoutes(SiteMapNodeEx node, string id, string virtualize);
+        public static IDynamicRoutingContext EnsureOrDefault(this IDynamicRoutingContext routingContext)
+        {
+            return (routingContext ?? (IDynamicRoutingContext)SiteMap.Provider);
+        }
     }
 }
