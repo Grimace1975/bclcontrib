@@ -36,21 +36,22 @@ namespace System.Web
     /// </summary>
     public class SiteMapNodeEx : SiteMapNode, IDynamicNode, IExtentsRepository
     {
+        public static readonly SiteMapNodeEx Empty = new SiteMapNodeEx(new EmptySiteMapProvider(), string.Empty);
         private static readonly Type s_type = typeof(SiteMapNodeEx);
         private IExtentsRepository _defaultRepository = new ExtentsRepository();
         private Dictionary<Type, IExtentsRepository> _repositories;
-        public static readonly SiteMapNodeEx Empty = new SiteMapNodeEx(new EmptySiteMapProvider(), string.Empty);
+        private IHaveVirtualUrlSiteMapNode _haveVirtualUrlSiteMapNode;
 
         public SiteMapNodeEx(SiteMapProvider provider, string key)
-            : base(provider, key) { Visible = true; }
+            : base(provider, key) { Visible = true; _haveVirtualUrlSiteMapNode = (this as IHaveVirtualUrlSiteMapNode); }
         public SiteMapNodeEx(SiteMapProvider provider, string key, string url)
-            : base(provider, key, url) { Visible = true; }
+            : base(provider, key, url) { Visible = true; _haveVirtualUrlSiteMapNode = (this as IHaveVirtualUrlSiteMapNode); }
         public SiteMapNodeEx(SiteMapProvider provider, string key, string url, string title)
-            : base(provider, key, url, title) { Visible = true; }
+            : base(provider, key, url, title) { Visible = true; _haveVirtualUrlSiteMapNode = (this as IHaveVirtualUrlSiteMapNode); }
         public SiteMapNodeEx(SiteMapProvider provider, string key, string url, string title, string description)
-            : base(provider, key, url, title, description) { Visible = true; }
+            : base(provider, key, url, title, description) { Visible = true; _haveVirtualUrlSiteMapNode = (this as IHaveVirtualUrlSiteMapNode); }
         public SiteMapNodeEx(SiteMapProvider provider, string key, string url, string title, string description, IList roles, NameValueCollection attributes, NameValueCollection explicitResourceKeys, string implicitResourceKey)
-            : base(provider, key, url, title, description, roles, attributes, explicitResourceKeys, implicitResourceKey) { Visible = true; }
+            : base(provider, key, url, title, description, roles, attributes, explicitResourceKeys, implicitResourceKey) { Visible = true; _haveVirtualUrlSiteMapNode = (this as IHaveVirtualUrlSiteMapNode); }
 
         public bool Visible { get; set; }
 
@@ -103,6 +104,24 @@ namespace System.Web
             if (_repositories == null)
                 _repositories = new Dictionary<Type, IExtentsRepository>();
             _repositories[shard] = repository;
+        }
+
+        public string InteriorUrl
+        {
+            get { return base.Url; }
+            set { base.Url = value; }
+        }
+
+        public new string Url
+        {
+            get { return (_haveVirtualUrlSiteMapNode == null ? base.Url : _haveVirtualUrlSiteMapNode.Url); }
+            set
+            {
+                if (_haveVirtualUrlSiteMapNode == null)
+                    base.Url = value;
+                else
+                    _haveVirtualUrlSiteMapNode.Url = value;
+            }
         }
 
         #region EmptySiteMapProvider

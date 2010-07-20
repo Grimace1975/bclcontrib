@@ -62,6 +62,7 @@
     <Compile Include="AssemblyRef.cs" />
     <Compile Include="Patterns\Caching\WebEnvironmentDebugStaticCacheProvider.cs" />
     <Compile Include="Patterns\Reporting\FlatFileCsvEmitterExtensions.cs" />
+    <Compile Include="Web+StaticSiteMap\IHaveVirtualUrlSiteMapNode.cs" />
     <Compile Include="Web\Routing+Dynamic\IDynamicRoutingContextExtensions.cs" />
     <Compile Include="Web\Routing+Dynamic\IDynamicNode.cs" />
     <Compile Include="Web\Routing+Dynamic\SiteMapDynamicRoutingContext.cs" />
@@ -167,7 +168,7 @@
     <Compile Include="Web\SiteMapProviderExtensions.cs" />
     <Compile Include="Web+StaticSiteMap\SiteMapNodeZoneExtent.cs" />
     <Compile Include="Web+StaticSiteMap\StaticSiteMapProviderEx+Observer.cs" />
-    <Compile Include="Web+StaticSiteMap\IUnconstrainSiteMapNode.cs" />
+    <Compile Include="Web+StaticSiteMap\IWantUnconstrainedSiteMapNode.cs" />
     <Compile Include="Web+StaticSiteMap\IStaticSiteMapProviderExNodeStore.cs" />
     <Compile Include="Web+StaticSiteMap\SiteMapLinkNode.cs" />
     <Compile Include="Web+StaticSiteMap\SiteMapNodeEx.cs" />

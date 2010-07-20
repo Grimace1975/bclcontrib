@@ -42,10 +42,10 @@ namespace System.Web.Routing
             _routingContext = routingContext;
         }
 
-        public static void SetDynamicId(IEnumerable<Route> routes, string dynamicId)
+        public static void SetRouteDefaults(IEnumerable<Route> routes, string dynamicId)
         {
             foreach (var route in routes)
-                route.DataTokens["dynamicId"] = dynamicId;
+                route.Defaults["dynamicId"] = dynamicId;
         }
 
         public override RouteData GetRouteData(HttpContextBase httpContext)
@@ -56,23 +56,24 @@ namespace System.Web.Routing
             // virtualPath modeled from Route::GetRouteData
             string virtualPath = httpRequest.AppRelativeCurrentExecutionFilePath.Substring(1) + httpRequest.PathInfo;
             //var requestUri = _siteMapExRouteContext.GetRequestUri(httpContext);
-            var nodeExtents = (_routingContext.FindNode(virtualPath) as IExtentsRepository);
+            var node =_routingContext.FindNode(virtualPath);
+            var nodeExtents = (node as IExtentsRepository);
             if (nodeExtents != null)
             {
                 // func
-                var func = nodeExtents.Get<Func<IExtentsRepository, RouteData>>();
+                var func = nodeExtents.Get<Func<IDynamicNode, RouteData>>();
                 if (func != null)
-                    return func(nodeExtents);
+                    return func(node);
                 // single
                 var route = nodeExtents.Get<Route>();
                 if (route != null)
                     return route.GetRouteData(httpContext);
                 // many
-                var routes = nodeExtents.GetMany<Route>();
-                if (routes != null)
-                    foreach (var route2 in routes)
+                var multiRoutes = nodeExtents.GetMany<Route>();
+                if (multiRoutes != null)
+                    foreach (var multiRoute in multiRoutes)
                     {
-                        var data = route2.GetRouteData(httpContext);
+                        var data = multiRoute.GetRouteData(httpContext);
                         if (data != null)
                             return data;
                     }
@@ -88,25 +89,26 @@ namespace System.Web.Routing
             object value;
             if (values.TryGetValue("dynamicId", out value))
             {
-                var nodeExtents = (_routingContext.FindNodeById(value as string) as IExtentsRepository);
+                var node = _routingContext.FindNodeById(value as string);
+                var nodeExtents = (node as IExtentsRepository);
                 values.Remove("dynamicId");
                 //
                 if (nodeExtents != null)
                 {
                     // func
-                    var func = nodeExtents.Get<Func<IExtentsRepository, VirtualPathData>>();
+                    var func = nodeExtents.Get<Func<IDynamicNode, VirtualPathData>>();
                     if (func != null)
-                        return func(nodeExtents);
+                        return func(node);
                     // single
                     var route = nodeExtents.Get<Route>();
                     if (route != null)
                         return route.GetVirtualPath(requestContext, values);
                     // many
-                    var routes = nodeExtents.GetMany<Route>();
-                    if (routes != null)
-                        foreach (var route2 in routes)
+                    var multiRoutes = nodeExtents.GetMany<Route>();
+                    if (multiRoutes != null)
+                        foreach (var multiRoute in multiRoutes)
                         {
-                            var path = route2.GetVirtualPath(requestContext, values);
+                            var path = multiRoute.GetVirtualPath(requestContext, values);
                             if (path != null)
                                 return path;
                         }

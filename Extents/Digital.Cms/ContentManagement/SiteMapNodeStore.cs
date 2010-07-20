@@ -218,7 +218,7 @@ namespace Digital.ContentManagement
                         if (!attrib.TryGetValue("LinkUri", out linkUri))
                             linkUri = "/";
                         node = new SiteMapLinkNode(_provider, uid, "/" + id, name) { LinkUri = linkUri };
-                        node.Set<Func<SiteMapNodeEx, RouteData>>((nodeEx) =>
+                        node.Set<Func<IDynamicNode, RouteData>>((nodeEx) =>
                         {
                             var linkNodeEx = (nodeEx as SiteMapLinkNode);
                             if (linkNodeEx != null)
@@ -251,7 +251,7 @@ namespace Digital.ContentManagement
 
             private void SetRouteInNode(SiteMapNodeEx node, IEnumerable<Route> routes, string dynamicId)
             {
-                DynamicRoute.SetDynamicId(routes, dynamicId);
+                DynamicRoute.SetRouteDefaults(routes, dynamicId);
                 int routes2 = routes.Count();
                 if (routes2 == 1)
                     node.Set<Route>(routes.Single());

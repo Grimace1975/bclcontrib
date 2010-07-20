@@ -26,7 +26,10 @@ THE SOFTWARE.
 namespace System.Web
 {
     /// <summary>
-    /// IUnconstrainSiteMapNode
+    /// IHaveVirtualUrlSiteMapNode
     /// </summary>
-	public interface IUnconstrainSiteMapNode {}
+    public interface IHaveVirtualUrlSiteMapNode
+    {
+        string Url { get; set; }
+    }
 }

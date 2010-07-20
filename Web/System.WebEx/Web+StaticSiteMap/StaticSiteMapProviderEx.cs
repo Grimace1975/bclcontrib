@@ -203,7 +203,7 @@ namespace System.Web
         protected override void AddNode(SiteMapNode node, SiteMapNode parentNode)
         {
             // assume in locked region
-            if (!(node is IUnconstrainSiteMapNode))
+            if (!(node is IWantUnconstrainedSiteMapNode))
             {
                 base.AddNode(node, parentNode);
                 return;

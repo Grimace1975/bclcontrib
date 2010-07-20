@@ -44,8 +44,8 @@ namespace System.Web.Mvc
             if (data == null)
                 return null;
             return PathHelpers.GenerateClientUrl(requestContext.HttpContext, data.VirtualPath);
-
         }
+
         public static string DynamicGenerateUrl(string routeName, string actionName, string dynamicId, string protocol, string hostName, string fragment, RouteValueDictionary routeValues, RouteCollection routeCollection, RequestContext requestContext, bool includeImplicitMvcValues) { return DynamicGenerateUrl((IDynamicRoutingContext)null, routeName, actionName, dynamicId, protocol, hostName, fragment, routeValues, routeCollection, requestContext, includeImplicitMvcValues); }
         public static string DynamicGenerateUrl(IDynamicRoutingContext routingContext, string routeName, string actionName, string dynamicId, string protocol, string hostName, string fragment, RouteValueDictionary routeValues, RouteCollection routeCollection, RequestContext requestContext, bool includeImplicitMvcValues)
         {
