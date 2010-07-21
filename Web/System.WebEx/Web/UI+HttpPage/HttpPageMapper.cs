@@ -91,8 +91,8 @@ namespace System.Web.UI
             // icon
             if (!string.IsNullOrEmpty(text = pageHead.IconUri))
             {
-                if (string.Compare(text, "/favicon.ico", StringComparison.InvariantCultureIgnoreCase) != 0)
-                    throw new InvalidOperationException("InvalidHttpHeadIcon");
+                if (string.Compare(text, "/favicon.ico", StringComparison.OrdinalIgnoreCase) != 0)
+                    throw new InvalidOperationException(string.Format("InvalidHttpHeadIconA {0}", "/favicon.ico"));
                 // icon (browser type A)
                 htmlLink = new HtmlLink { ID = HeaderControlId.Icon, Href = text };
                 htmlLink.Attributes["rel"] = "icon";

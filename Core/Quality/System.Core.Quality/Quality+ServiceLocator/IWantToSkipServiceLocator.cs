@@ -23,10 +23,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 #endregion
-namespace System.Web.Mvc
+namespace System.Quality
 {
     /// <summary>
-    /// IWantToSkipServiceLocatorControllerFactory
+    /// IWantToSkipServiceLocator
     /// </summary>
-    public interface IWantToSkipServiceLocatorControllerFactory { }
+    public interface IWantToSkipServiceLocator { }
 }

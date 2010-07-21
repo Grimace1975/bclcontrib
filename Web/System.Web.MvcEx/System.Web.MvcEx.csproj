@@ -58,9 +58,8 @@
     <Compile Include="Web\Mvc+Dynamic\DynamicRedirectToRouteResult.cs" />
     <Compile Include="Web\Mvc\PathHelpers.cs" />
     <Compile Include="Web\Mvc+Dynamic\ControllerExtensions.cs" />
-    <Compile Include="Web\Mvc+Quality\IWantToSkipServiceLocatorControllerFactory.cs" />
     <Compile Include="Web\Mvc+Dynamic\RouteValuesHelpers.cs" />
-    <Compile Include="Web\Mvc+Quality\ServiceLocatorControllerFactory.cs" />
+    <Compile Include="Web\Mvc\ServiceLocatorControllerFactory.cs" />
     <Compile Include="Web\Mvc+Route\MvcRouteHandlerExtensions.cs" />
     <Compile Include="Web\Mvc+Route\RouteCollectionExtensions.cs" />
   </ItemGroup>

@@ -37,25 +37,26 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Quality+ServiceLocator\IWantToSkipServiceLocator.cs" />
     <Compile Include="Local.Designer.cs">
       <DependentUpon>Local.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Quality.1\ITypeMockerWill.cs" />
-    <Compile Include="Quality.1\ITypeMocker.cs" />
-    <Compile Include="Quality.1\TypeMocker.cs" />
-    <Compile Include="Quality.1\TypeMockManager.cs" />
-    <Compile Include="Quality\ServiceDependencyAttribute.cs" />
-    <Compile Include="Quality\IServiceLocator.cs" />
-    <Compile Include="Quality\IServiceRegistrar.cs" />
-    <Compile Include="Quality\ServiceLocator.cs" />
-    <Compile Include="Quality\ServiceLocatorExtensions.cs" />
-    <Compile Include="Quality\ServiceLocatorManager.cs" />
-    <Compile Include="Quality\ServiceResolutionException.cs" />
-    <Compile Include="Quality\Reference_\zResolveLifetime.cs" />
-    <Compile Include="Quality\IServiceRegistration.cs" />
+    <Compile Include="Quality+TypeMocker\ITypeMockerWill.cs" />
+    <Compile Include="Quality+TypeMocker\ITypeMocker.cs" />
+    <Compile Include="Quality+TypeMocker\TypeMocker.cs" />
+    <Compile Include="Quality+TypeMocker\TypeMockManager.cs" />
+    <Compile Include="Quality+ServiceLocator\ServiceDependencyAttribute.cs" />
+    <Compile Include="Quality+ServiceLocator\IServiceLocator.cs" />
+    <Compile Include="Quality+ServiceLocator\IServiceRegistrar.cs" />
+    <Compile Include="Quality+ServiceLocator\ServiceLocator.cs" />
+    <Compile Include="Quality+ServiceLocator\ServiceLocatorExtensions.cs" />
+    <Compile Include="Quality+ServiceLocator\ServiceLocatorManager.cs" />
+    <Compile Include="Quality+ServiceLocator\ServiceResolutionException.cs" />
+    <Compile Include="Quality+ServiceLocator\Reference_\zResolveLifetime.cs" />
+    <Compile Include="Quality+ServiceLocator\IServiceRegistration.cs" />
     <Compile Include="Reflection\AssemblyExtensions.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -31,6 +31,8 @@ namespace System.Quality
     /// </summary>
     public static class ServiceLocator
     {
+        private static readonly Type s_wantToSkipServiceLocatorType = typeof(IWantToSkipServiceLocator);
+
         public static IServiceRegistrar GetRegistrar() { return ServiceLocatorManager.Current.GetRegistrar(); }
         public static TServiceRegistrar GetRegistrar<TServiceRegistrar>()
             where TServiceRegistrar : class, IServiceRegistrar { return ServiceLocatorManager.Current.GetRegistrar<TServiceRegistrar>(); }
@@ -45,5 +47,11 @@ namespace System.Quality
             where T : class { return ServiceLocatorManager.Current.ResolveAll<T>(); }
         public static TService Inject<TService>(TService instance)
             where TService : class { return ServiceLocatorManager.Current.Inject<TService>(instance); }
+
+        public static bool GetWantsToSkipLocator<T>() { return GetWantsToSkipLocator(typeof(T)); }
+        public static bool GetWantsToSkipLocator(Type type)
+        {
+            return ((type == null) || (type.IsAssignableFrom(s_wantToSkipServiceLocatorType)));
+        }
     }
 }

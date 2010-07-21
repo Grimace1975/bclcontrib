@@ -32,11 +32,9 @@ namespace System.Web.Mvc
     /// </summary>
     public class ServiceLocatorControllerFactory : DefaultControllerFactory
     {
-        private static readonly Type s_wantToSkipServiceLocatorControllerFactoryType = typeof(IWantToSkipServiceLocatorControllerFactory);
-
         protected override IController GetControllerInstance(RequestContext requestContext, Type controllerType)
         {
-            return (!controllerType.IsAssignableFrom(s_wantToSkipServiceLocatorControllerFactoryType) ? (IController)ServiceLocator.Resolve(controllerType) : base.GetControllerInstance(requestContext, controllerType));
+            return (!ServiceLocator.GetWantsToSkipLocator(controllerType) ? (IController)ServiceLocator.Resolve(controllerType) : base.GetControllerInstance(requestContext, controllerType));
         }
     }
 }
