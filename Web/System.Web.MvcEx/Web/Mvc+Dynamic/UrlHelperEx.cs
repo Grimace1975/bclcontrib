@@ -32,8 +32,10 @@ namespace System.Web.Mvc
     /// </summary>
     public static class UrlHelperEx
     {
-        public static string DynamicGenerateUrl(string routeName, string actionName, string dynamicId, RouteValueDictionary routeValues, RouteCollection routeCollection, RequestContext requestContext, bool includeImplicitMvcValues) { return DynamicGenerateUrl((IDynamicRoutingContext)null, routeName, actionName, dynamicId, routeValues, routeCollection, requestContext, includeImplicitMvcValues); }
-        public static string DynamicGenerateUrl(IDynamicRoutingContext routingContext, string routeName, string actionName, string dynamicId, RouteValueDictionary routeValues, RouteCollection routeCollection, RequestContext requestContext, bool includeImplicitMvcValues)
+        //public static string GenerateDynamicUrl(string routeName, string actionName, string dynamicId, RouteValueDictionary routeValues, RouteCollection routeCollection, RequestContext requestContext, bool includeImplicitMvcValues) { IDynamicNode node; return DynamicGenerateUrl(out node, (IDynamicRoutingContext)null, routeName, actionName, dynamicId, routeValues, routeCollection, requestContext, includeImplicitMvcValues); }
+        public static string GenerateDynamicUrl(out IDynamicNode node, string routeName, string actionName, string dynamicId, RouteValueDictionary routeValues, RouteCollection routeCollection, RequestContext requestContext, bool includeImplicitMvcValues) { return GenerateDynamicUrl(out node, (IDynamicRoutingContext)null, routeName, actionName, dynamicId, routeValues, routeCollection, requestContext, includeImplicitMvcValues); }
+        //public static string GenerateDynamicUrl(IDynamicRoutingContext routingContext, string routeName, string actionName, string dynamicId, RouteValueDictionary routeValues, RouteCollection routeCollection, RequestContext requestContext, bool includeImplicitMvcValues) { IDynamicNode node; return DynamicGenerateUrl(out node, routingContext, routeName, actionName, dynamicId, routeValues, routeCollection, requestContext, includeImplicitMvcValues); }
+        public static string GenerateDynamicUrl(out IDynamicNode node, IDynamicRoutingContext routingContext, string routeName, string actionName, string dynamicId, RouteValueDictionary routeValues, RouteCollection routeCollection, RequestContext requestContext, bool includeImplicitMvcValues)
         {
             if (routeCollection == null)
                 throw new ArgumentNullException("routeCollection");
@@ -42,28 +44,34 @@ namespace System.Web.Mvc
             var values = RouteValuesHelpers.DynamicMergeRouteValues(routingContext, actionName, dynamicId, requestContext.RouteData.Values, routeValues, includeImplicitMvcValues);
             var data = routeCollection.GetVirtualPathForArea(requestContext, routeName, values);
             if (data == null)
+            {
+                node = null;
                 return null;
+            }
+            node = (IDynamicNode)data.DataTokens["dynamicNode"];
             return PathHelpers.GenerateClientUrl(requestContext.HttpContext, data.VirtualPath);
         }
 
-        public static string DynamicGenerateUrl(string routeName, string actionName, string dynamicId, string protocol, string hostName, string fragment, RouteValueDictionary routeValues, RouteCollection routeCollection, RequestContext requestContext, bool includeImplicitMvcValues) { return DynamicGenerateUrl((IDynamicRoutingContext)null, routeName, actionName, dynamicId, protocol, hostName, fragment, routeValues, routeCollection, requestContext, includeImplicitMvcValues); }
-        public static string DynamicGenerateUrl(IDynamicRoutingContext routingContext, string routeName, string actionName, string dynamicId, string protocol, string hostName, string fragment, RouteValueDictionary routeValues, RouteCollection routeCollection, RequestContext requestContext, bool includeImplicitMvcValues)
+        //public static string GenerateDynamicUrl(string routeName, string actionName, string dynamicId, string protocol, string hostName, string fragment, RouteValueDictionary routeValues, RouteCollection routeCollection, RequestContext requestContext, bool includeImplicitMvcValues) { IDynamicNode node; return DynamicGenerateUrl(out node, (IDynamicRoutingContext)null, routeName, actionName, dynamicId, protocol, hostName, fragment, routeValues, routeCollection, requestContext, includeImplicitMvcValues); }
+        public static string GenerateDynamicUrl(out IDynamicNode node, string routeName, string actionName, string dynamicId, string protocol, string hostName, string fragment, RouteValueDictionary routeValues, RouteCollection routeCollection, RequestContext requestContext, bool includeImplicitMvcValues) { return GenerateDynamicUrl(out node, (IDynamicRoutingContext)null, routeName, actionName, dynamicId, protocol, hostName, fragment, routeValues, routeCollection, requestContext, includeImplicitMvcValues); }
+        //public static string GenerateDynamicUrl(IDynamicRoutingContext routingContext, string routeName, string actionName, string dynamicId, string protocol, string hostName, string fragment, RouteValueDictionary routeValues, RouteCollection routeCollection, RequestContext requestContext, bool includeImplicitMvcValues) { IDynamicNode node; return DynamicGenerateUrl(out node, routingContext, routeName, actionName, dynamicId, protocol, hostName, fragment, routeValues, routeCollection, requestContext, includeImplicitMvcValues); }
+        public static string GenerateDynamicUrl(out IDynamicNode node, IDynamicRoutingContext routingContext, string routeName, string actionName, string dynamicId, string protocol, string hostName, string fragment, RouteValueDictionary routeValues, RouteCollection routeCollection, RequestContext requestContext, bool includeImplicitMvcValues)
         {
-            string str = DynamicGenerateUrl(routingContext, routeName, actionName, dynamicId, routeValues, routeCollection, requestContext, includeImplicitMvcValues);
-            if (str == null)
-                return str;
+            string dynamicUrl = GenerateDynamicUrl(out node, routingContext, routeName, actionName, dynamicId, routeValues, routeCollection, requestContext, includeImplicitMvcValues);
+            if (dynamicUrl == null)
+                return dynamicUrl;
             if (!string.IsNullOrEmpty(fragment))
-                str = str + "#" + fragment;
-            if (string.IsNullOrEmpty(protocol) && string.IsNullOrEmpty(hostName))
-                return str;
+                dynamicUrl = dynamicUrl + "#" + fragment;
+            if ((string.IsNullOrEmpty(protocol)) && (string.IsNullOrEmpty(hostName)))
+                return dynamicUrl;
             var url = requestContext.HttpContext.Request.Url;
-            protocol = !string.IsNullOrEmpty(protocol) ? protocol : Uri.UriSchemeHttp;
-            hostName = !string.IsNullOrEmpty(hostName) ? hostName : url.Host;
+            protocol = (!string.IsNullOrEmpty(protocol) ? protocol : Uri.UriSchemeHttp);
+            hostName = (!string.IsNullOrEmpty(hostName) ? hostName : url.Host);
             string str2 = string.Empty;
             string scheme = url.Scheme;
             if (string.Equals(protocol, scheme, StringComparison.OrdinalIgnoreCase))
                 str2 = (url.IsDefaultPort ? string.Empty : (":" + Convert.ToString(url.Port, CultureInfo.InvariantCulture)));
-            return (protocol + Uri.SchemeDelimiter + hostName + str2 + str);
+            return (protocol + Uri.SchemeDelimiter + hostName + str2 + dynamicUrl);
         }
     }
 }

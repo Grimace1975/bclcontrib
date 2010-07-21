@@ -42,10 +42,14 @@ namespace System.Web.Routing
             _routingContext = routingContext;
         }
 
-        public static void SetRouteDefaults(IEnumerable<Route> routes, string dynamicId)
+        public static void SetRouteDefaults(IEnumerable<Route> routes, IDynamicNode node)
         {
+            var id = node.Key;
             foreach (var route in routes)
-                route.Defaults["dynamicId"] = dynamicId;
+            {
+                route.DataTokens["dynamicNode"] = node;
+                route.Defaults["dynamicId"] = id;
+            }
         }
 
         public override RouteData GetRouteData(HttpContextBase httpContext)
@@ -56,27 +60,30 @@ namespace System.Web.Routing
             // virtualPath modeled from Route::GetRouteData
             string virtualPath = httpRequest.AppRelativeCurrentExecutionFilePath.Substring(1) + httpRequest.PathInfo;
             //var requestUri = _siteMapExRouteContext.GetRequestUri(httpContext);
-            var node =_routingContext.FindNode(virtualPath);
-            var nodeExtents = (node as IExtentsRepository);
-            if (nodeExtents != null)
+            var node = GetNode(_routingContext, virtualPath);
+            if (node != null)
             {
-                // func
-                var func = nodeExtents.Get<Func<IDynamicNode, RouteData>>();
-                if (func != null)
-                    return func(node);
-                // single
-                var route = nodeExtents.Get<Route>();
-                if (route != null)
-                    return route.GetRouteData(httpContext);
-                // many
-                var multiRoutes = nodeExtents.GetMany<Route>();
-                if (multiRoutes != null)
-                    foreach (var multiRoute in multiRoutes)
-                    {
-                        var data = multiRoute.GetRouteData(httpContext);
-                        if (data != null)
-                            return data;
-                    }
+                var nodeExtents = (node as IExtentsRepository);
+                if (nodeExtents != null)
+                {
+                    // func
+                    var func = nodeExtents.Get<Func<IDynamicNode, RouteData>>();
+                    if (func != null)
+                        return func(node);
+                    // single
+                    var route = nodeExtents.Get<Route>();
+                    if (route != null)
+                        return route.GetRouteData(httpContext);
+                    // many
+                    var multiRoutes = nodeExtents.GetMany<Route>();
+                    if (multiRoutes != null)
+                        foreach (var multiRoute in multiRoutes)
+                        {
+                            var data = multiRoute.GetRouteData(httpContext);
+                            if (data != null)
+                                return data;
+                        }
+                }
             }
             return null;
         }
@@ -85,14 +92,10 @@ namespace System.Web.Routing
         {
             if (requestContext == null)
                 throw new ArgumentNullException("requestContext");
-            // lookup node
-            object value;
-            if (values.TryGetValue("dynamicId", out value))
+            var node = GetNode(_routingContext, values, true);
+            if (node != null)
             {
-                var node = _routingContext.FindNodeById(value as string);
                 var nodeExtents = (node as IExtentsRepository);
-                values.Remove("dynamicId");
-                //
                 if (nodeExtents != null)
                 {
                     // func
@@ -116,5 +119,23 @@ namespace System.Web.Routing
             }
             return null;
         }
+
+        private static IDynamicNode GetNode(IDynamicRoutingContext routingContext, string path)
+        {
+            return routingContext.FindNode(path);
+        }
+
+        private static IDynamicNode GetNode(IDynamicRoutingContext routingContext, RouteValueDictionary values, bool removeValue)
+        {
+            object value;
+            if (values.TryGetValue("dynamicId", out value))
+            {
+                if (removeValue)
+                    values.Remove("dynamicId");
+                return routingContext.FindNodeById(value as string);
+            }
+            return null;
+        }
     }
 }
+;

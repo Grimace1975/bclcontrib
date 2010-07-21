@@ -30,19 +30,29 @@ namespace System.Web
     /// <summary>
     /// SiteMapLinkNode
     /// </summary>
-	public class SiteMapLinkNode : SiteMapNodeEx //, IUnconstrainSiteMapNode
-	{
-		public SiteMapLinkNode(SiteMapProvider provider, string key)
-			: base(provider, key) { }
-		public SiteMapLinkNode(SiteMapProvider provider, string key, string url)
-			: base(provider, key, url) { }
-		public SiteMapLinkNode(SiteMapProvider provider, string key, string url, string title)
-			: base(provider, key, url, title) { }
-		public SiteMapLinkNode(SiteMapProvider provider, string key, string url, string title, string description)
-			: base(provider, key, url, title, description) { }
-		public SiteMapLinkNode(SiteMapProvider provider, string key, string url, string title, string description, IList roles, NameValueCollection attributes, NameValueCollection explicitResourceKeys, string implicitResourceKey)
-			: base(provider, key, url, title, description, roles, attributes, explicitResourceKeys, implicitResourceKey) { }
+    public class SiteMapLinkNode : SiteMapNodeEx, IHaveVirtualUrlSiteMapNode //, IUnconstrainSiteMapNode
+    {
+        public SiteMapLinkNode(SiteMapProvider provider, string key)
+            : base(provider, key) { }
+        public SiteMapLinkNode(SiteMapProvider provider, string key, string url)
+            : base(provider, key, url) { }
+        public SiteMapLinkNode(SiteMapProvider provider, string key, string url, string title)
+            : base(provider, key, url, title) { }
+        public SiteMapLinkNode(SiteMapProvider provider, string key, string url, string title, string description)
+            : base(provider, key, url, title, description) { }
+        public SiteMapLinkNode(SiteMapProvider provider, string key, string url, string title, string description, IList roles, NameValueCollection attributes, NameValueCollection explicitResourceKeys, string implicitResourceKey)
+            : base(provider, key, url, title, description, roles, attributes, explicitResourceKeys, implicitResourceKey) { }
 
         public string LinkUri { get; set; }
-	}
+
+        #region IHaveVirtualUrlSiteMapNode
+
+        string IHaveVirtualUrlSiteMapNode.Url
+        {
+            get { return LinkUri; }
+            set { LinkUri = value; }
+        }
+
+        #endregion
+    }
 }

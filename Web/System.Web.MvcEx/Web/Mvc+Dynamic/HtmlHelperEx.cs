@@ -32,23 +32,27 @@ namespace System.Web.Mvc
     /// </summary>
     public class HtmlHelperEx
     {
-        public static string GenerateDynamicLink(RequestContext requestContext, RouteCollection routeCollection, IDynamicRoutingContext routingContext, string linkText, string routeName, string actionName, string dynamicId, RouteValueDictionary routeValues, IDictionary<string, object> htmlAttributes) { return GenerateDynamicLink(requestContext, routeCollection, routingContext, linkText, routeName, actionName, dynamicId, null, null, null, routeValues, htmlAttributes); }
+        public static string GenerateDynamicLink(RequestContext requestContext, RouteCollection routeCollection, IDynamicRoutingContext routingContext, Func<IDynamicNode, string> linkText, string routeName, string actionName, string dynamicId, RouteValueDictionary routeValues, IDictionary<string, object> htmlAttributes) { return GenerateDynamicLink(requestContext, routeCollection, routingContext, linkText, routeName, actionName, dynamicId, null, null, null, routeValues, htmlAttributes); }
 
-        public static string GenerateDynamicLink(RequestContext requestContext, RouteCollection routeCollection, IDynamicRoutingContext routingContext, string linkText, string routeName, string actionName, string dynamicId, string protocol, string hostName, string fragment, RouteValueDictionary routeValues, IDictionary<string, object> htmlAttributes) { return DynamicGenerateLinkInternal(requestContext, routeCollection, routingContext, linkText, routeName, actionName, dynamicId, protocol, hostName, fragment, routeValues, htmlAttributes, true); }
+        public static string GenerateDynamicLink(RequestContext requestContext, RouteCollection routeCollection, IDynamicRoutingContext routingContext, Func<IDynamicNode, string> linkText, string routeName, string actionName, string dynamicId, string protocol, string hostName, string fragment, RouteValueDictionary routeValues, IDictionary<string, object> htmlAttributes) { return DynamicGenerateLinkInternal(requestContext, routeCollection, routingContext, linkText, routeName, actionName, dynamicId, protocol, hostName, fragment, routeValues, htmlAttributes, true); }
 
-        private static string DynamicGenerateLinkInternal(RequestContext requestContext, RouteCollection routeCollection, IDynamicRoutingContext routingContext, string linkText, string routeName, string actionName, string dynamicId, string protocol, string hostName, string fragment, RouteValueDictionary routeValues, IDictionary<string, object> htmlAttributes, bool includeImplicitMvcValues)
+        private static string DynamicGenerateLinkInternal(RequestContext requestContext, RouteCollection routeCollection, IDynamicRoutingContext routingContext, Func<IDynamicNode, string> linkText, string routeName, string actionName, string dynamicId, string protocol, string hostName, string fragment, RouteValueDictionary routeValues, IDictionary<string, object> htmlAttributes, bool includeImplicitMvcValues)
         {
-            string text = UrlHelperEx.DynamicGenerateUrl(routingContext, routeName, actionName, dynamicId, protocol, hostName, fragment, routeValues, routeCollection, requestContext, includeImplicitMvcValues);
+            IDynamicNode node;
+            string text = UrlHelperEx.GenerateDynamicUrl(out node, routingContext, routeName, actionName, dynamicId, protocol, hostName, fragment, routeValues, routeCollection, requestContext, includeImplicitMvcValues);
+            if (node == null)
+                throw new InvalidOperationException("!Node");
+            string nodeAsLinkText = (linkText == null ? node.Title : linkText(node));
             var b = new TagBuilder("a");
-            b.InnerHtml = (!string.IsNullOrEmpty(linkText) ? HttpUtility.HtmlEncode(linkText) : string.Empty);
+            b.InnerHtml = (!string.IsNullOrEmpty(nodeAsLinkText) ? HttpUtility.HtmlEncode(nodeAsLinkText) : string.Empty);
             b.MergeAttributes<string, object>(htmlAttributes);
             b.MergeAttribute("href", text);
             return b.ToString(TagRenderMode.Normal);
         }
 
-        public static string DynamicGenerateRouteLink(RequestContext requestContext, RouteCollection routeCollection, IDynamicRoutingContext routingContext, string linkText, string routeName, RouteValueDictionary routeValues, IDictionary<string, object> htmlAttributes) { return DynamicGenerateRouteLink(requestContext, routeCollection, routingContext, linkText, routeName, null, null, null, routeValues, htmlAttributes); }
+        public static string DynamicGenerateRouteLink(RequestContext requestContext, RouteCollection routeCollection, IDynamicRoutingContext routingContext, Func<IDynamicNode, string> linkText, string routeName, RouteValueDictionary routeValues, IDictionary<string, object> htmlAttributes) { return DynamicGenerateRouteLink(requestContext, routeCollection, routingContext, linkText, routeName, null, null, null, routeValues, htmlAttributes); }
 
-        public static string DynamicGenerateRouteLink(RequestContext requestContext, RouteCollection routeCollection, IDynamicRoutingContext routingContext, string linkText, string routeName, string protocol, string hostName, string fragment, RouteValueDictionary routeValues, IDictionary<string, object> htmlAttributes) { return DynamicGenerateLinkInternal(requestContext, routeCollection, routingContext, linkText, routeName, null, null, protocol, hostName, fragment, routeValues, htmlAttributes, false); }
+        public static string DynamicGenerateRouteLink(RequestContext requestContext, RouteCollection routeCollection, IDynamicRoutingContext routingContext, Func<IDynamicNode, string> linkText, string routeName, string protocol, string hostName, string fragment, RouteValueDictionary routeValues, IDictionary<string, object> htmlAttributes) { return DynamicGenerateLinkInternal(requestContext, routeCollection, routingContext, linkText, routeName, null, null, protocol, hostName, fragment, routeValues, htmlAttributes, false); }
 
     }
 }

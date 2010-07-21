@@ -200,17 +200,17 @@ namespace Digital.ContentManagement
                 {
                     case "X-Section":
                         node = new SiteMapSectionNode(_provider, uid, "/" + id, name);
-                        SetRouteInNode(node, _routeCreator.CreateRoutes(node, id, virtualize), uid);
+                        SetRouteInNode(_routeCreator.CreateRoutes(node, id, virtualize), node);
                         break;
                     case "E-Form":
                         node = new SiteMapFormNode(_provider, uid, "/" + id, name);
                         node.Set<SiteMapNodePartialProviderExtent>(new SiteMapNodePartialProviderExtent());
-                        SetRouteInNode(node, _routeCreator.CreateRoutes(node, id, virtualize), uid);
+                        SetRouteInNode(_routeCreator.CreateRoutes(node, id, virtualize), node);
                         break;
                     case "E-ListDetail":
                         node = new SiteMapListDetailNode(_provider, uid, "/" + id, name);
                         node.Set<SiteMapNodePartialProviderExtent>(new SiteMapNodePartialProviderExtent());
-                        SetRouteInNode(node, _routeCreator.CreateRoutes(node, id, virtualize), uid);
+                        SetRouteInNode(_routeCreator.CreateRoutes(node, id, virtualize), node);
                         break;
                     case "X-Link":
                         id = StringEx.Axb(sectionId, "/", id);
@@ -229,7 +229,7 @@ namespace Digital.ContentManagement
                     case "X-Content":
                         id = StringEx.Axb(sectionId, "/", id);
                         node = new SiteMapPageNode(_provider, uid, "/" + id, name);
-                        SetRouteInNode(node, _routeCreator.CreateRoutes(node, id, virtualize), uid);
+                        SetRouteInNode(_routeCreator.CreateRoutes(node, id, virtualize), node);
                         break;
                     default:
                         throw new InvalidOperationException();
@@ -249,9 +249,9 @@ namespace Digital.ContentManagement
                 return node;
             }
 
-            private void SetRouteInNode(SiteMapNodeEx node, IEnumerable<Route> routes, string dynamicId)
+            private void SetRouteInNode(IEnumerable<Route> routes, SiteMapNodeEx node)
             {
-                DynamicRoute.SetRouteDefaults(routes, dynamicId);
+                DynamicRoute.SetRouteDefaults(routes, node);
                 int routes2 = routes.Count();
                 if (routes2 == 1)
                     node.Set<Route>(routes.Single());

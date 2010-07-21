@@ -72,15 +72,7 @@ namespace System.Web.Mvc.Html
         public static MvcHtmlString DynamicActionLink(this HtmlHelper htmlHelper, IDynamicRoutingContext routingContext, string actionName, string dynamicId, RouteValueDictionary routeValues, IDictionary<string, object> htmlAttributes) { return DynamicActionLink(htmlHelper, routingContext, (Func<IDynamicNode, string>)null, actionName, dynamicId, routeValues, htmlAttributes); }
         public static MvcHtmlString DynamicActionLink(this HtmlHelper htmlHelper, IDynamicRoutingContext routingContext, Func<IDynamicNode, string> linkText, string actionName, string dynamicId, RouteValueDictionary routeValues, IDictionary<string, object> htmlAttributes)
         {
-            routingContext = routingContext.EnsureOrDefault();
-            var node = routingContext.FindNodeById(dynamicId);
-            if (node == null)
-                throw new ArgumentNullException("Node");
-            //
-            string nodeAsLinkText = (linkText == null ? node.Title : linkText(node));
-            if (string.IsNullOrEmpty(nodeAsLinkText))
-                throw new ArgumentNullException("linkText");
-            return MvcHtmlString.Create(HtmlHelperEx.GenerateDynamicLink(htmlHelper.ViewContext.RequestContext, htmlHelper.RouteCollection, routingContext, nodeAsLinkText, null, actionName, dynamicId, routeValues, htmlAttributes));
+            return MvcHtmlString.Create(HtmlHelperEx.GenerateDynamicLink(htmlHelper.ViewContext.RequestContext, htmlHelper.RouteCollection, routingContext, linkText, null, actionName, dynamicId, routeValues, htmlAttributes));
         }
 
         public static MvcHtmlString DynamicActionLink(this HtmlHelper htmlHelper, string actionName, string dynamicId, string protocol, string hostName, string fragment, object routeValues, object htmlAttributes) { return DynamicActionLink(htmlHelper, (IDynamicRoutingContext)null, (Func<IDynamicNode, string>)null, actionName, dynamicId, protocol, hostName, fragment, new RouteValueDictionary(routeValues), new RouteValueDictionary(htmlAttributes)); }
@@ -93,15 +85,7 @@ namespace System.Web.Mvc.Html
         public static MvcHtmlString DynamicActionLink(this HtmlHelper htmlHelper, IDynamicRoutingContext routingContext, string actionName, string dynamicId, string protocol, string hostName, string fragment, RouteValueDictionary routeValues, IDictionary<string, object> htmlAttributes) { return DynamicActionLink(htmlHelper, routingContext, (Func<IDynamicNode, string>)null, actionName, dynamicId, protocol, hostName, fragment, routeValues, htmlAttributes); }
         public static MvcHtmlString DynamicActionLink(this HtmlHelper htmlHelper, IDynamicRoutingContext routingContext, Func<IDynamicNode, string> linkText, string actionName, string dynamicId, string protocol, string hostName, string fragment, RouteValueDictionary routeValues, IDictionary<string, object> htmlAttributes)
         {
-            routingContext = routingContext.EnsureOrDefault();
-            var node = routingContext.FindNodeById(dynamicId);
-            if (node == null)
-                throw new ArgumentNullException("Node");
-            //
-            string nodeAsLinkText = (linkText == null ? node.Title : linkText(node));
-            if (string.IsNullOrEmpty(nodeAsLinkText))
-                throw new ArgumentNullException("linkText");
-            return MvcHtmlString.Create(HtmlHelperEx.GenerateDynamicLink(htmlHelper.ViewContext.RequestContext, htmlHelper.RouteCollection, routingContext, nodeAsLinkText, null, actionName, dynamicId, protocol, hostName, fragment, routeValues, htmlAttributes));
+            return MvcHtmlString.Create(HtmlHelperEx.GenerateDynamicLink(htmlHelper.ViewContext.RequestContext, htmlHelper.RouteCollection, routingContext, linkText, null, actionName, dynamicId, protocol, hostName, fragment, routeValues, htmlAttributes));
         }
 
         public static MvcHtmlString DynamicRouteLink(this HtmlHelper htmlHelper, object routeValues) { return DynamicRouteLink(htmlHelper, (IDynamicRoutingContext)null, (Func<IDynamicNode, string>)null, new RouteValueDictionary(routeValues)); }

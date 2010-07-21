@@ -31,6 +31,7 @@ namespace System.Web.Routing
     /// </summary>
     public interface IDynamicNode
     {
+        string Key { get; }
         string Title { get; }
     }
 }

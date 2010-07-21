@@ -48,11 +48,12 @@ namespace System.Web.Mvc
                 throw new ArgumentNullException("context");
             if (context.IsChildAction)
                 throw new InvalidOperationException("MvcResources.RedirectAction_CannotRedirectInChildAction");
-            string text = UrlHelperEx.DynamicGenerateUrl(RoutingContext, RouteName, null, null, RouteValues, Routes, context.RequestContext, false);
-            if (string.IsNullOrEmpty(text))
+            IDynamicNode node;
+            string value = UrlHelperEx.GenerateDynamicUrl(out node, RoutingContext, RouteName, null, null, RouteValues, Routes, context.RequestContext, false);
+            if (string.IsNullOrEmpty(value))
                 throw new InvalidOperationException("MvcResources.Common_NoRouteMatched");
             context.Controller.TempData.Keep();
-            context.HttpContext.Response.Redirect(text, false);
+            context.HttpContext.Response.Redirect(value, false);
         }
 
         public IDynamicRoutingContext RoutingContext { get; set; }
