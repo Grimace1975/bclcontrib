@@ -52,8 +52,13 @@
     <Compile Include="Web\Mvc+Dynamic\UrlHelperEx.cs" />
     <Compile Include="Web\Mvc+Dynamic\UrlHelperExtensions.cs" />
     <Compile Include="Web\Mvc+Dynamic\Html\LinkExtensionsEx.cs" />
+    <Compile Include="Web\Mvc+Forms\Html\SelectListLayout.cs" />
+    <Compile Include="Web\Mvc+Forms\Html\SelectExtensionsEx.cs" />
+    <Compile Include="Web\Mvc+Forms\Html\LabelExtensionsEx.cs" />
     <Compile Include="Web\Mvc+HtmlTextBox\Html\IHtmlTextBox.cs" />
     <Compile Include="Web\Mvc+HtmlTextBox\Html\TextAreaExtensionsEx.cs" />
+    <Compile Include="Web\Mvc\HtmlHelperExtensions.cs" />
+    <Compile Include="Web\Mvc\Html\TabBuilderExtensions.cs" />
     <Compile Include="Web\Mvc\ObservableResult.cs" />
     <Compile Include="Web\Mvc+Dynamic\DynamicRedirectToRouteResult.cs" />
     <Compile Include="Web\Mvc\PathHelpers.cs" />
