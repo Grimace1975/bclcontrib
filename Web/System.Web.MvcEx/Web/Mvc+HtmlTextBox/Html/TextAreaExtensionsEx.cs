@@ -35,7 +35,7 @@ namespace System.Web.Mvc.Html
     /// <summary>
     /// TextAreaExtensionsEx
     /// </summary>
-    public static class TextAreaExtensionsEx
+    public static partial class TextAreaExtensionsEx
     {
         internal static Dictionary<string, object> _implicitRowsAndColumns;
         private const int TextAreaColumns = 20;

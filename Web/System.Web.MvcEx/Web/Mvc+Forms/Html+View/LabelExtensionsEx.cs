@@ -30,11 +30,8 @@ namespace System.Web.Mvc.Html
     public static class LabelExtensionsEx
     {
         public static MvcHtmlString LabelEx(this HtmlHelper html, string expression) { return LabelHelperEx(html, ModelMetadata.FromStringExpression(expression, html.ViewData), expression); }
-
         public static MvcHtmlString LabelForEx<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression) { return LabelHelperEx(html, ModelMetadata.FromLambdaExpression<TModel, TValue>(expression, html.ViewData), ExpressionHelper.GetExpressionText(expression)); }
-
         public static MvcHtmlString LabelForModelEx(this HtmlHelper html) { return LabelHelperEx(html, html.ViewData.ModelMetadata, string.Empty); }
-
         internal static MvcHtmlString LabelHelperEx(HtmlHelper html, ModelMetadata metadata, string htmlFieldName)
         {
             string text = (metadata.DisplayName ?? (metadata.PropertyName ?? htmlFieldName.Split(new char[] { '.' }).Last<string>()));

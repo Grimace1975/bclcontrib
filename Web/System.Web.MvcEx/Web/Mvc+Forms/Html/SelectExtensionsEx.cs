@@ -32,7 +32,7 @@ using System.Globalization;
 using System.Collections;
 namespace System.Web.Mvc.Html
 {
-    public static class SelectExtensionsEx
+    public static partial class SelectExtensionsEx
     {
         public static MvcHtmlString RadioButtonList(this HtmlHelper htmlHelper, string name) { return RadioButtonList(htmlHelper, name, null, null, ((IDictionary<string, object>)null)); }
         public static MvcHtmlString RadioButtonList(this HtmlHelper htmlHelper, string name, IEnumerable<SelectListItem> selectList) { return RadioButtonList(htmlHelper, name, selectList, null, ((IDictionary<string, object>)null)); }
@@ -84,6 +84,7 @@ namespace System.Web.Mvc.Html
             return SelectInternal(htmlHelper, expression, selectList, true, htmlAttributes);
         }
 
+        #region Select Renderer
         private static MvcHtmlString SelectInternal(HtmlHelper htmlHelper, string name, IEnumerable<SelectListItem> selectList, bool allowMultiple, IDictionary<string, object> htmlAttributes)
         {
             ModelState state;
@@ -151,5 +152,6 @@ namespace System.Web.Mvc.Html
             divTag.InnerHtml = inputTag.ToString(TagRenderMode.Normal) + labelTag.ToString(TagRenderMode.Normal);
             return divTag.ToString(TagRenderMode.Normal);
         }
+        #endregion
     }
 }

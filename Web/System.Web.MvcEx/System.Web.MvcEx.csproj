@@ -52,9 +52,12 @@
     <Compile Include="Web\Mvc+Dynamic\UrlHelperEx.cs" />
     <Compile Include="Web\Mvc+Dynamic\UrlHelperExtensions.cs" />
     <Compile Include="Web\Mvc+Dynamic\Html\LinkExtensionsEx.cs" />
+    <Compile Include="Web\Mvc+Forms\Html+View\TextAreaExtensionsEx.cs" />
+    <Compile Include="Web\Mvc+Forms\Html+View\InputExtensionsEx.cs" />
+    <Compile Include="Web\Mvc+Forms\Html+View\LabelExtensionsEx.cs" />
+    <Compile Include="Web\Mvc+Forms\Html+View\SelectExtensionsEx.cs" />
     <Compile Include="Web\Mvc+Forms\Html\SelectListLayout.cs" />
     <Compile Include="Web\Mvc+Forms\Html\SelectExtensionsEx.cs" />
-    <Compile Include="Web\Mvc+Forms\Html\LabelExtensionsEx.cs" />
     <Compile Include="Web\Mvc+HtmlTextBox\Html\IHtmlTextBox.cs" />
     <Compile Include="Web\Mvc+HtmlTextBox\Html\TextAreaExtensionsEx.cs" />
     <Compile Include="Web\Mvc\HtmlHelperExtensions.cs" />

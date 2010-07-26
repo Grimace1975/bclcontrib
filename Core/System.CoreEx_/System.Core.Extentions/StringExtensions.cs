@@ -35,6 +35,41 @@ namespace System
     /// </summary>
     public static partial class StringExtensions
     {
+        public static string ReplaceEx(this string text, string oldValue, string newValue, StringComparison comparisonType)
+        {
+            if (comparisonType == StringComparison.Ordinal)
+                return text.Replace(oldValue, newValue);
+            int textLength = text.Length;
+            oldValue = oldValue.ToUpperInvariant();
+            int oldValueLength = oldValue.Length;
+            int newValueLength = newValue.Length;
+            //
+            int startIndex = 0;
+            int index = 0;
+            string upperString = text.ToUpperInvariant();
+            //
+            int sizeIncrease = Math.Max(0, (textLength / oldValueLength) * (newValueLength - oldValueLength));
+            var buffer = new char[textLength + sizeIncrease];
+            int bufferIndex = 0;
+            int copyCount;
+            while ((index = upperString.IndexOf(oldValue, startIndex, comparisonType)) != -1)
+            {
+                copyCount = index - startIndex; text.CopyTo(startIndex, buffer, bufferIndex, copyCount); bufferIndex += copyCount;
+                newValue.CopyTo(0, buffer, bufferIndex, newValueLength); bufferIndex += newValueLength;
+                //for (int textIndex = startIndex; textIndex < index; textIndex++)
+                //    buffer[bufferIndex++] = text[textIndex];
+                //for (int textIndex = 0; textIndex < newValueLength; textIndex++)
+                //    buffer[bufferIndex++] = newValue[textIndex];
+                startIndex = index + oldValueLength;
+            }
+            if (startIndex == 0)
+                return text;
+            copyCount = textLength - startIndex; text.CopyTo(startIndex, buffer, bufferIndex, copyCount); bufferIndex += copyCount;
+            //for (int textIndex = startIndex; textIndex < textLength; textIndex++)
+            //    buffer[bufferIndex++] = text[textIndex];
+            return new string(buffer, 0, bufferIndex);
+        }
+
         /// <summary>
         /// Enumeration representing the types of truncation support by a class.
         /// </summary>
