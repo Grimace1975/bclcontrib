@@ -30,23 +30,24 @@ using System.Web.Routing;
 using System.Text;
 using System.Globalization;
 using System.Collections;
+using System.Web.UI.WebControls;
 namespace System.Web.Mvc.Html
 {
     public static partial class SelectExtensionsEx
     {
         public static MvcHtmlString RadioButtonList(this HtmlHelper htmlHelper, string name) { return RadioButtonList(htmlHelper, name, null, null, ((IDictionary<string, object>)null)); }
         public static MvcHtmlString RadioButtonList(this HtmlHelper htmlHelper, string name, IEnumerable<SelectListItem> selectList) { return RadioButtonList(htmlHelper, name, selectList, null, ((IDictionary<string, object>)null)); }
-        public static MvcHtmlString RadioButtonList(this HtmlHelper htmlHelper, string name, ButtonListLayout layout) { return RadioButtonList(htmlHelper, name, null, layout, ((IDictionary<string, object>)null)); }
+        public static MvcHtmlString RadioButtonList(this HtmlHelper htmlHelper, string name, SelectListLayout layout) { return RadioButtonList(htmlHelper, name, null, layout, ((IDictionary<string, object>)null)); }
         public static MvcHtmlString RadioButtonList(this HtmlHelper htmlHelper, string name, IEnumerable<SelectListItem> selectList, IDictionary<string, object> htmlAttributes) { return RadioButtonList(htmlHelper, name, selectList, null, htmlAttributes); }
         public static MvcHtmlString RadioButtonList(this HtmlHelper htmlHelper, string name, IEnumerable<SelectListItem> selectList, object htmlAttributes) { return RadioButtonList(htmlHelper, name, selectList, null, ((IDictionary<string, object>)new RouteValueDictionary(htmlAttributes))); }
-        public static MvcHtmlString RadioButtonList(this HtmlHelper htmlHelper, string name, IEnumerable<SelectListItem> selectList, ButtonListLayout layout) { return RadioButtonList(htmlHelper, name, selectList, layout, ((IDictionary<string, object>)null)); }
-        public static MvcHtmlString RadioButtonList(this HtmlHelper htmlHelper, string name, IEnumerable<SelectListItem> selectList, ButtonListLayout layout, IDictionary<string, object> htmlAttributes) { return RadioButtonList(htmlHelper, name, selectList, layout, htmlAttributes); }
-        public static MvcHtmlString RadioButtonList(this HtmlHelper htmlHelper, string name, IEnumerable<SelectListItem> selectList, ButtonListLayout layout, object htmlAttributes) { return RadioButtonList(htmlHelper, name, selectList, layout, ((IDictionary<string, object>)new RouteValueDictionary(htmlAttributes))); }
+        public static MvcHtmlString RadioButtonList(this HtmlHelper htmlHelper, string name, IEnumerable<SelectListItem> selectList, SelectListLayout layout) { return RadioButtonList(htmlHelper, name, selectList, layout, ((IDictionary<string, object>)null)); }
+        public static MvcHtmlString RadioButtonList(this HtmlHelper htmlHelper, string name, IEnumerable<SelectListItem> selectList, SelectListLayout layout, IDictionary<string, object> htmlAttributes) { return RadioButtonList(htmlHelper, name, selectList, layout, htmlAttributes); }
+        public static MvcHtmlString RadioButtonList(this HtmlHelper htmlHelper, string name, IEnumerable<SelectListItem> selectList, SelectListLayout layout, object htmlAttributes) { return RadioButtonList(htmlHelper, name, selectList, layout, ((IDictionary<string, object>)new RouteValueDictionary(htmlAttributes))); }
         public static MvcHtmlString RadioButtonListFor<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression, IEnumerable<SelectListItem> selectList) { return RadioButtonListFor<TModel, TProperty>(htmlHelper, expression, selectList, null, ((IDictionary<string, object>)null)); }
         public static MvcHtmlString RadioButtonListFor<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression, IEnumerable<SelectListItem> selectList, IDictionary<string, object> htmlAttributes) { return RadioButtonListFor<TModel, TProperty>(htmlHelper, expression, selectList, null, htmlAttributes); }
         public static MvcHtmlString RadioButtonListFor<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression, IEnumerable<SelectListItem> selectList, object htmlAttributes) { return RadioButtonListFor<TModel, TProperty>(htmlHelper, expression, selectList, null, ((IDictionary<string, object>)new RouteValueDictionary(htmlAttributes))); }
-        public static MvcHtmlString RadioButtonListFor<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression, IEnumerable<SelectListItem> selectList, ButtonListLayout layout) { return RadioButtonListFor<TModel, TProperty>(htmlHelper, expression, selectList, layout, ((IDictionary<string, object>)null)); }
-        public static MvcHtmlString RadioButtonListFor<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression, IEnumerable<SelectListItem> selectList, ButtonListLayout layout, IDictionary<string, object> htmlAttributes)
+        public static MvcHtmlString RadioButtonListFor<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression, IEnumerable<SelectListItem> selectList, SelectListLayout layout) { return RadioButtonListFor<TModel, TProperty>(htmlHelper, expression, selectList, layout, ((IDictionary<string, object>)null)); }
+        public static MvcHtmlString RadioButtonListFor<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression, IEnumerable<SelectListItem> selectList, SelectListLayout layout, IDictionary<string, object> htmlAttributes)
         {
             if (expression == null)
                 throw new ArgumentNullException("expression");
@@ -54,24 +55,24 @@ namespace System.Web.Mvc.Html
         }
 
         public static MvcHtmlString RadioButtonListFor<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression, IEnumerable<SelectListItem> selectList, string layout, object htmlAttributes) { return RadioButtonListFor<TModel, TProperty>(htmlHelper, expression, selectList, layout, ((IDictionary<string, object>)new RouteValueDictionary(htmlAttributes))); }
-        private static MvcHtmlString RadioButtonListHelper(HtmlHelper htmlHelper, string expression, IEnumerable<SelectListItem> selectList, ButtonListLayout layout, IDictionary<string, object> htmlAttributes)
+        private static MvcHtmlString RadioButtonListHelper(HtmlHelper htmlHelper, string expression, IEnumerable<SelectListItem> selectList, SelectListLayout layout, IDictionary<string, object> htmlAttributes)
         {
-            return SelectInternal(htmlHelper, expression, selectList, false, htmlAttributes);
+            return SelectInternal(htmlHelper, expression, selectList, (layout ?? new SelectListLayout()), false, htmlAttributes);
         }
 
         public static MvcHtmlString CheckBoxList(this HtmlHelper htmlHelper, string name) { return CheckBoxList(htmlHelper, name, null, null, ((IDictionary<string, object>)null)); }
         public static MvcHtmlString CheckBoxList(this HtmlHelper htmlHelper, string name, IEnumerable<SelectListItem> selectList) { return CheckBoxList(htmlHelper, name, selectList, null, ((IDictionary<string, object>)null)); }
-        public static MvcHtmlString CheckBoxList(this HtmlHelper htmlHelper, string name, ButtonListLayout layout) { return CheckBoxList(htmlHelper, name, null, layout, ((IDictionary<string, object>)null)); }
+        public static MvcHtmlString CheckBoxList(this HtmlHelper htmlHelper, string name, SelectListLayout layout) { return CheckBoxList(htmlHelper, name, null, layout, ((IDictionary<string, object>)null)); }
         public static MvcHtmlString CheckBoxList(this HtmlHelper htmlHelper, string name, IEnumerable<SelectListItem> selectList, IDictionary<string, object> htmlAttributes) { return CheckBoxList(htmlHelper, name, selectList, null, htmlAttributes); }
         public static MvcHtmlString CheckBoxList(this HtmlHelper htmlHelper, string name, IEnumerable<SelectListItem> selectList, object htmlAttributes) { return CheckBoxList(htmlHelper, name, selectList, null, ((IDictionary<string, object>)new RouteValueDictionary(htmlAttributes))); }
-        public static MvcHtmlString CheckBoxList(this HtmlHelper htmlHelper, string name, IEnumerable<SelectListItem> selectList, ButtonListLayout layout) { return CheckBoxList(htmlHelper, name, selectList, layout, ((IDictionary<string, object>)null)); }
-        public static MvcHtmlString CheckBoxList(this HtmlHelper htmlHelper, string name, IEnumerable<SelectListItem> selectList, ButtonListLayout layout, IDictionary<string, object> htmlAttributes) { return CheckBoxList(htmlHelper, name, selectList, layout, htmlAttributes); }
-        public static MvcHtmlString CheckBoxList(this HtmlHelper htmlHelper, string name, IEnumerable<SelectListItem> selectList, ButtonListLayout layout, object htmlAttributes) { return CheckBoxList(htmlHelper, name, selectList, layout, ((IDictionary<string, object>)new RouteValueDictionary(htmlAttributes))); }
+        public static MvcHtmlString CheckBoxList(this HtmlHelper htmlHelper, string name, IEnumerable<SelectListItem> selectList, SelectListLayout layout) { return CheckBoxList(htmlHelper, name, selectList, layout, ((IDictionary<string, object>)null)); }
+        public static MvcHtmlString CheckBoxList(this HtmlHelper htmlHelper, string name, IEnumerable<SelectListItem> selectList, SelectListLayout layout, IDictionary<string, object> htmlAttributes) { return CheckBoxList(htmlHelper, name, selectList, layout, htmlAttributes); }
+        public static MvcHtmlString CheckBoxList(this HtmlHelper htmlHelper, string name, IEnumerable<SelectListItem> selectList, SelectListLayout layout, object htmlAttributes) { return CheckBoxList(htmlHelper, name, selectList, layout, ((IDictionary<string, object>)new RouteValueDictionary(htmlAttributes))); }
         public static MvcHtmlString CheckBoxListFor<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression, IEnumerable<SelectListItem> selectList) { return CheckBoxListFor<TModel, TProperty>(htmlHelper, expression, selectList, null, ((IDictionary<string, object>)null)); }
         public static MvcHtmlString CheckBoxListFor<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression, IEnumerable<SelectListItem> selectList, IDictionary<string, object> htmlAttributes) { return CheckBoxListFor<TModel, TProperty>(htmlHelper, expression, selectList, null, htmlAttributes); }
         public static MvcHtmlString CheckBoxListFor<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression, IEnumerable<SelectListItem> selectList, object htmlAttributes) { return CheckBoxListFor<TModel, TProperty>(htmlHelper, expression, selectList, null, ((IDictionary<string, object>)new RouteValueDictionary(htmlAttributes))); }
-        public static MvcHtmlString CheckBoxListFor<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression, IEnumerable<SelectListItem> selectList, ButtonListLayout layout) { return CheckBoxListFor<TModel, TProperty>(htmlHelper, expression, selectList, layout, ((IDictionary<string, object>)null)); }
-        public static MvcHtmlString CheckBoxListFor<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression, IEnumerable<SelectListItem> selectList, ButtonListLayout layout, IDictionary<string, object> htmlAttributes)
+        public static MvcHtmlString CheckBoxListFor<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression, IEnumerable<SelectListItem> selectList, SelectListLayout layout) { return CheckBoxListFor<TModel, TProperty>(htmlHelper, expression, selectList, layout, ((IDictionary<string, object>)null)); }
+        public static MvcHtmlString CheckBoxListFor<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression, IEnumerable<SelectListItem> selectList, SelectListLayout layout, IDictionary<string, object> htmlAttributes)
         {
             if (expression == null)
                 throw new ArgumentNullException("expression");
@@ -79,44 +80,43 @@ namespace System.Web.Mvc.Html
         }
 
         public static MvcHtmlString CheckBoxListFor<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression, IEnumerable<SelectListItem> selectList, string layout, object htmlAttributes) { return CheckBoxListFor<TModel, TProperty>(htmlHelper, expression, selectList, layout, ((IDictionary<string, object>)new RouteValueDictionary(htmlAttributes))); }
-        private static MvcHtmlString CheckBoxListHelper(HtmlHelper htmlHelper, string expression, IEnumerable<SelectListItem> selectList, ButtonListLayout layout, IDictionary<string, object> htmlAttributes)
+        private static MvcHtmlString CheckBoxListHelper(HtmlHelper htmlHelper, string expression, IEnumerable<SelectListItem> selectList, SelectListLayout layout, IDictionary<string, object> htmlAttributes)
         {
-            return SelectInternal(htmlHelper, expression, selectList, true, htmlAttributes);
+            return SelectInternal(htmlHelper, expression, selectList, (layout ?? new SelectListLayout()), true, htmlAttributes);
         }
 
         #region Select Renderer
-        private static MvcHtmlString SelectInternal(HtmlHelper htmlHelper, string name, IEnumerable<SelectListItem> selectList, bool allowMultiple, IDictionary<string, object> htmlAttributes)
+        private static MvcHtmlString SelectInternal(HtmlHelper htmlHelper, string name, IEnumerable<SelectListItem> items, SelectListLayout layout, bool allowMultiple, IDictionary<string, object> htmlAttributes)
         {
             ModelState state;
             name = htmlHelper.ViewContext.ViewData.TemplateInfo.GetFullHtmlFieldName(name);
             if (string.IsNullOrEmpty(name))
                 throw new ArgumentException("MvcResources.Common_NullOrEmpty", "name");
-            bool hasSelectList = false;
-            if (selectList == null)
+            bool hasItems = false;
+            if (items == null)
             {
-                selectList = GetSelectData(htmlHelper, name);
-                hasSelectList = true;
+                items = GetSelectData(htmlHelper, name);
+                hasItems = true;
             }
             object data = (allowMultiple ? htmlHelper.GetModelStateValue(name, typeof(string[])) : htmlHelper.GetModelStateValue(name, typeof(string)));
-            if ((!hasSelectList) && (data == null))
+            if ((!hasItems) && (data == null))
                 data = htmlHelper.ViewData.Eval(name);
             if (data != null)
             {
                 var source = (allowMultiple ? (data as IEnumerable) : ((IEnumerable)new object[] { data }));
                 var set = new HashSet<string>(source.Cast<object>().Select<object, string>(value => Convert.ToString(value, CultureInfo.CurrentCulture)), StringComparer.OrdinalIgnoreCase);
-                foreach (var item in selectList)
+                foreach (var item in items)
                     item.Selected = (item.Value != null ? set.Contains(item.Value) : set.Contains(item.Text));
             }
-            var b = new StringBuilder();
-            foreach (var selectItem in selectList)
-                b.AppendLine(ListItemToOption(name, selectItem));
-            var b2 = new TagBuilder("div");
-            b2.InnerHtml = b.ToString();
-            b2.MergeAttributes<string, object>(htmlAttributes);
-            b2.GenerateId(name);
+            var b = new TagBuilder("div");
+            if (layout.RepeatDirection == RepeatDirection.Horizontal)
+                b.AddCssStyle("clear", "both");
+            b.InnerHtml = HtmlForSelectList(name, items, layout, allowMultiple);
+            b.MergeAttributes<string, object>(htmlAttributes);
+            b.GenerateId(name);
             if (htmlHelper.ViewData.ModelState.TryGetValue(name, out state) && (state.Errors.Count > 0))
-                b2.AddCssClass(HtmlHelper.ValidationInputCssClassName);
-            return b2.ToMvcHtmlString(TagRenderMode.Normal);
+                b.AddCssClass(HtmlHelper.ValidationInputCssClassName);
+            return b.ToMvcHtmlString(TagRenderMode.Normal);
         }
 
         private static IEnumerable<SelectListItem> GetSelectData(this HtmlHelper htmlHelper, string name)
@@ -132,10 +132,18 @@ namespace System.Web.Mvc.Html
             return enumerable;
         }
 
-        internal static string ListItemToOption(string name, SelectListItem item)
+        private static string HtmlForSelectList(string name, IEnumerable<SelectListItem> items, SelectListLayout layout, bool allowMultiple)
+        {
+            var b = new StringBuilder();
+            foreach (var item in items)
+                b.AppendLine(HtmlForListItemToOption(name, item, layout, allowMultiple));
+            return b.ToString();
+        }
+
+        internal static string HtmlForListItemToOption(string name, SelectListItem item, SelectListLayout layout, bool allowMultiple)
         {
             var inputTag = new TagBuilder("input");
-            inputTag.Attributes.Add("type", "radio");
+            inputTag.Attributes.Add("type", (allowMultiple ? "checkbox" : "radio"));
             inputTag.Attributes.Add("name", name);
             if (item.Value != null)
                 inputTag.Attributes["value"] = item.Value;
@@ -148,7 +156,9 @@ namespace System.Web.Mvc.Html
                 labelTag.SetInnerText(item.Text);
             //
             var divTag = new TagBuilder("div");
-            divTag.AddCssClass("radioButton");
+            if (layout.RepeatDirection == RepeatDirection.Horizontal)
+                divTag.AddCssStyle("float", "left");
+            divTag.AddCssClass((allowMultiple ? "checkbox" : "radio") + "List");
             divTag.InnerHtml = inputTag.ToString(TagRenderMode.Normal) + labelTag.ToString(TagRenderMode.Normal);
             return divTag.ToString(TagRenderMode.Normal);
         }

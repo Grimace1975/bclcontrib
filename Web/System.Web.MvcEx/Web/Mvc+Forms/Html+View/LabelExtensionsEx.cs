@@ -29,10 +29,10 @@ namespace System.Web.Mvc.Html
 {
     public static class LabelExtensionsEx
     {
-        public static MvcHtmlString LabelEx(this HtmlHelper html, string expression) { return LabelHelperEx(html, ModelMetadata.FromStringExpression(expression, html.ViewData), expression); }
-        public static MvcHtmlString LabelForEx<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression) { return LabelHelperEx(html, ModelMetadata.FromLambdaExpression<TModel, TValue>(expression, html.ViewData), ExpressionHelper.GetExpressionText(expression)); }
-        public static MvcHtmlString LabelForModelEx(this HtmlHelper html) { return LabelHelperEx(html, html.ViewData.ModelMetadata, string.Empty); }
-        internal static MvcHtmlString LabelHelperEx(HtmlHelper html, ModelMetadata metadata, string htmlFieldName)
+        public static MvcHtmlString LabelEx(this HtmlHelper htmlHelper, string expression) { return LabelHelperEx(htmlHelper, ModelMetadata.FromStringExpression(expression, htmlHelper.ViewData), expression); }
+        public static MvcHtmlString LabelForEx<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression) { return LabelHelperEx(htmlHelper, ModelMetadata.FromLambdaExpression<TModel, TProperty>(expression, htmlHelper.ViewData), ExpressionHelper.GetExpressionText(expression)); }
+        public static MvcHtmlString LabelForModelEx(this HtmlHelper htmlHelper) { return LabelHelperEx(htmlHelper, htmlHelper.ViewData.ModelMetadata, string.Empty); }
+        internal static MvcHtmlString LabelHelperEx(HtmlHelper htmlHelper, ModelMetadata metadata, string htmlFieldName)
         {
             string text = (metadata.DisplayName ?? (metadata.PropertyName ?? htmlFieldName.Split(new char[] { '.' }).Last<string>()));
             if (string.IsNullOrEmpty(text))
@@ -40,9 +40,9 @@ namespace System.Web.Mvc.Html
             var labelTag = new TagBuilder("label");
             var name = metadata.PropertyName;
             ModelState state;
-            if ((!string.IsNullOrEmpty(name)) && (html.ViewData.ModelState.TryGetValue(name, out state)) && (state.Errors.Count > 0))
+            if ((!string.IsNullOrEmpty(name)) && (htmlHelper.ViewData.ModelState.TryGetValue(name, out state)) && (state.Errors.Count > 0))
                 labelTag.AddCssClass(HtmlHelperExtensions.ValidationLabelCssClassName);
-            labelTag.Attributes.Add("for", html.ViewContext.ViewData.TemplateInfo.GetFullHtmlFieldId(htmlFieldName));
+            labelTag.Attributes.Add("for", htmlHelper.ViewContext.ViewData.TemplateInfo.GetFullHtmlFieldId(htmlFieldName));
             labelTag.SetInnerText(text);
             return labelTag.ToMvcHtmlString(TagRenderMode.Normal);
         }

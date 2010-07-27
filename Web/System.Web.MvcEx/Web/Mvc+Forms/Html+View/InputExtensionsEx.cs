@@ -34,6 +34,7 @@ namespace System.Web.Mvc.Html
         public static MvcHtmlString CheckBoxForEx<TModel>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, bool>> expression, object htmlAttributes) { return CheckBoxForEx<TModel>(htmlHelper, expression, ((IDictionary<string, object>)new RouteValueDictionary(htmlAttributes))); }
         public static MvcHtmlString CheckBoxForEx<TModel>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, bool>> expression, IDictionary<string, object> htmlAttributes)
         {
+            var metadata = ModelMetadata.FromLambdaExpression<TModel, bool>(expression, htmlHelper.ViewData);
             return htmlHelper.CheckBoxFor<TModel>(expression, htmlAttributes);
         }
 
@@ -41,6 +42,7 @@ namespace System.Web.Mvc.Html
         public static MvcHtmlString HiddenForEx<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression, object htmlAttributes) { return HiddenForEx<TModel, TProperty>(htmlHelper, expression, ((IDictionary<string, object>)new RouteValueDictionary(htmlAttributes))); }
         public static MvcHtmlString HiddenForEx<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression, IDictionary<string, object> htmlAttributes)
         {
+            var metadata = ModelMetadata.FromLambdaExpression<TModel, TProperty>(expression, htmlHelper.ViewData);
             return htmlHelper.HiddenFor<TModel, TProperty>(expression, htmlAttributes);
         }
 
@@ -48,6 +50,7 @@ namespace System.Web.Mvc.Html
         public static MvcHtmlString PasswordForEx<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression, object htmlAttributes) { return PasswordForEx<TModel, TProperty>(htmlHelper, expression, ((IDictionary<string, object>)new RouteValueDictionary(htmlAttributes))); }
         public static MvcHtmlString PasswordForEx<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression, IDictionary<string, object> htmlAttributes)
         {
+            var metadata = ModelMetadata.FromLambdaExpression<TModel, TProperty>(expression, htmlHelper.ViewData);
             return htmlHelper.PasswordFor<TModel, TProperty>(expression, htmlAttributes);
         }
 
@@ -55,6 +58,7 @@ namespace System.Web.Mvc.Html
         public static MvcHtmlString RadioButtonFor<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression, object value, object htmlAttributes) { return RadioButtonForEx<TModel, TProperty>(htmlHelper, expression, value, ((IDictionary<string, object>)new RouteValueDictionary(htmlAttributes))); }
         public static MvcHtmlString RadioButtonForEx<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression, object value, IDictionary<string, object> htmlAttributes)
         {
+            var metadata = ModelMetadata.FromLambdaExpression<TModel, TProperty>(expression, htmlHelper.ViewData);
             return htmlHelper.RadioButtonFor<TModel, TProperty>(expression, value, htmlAttributes);
         }
 
@@ -62,6 +66,7 @@ namespace System.Web.Mvc.Html
         public static MvcHtmlString TextBoxForEx<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression, object htmlAttributes) { return TextBoxForEx<TModel, TProperty>(htmlHelper, expression, ((IDictionary<string, object>)new RouteValueDictionary(htmlAttributes))); }
         public static MvcHtmlString TextBoxForEx<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression, IDictionary<string, object> htmlAttributes)
         {
+            var metadata = ModelMetadata.FromLambdaExpression<TModel, TProperty>(expression, htmlHelper.ViewData);
             return htmlHelper.TextBoxFor<TModel, TProperty>(expression, htmlAttributes);
         }
     }

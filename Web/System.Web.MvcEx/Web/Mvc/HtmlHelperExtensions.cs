@@ -27,7 +27,7 @@ using System.Web.Routing;
 namespace System.Web.Mvc
 {
     /// <summary>
-    /// PathHelpers
+    /// HtmlHelperExtensions
     /// </summary>
     internal static class HtmlHelperExtensions
     {

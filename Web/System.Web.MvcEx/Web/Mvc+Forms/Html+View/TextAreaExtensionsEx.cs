@@ -35,12 +35,14 @@ namespace System.Web.Mvc.Html
         public static MvcHtmlString TextAreaForEx<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression, object htmlAttributes) { return TextAreaForEx<TModel, TProperty>(htmlHelper, expression, ((IDictionary<string, object>)new RouteValueDictionary(htmlAttributes))); }
         public static MvcHtmlString TextAreaForEx<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression, IDictionary<string, object> htmlAttributes)
         {
+            var metadata = ModelMetadata.FromLambdaExpression<TModel, TProperty>(expression, htmlHelper.ViewData);
             return htmlHelper.TextAreaFor<TModel, TProperty>(expression, htmlAttributes);
         }
 
         public static MvcHtmlString TextAreaForEx<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression, int rows, int columns, object htmlAttributes) { return TextAreaForEx<TModel, TProperty>(htmlHelper, expression, rows, columns, ((IDictionary<string, object>)new RouteValueDictionary(htmlAttributes))); }
         public static MvcHtmlString TextAreaForEx<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression, int rows, int columns, IDictionary<string, object> htmlAttributes)
         {
+            var metadata = ModelMetadata.FromLambdaExpression<TModel, TProperty>(expression, htmlHelper.ViewData);
             return htmlHelper.TextAreaFor<TModel, TProperty>(expression, rows, columns, htmlAttributes);
         }
     }

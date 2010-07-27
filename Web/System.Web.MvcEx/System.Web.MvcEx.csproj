@@ -60,6 +60,7 @@
     <Compile Include="Web\Mvc+Forms\Html\SelectExtensionsEx.cs" />
     <Compile Include="Web\Mvc+HtmlTextBox\Html\IHtmlTextBox.cs" />
     <Compile Include="Web\Mvc+HtmlTextBox\Html\TextAreaExtensionsEx.cs" />
+    <Compile Include="Web\Mvc\TagBuilderExtensions.cs" />
     <Compile Include="Web\Mvc\HtmlHelperExtensions.cs" />
     <Compile Include="Web\Mvc\Html\TabBuilderExtensions.cs" />
     <Compile Include="Web\Mvc\ObservableResult.cs" />

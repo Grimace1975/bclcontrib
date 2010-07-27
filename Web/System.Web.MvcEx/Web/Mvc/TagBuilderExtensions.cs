@@ -23,19 +23,23 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 #endregion
-using System.Web.UI.WebControls;
-namespace System.Web.Mvc.Html
+using System.Web.Routing;
+namespace System.Web.Mvc
 {
-    public class SelectListLayout
+    /// <summary>
+    /// TagBuilderExtensions
+    /// </summary>
+    internal static class TagBuilderExtensions
     {
-        public SelectListLayout()
+        public static void AddCssStyle(this TagBuilder tagBuilder, string id, string value)
         {
-            RepeatDirection = RepeatDirection.Vertical;
-            RepeatLayout = RepeatLayout.Flow;
+            string oldValue;
+            var attributes = tagBuilder.Attributes;
+            if (attributes.TryGetValue("class", out oldValue))
+                attributes["style"] = StringEx.Axb(id, ":", value) + "; " + oldValue;
+            else
+                attributes["style"] = StringEx.Axb(id, ":", value);
         }
 
-        public int RepeatColumns { get; set; }
-        public RepeatDirection RepeatDirection { get; set; }
-        public RepeatLayout RepeatLayout { get; set; }
     }
 }
