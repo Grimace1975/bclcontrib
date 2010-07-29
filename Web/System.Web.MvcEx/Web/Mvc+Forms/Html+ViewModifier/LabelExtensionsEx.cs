@@ -25,6 +25,7 @@ THE SOFTWARE.
 #endregion
 using System.Linq;
 using System.Linq.Expressions;
+using System.Text;
 namespace System.Web.Mvc.Html
 {
     public static class LabelExtensionsEx
@@ -37,14 +38,61 @@ namespace System.Web.Mvc.Html
             string text = (metadata.DisplayName ?? (metadata.PropertyName ?? htmlFieldName.Split(new char[] { '.' }).Last<string>()));
             if (string.IsNullOrEmpty(text))
                 return MvcHtmlString.Empty;
+            var templateInfo = htmlHelper.ViewContext.ViewData.TemplateInfo;
+            var fullFieldName = templateInfo.GetFullHtmlFieldName(htmlFieldName);
             var labelTag = new TagBuilder("label");
-            var name = metadata.PropertyName;
             ModelState state;
-            if ((!string.IsNullOrEmpty(name)) && (htmlHelper.ViewData.ModelState.TryGetValue(name, out state)) && (state.Errors.Count > 0))
+            if ((!string.IsNullOrEmpty(fullFieldName)) && (htmlHelper.ViewData.ModelState.TryGetValue(fullFieldName, out state)) && (state.Errors.Count > 0))
                 labelTag.AddCssClass(HtmlHelperExtensions.ValidationLabelCssClassName);
-            labelTag.Attributes.Add("for", htmlHelper.ViewContext.ViewData.TemplateInfo.GetFullHtmlFieldId(htmlFieldName));
+            labelTag.Attributes.Add("for", CreateSanitizedId(templateInfo.GetFullHtmlFieldId(htmlFieldName), HtmlHelper.IdAttributeDotReplacement));
             labelTag.SetInnerText(text);
             return labelTag.ToMvcHtmlString(TagRenderMode.Normal);
         }
+
+        #region from tagbuilder
+        private static class Html401IdUtil
+        {
+            private static bool IsAllowableSpecialCharacter(char c)
+            {
+                char ch = c;
+                return !(((ch != '-') && (ch != ':')) && (ch != '_'));
+            }
+
+            private static bool IsDigit(char c)
+            {
+                return (('0' <= c) && (c <= '9'));
+            }
+
+            public static bool IsLetter(char c)
+            {
+                return ((('A' <= c) && (c <= 'Z')) || (('a' <= c) && (c <= 'z')));
+            }
+
+            public static bool IsValidIdCharacter(char c)
+            {
+                return (!IsLetter(c) && !IsDigit(c) ? IsAllowableSpecialCharacter(c) : true);
+            }
+        }
+
+        internal static string CreateSanitizedId(string originalId, string dotReplacement)
+        {
+            if (string.IsNullOrEmpty(originalId))
+                return null;
+            char c = originalId[0];
+            if (!Html401IdUtil.IsLetter(c))
+                return null;
+            var b = new StringBuilder(originalId.Length);
+            b.Append(c);
+            for (int i = 1; i < originalId.Length; i++)
+            {
+                char ch2 = originalId[i];
+                if (Html401IdUtil.IsValidIdCharacter(ch2))
+                    b.Append(ch2);
+                else
+                    b.Append(dotReplacement);
+            }
+            return b.ToString();
+        }
+        #endregion
     }
 }
