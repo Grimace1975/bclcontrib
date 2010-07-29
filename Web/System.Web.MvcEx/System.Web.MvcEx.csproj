@@ -32,12 +32,18 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
     <Reference Include="System.configuration" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Abstractions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Web.Extensions">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Web.Mvc, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
@@ -47,19 +53,26 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Web\Mvc+DataAnnotations\ViewModifierExtensions.cs" />
+    <Compile Include="Web\Mvc+DataAnnotations\IModelMetadataEx.cs" />
     <Compile Include="Web\Mvc+Dynamic\HtmlHelperEx.cs" />
     <Compile Include="Web\Mvc+Dynamic\Html\FormExtensionsEx.cs" />
     <Compile Include="Web\Mvc+Dynamic\UrlHelperEx.cs" />
     <Compile Include="Web\Mvc+Dynamic\UrlHelperExtensions.cs" />
     <Compile Include="Web\Mvc+Dynamic\Html\LinkExtensionsEx.cs" />
-    <Compile Include="Web\Mvc+Forms\Html+View\TextAreaExtensionsEx.cs" />
-    <Compile Include="Web\Mvc+Forms\Html+View\InputExtensionsEx.cs" />
-    <Compile Include="Web\Mvc+Forms\Html+View\LabelExtensionsEx.cs" />
-    <Compile Include="Web\Mvc+Forms\Html+View\SelectExtensionsEx.cs" />
+    <Compile Include="Web\Mvc+Forms\Html+ViewModifier\TextAreaExtensionsEx.cs" />
+    <Compile Include="Web\Mvc+Forms\Html+ViewModifier\InputExtensionsEx.cs" />
+    <Compile Include="Web\Mvc+Forms\Html+ViewModifier\LabelExtensionsEx.cs" />
+    <Compile Include="Web\Mvc+Forms\Html+ViewModifier\SelectExtensionsEx.cs" />
     <Compile Include="Web\Mvc+Forms\Html\SelectListLayout.cs" />
     <Compile Include="Web\Mvc+Forms\Html\SelectExtensionsEx.cs" />
     <Compile Include="Web\Mvc+HtmlTextBox\Html\IHtmlTextBox.cs" />
     <Compile Include="Web\Mvc+HtmlTextBox\Html\TextAreaExtensionsEx.cs" />
+    <Compile Include="Web\Mvc+DataAnnotations\IViewModifier.cs" />
+    <Compile Include="Web\Mvc+DataAnnotations\ViewModifierAttributeBase.cs" />
+    <Compile Include="Web\Mvc+DataAnnotations\DataAnnotationsModelMetadataProvider.cs" />
+    <Compile Include="Web\Mvc+DataAnnotations\DataAnnotationsModelMetadataEx.cs" />
+    <Compile Include="Web\Mvc\ModelStateExtensions.cs" />
     <Compile Include="Web\Mvc\TagBuilderExtensions.cs" />
     <Compile Include="Web\Mvc\HtmlHelperExtensions.cs" />
     <Compile Include="Web\Mvc\Html\TabBuilderExtensions.cs" />
