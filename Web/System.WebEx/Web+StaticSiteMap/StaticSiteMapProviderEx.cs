@@ -112,9 +112,7 @@ namespace System.Web
             // scan for node			
             node = FindSiteMapNodeFromScan(segments);
             SiteMapNodeEx nodeEx;
-            if ((node != null) && ((nodeEx = (node as SiteMapNodeEx)) != null) && (nodeEx.HasExtents))
-                node = ExNodeFoundFromScan(nodeEx, segments);
-            return node;
+            return ((node == null) || ((nodeEx = (node as SiteMapNodeEx)) == null) || (!nodeEx.HasExtents) ? null : ExNodeFoundFromScan(nodeEx, segments));
         }
 
         private static string[] GetUrlSegments(string rawUrl, out string queryPart)
@@ -153,8 +151,7 @@ namespace System.Web
         protected virtual SiteMapNode ExNodeFoundFromScan(SiteMapNodeEx nodeEx, string[] segments)
         {
             // locks handled by FindSiteMapNode
-            var node = CheckExNodeFromScanAsPartialProvider(nodeEx, segments);
-            return (node ?? nodeEx);
+            return CheckExNodeFromScanAsPartialProvider(nodeEx, segments);
         }
 
         public override SiteMapNode BuildSiteMap()
