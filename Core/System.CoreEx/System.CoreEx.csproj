@@ -301,6 +301,15 @@
     <Compile Include="..\System.CoreEx_\System.Core.Extentions\Collections\Generic\DictionaryExtensions.cs">
       <Link>System.Core.Extentions\Collections\Generic\DictionaryExtensions.cs</Link>
     </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\Collections\Generic\IPagedList.cs">
+      <Link>System.Core.Extentions\Collections\Generic\IPagedList.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\Collections\Generic\IPagedMeta.cs">
+      <Link>System.Core.Extentions\Collections\Generic\IPagedMeta.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\Collections\Generic\PagedList.cs">
+      <Link>System.Core.Extentions\Collections\Generic\PagedList.cs</Link>
+    </Compile>
     <Compile Include="..\System.CoreEx_\System.Core.Extentions\DateTimeEx.cs">
       <Link>System.Core.Extentions\DateTimeEx.cs</Link>
     </Compile>
@@ -322,6 +331,9 @@
     <Compile Include="..\System.CoreEx_\System.Core.Extentions\Globalization\CultureInfoExtensions.cs">
       <Link>System.Core.Extentions\Globalization\CultureInfoExtensions.cs</Link>
     </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\IO\DirectoryEx.cs">
+      <Link>System.Core.Extentions\IO\DirectoryEx.cs</Link>
+    </Compile>
     <Compile Include="..\System.CoreEx_\System.Core.Extentions\IO\FileActor.cs">
       <Link>System.Core.Extentions\IO\FileActor.cs</Link>
     </Compile>
@@ -331,20 +343,47 @@
     <Compile Include="..\System.CoreEx_\System.Core.Extentions\IO\FileArchiver.cs">
       <Link>System.Core.Extentions\IO\FileArchiver.cs</Link>
     </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\IO\FileEx.cs">
+      <Link>System.Core.Extentions\IO\FileEx.cs</Link>
+    </Compile>
     <Compile Include="..\System.CoreEx_\System.Core.Extentions\IO\IOExtensions.cs">
       <Link>System.Core.Extentions\IO\IOExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\IO\Native_.cs">
+      <Link>System.Core.Extentions\IO\Native_.cs</Link>
     </Compile>
     <Compile Include="..\System.CoreEx_\System.Core.Extentions\IO\PathEx.cs">
       <Link>System.Core.Extentions\IO\PathEx.cs</Link>
     </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\Linq\Buffer.cs">
+      <Link>System.Core.Extentions\Linq\Buffer.cs</Link>
+    </Compile>
     <Compile Include="..\System.CoreEx_\System.Core.Extentions\Linq\DynamicQueryable.cs">
       <Link>System.Core.Extentions\Linq\DynamicQueryable.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\Linq\EnumerableExtensions+Paged.cs">
+      <Link>System.Core.Extentions\Linq\EnumerableExtensions+Paged.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\Linq\EnumerableExtensions+Tightest.cs">
+      <Link>System.Core.Extentions\Linq\EnumerableExtensions+Tightest.cs</Link>
     </Compile>
     <Compile Include="..\System.CoreEx_\System.Core.Extentions\Linq\EnumerableExtensions.cs">
       <Link>System.Core.Extentions\Linq\EnumerableExtensions.cs</Link>
     </Compile>
     <Compile Include="..\System.CoreEx_\System.Core.Extentions\Linq\Expressions\LambdaExpressionExtensions.cs">
       <Link>System.Core.Extentions\Linq\Expressions\LambdaExpressionExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\Linq\LinqPagedCriteria.cs">
+      <Link>System.Core.Extentions\Linq\LinqPagedCriteria.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\Linq\LinqPagedMeta.cs">
+      <Link>System.Core.Extentions\Linq\LinqPagedMeta.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\Linq\QueryableExtensions+Paged.cs">
+      <Link>System.Core.Extentions\Linq\QueryableExtensions+Paged.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\Linq\QueryableExtensions.cs">
+      <Link>System.Core.Extentions\Linq\QueryableExtensions.cs</Link>
     </Compile>
     <Compile Include="..\System.CoreEx_\System.Core.Extentions\MathEx.cs">
       <Link>System.Core.Extentions\MathEx.cs</Link>

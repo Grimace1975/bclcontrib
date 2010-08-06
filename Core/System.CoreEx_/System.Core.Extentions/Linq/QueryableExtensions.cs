@@ -23,26 +23,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 #endregion
-using Microsoft.Win32;
-using System.Runtime.InteropServices;
-namespace System.IO
+namespace System.Linq
 {
     /// <summary>
-    /// PathEx
+    /// QueryableExtensions
     /// </summary>
-    public static class PathEx
+    public static partial class QueryableExtensions
     {
-        public static string GetMimeType(string path)
-        {
-            if (string.IsNullOrEmpty(path))
-                throw new ArgumentNullException("path");
-            RegistryKey registryKey;
-            object contentTypeAsObject;
-            string extension = Path.GetExtension(path);
-            return ((!string.IsNullOrEmpty(extension)) &&
-                ((registryKey = Registry.ClassesRoot.OpenSubKey(extension.ToLowerInvariant())) != null) &&
-                ((contentTypeAsObject = registryKey.GetValue("Content Type")) != null)
-            ? contentTypeAsObject.ToString() : "application/unknown");
-        }
     }
 }

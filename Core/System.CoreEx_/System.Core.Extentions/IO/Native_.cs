@@ -27,22 +27,15 @@ using Microsoft.Win32;
 using System.Runtime.InteropServices;
 namespace System.IO
 {
-    /// <summary>
-    /// PathEx
-    /// </summary>
-    public static class PathEx
+    internal static class Native_
     {
-        public static string GetMimeType(string path)
-        {
-            if (string.IsNullOrEmpty(path))
-                throw new ArgumentNullException("path");
-            RegistryKey registryKey;
-            object contentTypeAsObject;
-            string extension = Path.GetExtension(path);
-            return ((!string.IsNullOrEmpty(extension)) &&
-                ((registryKey = Registry.ClassesRoot.OpenSubKey(extension.ToLowerInvariant())) != null) &&
-                ((contentTypeAsObject = registryKey.GetValue("Content Type")) != null)
-            ? contentTypeAsObject.ToString() : "application/unknown");
-        }
+        public const uint SYMBLOC_LINK_FLAG_FILE = 0x0;
+        public const uint SYMBLOC_LINK_FLAG_DIRECTORY = 0x1;
+
+        [DllImport("Kernel32.dll", CharSet = CharSet.Unicode)]
+        public static extern bool CreateHardLink(string lpFileName, string lpExistingFileName, IntPtr lpSecurityAttributes);
+
+        [DllImport("Kernel32.dll", CharSet = CharSet.Unicode)]
+        public static extern bool CreateSymbolicLink(string lpSymlinkFileName, string lpTargetFileName, uint dwFlags);
     }
 }

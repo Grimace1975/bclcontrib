@@ -23,26 +23,21 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 #endregion
-using Microsoft.Win32;
-using System.Runtime.InteropServices;
 namespace System.IO
 {
     /// <summary>
-    /// PathEx
+    /// FileEx
     /// </summary>
-    public static class PathEx
+    public static class FileEx
     {
-        public static string GetMimeType(string path)
+        public static void CreateHardLink(string fileName, string existingFileName)
         {
-            if (string.IsNullOrEmpty(path))
-                throw new ArgumentNullException("path");
-            RegistryKey registryKey;
-            object contentTypeAsObject;
-            string extension = Path.GetExtension(path);
-            return ((!string.IsNullOrEmpty(extension)) &&
-                ((registryKey = Registry.ClassesRoot.OpenSubKey(extension.ToLowerInvariant())) != null) &&
-                ((contentTypeAsObject = registryKey.GetValue("Content Type")) != null)
-            ? contentTypeAsObject.ToString() : "application/unknown");
+            Native_.CreateHardLink(fileName, existingFileName, IntPtr.Zero);
+        }
+
+        public static void CreateSymbolicLink(string fileName, string existingFileName)
+        {
+            Native_.CreateSymbolicLink(fileName, existingFileName, Native_.SYMBLOC_LINK_FLAG_FILE);
         }
     }
 }

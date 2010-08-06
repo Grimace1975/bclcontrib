@@ -23,26 +23,16 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 #endregion
-using Microsoft.Win32;
-using System.Runtime.InteropServices;
-namespace System.IO
+using System.Collections.Generic;
+namespace System.Linq
 {
-    /// <summary>
-    /// PathEx
-    /// </summary>
-    public static class PathEx
+    public class LinqPagedCriteria
     {
-        public static string GetMimeType(string path)
-        {
-            if (string.IsNullOrEmpty(path))
-                throw new ArgumentNullException("path");
-            RegistryKey registryKey;
-            object contentTypeAsObject;
-            string extension = Path.GetExtension(path);
-            return ((!string.IsNullOrEmpty(extension)) &&
-                ((registryKey = Registry.ClassesRoot.OpenSubKey(extension.ToLowerInvariant())) != null) &&
-                ((contentTypeAsObject = registryKey.GetValue("Content Type")) != null)
-            ? contentTypeAsObject.ToString() : "application/unknown");
-        }
+        public Func<int> TotalItemsAccessor { get; set; }
+        public int PageSize { get; set; }
+        public int PageIndex { get; set; }
+        //
+        public bool ShowAll { get; set; }
+        public int PageSetSize { get; set; }
     }
 }

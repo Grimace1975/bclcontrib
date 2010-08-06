@@ -30,8 +30,27 @@ namespace System.Linq
     /// <summary>
     /// EnumerableExtensions
     /// </summary>
-    public static class EnumerableExtensions
+    public static partial class EnumerableExtensions
     {
+        private static Func<TSource, TResult> CombineSelectors<TSource, TMiddle, TResult>(Func<TSource, TMiddle> selector1, Func<TMiddle, TResult> selector2)
+        {
+            return (x => selector2(selector1(x)));
+        }
+
+        private static Func<TSource, bool> CombinePredicates<TSource>(Func<TSource, bool> predicate1, Func<TSource, bool> predicate2)
+        {
+            return (x => (predicate1(x) ? predicate2(x) : false));
+        }
+
+        //private static IEnumerable<TResult> SelectIterator<TSource, TResult>(IEnumerable<TSource> source, Func<TSource, int, TResult> selector)
+        //{
+        //    return new WrappedSelectIterator<TSource, TResult>(-2)
+        //    {
+        //        OriginalSource = source,
+        //        OriginalSelector = selector,
+        //    };
+        //}
+
         public static IEnumerable<TSource> AsEnumerableYield<TSource>(this IEnumerable source)
         {
             if (source == null)
@@ -77,69 +96,6 @@ namespace System.Linq
                 if ((value != null) && (!value.Equals(nullValue)))
                     return value;
             return nullValue;
-        }
-
-        /// <summary>
-        /// Tries the get tightest match.
-        /// </summary>
-        /// <typeparam name="TValue">The type of the value.</typeparam>
-        /// <param name="id">The id.</param>
-        /// <param name="scope">The scope.</param>
-        /// <param name="hash">The hash.</param>
-        /// <param name="tightestValue">The tightest value.</param>
-        /// <param name="tightestValueLength">Length of the tightest value.</param>
-        /// <returns></returns>
-        public static bool TryGetTightestMatch<TSource>(this IEnumerable<TSource> source, string value, char scope, out TSource tightestValue)
-            where TSource : IValue<string>
-        {
-            if (value == null)
-                throw new ArgumentNullException("value");
-            // ensure url is proper by starting with a slash
-            if ((value.Length == 0) || (value[0] != scope))
-                throw new ArgumentException(string.Format(Local.InvalidIdA, value), "text");
-            // then remove all leading slashes
-            int firstNonSlashIndex = 0;
-            for (; (firstNonSlashIndex < value.Length) && (value[firstNonSlashIndex] == scope); firstNonSlashIndex++) ;
-            if ((firstNonSlashIndex > 0) && (firstNonSlashIndex < value.Length))
-                value = value.Substring(firstNonSlashIndex);
-            string matchText = value + scope;
-            // locate tightest virtual path match
-            tightestValue = default(TSource);
-            int tightestValueLength = 0;
-            foreach (TSource item in source)
-            {
-                string itemValue = item.Value;
-                int itemValueLength;
-                if ((value.StartsWith(itemValue + scope)) && ((itemValueLength = itemValue.Length) > tightestValueLength))
-                {
-                    tightestValue = item;
-                    tightestValueLength = itemValueLength;
-                }
-            }
-            return (tightestValueLength > 0);
-        }
-
-        public static bool TryGetTightestMatch<T, TSource>(this IEnumerable<TSource> source, T[] values, out TSource tightestValue)
-            where TSource : IValue<T[]>
-        {
-            if (values == null)
-                throw new ArgumentNullException("values");
-            // locate tightest virtual path match
-            tightestValue = default(TSource);
-            T[] tightestValues = null;
-            int tightestValuesLength = 0;
-            foreach (TSource item in source)
-            {
-                T[] itemValues = item.Value;
-                int itemValuesLength;
-                if ((EnumerableEx.CompareValues(itemValues, values, false)) && ((itemValuesLength = itemValues.Length) > tightestValuesLength))
-                {
-                    tightestValue = item;
-                    tightestValues = itemValues;
-                    tightestValuesLength = itemValuesLength;
-                }
-            }
-            return (tightestValuesLength > 0);
         }
 
         public static int MaxSkipNull(this IEnumerable<int> source, int nullValue)
