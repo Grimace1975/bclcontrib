@@ -28,9 +28,9 @@ namespace System.Linq
 {
     public static partial class EnumerableExtensions
     {
-        public static TSource[] ToPagedArray<TSource>(this IEnumerable<TSource> source, int pageIndex, out IPagedMeta pagedMeta) { return ToPagedArray<TSource>(source, new LinqPagedCriteria { PageIndex = pageIndex }, out pagedMeta); }
-        public static TSource[] ToPagedArray<TSource>(this IEnumerable<TSource> source, int pageIndex, int pageSize, out IPagedMeta pagedMeta) { return ToPagedArray<TSource>(source, new LinqPagedCriteria { PageIndex = pageIndex, PageSize = pageSize }, out pagedMeta); }
-        public static TSource[] ToPagedArray<TSource>(this IEnumerable<TSource> source, LinqPagedCriteria criteria, out IPagedMeta pagedMeta)
+        public static TSource[] ToPagedArray<TSource>(this IEnumerable<TSource> source, int pageIndex, out IPagedMetadata pagedMeta) { return ToPagedArray<TSource>(source, new LinqPagedCriteria { PageIndex = pageIndex }, out pagedMeta); }
+        public static TSource[] ToPagedArray<TSource>(this IEnumerable<TSource> source, int pageIndex, int pageSize, out IPagedMetadata pagedMeta) { return ToPagedArray<TSource>(source, new LinqPagedCriteria { PageIndex = pageIndex, PageSize = pageSize }, out pagedMeta); }
+        public static TSource[] ToPagedArray<TSource>(this IEnumerable<TSource> source, LinqPagedCriteria criteria, out IPagedMetadata pagedMeta)
         {
             if (source == null)
                 throw new ArgumentNullException("source");

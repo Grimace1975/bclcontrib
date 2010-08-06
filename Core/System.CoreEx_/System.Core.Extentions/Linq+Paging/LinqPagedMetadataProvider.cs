@@ -23,17 +23,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 #endregion
-namespace System.Collections.Generic
+using System.Collections.Generic;
+namespace System.Linq
 {
-    public interface IPagedMeta
+    public abstract class LinqPagedMetadataProvider
     {
-        int Pages { get; }
-        int TotalItems { get; }
-        int Items { get; }
-        int Index { get; }
-        bool HasPreviousPage { get; }
-        bool HasNextPage { get; }
-        bool IsFirstPage { get; }
-        bool IsLastPage { get; }
+        public abstract IPagedMetadata GetMetadata<TSource>(IQueryable<TSource> source, LinqPagedCriteria criteria);
     }
 }

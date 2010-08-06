@@ -27,57 +27,57 @@ namespace System.Collections.Generic
 {
     public class PagedList<T> : List<T>, IPagedList<T>
     {
-        private IPagedMeta _meta;
+        private IPagedMetadata _metadata;
 
-        public PagedList(IPagedMeta meta)
+        public PagedList(IPagedMetadata metadata)
             : base()
         {
-            _meta = meta;
+            _metadata = metadata;
         }
-        public PagedList(IEnumerable<T> collection, IPagedMeta meta)
+        public PagedList(IEnumerable<T> collection, IPagedMetadata metadata)
             : base(collection)
         {
-            _meta = meta;
+            _metadata = metadata;
         }
 
         public int Pages
         {
-            get { return _meta.Pages; }
+            get { return _metadata.Pages; }
         }
 
         public int TotalItems
         {
-            get { return _meta.TotalItems; }
+            get { return _metadata.TotalItems; }
         }
 
         public int Items
         {
-            get { return _meta.Items; }
+            get { return _metadata.Items; }
         }
 
         public int Index
         {
-            get { return _meta.Index; }
+            get { return _metadata.Index; }
         }
 
         public bool HasPreviousPage
         {
-            get { return _meta.HasPreviousPage; }
+            get { return _metadata.HasPreviousPage; }
         }
 
         public bool HasNextPage
         {
-            get { return _meta.HasNextPage; }
+            get { return _metadata.HasNextPage; }
         }
 
         public bool IsFirstPage
         {
-            get { return _meta.IsFirstPage; }
+            get { return _metadata.IsFirstPage; }
         }
 
         public bool IsLastPage
         {
-            get { return _meta.IsLastPage; }
+            get { return _metadata.IsLastPage; }
         }
     }
 }

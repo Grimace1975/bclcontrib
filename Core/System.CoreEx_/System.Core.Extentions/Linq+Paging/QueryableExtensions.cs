@@ -30,15 +30,15 @@ namespace System.Linq
 {
     public static partial class QueryableExtensions
     {
-        public static TSource[] ToPagedArray<TSource>(this IQueryable<TSource> source, int pageIndex, out IPagedMeta meta) { return ToPagedArray<TSource>(source, new LinqPagedCriteria { PageIndex = pageIndex }, out meta); }
-        public static TSource[] ToPagedArray<TSource>(this IQueryable<TSource> source, int pageIndex, int pageSize, out IPagedMeta meta) { return ToPagedArray<TSource>(source, new LinqPagedCriteria { PageIndex = pageIndex, PageSize = pageSize }, out meta); }
-        public static TSource[] ToPagedArray<TSource>(this IQueryable<TSource> source, LinqPagedCriteria criteria, out IPagedMeta meta)
+        public static TSource[] ToPagedArray<TSource>(this IQueryable<TSource> source, int pageIndex, out IPagedMetadata meta) { return ToPagedArray<TSource>(source, new LinqPagedCriteria { PageIndex = pageIndex }, out meta); }
+        public static TSource[] ToPagedArray<TSource>(this IQueryable<TSource> source, int pageIndex, int pageSize, out IPagedMetadata meta) { return ToPagedArray<TSource>(source, new LinqPagedCriteria { PageIndex = pageIndex, PageSize = pageSize }, out meta); }
+        public static TSource[] ToPagedArray<TSource>(this IQueryable<TSource> source, LinqPagedCriteria criteria, out IPagedMetadata meta)
         {
             if (source == null)
                 throw new ArgumentNullException("source");
             if (criteria == null)
                 throw new ArgumentNullException("criteria");
-            meta = new LinqPagedMeta<TSource>(source, criteria);
+            meta = LinqPagedMetadataProviders.Current.GetMetadata<TSource>(source, criteria);
             int pageSize = criteria.PageSize;
             int index = meta.Index;
             if (meta.TotalItems > 0)
@@ -54,7 +54,7 @@ namespace System.Linq
                 throw new ArgumentNullException("source");
             if (criteria == null)
                 throw new ArgumentNullException("criteria");
-            var meta = new LinqPagedMeta<TSource>(source, criteria);
+            var meta = LinqPagedMetadataProviders.Current.GetMetadata<TSource>(source, criteria);
             int pageSize = criteria.PageSize;
             int index = meta.Index;
             if (meta.TotalItems > 0)

@@ -23,7 +23,16 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 #endregion
-namespace System.Collections.Generic
+namespace System.Linq
 {
-    public interface IPagedList<T> : IList<T>, IPagedMetadata { }
+    public static class LinqPagedMetadataProviders
+    {
+        private static LinqPagedMetadataProvider _current = new DefaultLinqPagedMetadataProvider();
+
+        public static LinqPagedMetadataProvider Current
+        {
+            get { return _current; }
+            set { _current = (value ?? new EmptyLinqPagedMetadataProvider()); }
+        }
+    }
 }

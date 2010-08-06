@@ -26,7 +26,7 @@ THE SOFTWARE.
 using System.Collections.Generic;
 namespace System.Linq
 {
-    public class LinqPagedMeta<TSource> : IPagedMeta
+    public class LinqPagedMetadata<TSource> : IPagedMetadata
     {
         public int TotalItems { get; private set; }
         public int Pages { get; private set; }
@@ -36,7 +36,7 @@ namespace System.Linq
         //
         public bool HasOverflowedShowAll { get; private set; }
 
-        public LinqPagedMeta(IEnumerable<TSource> items, LinqPagedCriteria criteria)
+        public LinqPagedMetadata(IEnumerable<TSource> items, LinqPagedCriteria criteria)
         {
             if (items == null)
                 throw new ArgumentNullException("items");

@@ -25,5 +25,15 @@ THE SOFTWARE.
 #endregion
 namespace System.Collections.Generic
 {
-    public interface IPagedList<T> : IList<T>, IPagedMetadata { }
+    public interface IPagedMetadata
+    {
+        int Pages { get; }
+        int TotalItems { get; }
+        int Items { get; }
+        int Index { get; }
+        bool HasPreviousPage { get; }
+        bool HasNextPage { get; }
+        bool IsFirstPage { get; }
+        bool IsLastPage { get; }
+    }
 }

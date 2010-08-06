@@ -304,8 +304,8 @@
     <Compile Include="..\System.CoreEx_\System.Core.Extentions\Collections\Generic\IPagedList.cs">
       <Link>System.Core.Extentions\Collections\Generic\IPagedList.cs</Link>
     </Compile>
-    <Compile Include="..\System.CoreEx_\System.Core.Extentions\Collections\Generic\IPagedMeta.cs">
-      <Link>System.Core.Extentions\Collections\Generic\IPagedMeta.cs</Link>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\Collections\Generic\IPagedMetadata.cs">
+      <Link>System.Core.Extentions\Collections\Generic\IPagedMetadata.cs</Link>
     </Compile>
     <Compile Include="..\System.CoreEx_\System.Core.Extentions\Collections\Generic\PagedList.cs">
       <Link>System.Core.Extentions\Collections\Generic\PagedList.cs</Link>
@@ -355,14 +355,35 @@
     <Compile Include="..\System.CoreEx_\System.Core.Extentions\IO\PathEx.cs">
       <Link>System.Core.Extentions\IO\PathEx.cs</Link>
     </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\Linq+Paging\DefaultModelMetadataProvider.cs">
+      <Link>System.Core.Extentions\Linq+Paging\DefaultModelMetadataProvider.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\Linq+Paging\EmptyLinqPagedMetadataProvider.cs">
+      <Link>System.Core.Extentions\Linq+Paging\EmptyLinqPagedMetadataProvider.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\Linq+Paging\EnumerableExtensions.cs">
+      <Link>System.Core.Extentions\Linq+Paging\EnumerableExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\Linq+Paging\LinqPagedCriteria.cs">
+      <Link>System.Core.Extentions\Linq+Paging\LinqPagedCriteria.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\Linq+Paging\LinqPagedMetadata.cs">
+      <Link>System.Core.Extentions\Linq+Paging\LinqPagedMetadata.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\Linq+Paging\LinqPagedMetadataProvider.cs">
+      <Link>System.Core.Extentions\Linq+Paging\LinqPagedMetadataProvider.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\Linq+Paging\LinqPagedMetadataProviders.cs">
+      <Link>System.Core.Extentions\Linq+Paging\LinqPagedMetadataProviders.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\Linq+Paging\QueryableExtensions.cs">
+      <Link>System.Core.Extentions\Linq+Paging\QueryableExtensions.cs</Link>
+    </Compile>
     <Compile Include="..\System.CoreEx_\System.Core.Extentions\Linq\Buffer.cs">
       <Link>System.Core.Extentions\Linq\Buffer.cs</Link>
     </Compile>
     <Compile Include="..\System.CoreEx_\System.Core.Extentions\Linq\DynamicQueryable.cs">
       <Link>System.Core.Extentions\Linq\DynamicQueryable.cs</Link>
-    </Compile>
-    <Compile Include="..\System.CoreEx_\System.Core.Extentions\Linq\EnumerableExtensions+Paged.cs">
-      <Link>System.Core.Extentions\Linq\EnumerableExtensions+Paged.cs</Link>
     </Compile>
     <Compile Include="..\System.CoreEx_\System.Core.Extentions\Linq\EnumerableExtensions+Tightest.cs">
       <Link>System.Core.Extentions\Linq\EnumerableExtensions+Tightest.cs</Link>
@@ -372,15 +393,6 @@
     </Compile>
     <Compile Include="..\System.CoreEx_\System.Core.Extentions\Linq\Expressions\LambdaExpressionExtensions.cs">
       <Link>System.Core.Extentions\Linq\Expressions\LambdaExpressionExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\System.CoreEx_\System.Core.Extentions\Linq\LinqPagedCriteria.cs">
-      <Link>System.Core.Extentions\Linq\LinqPagedCriteria.cs</Link>
-    </Compile>
-    <Compile Include="..\System.CoreEx_\System.Core.Extentions\Linq\LinqPagedMeta.cs">
-      <Link>System.Core.Extentions\Linq\LinqPagedMeta.cs</Link>
-    </Compile>
-    <Compile Include="..\System.CoreEx_\System.Core.Extentions\Linq\QueryableExtensions+Paged.cs">
-      <Link>System.Core.Extentions\Linq\QueryableExtensions+Paged.cs</Link>
     </Compile>
     <Compile Include="..\System.CoreEx_\System.Core.Extentions\Linq\QueryableExtensions.cs">
       <Link>System.Core.Extentions\Linq\QueryableExtensions.cs</Link>
