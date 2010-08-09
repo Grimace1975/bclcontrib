@@ -33,6 +33,8 @@ namespace System.Web.UI
     {
         public class HeaderControlId
         {
+            public const string NoIndex = "HtmlHeadNoIndex";
+            public const string Canonical = "HtmlHeadCanonical";
             public const string Icon = "HtmlHeadIcon";
             public const string ShortcutIcon = "HtmlHeadShortcutIcon";
             public const string Search = "HtmlHeadSearch";
@@ -40,6 +42,10 @@ namespace System.Web.UI
             public const string Title = "HtmlHeadTitle";
             public const string Keyword = "HtmlHeadKeyword";
             public const string Description = "HtmlHeadDescription";
+            public const string Tag = "HtmlHeadTag";
+            public const string Author = "HtmlHeadAuthor";
+            public const string Copyright = "HtmlHeadCopyright";
+            public const string Developer = "HtmlHeadDeveloper";
         }
 
         public static void MapToHttpResponse(this HttpPage page, HttpResponse response)
@@ -87,7 +93,14 @@ namespace System.Web.UI
             string text;
             // no-index
             if (pageHead.NoIndex)
-                htmlHeadControls.Add(new HtmlMeta { Name = "robots", Content = "noindex" });
+                htmlHeadControls.Add(new HtmlMeta { ID = HeaderControlId.NoIndex, Name = "robots", Content = "noindex" });
+            // canonical
+            if (!string.IsNullOrEmpty(text = pageHead.CanonicalUri))
+            {
+                htmlLink = new HtmlLink { ID = HeaderControlId.Canonical, Href = text };
+                htmlLink.Attributes["rel"] = "canonical";
+                htmlHeadControls.Add(htmlLink);
+            }
             // icon
             if (!string.IsNullOrEmpty(text = pageHead.IconUri))
             {
@@ -144,16 +157,16 @@ namespace System.Web.UI
                 htmlHeadControls.Add(new HtmlMeta() { ID = HeaderControlId.Description, Name = "description", Content = text });
             // add search tag
             if (!string.IsNullOrEmpty(text = pageHead.Tag))
-                htmlHeadControls.Add(new HtmlMeta { ID = "Tag", Name = "tag", Content = text });
+                htmlHeadControls.Add(new HtmlMeta { ID = HeaderControlId.Tag, Name = "tag", Content = text });
             // author
             if (!string.IsNullOrEmpty(text = pageHead.Author))
-                htmlHeadControls.Add(new HtmlMeta { ID = "Author", Name = "author", Content = text });
+                htmlHeadControls.Add(new HtmlMeta { ID = HeaderControlId.Author, Name = "author", Content = text });
             // copyright
             if (!string.IsNullOrEmpty(text = pageHead.Copyright))
-                htmlHeadControls.Add(new HtmlMeta { ID = "Copyright", Name = "copyright", Content = text });
+                htmlHeadControls.Add(new HtmlMeta { ID = HeaderControlId.Copyright, Name = "copyright", Content = text });
             // developer
             if (!string.IsNullOrEmpty(text = pageHead.Developer))
-                htmlHeadControls.Add(new HtmlMeta { ID = "Developer", Name = "developer", Content = text });
+                htmlHeadControls.Add(new HtmlMeta { ID = HeaderControlId.Developer, Name = "developer", Content = text });
         }
 
         public static void MapToHttpPage(this IHttpPageMetatag pageMetatag, HttpPage page) { MapToHttpPage(pageMetatag, page, false); }

@@ -46,6 +46,7 @@ namespace System.Web.UI
         public class HttpHead : IHttpPageMetatag
         {
             public bool NoIndex { get; set; }
+            public string CanonicalUri { get; set; }
             public string Title { get; set; }
             public string Keywords { get; set; }
             public string Tag { get; set; }

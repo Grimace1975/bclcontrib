@@ -67,11 +67,12 @@ namespace Digital.ContentManagement
 
             protected class PageOrdinal
             {
-                public int Key, Uid, TreeId, Type, Id, Name, SectionId, AttribStream, IsHidden, PageDynamism, LastModifyDate, Virtualize;
+                public int Key, Uid, DefaultTreeId, TreeId, Type, Id, Name, SectionId, AttribStream, IsHidden, PageDynamism, LastModifyDate, Virtualize;
                 public PageOrdinal(IDataReader r)
                 {
                     Key = r.GetOrdinal("Key");
                     Uid = r.GetOrdinal("Uid");
+                    DefaultTreeId = r.GetOrdinal("DefaultTreeId");
                     TreeId = r.GetOrdinal("TreeId");
                     Type = r.GetOrdinal("Type");
                     Id = r.GetOrdinal("Id");
@@ -126,11 +127,14 @@ namespace Digital.ContentManagement
                                 r.NextResult();
                                 var pageOrdinal = new PageOrdinal(r);
                                 string hiddenRootTreeId = null;
+                                var virtualNodes = new List<KeyValuePair<SiteMapVirtualNode, string>>();
                                 while (r.Read())
                                 {
-                                    var node = CreateSiteMapNodeFromDataReader(nodes, pageOrdinal, r, ref hiddenRootTreeId);
-                                    observer.OnNext(new StaticSiteMapProviderEx.NodeToAdd { Node = node, ParentNode = GetParentNodeFromDataReader(nodes, pageOrdinal, r, false) });
+                                    var node = CreateSiteMapNodeFromDataReader(nodes, virtualNodes, pageOrdinal, r, ref hiddenRootTreeId);
+                                    observer.OnNext(new StaticSiteMapProviderEx.NodeToAdd { Node = node, ParentNode = GetParentNodeFromDataReader(nodes, _rootNode, pageOrdinal, r, false) });
                                 }
+                                if (virtualNodes.Count > 0)
+                                    LinkVirtualNodes(nodes, virtualNodes);
                             }
                             observer.OnCompleted();
                             return null;
@@ -142,6 +146,20 @@ namespace Digital.ContentManagement
                         return null;
                     }
                 }
+            }
+
+            private static void LinkVirtualNodes(Dictionary<string, SiteMapNodeEx> nodes, List<KeyValuePair<SiteMapVirtualNode, string>> virtualNodes)
+            {
+                SiteMapNodeEx node;
+                foreach (var virtualNode in virtualNodes)
+                    if (nodes.TryGetValue(virtualNode.Value, out node))
+                    {
+                        var key = virtualNode.Key;
+                        var nodeExtent = node.Get<SiteMapNodePartialProviderExtent>();
+                        if (nodeExtent != null)
+                            key.Set<SiteMapNodePartialProviderExtent>(nodeExtent);
+                        key.Actual = node;
+                    }
             }
 
             protected virtual IDbConnection Open(string connect, out IDbCommand command)
@@ -156,12 +174,12 @@ namespace Digital.ContentManagement
             }
 
             private static readonly TextPackBase s_xmlTextPack = XmlTextPack.Instance;
-            private IDictionary<string, string> BuildAttrib(string attribAsText)
+            private static IDictionary<string, string> BuildAttrib(string attribAsText)
             {
                 return (string.IsNullOrEmpty(attribAsText) ? null : s_xmlTextPack.PackDecode(attribAsText));
             }
 
-            private SiteMapNode CreateSiteMapNodeFromDataReader(Dictionary<string, SiteMapNodeEx> nodes, PageOrdinal ordinal, IDataReader r, ref string hiddenRootTreeId)
+            private SiteMapNode CreateSiteMapNodeFromDataReader(Dictionary<string, SiteMapNodeEx> nodes, List<KeyValuePair<SiteMapVirtualNode, string>> virtualNodes, PageOrdinal ordinal, IDataReader r, ref string hiddenRootTreeId)
             {
                 if (r.IsDBNull(ordinal.TreeId))
                     throw new ProviderException("Missing node ID");
@@ -171,6 +189,7 @@ namespace Digital.ContentManagement
                 bool visible = !r.Field<bool>(ordinal.IsHidden);
                 int key = r.Field<int>(ordinal.Key);
                 string uid = r.Field<string>(ordinal.Uid);
+                string defaultTreeId = r.Field<string>(ordinal.DefaultTreeId);
                 string type = r.Field<string>(ordinal.Type);
                 string id = r.Field<string>(ordinal.Id);
                 string name = r.Field<string>(ordinal.Name);
@@ -196,11 +215,13 @@ namespace Digital.ContentManagement
                 }
                 // make url
                 SiteMapNodeEx node;
+                SiteMapVirtualNode virtualNode;
                 switch (type)
                 {
                     case "X-Section":
-                        node = new SiteMapSectionNode(_provider, uid, "/" + id, name);
+                        node = virtualNode = new SiteMapSectionNode(_provider, uid, "/" + id, name);
                         SetRouteInNode(_routeCreator.CreateRoutes(node, id, virtualize), node);
+                        virtualNodes.Add(new KeyValuePair<SiteMapVirtualNode, string>(virtualNode, defaultTreeId));
                         break;
                     case "E-Form":
                         node = new SiteMapFormNode(_provider, uid, "/" + id, name);
@@ -222,7 +243,11 @@ namespace Digital.ContentManagement
                         {
                             var linkNodeEx = (nodeEx as SiteMapLinkNode);
                             if (linkNodeEx != null)
-                                HttpContext.Current.Response.Redirect(linkNodeEx.LinkUri);
+                            {
+                                var context = HttpContext.Current;
+                                var query = context.Request.Url.Query;
+                                context.Response.Redirect(query.Length == 0 ? linkNodeEx.LinkUri : linkNodeEx.LinkUri + query);
+                            }
                             return null;
                         });
                         break;
@@ -236,7 +261,7 @@ namespace Digital.ContentManagement
                 }
                 node.Visible = visible;
                 // content
-                var sectionNode = GetParentNodeFromDataReader(nodes, ordinal, r, true);
+                var sectionNode = GetParentNodeFromDataReader(nodes, _rootNode, ordinal, r, true);
                 node.Set<SiteMapNodeContentExtent>(new SiteMapNodeContentExtent { Key = key, TreeId = treeId, SectionNode = sectionNode });
                 var contentNode = (node as SiteMapPageNode);
                 if (contentNode != null)
@@ -249,7 +274,7 @@ namespace Digital.ContentManagement
                 return node;
             }
 
-            private void SetRouteInNode(IEnumerable<Route> routes, SiteMapNodeEx node)
+            private static void SetRouteInNode(IEnumerable<Route> routes, SiteMapNodeEx node)
             {
                 DynamicRoute.SetRouteDefaults(routes, node);
                 int routes2 = routes.Count();
@@ -259,14 +284,14 @@ namespace Digital.ContentManagement
                     node.SetMany<Route>(routes);
             }
 
-            private SiteMapNode GetParentNodeFromDataReader(Dictionary<string, SiteMapNodeEx> nodes, PageOrdinal ordinal, IDataReader r, bool findSection)
+            private static SiteMapNode GetParentNodeFromDataReader(Dictionary<string, SiteMapNodeEx> nodes, SiteMapNode rootNode, PageOrdinal ordinal, IDataReader r, bool findSection)
             {
                 if (r.IsDBNull(ordinal.TreeId))
                     throw new ProviderException("Missing parent ID");
                 // Get the parent ID from the DataReader
                 string parentTreeId = r.GetString(ordinal.TreeId);
                 if (parentTreeId.Length == 4)
-                    return _rootNode;
+                    return rootNode;
                 // Make sure the parent ID is valid
                 SiteMapNodeEx value;
                 parentTreeId = parentTreeId.Substring(0, (!findSection ? parentTreeId.Length - 4 : 4));
