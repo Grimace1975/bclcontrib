@@ -26,6 +26,8 @@ THE SOFTWARE.
 using System.Collections.Generic;
 using System.Text;
 using System.Xml;
+using System.Threading;
+using System.Runtime.InteropServices;
 namespace System.IO
 {
     /// <summary>
@@ -85,6 +87,34 @@ namespace System.IO
             using (var streamReader = new StreamReader(stream, encoding))
                 return streamReader.ReadToEnd();
         }
+
+        /*
+        private FileStream GetStream(string fileName, FileAccess fileAccess, int numberOfTries, int timeIntervalBetweenTries)
+        {
+            var tries = 0;
+            while (true)
+            {
+                try
+                {
+                    return File.Open(fileName, FileMode.Open, fileAccess, FileShare.None);
+                }
+                catch (IOException e)
+                {
+                    if (!IsFileLocked(e))
+                        throw;
+                    if (++tries > numberOfTries)
+                        throw new InvalidOperationException("The file is locked too long: " + e.Message, e);
+                    Thread.Sleep(timeIntervalBetweenTries);
+                }
+            }
+        }
+
+        private static bool IsFileLocked(IOException exception)
+        {
+            int errorCode = (Marshal.GetHRForException(exception) & ((1 << 16) - 1));
+            return (errorCode == 32) || (errorCode == 33);
+        }
+        */ 
 
         #region Serialize
         /// <summary>

@@ -30,9 +30,11 @@ namespace System.Web.Routing
 {
     public class UrlRoutingModuleEx : UrlRoutingModule
     {
+#if !CLR4
         private static readonly object s_requestDataKey = typeof(UrlRoutingModule).GetField("_requestDataKey", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null);
         private static readonly Type s_requestDataType = Type.GetType("System.Web.Routing.UrlRoutingModule+RequestData, " + AssemblyRef.SystemWebRouting);
         private static readonly PropertyInfo s_originalPathProperty = s_requestDataType.GetProperty("OriginalPath", BindingFlags.Public | BindingFlags.Instance);
+#endif
 
         public override void PostResolveRequestCache(HttpContextBase httpContext)
         {
