@@ -24,8 +24,19 @@ using System.Reflection;
 using StructureMap;
 namespace System.Quality
 {
+    /// <summary>
+    /// IStructureMapServiceLocator
+    /// </summary>
+    public interface IStructureMapServiceLocator : IServiceLocator
+    {
+        IContainer Container { get; }
+    }
+
+    /// <summary>
+    /// StructureMapServiceLocator
+    /// </summary>
     [Serializable]
-    public class StructureMapServiceLocator : IServiceLocator, IDisposable
+    public class StructureMapServiceLocator : IStructureMapServiceLocator, IDisposable
     {
         private IContainer _container;
         private StructureMapServiceRegistrar _registrar;

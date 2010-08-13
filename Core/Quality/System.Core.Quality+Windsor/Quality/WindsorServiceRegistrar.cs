@@ -24,7 +24,18 @@ using Castle.Windsor;
 using Castle.MicroKernel.Registration;
 namespace System.Quality
 {
-    public class WindsorServiceRegistrar : IServiceRegistrar, IDisposable
+    /// <summary>
+    /// IWindsorServiceRegistrar
+    /// </summary>
+    public interface IWindsorServiceRegistrar : IServiceRegistrar
+    {
+        void RegisterAll<Source>();
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public class WindsorServiceRegistrar : IWindsorServiceRegistrar, IDisposable
     {
         private WindsorServiceLocator _parent;
         private readonly IList<IRegistration> _registrations = new List<IRegistration>();

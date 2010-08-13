@@ -49,8 +49,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Quality\IWindsorServiceLocator.cs" />
-    <Compile Include="Quality\IWindsorServiceRegistrar.cs" />
     <Compile Include="Quality\WindsorServiceRegistrar.cs" />
     <Compile Include="Quality\WindsorServiceLocator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

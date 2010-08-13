@@ -25,8 +25,16 @@ using Ninject.Modules;
 using Ninject.Parameters;
 namespace System.Quality
 {
+    /// <summary>
+    /// INinjectServiceLocator
+    /// </summary>
+    public interface INinjectServiceLocator : IServiceLocator
+    {
+        IKernel Container { get; }
+    }
+
     [Serializable]
-    public class NinjectServiceLocator : IServiceLocator, IDisposable
+    public class NinjectServiceLocator : INinjectServiceLocator, IDisposable
     {
         private IKernel _container;
         private NinjectServiceRegistrar _registrar;

@@ -23,7 +23,18 @@ using StructureMap;
 using StructureMap.Graph;
 namespace System.Quality
 {
-    public class StructureMapServiceRegistrar : Registry, IServiceRegistrar, IDisposable
+    /// <summary>
+    /// IStructureMapServiceRegistrar
+    /// </summary>
+    public interface IStructureMapServiceRegistrar : IServiceRegistrar
+    {
+        void RegisterAll<Source>();
+    }
+
+    /// <summary>
+    /// StructureMapServiceRegistrar
+    /// </summary>
+    public class StructureMapServiceRegistrar : Registry, IStructureMapServiceRegistrar, IDisposable
     {
         private StructureMapServiceLocator _parent;
         private IContainer _container;

@@ -38,7 +38,7 @@ namespace System.Quality
         private static IServiceLocator _locator;
 
         public static void SetLocatorProvider(Func<IServiceLocator> provider) { SetLocatorProvider(provider, (Action<IServiceRegistrar, IServiceLocator>)null); }
-        public static void SetLocatorProvider(Func<IServiceLocator> provider, Assembly[] assemblies) { SetLocatorProvider(provider, (registrar, locator) => RegisterFromAssemblies(registrar, locator, assemblies)); }
+        public static void SetLocatorProvider(Func<IServiceLocator> provider, params Assembly[] assemblies) { SetLocatorProvider(provider, (registrar, locator) => RegisterFromAssemblies(registrar, locator, assemblies)); }
         public static void SetLocatorProvider(Func<IServiceLocator> provider, Action<IServiceRegistrar, IServiceLocator> registration)
         {
             _provider = provider;

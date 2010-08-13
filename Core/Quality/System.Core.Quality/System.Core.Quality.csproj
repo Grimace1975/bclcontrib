@@ -37,6 +37,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Quality+Bus\ServiceBusManager.cs" />
+    <Compile Include="Quality+Bus\IServiceBusCallback.cs" />
+    <Compile Include="Quality+Bus\IServiceMessage.cs" />
+    <Compile Include="Quality+Bus\IServiceBus.cs" />
+    <Compile Include="Quality+Bus\ServiceBus.cs" />
+    <Compile Include="Quality+Bus\ServiceBusException.cs" />
     <Compile Include="Quality+ServiceLocator\IWantToSkipServiceLocator.cs" />
     <Compile Include="Local.Designer.cs">
       <DependentUpon>Local.resx</DependentUpon>

@@ -70,6 +70,15 @@ namespace System {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to UndefinedServiceBusProvider.
+        /// </summary>
+        internal static string UndefinedServiceBusProvider {
+            get {
+                return ResourceManager.GetString("UndefinedServiceBusProvider", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to UndefinedServiceLocatorProvider.
         /// </summary>
         internal static string UndefinedServiceLocatorProvider {

@@ -22,7 +22,12 @@ using Ninject;
 using Ninject.Modules;
 namespace System.Quality
 {
-    public class NinjectServiceRegistrar : NinjectModule, IServiceRegistrar, IDisposable
+    /// <summary>
+    /// INinjectServiceRegistrar
+    /// </summary>
+    public interface INinjectServiceRegistrar : IServiceRegistrar { }
+
+    public class NinjectServiceRegistrar : NinjectModule, INinjectServiceRegistrar, IDisposable
     {
         private NinjectServiceLocator _parent;
         private IKernel _container;

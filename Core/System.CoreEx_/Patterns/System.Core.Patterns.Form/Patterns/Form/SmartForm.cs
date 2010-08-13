@@ -33,27 +33,27 @@ namespace System.Patterns.Forms
     /// </summary>
     public class SmartForm
     {
-        private Dictionary<string, string> _valueHash = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
-        private Dictionary<string, string> _replaceTagHash = new Dictionary<string, string>();
+        private Dictionary<string, string> _values = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+        private Dictionary<string, string> _replaceTags = new Dictionary<string, string>();
 
-        #region Class Types
-        /// <summary>
-        /// Contract
-        /// </summary>
-        public class Contract : Patterns.Generic.SimpleFactoryBase<IContract>
-        {
-            /// <summary>
-            /// Creates the specified key.
-            /// </summary>
-            /// <param name="key">The key.</param>
-            /// <returns></returns>
-            protected static IContract Create<T>(IAppUnit appUnit)
-                where T : class, IContract
-            {
-                return ServiceLocator.Resolve<T>();
-            }
-        }
-        #endregion
+        //#region Class Types
+        ///// <summary>
+        ///// Contract
+        ///// </summary>
+        //public class Contract : Patterns.Generic.SimpleFactoryBase<IContract>
+        //{
+        //    /// <summary>
+        //    /// Creates the specified key.
+        //    /// </summary>
+        //    /// <param name="key">The key.</param>
+        //    /// <returns></returns>
+        //    protected static IContract Create<T>(IAppUnit appUnit)
+        //        where T : class, IContract
+        //    {
+        //        return ServiceLocator.Resolve<T>();
+        //    }
+        //}
+        //#endregion
 
         /// <summary>
         /// Gets or sets the <see cref="System.String"/> value associated with the specified key.
@@ -66,36 +66,36 @@ namespace System.Patterns.Forms
                 if (string.IsNullOrEmpty(key))
                     throw new ArgumentNullException("key");
                 string value;
-                return (_valueHash.TryGetValue(key, out value) ? value : string.Empty);
+                return (_values.TryGetValue(key, out value) ? value : string.Empty);
             }
             set
             {
                 if (string.IsNullOrEmpty(key))
                     throw new ArgumentNullException("key");
-                _valueHash[key] = (value ?? string.Empty);
+                _values[key] = (value ?? string.Empty);
             }
         }
 
-        /// <summary>
-        /// Executes the contract.
-        /// </summary>
-        /// <param name="key">The key.</param>
-        /// <param name="method">The method.</param>
-        /// <param name="parameterArray">The parameter array.</param>
-        /// <returns></returns>
-        public object ExecuteContract(string key, string method, params object[] args)
-        {
-            object[] array;
-            if ((args != null) && (args.Length > 0))
-            {
-                array = new object[args.Length + 1];
-                args.CopyTo(array, 1);
-                array[0] = this;
-            }
-            else
-                array = new[] { this };
-            return Contract.Get(key).Execute(method, array);
-        }
+        ///// <summary>
+        ///// Executes the contract.
+        ///// </summary>
+        ///// <param name="key">The key.</param>
+        ///// <param name="method">The method.</param>
+        ///// <param name="parameterArray">The parameter array.</param>
+        ///// <returns></returns>
+        //public object ExecuteContract(string key, string method, params object[] args)
+        //{
+        //    object[] array;
+        //    if ((args != null) && (args.Length > 0))
+        //    {
+        //        array = new object[args.Length + 1];
+        //        args.CopyTo(array, 1);
+        //        array[0] = this;
+        //    }
+        //    else
+        //        array = new[] { this };
+        //    return Contract.Get(key).Execute(method, array);
+        //}
 
         /// <summary>
         /// Gets or sets a value indicating whether this instance is error.
@@ -103,32 +103,21 @@ namespace System.Patterns.Forms
         /// <value><c>true</c> if this instance is error; otherwise, <c>false</c>.</value>
         public bool HasError { get; set; }
 
+        public Dictionary<string, string> Values
+        {
+            get { return _values; }
+        }
+
+        public Dictionary<string, string> ReplaceTags
+        {
+            get { return _replaceTags; }
+        }
+
         ///// <summary>
         ///// Gets the meta.
         ///// </summary>
         ///// <value>The meta.</value>
         //public SmartFormMeta Meta { get; protected set; }
-
-        #region ReplaceTag
-        /// <summary>
-        /// Adds a replacement tag to the collection used by this instance of SmartForm.
-        /// </summary>
-        /// <param name="replaceTag">The replace tag.</param>
-        /// <param name="value">The value.</param>
-        public void AddReplaceTag(string replaceTag, string value)
-        {
-            if (string.IsNullOrEmpty(replaceTag))
-                throw new ArgumentNullException("key");
-            _replaceTagHash["[:" + replaceTag + ":]"] = (value ?? string.Empty);
-        }
-
-        /// <summary>
-        /// Clears the current collection of replacement tags in use.
-        /// </summary>
-        public void ClearReplaceTag()
-        {
-            _replaceTagHash.Clear();
-        }
 
         /// <summary>
         /// Creates the merged text resulting from applying all replacement tags against the string value associated with the key provided.
@@ -140,13 +129,12 @@ namespace System.Patterns.Forms
             if (string.IsNullOrEmpty(key))
                 throw new ArgumentNullException("key");
             string value;
-            if (!_valueHash.TryGetValue(key, out value))
+            if (!_values.TryGetValue(key, out value))
                 return string.Empty;
             if (value.Length > 0)
-                foreach (string replaceTagKey in _replaceTagHash.Keys)
-                    value = value.Replace(replaceTagKey, _replaceTagHash[replaceTagKey]);
+                foreach (string replaceTagKey in _replaceTags.Keys)
+                    value = value.Replace("[:" + replaceTagKey + ":]", _replaceTags[replaceTagKey]);
             return value;
         }
-        #endregion
     }
 }

@@ -23,6 +23,17 @@ using Microsoft.Practices.Unity;
 using System.Quality.Internal;
 namespace System.Quality
 {
+    /// <summary>
+    /// IUnityServiceLocator
+    /// </summary>
+    public interface IUnityServiceLocator : IServiceLocator
+    {
+        IUnityContainer Container { get; }
+    }
+
+    /// <summary>
+    /// UnityServiceLocator
+    /// </summary>
     [Serializable]
     public class UnityServiceLocator : IUnityServiceLocator, IDisposable
     {

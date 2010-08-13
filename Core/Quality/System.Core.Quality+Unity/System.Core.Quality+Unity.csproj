@@ -45,8 +45,6 @@
     <Compile Include="Quality\Internal\UnityPropertySelectorPolicy.cs" />
     <Compile Include="Quality\Internal\UnityMethodSelectorPolicy.cs" />
     <Compile Include="Quality\Internal\UnityStrategiesExtension.cs" />
-    <Compile Include="Quality\IUnityServiceRegistrar.cs" />
-    <Compile Include="Quality\IUnityServiceLocator.cs" />
     <Compile Include="Quality\UnityServiceLocator.cs" />
     <Compile Include="Quality\UnityServiceRegistrar.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -50,7 +50,6 @@
     <Compile Include="Patterns\Form\Reference_\zSmartForm.cs" />
     <Compile Include="Patterns\Form\Reference_\zSmartFormMetax.cs" />
     <Compile Include="Patterns\Form\SmartForm.cs" />
-    <Compile Include="Patterns\Form\SmartForm2.cs" />
     <Compile Include="Patterns\Form\SmartFormContracts\EmailSmartFormBodyBuilder.cs" />
     <Compile Include="Patterns\Form\SmartFormContracts\EmailSmartFormBodyBuilder2.cs" />
     <Compile Include="Patterns\Form\SmartFormContracts\EmailSmartFormContract.cs" />

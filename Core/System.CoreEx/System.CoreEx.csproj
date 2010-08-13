@@ -121,9 +121,6 @@
     <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Form\Patterns\Form\SmartForm.cs">
       <Link>Patterns\System.Core.Patterns.Form\Patterns\Form\SmartForm.cs</Link>
     </Compile>
-    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Form\Patterns\Form\SmartForm2.cs">
-      <Link>Patterns\System.Core.Patterns.Form\Patterns\Form\SmartForm2.cs</Link>
-    </Compile>
     <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Form\Patterns\Form\SmartFormContracts\EmailSmartFormBodyBuilder.cs">
       <Link>Patterns\System.Core.Patterns.Form\Patterns\Form\SmartFormContracts\EmailSmartFormBodyBuilder.cs</Link>
     </Compile>

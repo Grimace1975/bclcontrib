@@ -41,8 +41,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Quality\IStructureMapServiceLocator.cs" />
-    <Compile Include="Quality\IStructureMapServiceRegistrar.cs" />
     <Compile Include="Quality\StructureMapServiceRegistrar.cs" />
     <Compile Include="Quality\StructureMapServiceLocator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

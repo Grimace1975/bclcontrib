@@ -41,8 +41,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Quality\INinjectServiceLocator.cs" />
-    <Compile Include="Quality\INinjectServiceRegistrar.cs" />
     <Compile Include="Quality\NinjectServiceRegistrar.cs" />
     <Compile Include="Quality\NinjectServiceLocator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

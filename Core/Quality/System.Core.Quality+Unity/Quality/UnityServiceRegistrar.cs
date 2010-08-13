@@ -21,6 +21,14 @@
 using Microsoft.Practices.Unity;
 namespace System.Quality
 {
+    /// <summary>
+    /// IUnityServiceRegistrar
+    /// </summary>
+    public interface IUnityServiceRegistrar : IServiceRegistrar { }
+
+    /// <summary>
+    /// UnityServiceRegistrar
+    /// </summary>
     internal sealed class UnityServiceRegistrar : IUnityServiceRegistrar, IDisposable
     {
         private UnityServiceLocator _parent;

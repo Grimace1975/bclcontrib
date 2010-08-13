@@ -24,8 +24,19 @@ using Castle.Windsor;
 using Castle.MicroKernel.Resolvers.SpecializedResolvers;
 namespace System.Quality
 {
+    /// <summary>
+    /// IWindsorServiceLocator
+    /// </summary>
+    public interface IWindsorServiceLocator : IServiceLocator
+    {
+        IWindsorContainer Container { get; }
+    }
+
+    /// <summary>
+    /// WindsorServiceLocator
+    /// </summary>
     [Serializable]
-    public class WindsorServiceLocator : IServiceLocator, IDisposable
+    public class WindsorServiceLocator : IWindsorServiceLocator, IDisposable
     {
         private IWindsorContainer _container;
         private WindsorServiceRegistrar _registrar;
