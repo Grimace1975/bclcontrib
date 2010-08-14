@@ -37,6 +37,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Quality+Bus\IServiceMessageHandler.cs" />
     <Compile Include="Quality+Bus\ServiceBusManager.cs" />
     <Compile Include="Quality+Bus\IServiceBusCallback.cs" />
     <Compile Include="Quality+Bus\IServiceMessage.cs" />
