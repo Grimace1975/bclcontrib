@@ -26,6 +26,8 @@ namespace System.DirectoryServices.AccountManagement
 
         public static IEnumerable<GroupPrincipal> GetAllGroupPrincipals(PrincipalContext context)
         {
+            if (context == null)
+                throw new ArgumentNullException("context");
             var searcher = new PrincipalSearcher(new GroupPrincipal(context));
             using (var searchResults = searcher.FindAll())
                 return searchResults
@@ -36,6 +38,12 @@ namespace System.DirectoryServices.AccountManagement
 
         public static IEnumerable<GroupPrincipal> GetGroupPrincipalsByUserIdentity(PrincipalContext context, IdentityType identityType, string identity, string container)
         {
+            if (context == null)
+                throw new ArgumentNullException("context");
+            if (string.IsNullOrEmpty(identity))
+                throw new ArgumentNullException("identity");
+            if (string.IsNullOrEmpty(container))
+                throw new ArgumentNullException("container");
             using (var user = UserPrincipal.FindByIdentity(context, identityType, identity))
             {
                 if (user == null)
@@ -46,6 +54,10 @@ namespace System.DirectoryServices.AccountManagement
 
         public static IEnumerable<GroupPrincipal> GetGroupPrincipalsByUser(UserPrincipal user, string container)
         {
+            if (user == null)
+                throw new ArgumentNullException("user");
+            if (string.IsNullOrEmpty(container))
+                throw new ArgumentNullException("container");
             return user.GetGroups()
                 .Where(g => (g.StructuralObjectClass == "group") && (g.DistinguishedName.EndsWith(container)))
                 .OfType<GroupPrincipal>()
@@ -54,11 +66,21 @@ namespace System.DirectoryServices.AccountManagement
 
         public static GroupPrincipal GetGroupPrincipalByIdentity(PrincipalContext context, IdentityType identityType, string identity)
         {
+            if (context == null)
+                throw new ArgumentNullException("context");
+            if (string.IsNullOrEmpty(identity))
+                throw new ArgumentNullException("identity");
             return GroupPrincipal.FindByIdentity(context, identityType, identity);
         }
 
-        public static List<T> MapUserPrincipalToGroup<T>(string container, string suffix, UserPrincipal userPrincipal, Func<string, T> builder)
+        public static IEnumerable<T> MapUserPrincipalToGroup<T>(string container, string suffix, UserPrincipal userPrincipal, Func<string, T> builder)
         {
+            if (string.IsNullOrEmpty(container))
+                throw new ArgumentNullException("container");
+            if (userPrincipal == null)
+                throw new ArgumentNullException("userPrincipal");
+            if (builder == null)
+                throw new ArgumentNullException("builder");
             suffix = (string.IsNullOrEmpty(suffix) ? string.Empty : "-" + suffix);
             var entry = (DirectoryEntry)userPrincipal.GetUnderlyingObject();
             var memberOf = entry.Properties["memberOf"].Value;
@@ -80,6 +102,12 @@ namespace System.DirectoryServices.AccountManagement
 
         public TReturn WithGroupPrincipalBySid<TReturn>(string container, string sid, Func<GroupPrincipal, TReturn> action)
         {
+            if (string.IsNullOrEmpty(container))
+                throw new ArgumentNullException("container");
+            if (string.IsNullOrEmpty(sid))
+                throw new ArgumentNullException("sid");
+            if (action == null)
+                throw new ArgumentNullException("action");
             if (sid == AnonymousSid.Value)
                 throw new InvalidOperationException();
             using (var context = GetPrincipalContext(container))
@@ -88,9 +116,16 @@ namespace System.DirectoryServices.AccountManagement
 
         public TReturn WithGroupPrincipalByIdentity<TReturn>(string container, IdentityType identityType, string identity, Func<GroupPrincipal, TReturn> action)
         {
+            if (string.IsNullOrEmpty(container))
+                throw new ArgumentNullException("container");
+            if (string.IsNullOrEmpty(identity))
+                throw new ArgumentNullException("identity");
+            if (action == null)
+                throw new ArgumentNullException("action");
             using (var context = GetPrincipalContext(container))
                 return action(GroupPrincipal.FindByIdentity(context, identityType, identity));
         }
+
 
         public void SyncGroupPrincipalMembers<T>(PrincipalContext context, UserPrincipal userPrincipal, IdentityType identityType, IEnumerable<T> items, Func<UserPrincipal, IEnumerable<T>> existingItemsAccessor, Func<T, string> identityAccessor)
         {
@@ -136,24 +171,36 @@ namespace System.DirectoryServices.AccountManagement
 
         #region UserPrincipal
 
-        public void MoveTo(UserPrincipal userPrincipal, string newContainer)
+        public static IEnumerable<UserPrincipal> GetAllUserPrincipals(PrincipalContext context)
         {
-            var DirectoryEntry = (DirectoryEntry)userPrincipal.GetUnderlyingObject();
-            var newDirectoryEntry = GetDirectoryEntry(newContainer);
-            if (newDirectoryEntry != null)
-            {
-                DirectoryEntry.MoveTo(newDirectoryEntry);
-                DirectoryEntry.CommitChanges();
-            }
+            if (context == null)
+                throw new ArgumentNullException("context");
+            var searcher = new PrincipalSearcher(new UserPrincipal(context));
+            using (var searchResults = searcher.FindAll())
+                return searchResults
+#if DEBUG
+.Take(100)
+#endif
+.Where(user => user.StructuralObjectClass == "user")
+                    .OfType<UserPrincipal>()
+                    .ToList();
         }
 
         public static UserPrincipal GetUserPrincipalByIdentity(PrincipalContext context, IdentityType identityType, string identity)
         {
+            if (context == null)
+                throw new ArgumentNullException("context");
+            if (string.IsNullOrEmpty(identity))
+                throw new ArgumentNullException("identity");
             return UserPrincipal.FindByIdentity(context, identityType, identity);
         }
 
         public static UserPrincipal GetUserPrincipalByEmail(PrincipalContext context, string email)
         {
+            if (context == null)
+                throw new ArgumentNullException("context");
+            if (string.IsNullOrEmpty(email))
+                throw new ArgumentNullException("email");
             var searcher = new PrincipalSearcher(new UserPrincipal(context) { EmailAddress = email });
             using (var users = searcher.FindAll())
                 switch (users.Count())
@@ -167,28 +214,12 @@ namespace System.DirectoryServices.AccountManagement
                 }
         }
 
-        public TReturn WithUserPrincipalBySid<TReturn>(string sid, Func<UserPrincipal, TReturn> action)
-        {
-            if (sid == AnonymousSid.Value)
-                throw new InvalidOperationException();
-            using (var context = GetPrincipalContext(_userContainer))
-                return action(UserPrincipal.FindByIdentity(context, IdentityType.Sid, sid));
-        }
-
-        public TReturn WithUserPrincipalByIdentity<TReturn>(IdentityType identityType, string identity, Func<UserPrincipal, TReturn> action)
-        {
-            using (var context = GetPrincipalContext(_userContainer))
-                return action(UserPrincipal.FindByIdentity(context, identityType, identity));
-        }
-
-        public TReturn WithUserPrincipalByIdentity<TReturn>(string container, IdentityType identityType, string identity, Func<UserPrincipal, TReturn> action)
-        {
-            using (var context = GetPrincipalContext(container))
-                return action(UserPrincipal.FindByIdentity(context, identityType, identity));
-        }
-
         public static IEnumerable<UserPrincipal> GetUserPrincipalsBySingleIdentity<TSingle>(PrincipalContext context, IdentityType identityType, string identity)
         {
+            if (context == null)
+                throw new ArgumentNullException("context");
+            if (string.IsNullOrEmpty(identity))
+                throw new ArgumentNullException("identity");
             using (var groupPrincipal = GroupPrincipal.FindByIdentity(context, identityType, identity))
             {
                 if (groupPrincipal == null)
@@ -202,6 +233,12 @@ namespace System.DirectoryServices.AccountManagement
 
         public static IEnumerable<UserPrincipal> GetUserPrincipalsBySingleIdentity<TSingle>(PrincipalContext context, IdentityType identityType, string identity, Func<GroupPrincipal, TSingle> singleBuilder, out TSingle single)
         {
+            if (context == null)
+                throw new ArgumentNullException("context");
+            if (string.IsNullOrEmpty(identity))
+                throw new ArgumentNullException("identity");
+            if (singleBuilder == null)
+                throw new ArgumentNullException("singleBuilder");
             using (var groupPrincipal = GroupPrincipal.FindByIdentity(context, identityType, identity))
             {
                 if (groupPrincipal == null)
@@ -218,23 +255,65 @@ namespace System.DirectoryServices.AccountManagement
             }
         }
 
-        public static IEnumerable<UserPrincipal> GetAllUsers(PrincipalContext context)
+        public void MoveUserPrincipalTo(UserPrincipal userPrincipal, string newContainer) { MoveUserPrincipalTo(userPrincipal, GetDirectoryEntry(newContainer)); }
+        public static void MoveUserPrincipalTo(UserPrincipal userPrincipal, DirectoryEntry newContainer)
         {
-            var searcher = new PrincipalSearcher(new UserPrincipal(context));
-            using (var searchResults = searcher.FindAll())
-                return searchResults
-#if DEBUG
-.Take(100)
-#endif
-.Where(user => user.StructuralObjectClass == "user")
-                    .OfType<UserPrincipal>()
-                    .ToList();
+            if (userPrincipal == null)
+                throw new ArgumentNullException("userPrincipal");
+            var directoryEntry = (DirectoryEntry)userPrincipal.GetUnderlyingObject();
+            if (newContainer != null)
+            {
+                directoryEntry.MoveTo(newContainer);
+                directoryEntry.CommitChanges();
+            }
         }
 
+        public TReturn WithUserPrincipals<TReturn>(Func<IEnumerable<UserPrincipal>, TReturn> action)
+        {
+            if (action == null)
+                throw new ArgumentNullException("action");
+            using (var context = GetPrincipalContext(_userContainer))
+                return action(GetAllUserPrincipals(context));
+        }
+
+        public TReturn WithUserPrincipalBySid<TReturn>(string sid, Func<UserPrincipal, TReturn> action)
+        {
+            if (string.IsNullOrEmpty(sid))
+                throw new ArgumentNullException("sid");
+            if (action == null)
+                throw new ArgumentNullException("action");
+            if (sid == AnonymousSid.Value)
+                throw new InvalidOperationException();
+            using (var context = GetPrincipalContext(_userContainer))
+                return action(UserPrincipal.FindByIdentity(context, IdentityType.Sid, sid));
+        }
+
+        public TReturn WithUserPrincipalByIdentity<TReturn>(IdentityType identityType, string identity, Func<UserPrincipal, TReturn> action)
+        {
+            if (string.IsNullOrEmpty(identity))
+                throw new ArgumentNullException("identity");
+            if (action == null)
+                throw new ArgumentNullException("action");
+            using (var context = GetPrincipalContext(_userContainer))
+                return action(UserPrincipal.FindByIdentity(context, identityType, identity));
+        }
+
+        public TReturn WithUserPrincipalByIdentity<TReturn>(string container, IdentityType identityType, string identity, Func<UserPrincipal, TReturn> action)
+        {
+            if (string.IsNullOrEmpty(container))
+                throw new ArgumentNullException("container");
+            if (string.IsNullOrEmpty(identity))
+                throw new ArgumentNullException("identity");
+            if (action == null)
+                throw new ArgumentNullException("action");
+            using (var context = GetPrincipalContext(container))
+                return action(UserPrincipal.FindByIdentity(context, identityType, identity));
+        }
         #endregion
 
         #region Context
 
+        public PrincipalContext GetPrincipalUsersContext() { return GetPrincipalContext(ContextType.ApplicationDirectory, _userContainer); }
         public PrincipalContext GetPrincipalContext(string container) { return GetPrincipalContext(ContextType.ApplicationDirectory, container); }
         public PrincipalContext GetPrincipalContext(ContextType contextType, string container)
         {

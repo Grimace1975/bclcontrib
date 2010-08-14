@@ -781,6 +781,27 @@
     <Compile Include="..\System.CoreEx_\System.Core.Reactive\+Reactive\ObservableExtensions.cs">
       <Link>System.Core.Reactive\+Reactive\ObservableExtensions.cs</Link>
     </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Reflection\+DynamicProxy\Reflection\DynamicProxyMethodEmitter.cs">
+      <Link>System.Core.Reflection\+DynamicProxy\Reflection\DynamicProxyMethodEmitter.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Reflection\+DynamicProxy\Reflection\DynamicProxyTypeEmitter.cs">
+      <Link>System.Core.Reflection\+DynamicProxy\Reflection\DynamicProxyTypeEmitter.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Reflection\+DynamicProxy\Reflection\IDynamicProxy.cs">
+      <Link>System.Core.Reflection\+DynamicProxy\Reflection\IDynamicProxy.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Reflection\+DynamicProxy\Reflection\Interceptor.cs">
+      <Link>System.Core.Reflection\+DynamicProxy\Reflection\Interceptor.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Reflection\+DynamicProxy\Reflection\InterceptorHandler.cs">
+      <Link>System.Core.Reflection\+DynamicProxy\Reflection\InterceptorHandler.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Reflection\+DynamicProxy\Reflection\InvocationInfo.cs">
+      <Link>System.Core.Reflection\+DynamicProxy\Reflection\InvocationInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Reflection\+DynamicProxy\Reflection\ProxyImplementor.cs">
+      <Link>System.Core.Reflection\+DynamicProxy\Reflection\ProxyImplementor.cs</Link>
+    </Compile>
     <Compile Include="..\System.CoreEx_\System.Core.Reflection\Reflection\AssemblyExtensions.cs">
       <Link>System.Core.Reflection\Reflection\AssemblyExtensions.cs</Link>
     </Compile>
