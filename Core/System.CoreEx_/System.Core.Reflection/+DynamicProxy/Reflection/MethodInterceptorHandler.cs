@@ -1,4 +1,4 @@
-#region License
+﻿#region License
 /*
 The MIT License
 
@@ -23,7 +23,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 #endregion
-namespace System.Collections.Generic
+using System.Diagnostics;
+namespace System.Reflection
 {
-    public interface IPagedList<T> : IList<T>, IPagedMetadata { }
+    public delegate object MethodInterceptorHandler(object proxy, MethodInfo targetMethod, StackTrace stackTrace, Type[] genericTypeArguments, object[] arguments);
 }

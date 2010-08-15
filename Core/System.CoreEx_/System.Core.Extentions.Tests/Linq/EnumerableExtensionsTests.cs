@@ -1,8 +1,8 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-namespace System
+namespace System.Linq
 {
 	[TestClass]
-	public class EnumerableExTests
+    public class EnumerableExtensionsTests
 	{
         //public class X : IValue<string>
         //{

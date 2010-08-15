@@ -222,7 +222,10 @@
       <Link>System.CoreEx+\System.Core.Core2\DefaultAppUnit.cs</Link>
     </Compile>
     <Compile Include="..\..\System.CoreEx_\System.Core2\EXTENTIONS\ConvertEx.cs">
-      <Link>System.CoreEx+\System.Core.Core2\EXTENTIONS\ConvertEx.cs</Link>
+      <Link>System.CoreEx+\System.Core.Core2\Ex\ConvertEx.cs</Link>
+    </Compile>
+    <Compile Include="..\..\System.CoreEx_\System.Core2\EXTENTIONS\TypeExtensions.cs">
+      <Link>System.CoreEx+\System.Core.Core2\EXTENTIONS\TypeExtensions.cs</Link>
     </Compile>
     <Compile Include="..\..\System.CoreEx_\System.Core2\IAppUnit.cs">
       <Link>System.CoreEx+\System.Core.Core2\IAppUnit.cs</Link>
@@ -235,9 +238,6 @@
     </Compile>
     <Compile Include="..\..\System.CoreEx_\System.Core2\TryFunc.cs">
       <Link>System.CoreEx+\System.Core.Core2\TryFunc.cs</Link>
-    </Compile>
-    <Compile Include="..\..\System.CoreEx_\System.Core2\TypeExtensions.cs">
-      <Link>System.CoreEx+\System.Core.Core2\TypeExtensions.cs</Link>
     </Compile>
     <Compile Include="..\..\System.DataEx\Data\SqlClient\SqlConvert.cs">
       <Link>System.DataEx+\Data\SqlClient\SqlConvert.cs</Link>

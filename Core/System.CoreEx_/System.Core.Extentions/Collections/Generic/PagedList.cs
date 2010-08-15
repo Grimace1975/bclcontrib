@@ -25,12 +25,13 @@ THE SOFTWARE.
 #endregion
 namespace System.Collections.Generic
 {
+    public interface IPagedList<T> : IList<T>, IPagedMetadata { }
+
     public class PagedList<T> : List<T>, IPagedList<T>
     {
-        private IPagedMetadata _metadata;
+        private readonly IPagedMetadata _metadata;
 
         public PagedList(IPagedMetadata metadata)
-            : base()
         {
             _metadata = metadata;
         }

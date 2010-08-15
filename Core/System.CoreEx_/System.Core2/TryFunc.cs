@@ -28,13 +28,13 @@ namespace System
 	/// <summary>
 	/// 
 	/// </summary>
-	public delegate bool TryFunc<T, TOut>(T arg, out TOut value);
+	public delegate bool TryFunc<in T, TOut>(T arg, out TOut value);
 	/// <summary>
 	/// 
 	/// </summary>
-	public delegate bool TryFunc<T1, T2, TOut>(T1 arg1, T2 arg2, out TOut value);
+	public delegate bool TryFunc<in T1, in T2, TOut>(T1 arg1, T2 arg2, out TOut value);
 	/// <summary>
 	/// 
 	/// </summary>
-	public delegate bool TryFunc<T1, T2, T3, TOut>(T1 arg1, T2 arg2, T3 arg3, out TOut value);
+	public delegate bool TryFunc<in T1, in T2, in T3, TOut>(T1 arg1, T2 arg2, T3 arg3, out TOut value);
 }

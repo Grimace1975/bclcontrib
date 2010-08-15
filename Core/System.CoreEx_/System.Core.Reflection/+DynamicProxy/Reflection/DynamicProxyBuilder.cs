@@ -23,25 +23,34 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 #endregion
-using System.Diagnostics;
-
+using System.Reflection.Emit;
 namespace System.Reflection
 {
-    public interface IInterceptor
+    public interface IDynamicProxyBuilder
     {
-        object Intercept(InvocationInfo info);
+        Type CreateProxiedType(Type baseType, Type[] baseInterfaces);
     }
 
-    public abstract class Interceptor : IInterceptor
+    public class DynamicProxyBuilder : IDynamicProxyBuilder
     {
-        protected Interceptor() { }
-
-        public object Intercept(object proxy, MethodInfo targetMethod, StackTrace stackTrace, Type[] genericTypeArguments, object[] arguments) { return Intercept(new InvocationInfo(proxy, targetMethod, stackTrace, genericTypeArguments, arguments)); }
-        public abstract object Intercept(InvocationInfo info);
-
-        public static implicit operator InterceptorHandler(Interceptor interceptor)
+        public DynamicProxyBuilder()
+            : this(new DynamicProxyTypeEmitter(new DynamicProxyMethodEmitter())) { }
+        public DynamicProxyBuilder(IDynamicProxyTypeEmitter proxyTypeEmitter)
         {
-            return new InterceptorHandler(interceptor.Intercept);
+            ProxyTypeEmitter = proxyTypeEmitter;
+        }
+
+        public IDynamicProxyTypeEmitter ProxyTypeEmitter { get; private set; }
+
+        public Type CreateProxiedType(Type baseType, Type[] baseInterfaces)
+        {
+            var currentDomain = AppDomain.CurrentDomain;
+            string typeName = string.Format("{0}Proxy", baseType.Name);
+            string assemblyName = string.Format("{0}Assembly", typeName);
+            string moduleName = string.Format("{0}Module", typeName);
+            var name = new AssemblyName(assemblyName);
+            var b = currentDomain.DefineDynamicAssembly(name, AssemblyBuilderAccess.Run).DefineDynamicModule(moduleName);
+            return ProxyTypeEmitter.CreateProxiedType(b, baseType, baseInterfaces);
         }
     }
 }

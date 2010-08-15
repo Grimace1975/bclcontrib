@@ -26,12 +26,11 @@ THE SOFTWARE.
 using System.Runtime.Serialization;
 using System.Reflection.Emit;
 using System.Collections.Generic;
-
 namespace System.Reflection
 {
     public interface IDynamicProxyTypeEmitter
     {
-        Type CreateProxiedType(Type baseType, Type[] baseInterfaces);
+        Type CreateProxiedType(ModuleBuilder b, Type baseType, Type[] baseInterfaces);
     }
 
     internal class DynamicProxyTypeEmitter : IDynamicProxyTypeEmitter
@@ -48,14 +47,8 @@ namespace System.Reflection
         [Serializable]
         public class ProxyObjectReference : IObjectReference, ISerializable
         {
-            private readonly IDynamicProxyTypeEmitter _parent;
             private readonly Type _baseType;
             private readonly IDynamicProxy _proxy;
-
-            public ProxyObjectReference(IDynamicProxyTypeEmitter parent)
-            {
-                _parent = parent;
-            }
 
             protected ProxyObjectReference(SerializationInfo info, StreamingContext context)
             {
@@ -68,7 +61,7 @@ namespace System.Reflection
                     string name = string.Format("__baseInterface{0}", index);
                     baseInterfaces.Add(Type.GetType(info.GetString(name), true, false));
                 }
-                var proxyType = _parent.CreateProxiedType(_baseType, baseInterfaces.ToArray());
+                var proxyType = new DynamicProxyBuilder().CreateProxiedType(_baseType, baseInterfaces.ToArray());
                 _proxy = (IDynamicProxy)Activator.CreateInstance(proxyType, new object[] { info, context });
             }
 
@@ -94,21 +87,16 @@ namespace System.Reflection
         #region Type
 
         private static readonly ConstructorInfo s_baseConstructor = typeof(object).GetConstructor(new Type[0]);
-        private static readonly MethodInfo s_getAssemblyQualifiedNameMethod = typeof(Type).GetMethod("get_AssemblyQualifiedName");
         private static readonly MethodInfo s_getTypeFromHandleMethod = typeof(Type).GetMethod("GetTypeFromHandle");
         private static readonly MethodInfo s_addValueMethod = typeof(SerializationInfo).GetMethod("AddValue", BindingFlags.Public | BindingFlags.Instance, null, new Type[] { typeof(string), typeof(object) }, null);
         private static readonly MethodInfo s_getValueMethod = typeof(SerializationInfo).GetMethod("GetValue", BindingFlags.Public | BindingFlags.Instance, null, new Type[] { typeof(string), typeof(Type) }, null);
         private static readonly MethodInfo s_setTypeMethod = typeof(SerializationInfo).GetMethod("SetType", BindingFlags.Public | BindingFlags.Instance, null, new Type[] { typeof(Type) }, null);
 
-        public Type CreateProxiedType(Type baseType, Type[] baseInterfaces)
+        public Type CreateProxiedType(ModuleBuilder b, Type baseType, Type[] baseInterfaces)
         {
-            var currentDomain = AppDomain.CurrentDomain;
             string typeName = string.Format("{0}Proxy", baseType.Name);
-            string assemblyName = string.Format("{0}Assembly", typeName);
-            string moduleName = string.Format("{0}Module", typeName);
-            var name = new AssemblyName(assemblyName);
-            var assemblyBuilder = currentDomain.DefineDynamicAssembly(name, AssemblyBuilderAccess.Run).DefineDynamicModule(moduleName);
-            var attributes = TypeAttributes.BeforeFieldInit | TypeAttributes.AutoClass | TypeAttributes.Public;
+            //
+            const TypeAttributes attributes = TypeAttributes.BeforeFieldInit | TypeAttributes.AutoClass | TypeAttributes.Public;
             var interfaces = new List<Type>();
             if ((baseInterfaces != null) && (baseInterfaces.Length > 0))
                 interfaces.AddRange(baseInterfaces);
@@ -122,22 +110,22 @@ namespace System.Reflection
                 BuildInterfacesRecurse(@interface, interfaces);
             if (!interfaces.Contains(typeof(ISerializable)))
                 interfaces.Add(typeof(ISerializable));
-            var b = assemblyBuilder.DefineType(typeName, attributes, parent, interfaces.ToArray());
-            var constructorBuilder = DefineConstructor(b);
-            var implementor = new ProxyImplementor();
-            implementor.ImplementProxy(b);
+            var typeBuilder = b.DefineType(typeName, attributes, parent, interfaces.ToArray());
+            var constructorBuilder = DefineConstructor(typeBuilder);
+            var implementor = new DynamicProxyImplementor();
+            implementor.ImplementProxy(typeBuilder);
             var methods = baseType.GetMethods(BindingFlags.Public | BindingFlags.Instance);
             var proxies = new List<MethodInfo>();
             BuildMethods(interfaces, methods, proxies);
             var interceptorField = implementor.InterceptorField;
             foreach (var proxy in proxies)
                 if (proxy.DeclaringType != typeof(ISerializable))
-                    ProxyMethodEmitter.CreateProxiedMethod(b, interceptorField, proxy);
-            AddSerializationSupport(b, baseType, baseInterfaces, interceptorField, constructorBuilder);
-            return b.CreateType();
+                    ProxyMethodEmitter.CreateProxiedMethod(typeBuilder, interceptorField, proxy);
+            AddSerializationSupport(typeBuilder, baseType, baseInterfaces, interceptorField, constructorBuilder);
+            return typeBuilder.CreateType();
         }
 
-        private static void BuildInterfacesRecurse(Type type, List<Type> interfaces)
+        private static void BuildInterfacesRecurse(Type type, ICollection<Type> interfaces)
         {
             var childInterfaces = type.GetInterfaces();
             if ((childInterfaces != null) && (childInterfaces.Length != 0))
@@ -149,7 +137,7 @@ namespace System.Reflection
                     }
         }
 
-        private static void BuildMethods(IEnumerable<Type> interfaces, IEnumerable<MethodInfo> methods, List<MethodInfo> proxies)
+        private static void BuildMethods(IEnumerable<Type> interfaces, IEnumerable<MethodInfo> methods, ICollection<MethodInfo> proxies)
         {
             foreach (var method in methods)
                 if (((!method.IsPrivate) && (!method.IsFinal)) && ((method.IsVirtual) || (method.IsAbstract)))
@@ -170,7 +158,7 @@ namespace System.Reflection
 
         private static ConstructorBuilder DefineConstructor(TypeBuilder b)
         {
-            var attributes = MethodAttributes.RTSpecialName | MethodAttributes.SpecialName | MethodAttributes.HideBySig | MethodAttributes.Public;
+            const MethodAttributes attributes = MethodAttributes.RTSpecialName | MethodAttributes.SpecialName | MethodAttributes.HideBySig | MethodAttributes.Public;
             var methodBuilder = b.DefineConstructor(attributes, CallingConventions.Standard, new Type[0]);
             var w = methodBuilder.GetILGenerator();
             methodBuilder.SetImplementationFlags(MethodImplAttributes.IL);
@@ -182,13 +170,13 @@ namespace System.Reflection
 
         private static void DefineSerializationConstructor(TypeBuilder b, Type[] baseInterfaces, FieldInfo interceptorField, ConstructorBuilder constructorBuilder)
         {
-            var attributes = MethodAttributes.RTSpecialName | MethodAttributes.SpecialName | MethodAttributes.HideBySig | MethodAttributes.Public;
+            const MethodAttributes attributes = MethodAttributes.RTSpecialName | MethodAttributes.SpecialName | MethodAttributes.HideBySig | MethodAttributes.Public;
             var parameterTypes = new[] { typeof(SerializationInfo), typeof(StreamingContext) };
             var methodBuilder = b.DefineConstructor(attributes, CallingConventions.Standard, parameterTypes);
             var w = methodBuilder.GetILGenerator();
             var local = w.DeclareLocal(typeof(Type));
             methodBuilder.SetImplementationFlags(MethodImplAttributes.IL);
-            w.Emit(OpCodes.Ldtoken, typeof(IInterceptor));
+            w.Emit(OpCodes.Ldtoken, typeof(IMethodInterceptor));
             w.Emit(OpCodes.Call, s_getTypeFromHandleMethod);
             w.Emit(OpCodes.Stloc, local);
             w.Emit(OpCodes.Ldarg_0);
@@ -198,14 +186,14 @@ namespace System.Reflection
             w.Emit(OpCodes.Ldstr, "__interceptor");
             w.Emit(OpCodes.Ldloc, local);
             w.Emit(OpCodes.Callvirt, s_getValueMethod);
-            w.Emit(OpCodes.Castclass, typeof(IInterceptor));
+            w.Emit(OpCodes.Castclass, typeof(IMethodInterceptor));
             w.Emit(OpCodes.Stfld, interceptorField);
             w.Emit(OpCodes.Ret);
         }
 
         private static void ImplementGetObjectData(TypeBuilder b, Type baseType, Type[] baseInterfaces, FieldInfo interceptorField)
         {
-            var attributes = MethodAttributes.HideBySig | MethodAttributes.Virtual | MethodAttributes.Public;
+            const MethodAttributes attributes = MethodAttributes.HideBySig | MethodAttributes.Virtual | MethodAttributes.Public;
             var parameterTypes = new[] { typeof(SerializationInfo), typeof(StreamingContext) };
             var w = b.DefineMethod("GetObjectData", attributes, typeof(void), parameterTypes).GetILGenerator();
             w.Emit(OpCodes.Ldarg_1);

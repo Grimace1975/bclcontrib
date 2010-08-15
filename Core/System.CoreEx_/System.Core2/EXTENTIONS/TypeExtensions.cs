@@ -1,7 +1,7 @@
-﻿#if !SqlServer
+﻿using System.Reflection;
+#if !SqlServer
 using System.Linq;
 #endif
-using System.Reflection;
 namespace System
 {
     public static class TypeExtensions
@@ -13,11 +13,22 @@ namespace System
         {
 #if !SqlServer
             var genericMethod = type.GetMethods(bindingAttr)
-                .Where(m => m.IsGenericMethod).Single(m => (m.ContainsGenericParameters) && (m.Name == name));
+                .Where(m => m.IsGenericMethod)
+                .Where(m => (m.ContainsGenericParameters) && (m.Name == name))
+                .Where(m => ((genericTypes == null) && (!m.GetGenericArguments().Any())) || ((genericTypes != null) && (m.GetGenericArguments().Single().GetGenericParameterConstraints().Match(genericTypes, true))))
+                .Where(m => ((types == null) && (!m.GetParameters().Any())) || ((types != null) && (m.GetParameters().Select(c => c.ParameterType).Match(types, ParameterMatchPredicate, true))))
+                .Single();
             return genericMethod.GetGenericMethodDefinition();
 #else
             throw new NotImplementedException();
 #endif
+        }
+
+        private static bool ParameterMatchPredicate(Type left, Type right)
+        {
+            if (left.ContainsGenericParameters)
+                return left.Equals(right);
+            return true;
         }
     }
 }

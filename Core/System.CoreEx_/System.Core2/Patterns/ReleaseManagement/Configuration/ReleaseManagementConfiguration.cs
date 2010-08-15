@@ -31,9 +31,6 @@ namespace System.Patterns.ReleaseManagement.Configuration
     /// </summary>
 	public class ReleaseManagementConfiguration : Patterns.Configuration.Configuration
     {
-        public ReleaseManagementConfiguration()
-            : base() { }
-
         [ConfigurationProperty("deploymentEnvironment", DefaultValue = DeploymentEnvironment.Live)]
         public DeploymentEnvironment DeploymentEnvironment
         {

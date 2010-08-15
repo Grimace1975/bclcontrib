@@ -23,15 +23,13 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 #endregion
-using System.Threading;
 using System.Reflection;
-using System.Collections.Generic;
 namespace System.Patterns.Generic
 {
     /// <summary>
     /// SimpleFactoryBase
     /// </summary>
-    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="TBase"></typeparam>
     public abstract class SimpleFactoryBase<TBase>
         where TBase : class
     {

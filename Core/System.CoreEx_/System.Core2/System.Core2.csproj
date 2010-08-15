@@ -22,7 +22,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -61,22 +61,23 @@
     <Compile Include="Collections\ICollectionKey.cs" />
     <Compile Include="Collections\IValue.cs" />
     <Compile Include="Collections\SortDirection.cs" />
+    <Compile Include="EXTENTIONS\Configuration\ConfigurationManagerEx.cs" />
     <Compile Include="EnvironmentExMapper.cs" />
     <Compile Include="DefaultAppUnit.cs" />
-    <Compile Include="EXTENTIONS\Configuration\ConfigurationManagerEx.cs" />
+    <Compile Include="EXTENTIONS\ConvertEx.cs" />
+    <Compile Include="EXTENTIONS\Threading\ReaderWriterLockExtensions.cs" />
+    <Compile Include="EXTENTIONS\Xml\XmlNodeEx.cs" />
+    <Compile Include="Linq\EnumerableExtensionsForMatch.cs" />
     <Compile Include="Patterns\Generic\ExtentsRepository.cs" />
     <Compile Include="Patterns\Generic\SimpleFactoryBase.cs" />
     <Compile Include="Patterns\ReleaseManagement\Configuration\ReleaseManagementConfiguration.cs" />
-    <Compile Include="TypeExtensions.cs" />
+    <Compile Include="EXTENTIONS\TypeExtensions.cs" />
     <Compile Include="zLocal.Designer.cs">
       <DependentUpon>zLocal.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="EnvironmentEx.cs" />
-    <Compile Include="EXTENTIONS\ConvertEx.cs" />
-    <Compile Include="EXTENTIONS\Threading\ReaderWriterLockExtensions.cs" />
-    <Compile Include="EXTENTIONS\Xml\XmlNodeEx.cs" />
     <Compile Include="Patterns\Configuration\Configuration.cs" />
     <Compile Include="Patterns\Configuration\ConfigurationSection.cs" />
     <Compile Include="Patterns\Configuration\ConfigurationSet.cs" />
@@ -129,6 +130,7 @@
       <Name>System.Core.Quality</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

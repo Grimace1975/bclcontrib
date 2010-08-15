@@ -31,9 +31,6 @@ namespace System.Diagnostics
     public static class Logger
     {
 #if CoreEvent_NLOG
-        /// <summary>
-        /// Nlog log manager instance
-        /// </summary>
         private static NLog.Logger s_logger = NLog.LogManager.GetCurrentClassLogger();
 #endif
 
@@ -74,7 +71,7 @@ namespace System.Diagnostics
         /// <param name="logEventType">Type of event to log.</param>
         /// <param name="module">Point of origin of the event in the form of Class::Method</param>
         /// <param name="text">Message to associated with the event.</param>
-        /// <param name="parameters">List of parameters associated with event.</param>
+        /// <param name="args">List of parameters associated with event.</param>
         public static void LogEvent(LogEventType logEventType, string module, string text, params object[] args)
         {
 #if CoreEvent_NLOG

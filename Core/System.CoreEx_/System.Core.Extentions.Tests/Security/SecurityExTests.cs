@@ -1,7 +1,6 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Security;
-using System.Collections;
+using System.Linq;
 namespace System
 {
     /// <summary>
@@ -75,7 +74,7 @@ namespace System
             byte[] actual;
 			actual = SecurityEx.SymmetricEncrypt(clearBytes, key, iv);
 			Console.WriteLine(ConvertEx.ToBase16String(actual));
-            Assert.IsTrue(EnumerableEx.CompareValues(actual, expected, true));
+            Assert.IsTrue(actual.Match(expected, true));
         }
 
         /// <summary>
@@ -91,7 +90,7 @@ namespace System
             byte[] actual;
 			actual = SecurityEx.SymmetricDecrypt(cipherBytes, key, iv);
 			Console.WriteLine(ConvertEx.ToBase16String(actual));
-            Assert.IsTrue(EnumerableEx.CompareValues(actual, expected, true));
+            Assert.IsTrue(actual.Match(expected, true));
         }
 
         /// <summary>

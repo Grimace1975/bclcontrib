@@ -23,12 +23,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 #endregion
-using System.Diagnostics;
 using System.Reflection.Emit;
-
 namespace System.Reflection
 {
-    internal class ProxyImplementor
+    internal class DynamicProxyImplementor
     {
         private FieldBuilder _fieldBuilder;
 
@@ -36,15 +34,15 @@ namespace System.Reflection
         {
             var dynamicProxyType = typeof(IDynamicProxy);
             b.AddInterfaceImplementation(dynamicProxyType);
-            _fieldBuilder = b.DefineField("__interceptor", typeof(IInterceptor), FieldAttributes.Private);
-            var attributes = MethodAttributes.SpecialName | MethodAttributes.VtableLayoutMask | MethodAttributes.HideBySig | MethodAttributes.Virtual | MethodAttributes.Public;
-            var getMethodBuilder = b.DefineMethod("get_Interceptor", attributes, CallingConventions.HasThis, typeof(IInterceptor), new Type[0]);
+            _fieldBuilder = b.DefineField("__interceptor", typeof(IMethodInterceptor), FieldAttributes.Private);
+            const MethodAttributes attributes = MethodAttributes.SpecialName | MethodAttributes.VtableLayoutMask | MethodAttributes.HideBySig | MethodAttributes.Virtual | MethodAttributes.Public;
+            var getMethodBuilder = b.DefineMethod("get_Interceptor", attributes, CallingConventions.HasThis, typeof(IMethodInterceptor), new Type[0]);
             getMethodBuilder.SetImplementationFlags(MethodImplAttributes.IL);
             var w = getMethodBuilder.GetILGenerator();
             w.Emit(OpCodes.Ldarg_0);
             w.Emit(OpCodes.Ldfld, _fieldBuilder);
             w.Emit(OpCodes.Ret);
-            var setMethodBuilder = b.DefineMethod("set_Interceptor", attributes, CallingConventions.HasThis, typeof(void), new Type[] { typeof(IInterceptor) });
+            var setMethodBuilder = b.DefineMethod("set_Interceptor", attributes, CallingConventions.HasThis, typeof(void), new Type[] { typeof(IMethodInterceptor) });
             setMethodBuilder.SetImplementationFlags(MethodImplAttributes.IL);
             w = setMethodBuilder.GetILGenerator();
             w.Emit(OpCodes.Ldarg_0);

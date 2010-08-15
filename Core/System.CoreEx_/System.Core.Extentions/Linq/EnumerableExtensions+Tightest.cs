@@ -32,16 +32,6 @@ namespace System.Linq
     /// </summary>
     public static partial class EnumerableExtensions
     {
-        /// <summary>
-        /// Tries the get tightest match.
-        /// </summary>
-        /// <typeparam name="TValue">The type of the value.</typeparam>
-        /// <param name="id">The id.</param>
-        /// <param name="scope">The scope.</param>
-        /// <param name="hash">The hash.</param>
-        /// <param name="tightestValue">The tightest value.</param>
-        /// <param name="tightestValueLength">Length of the tightest value.</param>
-        /// <returns></returns>
         public static bool TryGetTightestMatch<TSource>(this IEnumerable<TSource> source, string value, char scope, out TSource tightestValue)
             where TSource : IValue<string>
         {
@@ -55,7 +45,7 @@ namespace System.Linq
             for (; (firstNonSlashIndex < value.Length) && (value[firstNonSlashIndex] == scope); firstNonSlashIndex++) ;
             if ((firstNonSlashIndex > 0) && (firstNonSlashIndex < value.Length))
                 value = value.Substring(firstNonSlashIndex);
-            string matchText = value + scope;
+            //string matchText = value + scope;
             // locate tightest virtual path match
             tightestValue = default(TSource);
             int tightestValueLength = 0;
@@ -79,16 +69,16 @@ namespace System.Linq
                 throw new ArgumentNullException("values");
             // locate tightest virtual path match
             tightestValue = default(TSource);
-            T[] tightestValues = null;
+            //T[] tightestValues = null;
             int tightestValuesLength = 0;
             foreach (TSource item in source)
             {
                 T[] itemValues = item.Value;
                 int itemValuesLength;
-                if ((EnumerableEx.CompareValues(itemValues, values, false)) && ((itemValuesLength = itemValues.Length) > tightestValuesLength))
+                if ((itemValues.Match(values, false)) && ((itemValuesLength = itemValues.Length) > tightestValuesLength))
                 {
                     tightestValue = item;
-                    tightestValues = itemValues;
+                    //tightestValues = itemValues;
                     tightestValuesLength = itemValuesLength;
                 }
             }

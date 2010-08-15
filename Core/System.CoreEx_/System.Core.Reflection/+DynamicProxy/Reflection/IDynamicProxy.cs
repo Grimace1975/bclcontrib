@@ -27,6 +27,6 @@ namespace System.Reflection
 {
     public interface IDynamicProxy
     {
-        IInterceptor Interceptor { get; set; }
+        IMethodInterceptor Interceptor { get; set; }
     }
 }

@@ -23,23 +23,32 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 #endregion
-using System;
+using System.Linq;
 using NServiceBus;
+using System.Reflection;
 
 namespace System.Quality
 {
     internal class MessageWrapper<TMessage>
         where TMessage : IServiceMessage
     {
-        public class TypeWrapper
-        {
-        }
+        private static readonly MethodInfo s_a1 = typeof(IBus).GetGenericMethod("Publish", new[] { typeof(IMessage) }, new[] { typeof(Action<TMessage>) });
+        private static readonly MethodInfo s_a2 = typeof(IBus).GetGenericMethod("Publish", new[] { typeof(IMessage) }, new[] { typeof(TMessage[]) });
+        private static readonly MethodInfo s_a3 = typeof(IBus).GetGenericMethod("Reply", new[] { typeof(IMessage) }, new[] { typeof(Action<TMessage>) });
+        private static readonly MethodInfo s_a4 = typeof(IBus).GetGenericMethod("Send", new[] { typeof(IMessage) }, new[] { typeof(Action<TMessage>) });
+        private static readonly MethodInfo s_a5 = typeof(IBus).GetGenericMethod("Send", new[] { typeof(IMessage) }, new[] { typeof(string), typeof(Action<TMessage>) });
+        private static readonly MethodInfo s_a6 = typeof(IBus).GetGenericMethod("SendLocal", new[] { typeof(IMessage) }, new[] { typeof(Action<TMessage>) });
+        private static readonly MethodInfo s_a7 = typeof(IBus).GetGenericMethod("Subscribe", new[] { typeof(IMessage) }, null);
+        private static readonly MethodInfo s_a8 = typeof(IBus).GetGenericMethod("Subscribe", new[] { typeof(IMessage) }, new[] { typeof(Predicate<TMessage>) });
+        private static readonly MethodInfo s_a9 = typeof(IBus).GetGenericMethod("Unsubscribe", new[] { typeof(IMessage) }, null);
 
+        //private static readonly Type s_wrappedType = new DynamicProxyBuilder().CreateProxiedType(typeof(TMessage), new[] { typeof(IMessage) });
+        //public static TBase Get(Type type) { return (TBase)s_getMethodInfo.MakeGenericMethod(type, DefaultAppUnit.Type).Invoke(null, null); }
 
         public static void Publish(IBus bus, Action<TMessage> messageBuilder) { bus.Publish<IMessage>(Wrap(messageBuilder)); }
         public static void Publish(IBus bus, TMessage[] messages) { bus.Publish<IMessage>(Wrap(messages)); }
         public static void Reply(IBus bus, Action<TMessage> messageBuilder) { bus.Reply<IMessage>(Wrap(messageBuilder)); }
-        public static IServiceBusCallback Send(IBus bus, Action<TMessage> action) { return MessageWrapper.Wrap(bus.Send<IMessage>(Wrap(action))); }
+        public static IServiceBusCallback Send(IBus bus, Action<TMessage> messageBuilder) { return MessageWrapper.Wrap(bus.Send<IMessage>(Wrap(messageBuilder))); }
         public static IServiceBusCallback Send(IBus bus, string destination, Action<TMessage> messageBuilder) { return MessageWrapper.Wrap(bus.Send<IMessage>(destination, Wrap(messageBuilder))); }
         public static void SendLocal(IBus bus, Action<TMessage> messageBuilder) { bus.SendLocal<IMessage>(Wrap(messageBuilder)); }
         public static void Subscribe(IBus bus) { bus.Subscribe<IMessage>(); }
@@ -48,17 +57,18 @@ namespace System.Quality
 
         public static Action<IMessage> Wrap(Action<TMessage> messageBuilder)
         {
-            return null;
+            return (c => messageBuilder(default(TMessage)));
         }
 
-        private static Predicate<IMessage> Wrap(Predicate<TMessage> predicate)
+        private static Predicate<IMessage> Wrap(Predicate<TMessage> condition)
         {
-            throw new NotImplementedException();
+            return (c => condition(default(TMessage)));
         }
 
         public static IMessage[] Wrap(TMessage[] messages)
         {
-            return null;
+            return messages.Select(c => default(IMessage))
+                .ToArray();
         }
     }
 }

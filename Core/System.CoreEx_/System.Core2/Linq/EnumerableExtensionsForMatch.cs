@@ -24,32 +24,12 @@ THE SOFTWARE.
 */
 #endregion
 using System.Collections.Generic;
-namespace System.Collections
+namespace System.Linq
 {
-    /// <summary>
-    /// Provides a basic façade pattern that facilitates common numeric-based calculations into a single class.
-    /// </summary>
-    public static class EnumerableEx
+    public static partial class EnumerableExtensionsForMatch
     {
-        public static bool CompareValues<T>(T[] left, T[] right, bool exactMatch)
-        {
-            if ((left == null) || (right == null))
-                return ((left == null) && (right == null));
-            if ((exactMatch) && (left.Length != right.Length))
-                return false;
-            for (int index = 0; index < left.Length; index++)
-            {
-                T leftValue = left[index];
-                T rightValue = right[index];
-                if (((leftValue == null) && (rightValue != null)) ||
-                    ((leftValue != null) && (rightValue == null)) ||
-                    (!leftValue.Equals(rightValue)))
-                    return false;
-            }
-            return true;
-        }
-
-        public static bool CompareValues<TSource>(IEnumerable<TSource> left, IEnumerable<TSource> right, bool exactMatch)
+        public static bool Match<TSource>(this IEnumerable<TSource> left, IEnumerable<TSource> right, bool exactMatch) { return Match(left, right, (leftValue, rightValue) => leftValue.Equals(rightValue), exactMatch); }
+        public static bool Match<TSource>(this IEnumerable<TSource> left, IEnumerable<TSource> right, Func<TSource, TSource, bool> predicate, bool exactMatch)
         {
             if ((left == null) || (right == null))
                 return ((left == null) && (right == null));
@@ -57,15 +37,32 @@ namespace System.Collections
             IEnumerator<TSource> rightEnum;
             for (leftEnum = left.GetEnumerator(), rightEnum = right.GetEnumerator(); (leftEnum.MoveNext()) && (rightEnum.MoveNext()); )
             {
-                TSource leftValue = leftEnum.Current;
-                TSource rightValue = rightEnum.Current;
+                var leftValue = leftEnum.Current;
+                var rightValue = rightEnum.Current;
                 if (((leftValue == null) && (rightValue != null)) ||
                     ((leftValue != null) && (rightValue == null)) ||
-                    (!leftValue.Equals(rightValue)))
+                    (!predicate(leftValue, rightValue)))
                     return false;
             }
-            if ((exactMatch) && (leftEnum.MoveNext() != rightEnum.MoveNext()))
+            return ((!exactMatch) || (leftEnum.MoveNext() == rightEnum.MoveNext()));
+        }
+
+        public static bool Match<TSource>(this TSource[] left, TSource[] right, bool exactMatch) { return Match(left, right, (leftValue, rightValue) => leftValue.Equals(rightValue), exactMatch); }
+        public static bool Match<TSource>(this TSource[] left, TSource[] right, Func<TSource, TSource, bool> predicate, bool exactMatch)
+        {
+            if ((left == null) || (right == null))
+                return ((left == null) && (right == null));
+            if ((exactMatch) && (left.Length != right.Length))
                 return false;
+            for (int index = 0; index < left.Length; index++)
+            {
+                var leftValue = left[index];
+                var rightValue = right[index];
+                if (((leftValue == null) && (rightValue != null)) ||
+                    ((leftValue != null) && (rightValue == null)) ||
+                    (!predicate(leftValue, rightValue)))
+                    return false;
+            }
             return true;
         }
     }

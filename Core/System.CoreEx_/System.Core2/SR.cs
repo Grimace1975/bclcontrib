@@ -30,16 +30,9 @@ namespace System
     /// </summary>
     public class TR
     {
-        /// <summary>
-        /// Gets the specified key.
-        /// </summary>
-        /// <param name="key">The key.</param>
-        /// <param name="parameters">The parameters.</param>
-        /// <returns></returns>
         public static string Get(string id, params object[] args)
         {
             throw new NotImplementedException();
-            //return null;
         }
     }
 }

@@ -67,7 +67,7 @@ namespace System.Primitives.Codecs
             if (startIndex < textLength)
                 b.Append(text.Substring(startIndex, textLength - startIndex - 1));
             // convert line-break to system line-break sequence
-            return b.ToString().Replace("\x0a", System.Environment.NewLine);
+            return b.ToString().Replace("\x0a", Environment.NewLine);
         }
 
         /// <summary>
@@ -130,7 +130,7 @@ namespace System.Primitives.Codecs
         /// <summary>
         /// Fixes the trailing space.
         /// </summary>
-        /// <param name="buffer">The buffer.</param>
+        /// <param name="b">The buffer.</param>
         private static void FixTrailingSpace(StringBuilder b)
         {
             int lastCharacterCode = Convert.ToInt16(b[b.Length - 1]);

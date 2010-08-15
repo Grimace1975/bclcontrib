@@ -41,12 +41,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="+DynamicProxy\Reflection\ProxyImplementor.cs" />
+    <Compile Include="+DynamicProxy\Reflection\DynamicProxyBuilder.cs" />
+    <Compile Include="+DynamicProxy\Reflection\DynamicProxyImplementor.cs" />
     <Compile Include="+DynamicProxy\Reflection\DynamicProxyTypeEmitter.cs" />
-    <Compile Include="+DynamicProxy\Reflection\InterceptorHandler.cs" />
-    <Compile Include="+DynamicProxy\Reflection\Interceptor.cs" />
+    <Compile Include="+DynamicProxy\Reflection\MethodInterceptorHandler.cs" />
+    <Compile Include="+DynamicProxy\Reflection\MethodInterceptor.cs" />
     <Compile Include="+DynamicProxy\Reflection\IDynamicProxy.cs" />
-    <Compile Include="+DynamicProxy\Reflection\InvocationInfo.cs" />
+    <Compile Include="+DynamicProxy\Reflection\MethodInvocationInfo.cs" />
     <Compile Include="+DynamicProxy\Reflection\DynamicProxyMethodEmitter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reflection\AssemblyExtensions.cs" />

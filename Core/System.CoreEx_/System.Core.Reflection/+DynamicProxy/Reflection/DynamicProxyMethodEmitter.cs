@@ -26,7 +26,6 @@ THE SOFTWARE.
 using System.Reflection.Emit;
 using System.Diagnostics;
 using System.Collections.Generic;
-
 namespace System.Reflection
 {
     public interface IDynamicProxyMethodEmitter
@@ -34,7 +33,7 @@ namespace System.Reflection
         void CreateProxiedMethod(TypeBuilder b, FieldInfo field, MethodInfo method);
     }
 
-    internal class DynamicProxyMethodEmitter : IDynamicProxyMethodEmitter
+    public class DynamicProxyMethodEmitter : IDynamicProxyMethodEmitter
     {
         static DynamicProxyMethodEmitter()
         {
@@ -60,8 +59,8 @@ namespace System.Reflection
         private static readonly ConstructorInfo s_notImplementedConstructor = typeof(NotImplementedException).GetConstructor(new Type[0]);
         private static readonly Dictionary<string, OpCode> s_stindMap = new Dictionary<string, OpCode>();
         //
-        private static readonly MethodInfo s_handlerMethod = typeof(IInterceptor).GetMethod("Intercept");
-        private static readonly ConstructorInfo s_invocationInfoConstructor = typeof(InvocationInfo).GetConstructor(new[] { typeof(object), typeof(MethodInfo), typeof(StackTrace), typeof(Type[]), typeof(object[]) });
+        private static readonly MethodInfo s_handlerMethod = typeof(IMethodInterceptor).GetMethod("Intercept");
+        private static readonly ConstructorInfo s_invocationInfoConstructor = typeof(MethodInvocationInfo).GetConstructor(new[] { typeof(object), typeof(MethodInfo), typeof(StackTrace), typeof(Type[]), typeof(object[]) });
         private static readonly PropertyInfo s_interceptorProperty = typeof(IDynamicProxy).GetProperty("Interceptor");
         private static readonly MethodInfo s_getInterceptorMethod = s_interceptorProperty.GetGetMethod();
 
@@ -71,7 +70,7 @@ namespace System.Reflection
             var parameterTypes = new List<Type>();
             foreach (var parameter in parameters)
                 parameterTypes.Add(parameter.ParameterType);
-            var attributes = MethodAttributes.HideBySig | MethodAttributes.Virtual | MethodAttributes.Public;
+            const MethodAttributes attributes = MethodAttributes.HideBySig | MethodAttributes.Virtual | MethodAttributes.Public;
             var methodBuilder = b.DefineMethod(method.Name, attributes, CallingConventions.HasThis, method.ReturnType, parameterTypes.ToArray());
             var genericArguments = method.GetGenericArguments();
             if ((genericArguments != null) && (genericArguments.Length > 0))
@@ -87,10 +86,9 @@ namespace System.Reflection
 
         public void EmitMethodBody(ILGenerator w, MethodInfo method, FieldInfo field)
         {
-            bool isStatic = false;
             var parameters = method.GetParameters();
             w.DeclareLocal(typeof(object[]));
-            w.DeclareLocal(typeof(InvocationInfo));
+            w.DeclareLocal(typeof(MethodInvocationInfo));
             w.DeclareLocal(typeof(Type[]));
             w.Emit(OpCodes.Ldarg_0);
             w.Emit(OpCodes.Callvirt, s_getInterceptorMethod);
@@ -114,7 +112,7 @@ namespace System.Reflection
             w.Emit(OpCodes.Castclass, typeof(MethodInfo));
             PushStackTrace(w);
             PushGenericArguments(w, method);
-            PushArguments(w, parameters, isStatic);
+            PushArguments(w, parameters);
             w.Emit(OpCodes.Newobj, s_invocationInfoConstructor);
             w.Emit(OpCodes.Stloc_1);
             w.Emit(OpCodes.Ldloc_1);
@@ -134,7 +132,7 @@ namespace System.Reflection
             return s_stindMap[name];
         }
 
-        private void PackageReturnType(ILGenerator w, MethodInfo method)
+        private static void PackageReturnType(ILGenerator w, MethodInfo method)
         {
             var returnType = method.ReturnType;
             if (returnType == typeof(void))
@@ -143,7 +141,7 @@ namespace System.Reflection
                 w.Emit(OpCodes.Unbox_Any, returnType);
         }
 
-        private void PushStackTrace(ILGenerator w)
+        private static void PushStackTrace(ILGenerator w)
         {
             w.Emit(OpCodes.Ldnull);
         }
@@ -152,7 +150,7 @@ namespace System.Reflection
 
         #region Arguments
 
-        private void PushArguments(ILGenerator w, ParameterInfo[] parameters, bool isStatic)
+        private static void PushArguments(ILGenerator w, ParameterInfo[] parameters)
         {
             int count = (parameters == null ? 0 : parameters.Length);
             w.Emit(OpCodes.Ldc_I4, count);
@@ -189,7 +187,7 @@ namespace System.Reflection
 
         private static void SaveRefArguments(ILGenerator w, ParameterInfo[] parameters)
         {
-            var method = typeof(InvocationInfo).GetMethod("get_Arguments");
+            var method = typeof(MethodInvocationInfo).GetMethod("get_Arguments");
             w.Emit(OpCodes.Ldloc_1);
             w.Emit(OpCodes.Call, method);
             w.Emit(OpCodes.Stloc_0);
@@ -210,7 +208,7 @@ namespace System.Reflection
             }
         }
 
-        private void PushGenericArguments(ILGenerator w, MethodInfo method)
+        private static void PushGenericArguments(ILGenerator w, MethodInfo method)
         {
             var genericArguments = method.GetGenericArguments();
             int count = (genericArguments == null ? 0 : genericArguments.Length);

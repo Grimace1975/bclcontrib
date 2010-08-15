@@ -30,7 +30,7 @@ namespace System.Patterns
     /// </summary>
     public class Disposeable : IDisposable
     {
-        private bool _disposed = false;
+        private bool _disposed;
 
         /// <summary>
         /// Implements the <see cref="System.IDisposable.Dispose"/> method of

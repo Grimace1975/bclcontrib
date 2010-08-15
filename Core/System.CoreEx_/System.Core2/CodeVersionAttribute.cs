@@ -44,7 +44,6 @@ namespace System
 		/// <param name="kind">The kind.</param>
 		/// <param name="version">The version.</param>
 		public CodeVersionAttribute(CodeVersionKind kind, string version)
-			: base()
 		{
 			Kind = kind;
 			Version = version;

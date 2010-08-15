@@ -24,8 +24,23 @@ THE SOFTWARE.
 */
 #endregion
 using System.Diagnostics;
-
 namespace System.Reflection
 {
-    public delegate object InterceptorHandler(object proxy, MethodInfo targetMethod, StackTrace stackTrace, Type[] genericTypeArguments, object[] arguments);
+    public interface IMethodInterceptor
+    {
+        object Intercept(MethodInvocationInfo info);
+    }
+
+    public abstract class MethodInterceptor : IMethodInterceptor
+    {
+        protected MethodInterceptor() { }
+
+        public object Intercept(object proxy, MethodInfo targetMethod, StackTrace stackTrace, Type[] genericTypeArguments, object[] arguments) { return Intercept(new MethodInvocationInfo(proxy, targetMethod, stackTrace, genericTypeArguments, arguments)); }
+        public abstract object Intercept(MethodInvocationInfo info);
+
+        public static implicit operator MethodInterceptorHandler(MethodInterceptor interceptor)
+        {
+            return interceptor.Intercept;
+        }
+    }
 }

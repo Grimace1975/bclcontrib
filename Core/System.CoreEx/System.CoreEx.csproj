@@ -296,14 +296,8 @@
     <Compile Include="..\System.CoreEx_\System.Core.Extentions\ActivatorEx.cs">
       <Link>System.Core.Extentions\ActivatorEx.cs</Link>
     </Compile>
-    <Compile Include="..\System.CoreEx_\System.Core.Extentions\Collections\EnumerableEx.cs">
-      <Link>System.Core.Extentions\Collections\EnumerableEx.cs</Link>
-    </Compile>
     <Compile Include="..\System.CoreEx_\System.Core.Extentions\Collections\Generic\DictionaryExtensions.cs">
       <Link>System.Core.Extentions\Collections\Generic\DictionaryExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\System.CoreEx_\System.Core.Extentions\Collections\Generic\IPagedList.cs">
-      <Link>System.Core.Extentions\Collections\Generic\IPagedList.cs</Link>
     </Compile>
     <Compile Include="..\System.CoreEx_\System.Core.Extentions\Collections\Generic\IPagedMetadata.cs">
       <Link>System.Core.Extentions\Collections\Generic\IPagedMetadata.cs</Link>
@@ -785,6 +779,12 @@
     <Compile Include="..\System.CoreEx_\System.Core.Reactive\+Reactive\ObservableExtensions.cs">
       <Link>System.Core.Reactive\+Reactive\ObservableExtensions.cs</Link>
     </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Reflection\+DynamicProxy\Reflection\DynamicProxyBuilder.cs">
+      <Link>System.Core.Reflection\+DynamicProxy\Reflection\DynamicProxyBuilder.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Reflection\+DynamicProxy\Reflection\DynamicProxyImplementor.cs">
+      <Link>System.Core.Reflection\+DynamicProxy\Reflection\DynamicProxyImplementor.cs</Link>
+    </Compile>
     <Compile Include="..\System.CoreEx_\System.Core.Reflection\+DynamicProxy\Reflection\DynamicProxyMethodEmitter.cs">
       <Link>System.Core.Reflection\+DynamicProxy\Reflection\DynamicProxyMethodEmitter.cs</Link>
     </Compile>
@@ -794,17 +794,14 @@
     <Compile Include="..\System.CoreEx_\System.Core.Reflection\+DynamicProxy\Reflection\IDynamicProxy.cs">
       <Link>System.Core.Reflection\+DynamicProxy\Reflection\IDynamicProxy.cs</Link>
     </Compile>
-    <Compile Include="..\System.CoreEx_\System.Core.Reflection\+DynamicProxy\Reflection\Interceptor.cs">
-      <Link>System.Core.Reflection\+DynamicProxy\Reflection\Interceptor.cs</Link>
+    <Compile Include="..\System.CoreEx_\System.Core.Reflection\+DynamicProxy\Reflection\MethodInterceptor.cs">
+      <Link>System.Core.Reflection\+DynamicProxy\Reflection\MethodInterceptor.cs</Link>
     </Compile>
-    <Compile Include="..\System.CoreEx_\System.Core.Reflection\+DynamicProxy\Reflection\InterceptorHandler.cs">
-      <Link>System.Core.Reflection\+DynamicProxy\Reflection\InterceptorHandler.cs</Link>
+    <Compile Include="..\System.CoreEx_\System.Core.Reflection\+DynamicProxy\Reflection\MethodInterceptorHandler.cs">
+      <Link>System.Core.Reflection\+DynamicProxy\Reflection\MethodInterceptorHandler.cs</Link>
     </Compile>
-    <Compile Include="..\System.CoreEx_\System.Core.Reflection\+DynamicProxy\Reflection\InvocationInfo.cs">
-      <Link>System.Core.Reflection\+DynamicProxy\Reflection\InvocationInfo.cs</Link>
-    </Compile>
-    <Compile Include="..\System.CoreEx_\System.Core.Reflection\+DynamicProxy\Reflection\ProxyImplementor.cs">
-      <Link>System.Core.Reflection\+DynamicProxy\Reflection\ProxyImplementor.cs</Link>
+    <Compile Include="..\System.CoreEx_\System.Core.Reflection\+DynamicProxy\Reflection\MethodInvocationInfo.cs">
+      <Link>System.Core.Reflection\+DynamicProxy\Reflection\MethodInvocationInfo.cs</Link>
     </Compile>
     <Compile Include="..\System.CoreEx_\System.Core.Reflection\Reflection\AssemblyExtensions.cs">
       <Link>System.Core.Reflection\Reflection\AssemblyExtensions.cs</Link>
@@ -1028,6 +1025,9 @@
     <Compile Include="..\System.CoreEx_\System.Core2\EXTENTIONS\Threading\ReaderWriterLockExtensions.cs">
       <Link>System.Core2\EXTENTIONS\Threading\ReaderWriterLockExtensions.cs</Link>
     </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core2\EXTENTIONS\TypeExtensions.cs">
+      <Link>System.Core2\EXTENTIONS\TypeExtensions.cs</Link>
+    </Compile>
     <Compile Include="..\System.CoreEx_\System.Core2\EXTENTIONS\Xml\XmlNodeEx.cs">
       <Link>System.Core2\EXTENTIONS\Xml\XmlNodeEx.cs</Link>
     </Compile>
@@ -1036,6 +1036,9 @@
     </Compile>
     <Compile Include="..\System.CoreEx_\System.Core2\IAppUnit.cs">
       <Link>System.Core2\IAppUnit.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core2\Linq\EnumerableExtensionsForMatch.cs">
+      <Link>System.Core2\Linq\EnumerableExtensionsForMatch.cs</Link>
     </Compile>
     <Compile Include="..\System.CoreEx_\System.Core2\Patterns\Configuration\Configuration.cs">
       <Link>System.Core2\Patterns\Configuration\Configuration.cs</Link>
@@ -1102,9 +1105,6 @@
     </Compile>
     <Compile Include="..\System.CoreEx_\System.Core2\TypeCodeObject.cs">
       <Link>System.Core2\TypeCodeObject.cs</Link>
-    </Compile>
-    <Compile Include="..\System.CoreEx_\System.Core2\TypeExtensions.cs">
-      <Link>System.Core2\TypeExtensions.cs</Link>
     </Compile>
     <Compile Include="..\System.CoreEx_\System.Core2\WeakReference.cs">
       <Link>System.Core2\WeakReference.cs</Link>

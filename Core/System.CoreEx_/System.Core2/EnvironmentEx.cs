@@ -24,7 +24,6 @@ THE SOFTWARE.
 */
 #endregion
 using System.Patterns.ReleaseManagement;
-using System.Patterns.ReleaseManagement.Configuration;
 namespace System
 {
     /// <summary>

@@ -25,12 +25,11 @@ THE SOFTWARE.
 #endregion
 using System.Text;
 using System.Diagnostics;
-
 namespace System.Reflection
 {
-    public class InvocationInfo
+    public class MethodInvocationInfo
     {
-        public InvocationInfo(object proxy, MethodInfo targetMethod, StackTrace stackTrace, Type[] genericTypeArguments, object[] arguments)
+        public MethodInvocationInfo(object proxy, MethodInfo targetMethod, StackTrace stackTrace, Type[] genericTypeArguments, object[] arguments)
         {
             Target = proxy;
             TargetMethod = targetMethod;
@@ -39,7 +38,7 @@ namespace System.Reflection
             StackTrace = stackTrace;
         }
 
-        private string GetMethodName(MethodInfo method)
+        private static string GetMethodName(MethodInfo method)
         {
             var b = new StringBuilder();
             b.AppendFormat("{0}.{1}", method.DeclaringType.Name, method.Name);
@@ -71,10 +70,8 @@ namespace System.Reflection
             b.AppendLine("Arguments:");
             foreach (var parameter in TargetMethod.GetParameters())
             {
-                object value = Arguments[parameter.Position];
-                if (value == null)
-                    value = "(null)";
-                b.AppendFormat("\t{0,10:G}: {1}\n", parameter.Name, value.ToString());
+                object value = (Arguments[parameter.Position] ?? "(null)");
+                b.AppendFormat("\t{0,10:G}: {1}\n", parameter.Name, value);
             }
             b.AppendLine();
             return b.ToString();

@@ -59,8 +59,8 @@ namespace System
         }
 
 #if !SqlServer
-        private static object s_nextIdLock = new object();
-        private static int s_nextId = 0;
+        private static readonly object s_nextIdLock = new object();
+        private static int s_nextId;
 
         /// <summary>
         /// Gets the next id in the sequence.

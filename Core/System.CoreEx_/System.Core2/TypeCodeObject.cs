@@ -31,35 +31,18 @@ namespace System
     /// </summary>
     public class TypeCodeObject<TValue>
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="TypeCodeObject"/> class.
-        /// </summary>
-        /// <param name="typeCode">The type code.</param>
         public TypeCodeObject(TypeCode typeCode)
         {
             TypeCode = typeCode;
         }
-        /// <summary>
-        /// Initializes a new instance of the <see cref="TypeCodeObject"/> class.
-        /// </summary>
-        /// <param name="typeCode">The type code.</param>
-        /// <param name="value">The value.</param>
         public TypeCodeObject(TypeCode typeCode, TValue value)
         {
             TypeCode = typeCode;
             Value = value;
         }
 
-        /// <summary>
-        /// Gets or sets the type code.
-        /// </summary>
-        /// <value>The type code.</value>
         public TypeCode TypeCode { get; set; }
 
-        /// <summary>
-        /// Gets or sets the value.
-        /// </summary>
-        /// <value>The value.</value>
         public TValue Value { get; set; }
     }
 }
