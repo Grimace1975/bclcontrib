@@ -40,9 +40,7 @@ namespace System.Interop.MediaInfo.Contents
         public VideoTrack(MediaVisitor visitor, uint trackIndex)
         {
             if (trackIndex >= visitor.VideoTracks)
-            {
                 throw new ArgumentOutOfRangeException("trackIndex");
-            }
             var handle = visitor._handle;
             Count = MediaInfo.Get(handle, _StreamKind.Video, trackIndex, "Count");
             StreamCount = MediaInfo.Get(handle, _StreamKind.Video, trackIndex, "StreamCount");

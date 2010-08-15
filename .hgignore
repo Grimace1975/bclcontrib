@@ -1,7 +1,6 @@
 relre:^TestResults/.*
 glob:*.suo
 glob:*.user
-glob:*.testrunconfig
 glob:*/bin/*
 glob:*/obj/*
 glob:*/Bin/*

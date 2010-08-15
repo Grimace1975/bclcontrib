@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.WebEx.Integrate", "System.WebEx.Integrate\System.WebEx.Integrate.csproj", "{A0473035-FA9B-4205-886C-9FF1ABAC41DD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.WebEx.Integrate+TinyMce", "System.WebEx.Integrate+TinyMce\System.WebEx.Integrate+TinyMce.csproj", "{167E0981-C93D-43F9-B982-568469E93F8F}"

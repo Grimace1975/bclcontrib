@@ -38,9 +38,7 @@ namespace System.Interop.MediaInfo
         /// <summary>
         /// Initializes a new instance of the <see cref="MediaVisitor"/> class.
         /// </summary>
-        public MediaVisitor()
-        {
-        }
+        public MediaVisitor() { }
 
         /// <summary>
         /// Opens the specified path.
