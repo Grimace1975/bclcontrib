@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -12,6 +12,10 @@
     <AssemblyName>System.Core.Extentions</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -59,9 +63,9 @@
     <Compile Include="IO\FileArchiver.cs" />
     <Compile Include="IO\IOExtensions.cs" />
     <Compile Include="IO\PathEx.cs" />
-    <Compile Include="Linq\+zEnumerableExtensions\WrappedSelectIterator.cs" />
-    <Compile Include="Linq\+zEnumerableExtensions\WhereEnumerableIterator.cs" />
-    <Compile Include="Linq\+zEnumerableExtensions\WhereSelectArrayIterator.cs" />
+    <None Include="Linq\+zEnumerableExtensions\WrappedSelectIterator.cs" />
+    <None Include="Linq\+zEnumerableExtensions\WhereEnumerableIterator.cs" />
+    <None Include="Linq\+zEnumerableExtensions\WhereSelectArrayIterator.cs" />
     <Compile Include="Linq\Buffer.cs" />
     <Compile Include="Linq+Paging\DefaultModelMetadataProvider.cs" />
     <Compile Include="Linq+Paging\EmptyLinqPagedMetadataProvider.cs" />
@@ -71,9 +75,9 @@
     <Compile Include="Linq+Paging\QueryableExtensions.cs" />
     <Compile Include="Linq\QueryableExtensions.cs" />
     <Compile Include="Linq\EnumerableExtensions+Tightest.cs" />
-    <Compile Include="Linq\+zEnumerableExtensions\WhereSelectListIterator.cs" />
-    <Compile Include="Linq\+zEnumerableExtensions\WhereSelectEnumerableIterator.cs" />
-    <Compile Include="Linq\+zEnumerableExtensions\Iterator.cs" />
+    <None Include="Linq\+zEnumerableExtensions\WhereSelectListIterator.cs" />
+    <None Include="Linq\+zEnumerableExtensions\WhereSelectEnumerableIterator.cs" />
+    <None Include="Linq\+zEnumerableExtensions\Iterator.cs" />
     <Compile Include="Linq+Paging\EnumerableExtensions.cs" />
     <Compile Include="Linq+Paging\LinqPagedCriteria.cs" />
     <Compile Include="Linq\DynamicQueryable.cs" />

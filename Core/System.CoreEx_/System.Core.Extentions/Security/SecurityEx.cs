@@ -36,15 +36,6 @@ namespace System.Security
     /// </summary>
     public static class SecurityEx
     {
-        //NOTE: For use in the PasswordEncrypt and PasswordDecrypt members only.
-        //Since we're accepting a user created clear text password - it's  unlikey that the password
-        //will be more than 128 bits long, or 16 bytes (although it's possibe). The default AES block size
-        //is 128 bits and so even though the mode of encryption is CBC - we'll amlost never encrypt more than a single block.
-        //Even if we were encrypting multiple blocks, the IV does not have to be a secret - so it's hard
-        //coded here for now (although in the future it should be moved to an application specific configuration setting
-        //along with the full length symmetric key).
-        private static readonly string s_hexIv = "C9DCF37AED8574A1441FD82DB743765C";
-
         /// <summary>
         /// Hash utility - pass the hash algorithm name as a string i.e. SHA256, SHA1, MD5 etc.
         /// </summary>
@@ -76,6 +67,15 @@ namespace System.Security
         }
 
 #if !SqlServer
+        //NOTE: For use in the PasswordEncrypt and PasswordDecrypt members only.
+        //Since we're accepting a user created clear text password - it's  unlikey that the password
+        //will be more than 128 bits long, or 16 bytes (although it's possibe). The default AES block size
+        //is 128 bits and so even though the mode of encryption is CBC - we'll amlost never encrypt more than a single block.
+        //Even if we were encrypting multiple blocks, the IV does not have to be a secret - so it's hard
+        //coded here for now (although in the future it should be moved to an application specific configuration setting
+        //along with the full length symmetric key).
+        private const string s_hexIv = "C9DCF37AED8574A1441FD82DB743765C";
+
         /// <summary>
         /// Helper method to encrypt an account password. Password encryption must be 'reversable' in
         /// order to support WSSE authentication. Atom-enabled clients using WSSE will be performing the WSSE digest

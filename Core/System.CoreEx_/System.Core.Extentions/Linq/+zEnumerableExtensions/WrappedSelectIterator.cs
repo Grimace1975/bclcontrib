@@ -35,10 +35,10 @@ namespace System.Linq
         {
             private int _state;
             private TResult _current;
-            public Func<TSource, int, TResult> OriginalSelector;
-            public IEnumerable<TSource> OriginalSource;
+            private Func<TSource, int, TResult> _originalSelector;
+            private IEnumerable<TSource> _originalSource;
             private IEnumerator<TSource> _wrapa;
-            private int threadId;
+            private int _threadId;
             private TSource _a;
             private int _b;
             private Func<TSource, int, TResult> _selector;
@@ -48,7 +48,7 @@ namespace System.Linq
             public WrappedSelectIterator(int state)
             {
                 _state = state;
-                threadId = Thread.CurrentThread.ManagedThreadId;
+                _threadId = Thread.CurrentThread.ManagedThreadId;
             }
 
             private void Finally()
@@ -98,15 +98,15 @@ namespace System.Linq
             IEnumerator<TResult> IEnumerable<TResult>.GetEnumerator()
             {
                 WrappedSelectIterator<TSource, TResult> d;
-                if ((threadId == Thread.CurrentThread.ManagedThreadId) && (_state == -2))
+                if ((_threadId == Thread.CurrentThread.ManagedThreadId) && (_state == -2))
                 {
                     _state = 0;
                     d = (WrappedSelectIterator<TSource, TResult>)this;
                 }
                 else
                     d = new WrappedSelectIterator<TSource, TResult>(0);
-                d._source = OriginalSource;
-                d._selector = OriginalSelector;
+                d._source = _originalSource;
+                d._selector = _originalSelector;
                 return d;
             }
 

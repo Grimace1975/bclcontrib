@@ -5,7 +5,7 @@ namespace System.ComponentModel.DataAnnotations
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field, AllowMultiple = false)]
     public class DataTypeExAttribute : ValidationAttribute
     {
-        private DataTypeParserBase _parser;
+        //private DataTypeParserBase _parser;
 
         public DataTypeExAttribute(Type parserType)
             : this(parserType, null) { }

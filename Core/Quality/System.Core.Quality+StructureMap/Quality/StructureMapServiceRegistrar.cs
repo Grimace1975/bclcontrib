@@ -20,7 +20,6 @@
 #endregion
 using StructureMap.Configuration.DSL;
 using StructureMap;
-using StructureMap.Graph;
 namespace System.Quality
 {
     /// <summary>
@@ -28,7 +27,7 @@ namespace System.Quality
     /// </summary>
     public interface IStructureMapServiceRegistrar : IServiceRegistrar
     {
-        void RegisterAll<Source>();
+        void RegisterAll<TSource>();
     }
 
     /// <summary>
@@ -61,61 +60,61 @@ namespace System.Quality
             _container.Configure(x => x.AddRegistry(this));
         }
 
-        public void Register<Source>(Source instance)
-            where Source : class
+        public new void Register<TSource>(TSource instance)
+            where TSource : class
         {
-            For<Source>()
+            For<TSource>()
                 .Use(instance);
         }
 
-        public void Register<Source>(Func<Source> factoryMethod)
-            where Source : class
+        public void Register<TSource>(Func<TSource> factoryMethod)
+            where TSource : class
         {
-            For<Source>()
+            For<TSource>()
                 .Use(factoryMethod.Invoke);
             //Container.Configure(configure => configure.For<Source>()
             //    .Use(factoryMethod.Invoke));
         }
 
-        public void Register<Source>(Type implType)
-            where Source : class
+        public void Register<TSource>(Type implType)
+            where TSource : class
         {
-            ForRequestedType(typeof(Source))
-                .AddType(implType);
+            For(typeof(TSource))
+                .Add(implType);
         }
 
-        public void Register<Source, Implementation>()
-            where Implementation : class, Source
+        public void Register<TSource, TImplementation>()
+            where TImplementation : class, TSource
         {
-            ForRequestedType<Source>()
-                .AddConcreteType<Implementation>();
+            For<TSource>()
+                .Add<TImplementation>();
         }
 
-        public void Register<Source, Implementation>(string id)
-            where Implementation : class, Source
+        public void Register<TSource, TImplementation>(string id)
+            where TImplementation : class, TSource
         {
-            ForRequestedType(typeof(Source))
-                .AddType(typeof(Implementation))
-                .WithName(id);
+            For(typeof(TSource))
+                .Add(typeof(TImplementation))
+                .Named(id);
         }
 
         public void Register(string id, Type type)
         {
-            ForRequestedType(type)
-                .AddType(type)
-                .WithName(id);
+            For(type)
+                .Add(type)
+                .Named(id);
         }
 
         public void Register(Type serviceType, Type implType)
         {
-            ForRequestedType(serviceType)
-                .AddType(implType);
+            For(serviceType)
+                .Add(implType);
         }
 
         #region Domain extents
-        public void RegisterAll<Source>()
+        public void RegisterAll<TSource>()
         {
-            Scan(scanner => scanner.AddAllTypesOf<Source>());
+            Scan(scanner => scanner.AddAllTypesOf<TSource>());
         }
         #endregion
     }
