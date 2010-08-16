@@ -4,8 +4,11 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Abstract", "Abstract", "{0434D567-18D6-4E7E-BA01-E06D99F63716}"
 	ProjectSection(SolutionItems) = preProject
 		BCLCONTRIB.vsmdi = BCLCONTRIB.vsmdi
+		BCLCONTRIB1.vsmdi = BCLCONTRIB1.vsmdi
+		Local.testsettings = Local.testsettings
 		LocalTestRun.testrunconfig = LocalTestRun.testrunconfig
 		Readme.txt = Readme.txt
+		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{D2FE8F0B-CE1C-49E1-8275-E54607B41459}"
@@ -118,10 +121,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.DirectoryServicesEx"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.Core.Quality+Moq", "Core\Quality\System.Core.Quality+Moq\System.Core.Quality+Moq.csproj", "{87A04E75-9495-4F07-8D85-22B8F1B52272}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.Core.Quality+NServiceBus.Tests", "System.Core.Quality+NServiceBus.Tests\System.Core.Quality+NServiceBus.Tests.csproj", "{16F09DB7-F92C-47D6-9FC0-64D79D7C6D79}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.Core.Quality+MassTransit", "Core\Quality\System.Core.Quality+MassTransit\System.Core.Quality+MassTransit.csproj", "{5A21E242-E2BB-4F5F-838D-9FA893AECD6D}"
+EndProject
 Global
-	GlobalSection(TestCaseManagementSettings) = postSolution
-		CategoryFile = BCLCONTRIB.vsmdi
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -315,6 +319,14 @@ Global
 		{87A04E75-9495-4F07-8D85-22B8F1B52272}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{87A04E75-9495-4F07-8D85-22B8F1B52272}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{87A04E75-9495-4F07-8D85-22B8F1B52272}.Release|Any CPU.Build.0 = Release|Any CPU
+		{16F09DB7-F92C-47D6-9FC0-64D79D7C6D79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{16F09DB7-F92C-47D6-9FC0-64D79D7C6D79}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{16F09DB7-F92C-47D6-9FC0-64D79D7C6D79}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{16F09DB7-F92C-47D6-9FC0-64D79D7C6D79}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A21E242-E2BB-4F5F-838D-9FA893AECD6D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A21E242-E2BB-4F5F-838D-9FA893AECD6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A21E242-E2BB-4F5F-838D-9FA893AECD6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A21E242-E2BB-4F5F-838D-9FA893AECD6D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -342,6 +354,8 @@ Global
 		{C03A8167-F65E-4271-978C-E72914C9C311} = {DBD1302C-3F2E-4157-9240-492F611A75A2}
 		{BF36681D-4869-48B6-B2E9-F78430206F62} = {DBD1302C-3F2E-4157-9240-492F611A75A2}
 		{87A04E75-9495-4F07-8D85-22B8F1B52272} = {DBD1302C-3F2E-4157-9240-492F611A75A2}
+		{16F09DB7-F92C-47D6-9FC0-64D79D7C6D79} = {DBD1302C-3F2E-4157-9240-492F611A75A2}
+		{5A21E242-E2BB-4F5F-838D-9FA893AECD6D} = {DBD1302C-3F2E-4157-9240-492F611A75A2}
 		{772CCA21-8CE3-426B-B9F4-F450E0B4458D} = {85C3C5DB-F513-42CA-A66A-D358F65E2F3A}
 		{3E49BB33-F17D-4229-9D5E-1D6B2C933C9D} = {49EA0BE7-86C6-4C57-8701-292A558961A0}
 		{2B46D015-F0A4-4B8D-AEEA-867392A21A8D} = {49EA0BE7-86C6-4C57-8701-292A558961A0}

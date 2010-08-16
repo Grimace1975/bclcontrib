@@ -30,6 +30,7 @@ namespace System.Quality
     /// </summary>
     public interface IServiceBus
     {
+        TMessage MakeMessage<TMessage>() where TMessage : IServiceMessage, new();
         void Publish<TMessage>(Action<TMessage> messageBuilder) where TMessage : IServiceMessage;
         void Publish<TMessage>(params TMessage[] messages) where TMessage : IServiceMessage;
         void Reply<TMessage>(Action<TMessage> messageBuilder) where TMessage : IServiceMessage;

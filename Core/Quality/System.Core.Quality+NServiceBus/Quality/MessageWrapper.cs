@@ -23,26 +23,39 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 #endregion
-using System;
+using System.Linq;
 using NServiceBus;
 
 namespace System.Quality
 {
     internal class MessageWrapper
     {
+        public class CallbackWrapper : IServiceBusCallback
+        {
+            private readonly ICallback _callback;
+
+            public CallbackWrapper(ICallback callback)
+            {
+                _callback = callback;
+            }
+
+            public void Register<T>(Action<T> callback) { _callback.Register(callback); }
+            public IAsyncResult Register(AsyncCallback callback, object state) { return _callback.Register(callback, state); }
+        }
+
         public static Type Wrap(Type messageType)
         {
-            throw new NotImplementedException();
+            return messageType;
         }
 
         public static Predicate<IMessage> Wrap(Predicate<IServiceMessage> condition)
         {
-            throw new NotImplementedException();
+            return (c => condition((INServiceBusServiceMessage)c));
         }
 
         public static IMessage[] Wrap(IServiceMessage[] messages)
         {
-            throw new NotImplementedException();
+            return messages.Cast<INServiceBusServiceMessage>().ToArray();
         }
 
         public static IServiceBusCallback Wrap(ICallback callback)

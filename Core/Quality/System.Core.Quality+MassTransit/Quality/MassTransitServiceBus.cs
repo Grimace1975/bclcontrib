@@ -23,36 +23,30 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 #endregion
-using NServiceBus;
+using IBus = MassTransit.ServiceBus.IServiceBus;
 namespace System.Quality
 {
     /// <summary>
-    /// INServiceBusServiceBus
+    /// IMassTransitServiceBus
     /// </summary>
-    public interface INServiceBusServiceBus : IServiceBus
+    public interface IMassTransitServiceBus : IServiceBus
     {
         IBus Bus { get; }
     }
 
     /// <summary>
-    /// NServiceBusServiceBus
+    /// MassTransitServiceBus
     /// </summary>
-    public class NServiceBusServiceBus : INServiceBusServiceBus
+    public class MassTransitServiceBus : IMassTransitServiceBus
     {
-        private static readonly Type s_domainServiceMessageType = typeof(INServiceBusServiceMessage);
-
-        public NServiceBusServiceBus()
-            : this(new NServiceBus.Unicast.UnicastBus()) { }
-        //public NServiceBusServiceBus()
-        //    : this(Configure.With()
-        //        .CreateBus()
-        //        .Start()) { }
-        public NServiceBusServiceBus(Func<IBus> busBuilder)
+        public MassTransitServiceBus()
+            : this(new MassTransit.ServiceBus.ServiceBus()) { }
+        public MassTransitServiceBus(Func<IBus> busBuilder)
             : this(busBuilder()) { }
-        public NServiceBusServiceBus(IBus bus)
+        public MassTransitServiceBus(IBus bus)
         {
             if (bus == null)
-                throw new ArgumentNullException("bus", "The specified NServiceBus bus cannot be null.");
+                throw new ArgumentNullException("bus", "The specified MassTransit bus cannot be null.");
             Bus = bus;
         }
 
@@ -61,11 +55,7 @@ namespace System.Quality
         public TMessage MakeMessage<TMessage>()
             where TMessage : IServiceMessage, new()
         {
-            try
-            {
-                return MessageWrapper<TMessage>.MakeMessage();
-            }
-            catch (Exception exception) { throw new ServiceBusException(exception); }
+            return new TMessage();
         }
 
         public void Publish<TMessage>(Action<TMessage> messageBuilder)
@@ -95,96 +85,50 @@ namespace System.Quality
         public void Reply<TMessage>(Action<TMessage> messageBuilder)
             where TMessage : IServiceMessage
         {
-            if (!typeof(TMessage).IsAssignableFrom(s_domainServiceMessageType))
-                throw new ArgumentException("TMessage");
-            try
-            {
-                MessageWrapper<TMessage>.Reply(Bus, messageBuilder);
-            }
-            catch (Exception exception) { throw new ServiceBusException(exception); }
+            throw new NotSupportedException();
         }
 
         public void Reply(params IServiceMessage[] messages)
         {
-            try
-            {
-                Bus.Reply(MessageWrapper.Wrap(messages));
-            }
-            catch (Exception exception) { throw new ServiceBusException(exception); }
+            throw new NotSupportedException();
         }
 
         public void Return<T>(T value)
         {
-            if (typeof(T) != typeof(int))
-                throw new NotSupportedException();
-            try
-            {
-                Bus.Return(Convert.ToInt32(value));
-            }
-            catch (Exception exception) { throw new ServiceBusException(exception); }
+            throw new NotSupportedException();
         }
 
         public IServiceBusCallback Send<TMessage>(Action<TMessage> messageBuilder)
             where TMessage : IServiceMessage
         {
-            if (!typeof(TMessage).IsAssignableFrom(s_domainServiceMessageType))
-                throw new ArgumentException("TMessage");
-            try
-            {
-                return MessageWrapper<TMessage>.Send(Bus, messageBuilder);
-            }
-            catch (Exception exception) { throw new ServiceBusException(exception); }
+            throw new NotSupportedException();
         }
 
         public IServiceBusCallback Send<TMessage>(string destination, Action<TMessage> messageBuilder)
             where TMessage : IServiceMessage
         {
-            if (!typeof(TMessage).IsAssignableFrom(s_domainServiceMessageType))
-                throw new ArgumentException("TMessage");
-            try
-            {
-                return MessageWrapper<TMessage>.Send(Bus, destination, messageBuilder);
-            }
-            catch (Exception exception) { throw new ServiceBusException(exception); }
+            throw new NotSupportedException();
         }
 
         public IServiceBusCallback Send(params IServiceMessage[] messages)
         {
-            try
-            {
-                return MessageWrapper.Wrap(Bus.Send(MessageWrapper.Wrap(messages)));
-            }
-            catch (Exception exception) { throw new ServiceBusException(exception); }
+            throw new NotSupportedException();
         }
 
         public IServiceBusCallback Send(string destination, params IServiceMessage[] messages)
         {
-            try
-            {
-                return MessageWrapper.Wrap(Bus.Send(destination, MessageWrapper.Wrap(messages)));
-            }
-            catch (Exception exception) { throw new ServiceBusException(exception); }
+            throw new NotSupportedException();
         }
 
         public void SendLocal<TMessage>(Action<TMessage> messageBuilder)
             where TMessage : IServiceMessage
         {
-            if (!typeof(TMessage).IsAssignableFrom(s_domainServiceMessageType))
-                throw new ArgumentException("TMessage");
-            try
-            {
-                MessageWrapper<TMessage>.SendLocal(Bus, messageBuilder);
-            }
-            catch (Exception exception) { throw new ServiceBusException(exception); }
+            throw new NotSupportedException();
         }
 
         public void SendLocal(params IServiceMessage[] messages)
         {
-            try
-            {
-                Bus.SendLocal(MessageWrapper.Wrap(messages));
-            }
-            catch (Exception exception) { throw new ServiceBusException(exception); }
+            throw new NotSupportedException();
         }
 
         public void Subscribe<TMessage>()

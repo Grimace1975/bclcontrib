@@ -23,16 +23,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 #endregion
-using System.Collections.Generic;
 namespace System.Quality
 {
     /// <summary>
-    /// ServiceBus
+    /// IMassTransitServiceMessage
     /// </summary>
-    public static class ServiceBus
-    {
-        public static TMessage MakeMessage<TMessage>()
-            where TMessage : IServiceMessage, new() { return ServiceBusManager.Current.MakeMessage<TMessage>(); }
-        public static IServiceBusCallback Send(params IServiceMessage[] messages) { return ServiceBusManager.Current.Send(messages); }
-    }
+    public interface IMassTransitServiceMessage : IServiceMessage { }
 }

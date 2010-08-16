@@ -34,7 +34,7 @@ namespace System.Patterns.Generic
         where TBase : class
     {
         private static readonly MethodInfo s_getMethodInfo = typeof(TBase).GetGenericMethod("Get", new[] { typeof(TBase) }, null);
-        private static readonly MethodInfo s_get2MethodInfo = typeof(TBase).GetGenericMethod("Get", new[] { typeof(TBase), typeof(IAppUnit) }, new[] { typeof(string) });
+        private static readonly MethodInfo s_get2MethodInfo = typeof(TBase).GetGenericMethod("Get", new[] { typeof(TBase), typeof(IAppUnit) }, new Type[] { }); //new[] { typeof(string) });
         private static readonly MethodInfo s_createMethodInfo = typeof(TBase).GetMethod("Create", BindingFlags.NonPublic | BindingFlags.Static, null, new[] { typeof(Type) }, null);
 
         protected class DelegateFactoryByAppUnit<T, TAppUnit>

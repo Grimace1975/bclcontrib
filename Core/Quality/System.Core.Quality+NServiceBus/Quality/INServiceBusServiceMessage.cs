@@ -24,19 +24,10 @@ THE SOFTWARE.
 */
 #endregion
 using NServiceBus;
-
 namespace System.Quality
 {
-    internal class CallbackWrapper : IServiceBusCallback
-    {
-        private ICallback _callback;
-
-        public CallbackWrapper(ICallback callback)
-        {
-            _callback = callback;
-        }
-
-        public void Register<T>(Action<T> callback) { _callback.Register(callback); }
-        public IAsyncResult Register(AsyncCallback callback, object state) { return _callback.Register(callback, state); }
-    }
+    /// <summary>
+    /// INServiceBusServiceMessage
+    /// </summary>
+    public interface INServiceBusServiceMessage : IServiceMessage, IMessage { }
 }
