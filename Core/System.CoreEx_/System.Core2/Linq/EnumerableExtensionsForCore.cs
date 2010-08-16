@@ -26,7 +26,7 @@ THE SOFTWARE.
 using System.Collections.Generic;
 namespace System.Linq
 {
-    public static partial class EnumerableExtensionsForMatch
+    public static partial class EnumerableExtensionsForCore
     {
         public static bool Match<TSource>(this IEnumerable<TSource> left, IEnumerable<TSource> right, bool exactMatch) { return Match(left, right, (leftValue, rightValue) => leftValue.Equals(rightValue), exactMatch); }
         public static bool Match<TSource>(this IEnumerable<TSource> left, IEnumerable<TSource> right, Func<TSource, TSource, bool> predicate, bool exactMatch)

@@ -21,6 +21,7 @@ xcopy Web\System.Web.Hosting\bin\Release\System.Web.Hosting.* bin\ /Q /R /H /Y
 xcopy Web\System.Web.MvcEx\bin\Release\System.Web.MvcEx.* bin\ /Q /R /H /Y
 xcopy Web\System.WebEx\bin\Release\System.WebEx.* bin\ /Q /R /H /Y
 xcopy INTEGRATE_\WEB\System.WebEx.Integrate\bin\Release\System.WebEx.Integrate.* bin\INTEGRATE_\ /Q /R /H /Y
+xcopy INTEROP_\CORE\System.Interop.Core\bin\Release\System.Interop.Core.* bin\INTEROP_\ /Q /R /H /Y
 
 :: Debug
 xcopy Abstractions\System.Abstractions\bin\Debug\System.Abstractions.* bin\Debug\ /Q /R /H /Y
@@ -44,6 +45,7 @@ xcopy Web\System.Web.Hosting\bin\Debug\System.Web.Hosting.* bin\Debug\ /Q /R /H 
 xcopy Web\System.Web.MvcEx\bin\Debug\System.Web.MvcEx.* bin\Debug\ /Q /R /H /Y
 xcopy Web\System.WebEx\bin\Debug\System.WebEx.* bin\Debug\ /Q /R /H /Y
 xcopy INTEGRATE_\WEB\System.WebEx.Integrate\bin\Debug\System.WebEx.Integrate.* bin\Debug\INTEGRATE_\ /Q /R /H /Y
+xcopy INTEROP_\CORE\System.Interop.Core\bin\Debug\System.Interop.Core.* bin\Debug\INTEROP_\ /Q /R /H /Y
 
 ::
 ::robocopy Bin\Debug\ "C:\_APPLICATION\AFIWEB\Library_\Reference Assemblies\BclContrib" /MIR /TEE /NJH /NJS

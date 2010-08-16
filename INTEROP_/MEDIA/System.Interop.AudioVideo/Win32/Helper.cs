@@ -24,7 +24,7 @@ THE SOFTWARE.
 */
 #endregion
 using System.Text;
-namespace System.Interopt.AudioVideo.Win32
+namespace System.Interop.AudioVideo.Win32
 {
     /// <summary>
     /// Helper

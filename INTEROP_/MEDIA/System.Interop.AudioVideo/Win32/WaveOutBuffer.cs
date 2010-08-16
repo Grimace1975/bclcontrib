@@ -25,7 +25,7 @@ THE SOFTWARE.
 #endregion
 using System.Runtime.InteropServices;
 using System.Threading;
-namespace System.Interopt.AudioVideo.Win32
+namespace System.Interop.AudioVideo.Win32
 {
     /// <summary>
     /// Wave Out Buffer

@@ -25,7 +25,7 @@ THE SOFTWARE.
 #endregion
 using System.Net;
 using System.IO;
-namespace System.Net
+namespace System.Interop.Core.Net
 {
     /// <summary>
     /// FtpClient
@@ -63,7 +63,7 @@ namespace System.Net
         /// <returns></returns>
         public override bool Exists(string remoteFile)
         {
-            var request = (FtpWebRequest)FtpWebRequest.Create(new Uri("ftp://" + RemoteHost + remoteFile));
+            var request = (FtpWebRequest)FtpWebRequest.Create(new Uri("ftp://" + RemoteHost + "/" + remoteFile));
             request.Method = WebRequestMethods.Ftp.GetFileSize;
             request.Credentials = Credentials;
             request.UsePassive = true;
@@ -82,9 +82,9 @@ namespace System.Net
         /// </summary>
         /// <param name="remoteFile">The remote file.</param>
         /// <returns></returns>
-        public override bool TryDelete(string remoteFile)
+        public override bool TryDelete(string remoteFile, out Exception ex)
         {
-            FtpWebRequest request = (FtpWebRequest)FtpWebRequest.Create(new Uri("ftp://" + RemoteHost + remoteFile));
+            FtpWebRequest request = (FtpWebRequest)FtpWebRequest.Create(new Uri("ftp://" + RemoteHost + "/" + remoteFile));
             request.Method = WebRequestMethods.Ftp.DeleteFile;
             request.Credentials = Credentials;
             request.UsePassive = true;
@@ -93,9 +93,10 @@ namespace System.Net
             try
             {
                 using (var response = (FtpWebResponse)request.GetResponse()) { };
+                ex = null;
                 return true;
             }
-            catch (WebException) { return false; }
+            catch (WebException e) { ex = e; return false; }
         }
 
         /// <summary>
@@ -104,9 +105,9 @@ namespace System.Net
         /// <param name="remoteFile">The remote file.</param>
         /// <param name="localFile">The local file.</param>
         /// <returns></returns>
-        public override bool TryGet(string remoteFile, string localFile)
+        public override bool TryGet(string remoteFile, string localFile, out Exception ex)
         {
-            var request = (FtpWebRequest)FtpWebRequest.Create(new Uri("ftp://" + RemoteHost + remoteFile));
+            var request = (FtpWebRequest)FtpWebRequest.Create(new Uri("ftp://" + RemoteHost + "/" + remoteFile));
             request.Method = WebRequestMethods.Ftp.DownloadFile;
             request.Credentials = Credentials;
             request.UsePassive = true;
@@ -114,7 +115,9 @@ namespace System.Net
             request.KeepAlive = false;
             if (File.Exists(localFile))
                 File.Delete(localFile);
-            using (var response = (FtpWebResponse)request.GetResponse())
+            try
+            {
+                using (var response = (FtpWebResponse)request.GetResponse())
                 using (Stream r = response.GetResponseStream(), w = File.Open(localFile, FileMode.CreateNew))
                 {
                     byte[] b = new byte[32768];
@@ -122,7 +125,10 @@ namespace System.Net
                     while ((read = r.Read(b, 0, b.Length)) > 0)
                         w.Write(b, 0, b.Length);
                 }
-            return true;
+                ex = null;
+                return true;
+            }
+            catch (WebException e) { ex = e; return false; }
         }
 
         /// <summary>
@@ -131,22 +137,27 @@ namespace System.Net
         /// <param name="localFile">The local file.</param>
         /// <param name="remoteFile">The remote file.</param>
         /// <returns></returns>
-        public override bool TryPut(string localFile, string remoteFile)
+        public override bool TryPut(string localFile, string remoteFile, out Exception ex)
         {
-            var request = (FtpWebRequest)FtpWebRequest.Create(new Uri("ftp://" + RemoteHost + remoteFile));
+            var request = (FtpWebRequest)FtpWebRequest.Create(new Uri("ftp://" + RemoteHost + "/" + remoteFile));
             request.Method = WebRequestMethods.Ftp.UploadFile;
             request.Credentials = Credentials;
             request.UsePassive = true;
             request.UseBinary = true;
             request.KeepAlive = false;
-            using (Stream w = request.GetRequestStream(), r = File.Open(localFile, FileMode.Open))
+            try
             {
-                byte[] b = new byte[32768];
-                int read = 0;
-                while ((read = r.Read(b, 0, b.Length)) > 0)
-                    w.Write(b, 0, b.Length);
+                using (Stream w = request.GetRequestStream(), r = File.Open(localFile, FileMode.Open))
+                {
+                    byte[] b = new byte[32768];
+                    int read = 0;
+                    while ((read = r.Read(b, 0, b.Length)) > 0)
+                        w.Write(b, 0, b.Length);
+                }
+                ex = null;
+                return true;
             }
-            return true;
+            catch (WebException e) { ex = e; return false; }
         }
     }
 }

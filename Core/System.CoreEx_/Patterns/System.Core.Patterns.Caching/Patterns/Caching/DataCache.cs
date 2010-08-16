@@ -161,6 +161,7 @@ namespace System.Patterns.Caching
         public static object Get(DataCacheRegistration registration) { return Get<object>(registration, string.Empty, null); }
         public static T Get<T>(DataCacheRegistration registration) { return Get<T>(registration, string.Empty, null); }
         public static IEnumerable<T> GetMany<T>(DataCacheRegistration registration) { return Get<IEnumerable<T>>(registration, string.Empty, null); }
+        public static IQueryable<T> GetQuery<T>(DataCacheRegistration registration) { return Get<IQueryable<T>>(registration, string.Empty, null); }
         /// <summary>
         /// Gets the data source.
         /// </summary>
@@ -171,6 +172,7 @@ namespace System.Patterns.Caching
         public static object Get(DataCacheRegistration registration, object[] values) { return Get<object>(registration, string.Empty, values); }
         public static T Get<T>(DataCacheRegistration registration, object[] values) { return Get<T>(registration, string.Empty, values); }
         public static IEnumerable<T> GetMany<T>(DataCacheRegistration registration, object[] values) { return Get<IEnumerable<T>>(registration, string.Empty, values); }
+        public static IQueryable<T> GetQuery<T>(DataCacheRegistration registration, object[] values) { return Get<IQueryable<T>>(registration, string.Empty, values); }
         /// <summary>
         /// Gets the data source.
         /// </summary>
@@ -181,6 +183,7 @@ namespace System.Patterns.Caching
         public static object Get(DataCacheRegistration registration, string tag) { return Get<object>(registration, tag, null); }
         public static T Get<T>(DataCacheRegistration registration, string tag) { return Get<T>(registration, tag, null); }
         public static IEnumerable<T> GetMany<T>(DataCacheRegistration registration, string tag) { return Get<IEnumerable<T>>(registration, tag, null); }
+        public static IQueryable<T> GetQuery<T>(DataCacheRegistration registration, string tag) { return Get<IQueryable<T>>(registration, tag, null); }
         /// <summary>
         /// Gets the data source.
         /// </summary>
@@ -190,6 +193,7 @@ namespace System.Patterns.Caching
         public static object Get(Type type, string registrationId) { return Get<object>(type, registrationId, string.Empty, null); }
         public static T Get<T>(Type type, string registrationId) { return Get<T>(type, registrationId, string.Empty, null); }
         public static IEnumerable<T> GetMany<T>(Type type, string registrationId) { return Get<IEnumerable<T>>(type, registrationId, string.Empty, null); }
+        public static IQueryable<T> GetQuery<T>(Type type, string registrationId) { return Get<IQueryable<T>>(type, registrationId, string.Empty, null); }
         /// <summary>
         /// Gets the data source.
         /// </summary>
@@ -200,6 +204,7 @@ namespace System.Patterns.Caching
         public static object Get(Type type, string registrationId, object[] values) { return Get<object>(type, registrationId, string.Empty, values); }
         public static T Get<T>(Type type, string registrationId, object[] values) { return Get<T>(type, registrationId, string.Empty, values); }
         public static IEnumerable<T> GetMany<T>(Type type, string registrationId, object[] values) { return Get<IEnumerable<T>>(type, registrationId, string.Empty, values); }
+        public static IQueryable<T> GetQuery<T>(Type type, string registrationId, object[] values) { return Get<IQueryable<T>>(type, registrationId, string.Empty, values); }
         /// <summary>
         /// Gets the data source.
         /// </summary>
@@ -210,6 +215,7 @@ namespace System.Patterns.Caching
         public static object Get(Type type, string registrationId, string tag) { return Get<object>(type, registrationId, tag, null); }
         public static T Get<T>(Type type, string registrationId, string tag) { return Get<T>(type, registrationId, tag, null); }
         public static IEnumerable<T> GetMany<T>(Type type, string registrationId, string tag) { return Get<IEnumerable<T>>(type, registrationId, tag, null); }
+        public static IQueryable<T> GetQuery<T>(Type type, string registrationId, string tag) { return Get<IQueryable<T>>(type, registrationId, tag, null); }
         /// <summary>
         /// Gets the data source.
         /// </summary>
@@ -221,6 +227,7 @@ namespace System.Patterns.Caching
         //:BIND: GetDataSource(Type, string, string, object[])
         public static object Get(DataCacheRegistration registration, string tag, object[] values) { return Get<object>(registration, tag, values); }
         public static IEnumerable<T> GetMany<T>(DataCacheRegistration registration, string tag, object[] values) { return Get<IEnumerable<T>>(registration, tag, values); }
+        public static IQueryable<T> GetQuery<T>(DataCacheRegistration registration, string tag, object[] values) { return Get<IQueryable<T>>(registration, tag, values); }
         public static T Get<T>(DataCacheRegistration registration, string tag, object[] values)
         {
             if (registration == null)
@@ -270,6 +277,7 @@ namespace System.Patterns.Caching
         //:BIND: GetDataSource(DataSourceRegistration, string, object[])
         public static object Get(Type type, string registrationId, string tag, object[] values) { return Get<object>(type, registrationId, tag, values); }
         public static IEnumerable<T> GetMany<T>(Type type, string registrationId, string tag, object[] values) { return Get<IEnumerable<T>>(type, registrationId, tag, values); }
+        public static IQueryable<T> GetQuery<T>(Type type, string registrationId, string tag, object[] values) { return Get<IQueryable<T>>(type, registrationId, tag, values); }
         public static T Get<T>(Type type, string registrationId, string tag, object[] values)
         {
             if (type == null)

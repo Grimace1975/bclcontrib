@@ -30,7 +30,7 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Threading;
 using System.Runtime.InteropServices;
-namespace System.Interopt.AudioVideo.DirectShow
+namespace System.Interop.AudioVideo.DirectShow
 {
     /// <summary>
     /// CapGrabber

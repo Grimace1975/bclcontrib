@@ -25,7 +25,7 @@ THE SOFTWARE.
 #endregion
 using System.IO;
 using System.Collections;
-namespace System.Interopt.AudioVideo.Win32
+namespace System.Interop.AudioVideo.Win32
 {
     /// <summary>
     /// Fifo Stream

@@ -23,29 +23,4 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 #endregion
-//using System.Web;
-//using System.Patterns.Reporting;
-//using System.Collections.Generic;
-//namespace System.Patterns.Reporting
-//{
-//    /// <summary>
-//    /// FlatFileCsvEmitterExtensions
-//    /// </summary>
-//    public static partial class FlatFileCsvEmitterExtensions
-//    {
-//        public static void EmitHttp<TItem>(this FlatFileCsvEmitter emitter, string fileName, IEnumerable<TItem> set) { EmitHttp<TItem>(emitter, (FlatFileContext)null, fileName, set); }
-//        public static void EmitHttp<TItem>(this FlatFileCsvEmitter emitter, FlatFileContext context, string fileName, IEnumerable<TItem> set)
-//        {
-//            if (string.IsNullOrEmpty(fileName))
-//                throw new ArgumentNullException("fileName");
-//            if (set == null)
-//                throw new ArgumentNullException("set");
-//            // emit
-//            var response = HttpContext.Current.Response;
-//            //Http.Instance.IsRender = false;
-//            response.ContentType = "application/csv; name=" + fileName;
-//            response.AddHeader("Content-Disposition", "attachment; filename=" + fileName);
-//            emitter.Emit<TItem>(context, response.Output, set);
-//        }
-//    }
-//}
+// LOCATION: System.WebEx

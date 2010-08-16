@@ -57,7 +57,7 @@ namespace System.Patterns.Caching
             return folder.EnsureEndsWith("\\") + key + ".txt";
         }
 
-        public static CacheDependency CreateCacheDependency(string folder, params string[] keys)
+        public static CacheDependency MakeCacheDependency(string folder, params string[] keys)
         {
             if ((keys == null) || (keys.Length == 0))
                 throw new ArgumentNullException("keys");

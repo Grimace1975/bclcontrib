@@ -209,15 +209,6 @@
     <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Versioning\Patterns\Versioning\VersionTypeUriPart.cs">
       <Link>Patterns\System.Core.Patterns.Versioning\Patterns\Versioning\VersionTypeUriPart.cs</Link>
     </Compile>
-    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns\Net\FtpClient.cs">
-      <Link>Patterns\System.Core.Patterns\Net\FtpClient.cs</Link>
-    </Compile>
-    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns\Net\SftpClient.cs">
-      <Link>Patterns\System.Core.Patterns\Net\SftpClient.cs</Link>
-    </Compile>
-    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns\Net\SmsClient.cs">
-      <Link>Patterns\System.Core.Patterns\Net\SmsClient.cs</Link>
-    </Compile>
     <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns\Patterns\Schema+Culture\Configuration\CultureSchemaConfiguration.cs">
       <Link>Patterns\System.Core.Patterns\Patterns\Schema+Culture\Configuration\CultureSchemaConfiguration.cs</Link>
     </Compile>
@@ -1037,8 +1028,8 @@
     <Compile Include="..\System.CoreEx_\System.Core2\IAppUnit.cs">
       <Link>System.Core2\IAppUnit.cs</Link>
     </Compile>
-    <Compile Include="..\System.CoreEx_\System.Core2\Linq\EnumerableExtensionsForMatch.cs">
-      <Link>System.Core2\Linq\EnumerableExtensionsForMatch.cs</Link>
+    <Compile Include="..\System.CoreEx_\System.Core2\Linq\EnumerableExtensionsForCore.cs">
+      <Link>System.Core2\Linq\EnumerableExtensionsForCore.cs</Link>
     </Compile>
     <Compile Include="..\System.CoreEx_\System.Core2\Patterns\Configuration\Configuration.cs">
       <Link>System.Core2\Patterns\Configuration\Configuration.cs</Link>

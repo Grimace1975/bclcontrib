@@ -63,10 +63,6 @@
     <Compile Include="3.TABLE\Text\TextTableFormatter.cs" />
     <Compile Include="3.TABLE\Text\XmlTableFormatter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Unsorted_\DataBinder.cs" />
-    <Compile Include="Unsorted_\GenericTypeHelper.cs" />
-    <Compile Include="Unsorted_\GnuPgp.cs" />
-    <Compile Include="Unsorted_\GnuPgpSettings.cs" />
     <Compile Include="Unsorted_\_AtomSite\Extensions.cs" />
     <Compile Include="Unsorted_\_AtomSite\FileHelper.cs" />
     <Compile Include="Unsorted_\_AtomSite\WebHelper.cs" />

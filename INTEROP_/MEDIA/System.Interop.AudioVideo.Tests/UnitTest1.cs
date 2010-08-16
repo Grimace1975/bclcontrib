@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace System.Interopt.AudioVideo.Tests
+namespace System.Interop.AudioVideo.Tests
 {
 	/// <summary>
 	/// Summary description for UnitTest1

@@ -23,8 +23,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 #endregion
+using System.Net;
 using System.Net.Mail;
-namespace System.Net.Integrate
+namespace System.Interop.Core.Net
 {
     /// <summary>
     /// SmsClient
@@ -47,7 +48,7 @@ namespace System.Net.Integrate
         /// Sends the specified message.
         /// </summary>
         /// <param name="message">The message.</param>
-        public override void Send(SmsMessage message)
+        public override void TrySend(SmsMessage message, out Exception ex)
         {
             if (From == null)
                 throw new NullReferenceException("From");
@@ -58,7 +59,12 @@ namespace System.Net.Integrate
                 Body = message.Body,
             };
             emailMessage.To.Add(new MailAddress(GetCarrierEmail(message.CarrierId, message.PhoneId)));
-            _smtpClient.Send(emailMessage);
+            try
+            {
+                _smtpClient.Send(emailMessage);
+                ex = null;
+            }
+            catch (SmtpException e) { ex = e; }
         }
 
         public MailAddress From { get; set; }

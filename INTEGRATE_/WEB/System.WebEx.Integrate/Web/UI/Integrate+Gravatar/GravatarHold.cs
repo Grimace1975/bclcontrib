@@ -1,4 +1,4 @@
-﻿#region License
+#region License
 /*
 The MIT License
 
@@ -23,22 +23,20 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 #endregion
-using System.Runtime.InteropServices;
-namespace System.Interop.AudioVideo.Native_.DirectShow
-{
-    /// <summary>
-    /// PinDirection
-    /// </summary>
-    [ComVisible(false)]
-    public enum PinDirection
-    {
-        /// <summary>
-        /// Input
-        /// </summary>
-        Input,
-        /// <summary>
-        /// Output
-        /// </summary>
-        Output
-    }
-}
+//using System;
+//namespace Instinct.ApplicationUnit_.WebApplicationControl
+//{
+//    // [Gravatar]http://en.gravatar.com/
+//    public class Gravatar : System.Web.UI.WebControls.WebControl
+//    {
+//        public static Uri GetGravatarHref(string email, int size)
+//        {
+//            if (email == null)
+//                email = "";
+//            return new Uri("http://gravatar.com/avatar/" +
+//                //SecurityHelper.ToMd5Hash(email.ToLowerInvariant())
+//                      SecurityHelper.HashIt(email.ToLowerInvariant(), "MD5", false)
+//                      + ".jpg?s=" + size + "&amp;d=");
+//        }
+//    }
+//}

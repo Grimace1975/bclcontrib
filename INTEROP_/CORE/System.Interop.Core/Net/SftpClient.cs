@@ -26,7 +26,7 @@ THE SOFTWARE.
 //using Tamir.SharpSsh.jsch;
 //using System;
 //using System.Net;
-//namespace System.Net
+//namespace System.Interop.Core.Net
 //{
 //    /// <summary>
 //    /// SftpClient

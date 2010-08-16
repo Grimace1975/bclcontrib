@@ -25,15 +25,6 @@
 //            return null;
 //        }
 
-//        public static Uri GetGravatarHref(string email, int size)
-//        {
-//            if (email == null) email = "";
-//            return new Uri("http://gravatar.com/avatar/" +
-//                //SecurityHelper.ToMd5Hash(email.ToLowerInvariant())
-//                      SecurityHelper.HashIt(email.ToLowerInvariant(), "MD5", false)
-//                      + ".jpg?s=" + size + "&amp;d=");
-//        }
-
 //        public static XElement ReadHtmlAsXhtml(string html)
 //        {
 //            //detect if xhtml by looking for namespace near start

@@ -25,7 +25,7 @@ THE SOFTWARE.
 #endregion
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.ComTypes;
-namespace System.Interopt.AudioVideo.Native_.DirectShow
+namespace System.Interop.AudioVideo.Native_.DirectShow
 {
     /// <summary>
     /// ICreateDevEnum

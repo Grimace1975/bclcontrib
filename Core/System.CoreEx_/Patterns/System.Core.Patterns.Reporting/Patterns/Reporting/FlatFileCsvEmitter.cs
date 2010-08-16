@@ -81,7 +81,7 @@ namespace System.Patterns.Reporting
                     FlatFileField field;
                     if ((fields != null) && (fields.TryGetValue(itemProperty.Name, out field)))
                     {
-                        if (field == null)
+                        if (field.IsIgnore)
                             continue;
                         IDataTypeFormatter dataTypeFormatter;
                         var fieldFormatter = field.CustomFieldFormatter;
@@ -105,10 +105,8 @@ namespace System.Patterns.Reporting
                             }
                         }
                         else if ((dataTypeFormatter = field.DataTypeFormatter) != null)
-                        {
                             // datatype
                             valueAsText = dataTypeFormatter.Format(value, field.DefaultValue, field.Attrib);
-                        }
                         else
                         {
                             // default formatter

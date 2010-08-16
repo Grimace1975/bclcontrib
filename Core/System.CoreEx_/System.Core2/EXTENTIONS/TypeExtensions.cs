@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using System.Collections.Generic;
 #if !SqlServer
 using System.Linq;
 #endif
@@ -35,6 +36,36 @@ namespace System
         private static bool ParameterMatchPredicate(Type left, Type right)
         {
             return (left.ToString() == right.ToString());
+        }
+
+        public static Type GetEnumerableElementType(Type type)
+        {
+            var enumerable = FindIEnumerable(type);
+            return (enumerable == null ? type : enumerable.GetGenericArguments()[0]);
+        }
+
+        private static Type FindIEnumerable(Type type)
+        {
+            if ((type == null) || (type == CoreEx.StringType))
+                return null;
+            if (type.IsArray)
+                return typeof(IEnumerable<>).MakeGenericType(type.GetElementType());
+            if (type.IsGenericType)
+                foreach (var argument in type.GetGenericArguments())
+                {
+                    var enumerable = typeof(IEnumerable<>).MakeGenericType(argument);
+                    if (enumerable.IsAssignableFrom(type))
+                        return enumerable;
+                }
+            var interfaces = type.GetInterfaces();
+            if (interfaces.Length > 0)
+                foreach (var @interface in interfaces)
+                {
+                    var enumerable = FindIEnumerable(@interface);
+                    if (enumerable != null)
+                        return enumerable;
+                }
+            return ((type.BaseType != null) && (type.BaseType != CoreEx.ObjectType) ? FindIEnumerable(type.BaseType) : null);
         }
     }
 }

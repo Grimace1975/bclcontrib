@@ -24,7 +24,7 @@ THE SOFTWARE.
 */
 #endregion
 using System.Runtime.InteropServices;
-namespace System.Interopt.AudioVideo.Native_.DirectShow
+namespace System.Interop.AudioVideo.Native_.DirectShow
 {
     [ComVisible(false), StructLayout(LayoutKind.Sequential)]
     public class AMMediaType : IDisposable

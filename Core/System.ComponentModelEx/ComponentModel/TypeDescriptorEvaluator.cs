@@ -2,18 +2,18 @@ using System.Collections;
 using System.ComponentModel;
 using System.Reflection;
 using System.Globalization;
-namespace System
+namespace System.ComponentModel
 {
     /// <summary>
-    /// DataBinder
+    /// TypeDescriptorEvaluator
     /// </summary>
-    public class DataBinder
+    //+ copied from DataSourceHelper:DataBinder
+    public class TypeDescriptorEvaluator
     {
         private static readonly char[] s_expressionPartSeparator = new char[] { '.' };
-        private static readonly char[] s_indexExprEndChars = new char[] { ']', ')' };
-        private static readonly char[] s_indexExprStartChars = new char[] { '[', '(' };
+        private static readonly char[] s_indexExpressionEndChars = new char[] { ']', ')' };
+        private static readonly char[] s_indexExpressionStartChars = new char[] { '[', '(' };
 
-        //+ copied from DataSourceHelper 
         /// <summary>
         /// Gets the resolved data source.
         /// </summary>
@@ -35,7 +35,7 @@ namespace System
                         var itemProperties = ((ITypedList)list).GetItemProperties(new PropertyDescriptor[0]);
                         if ((itemProperties == null) || (itemProperties.Count == 0))
                             throw new Exception("ListSource_Without_DataMembers");
-                        PropertyDescriptor descriptor = (string.IsNullOrEmpty(dataMember) ? itemProperties[0] : itemProperties.Find(dataMember, true));
+                        var descriptor = (string.IsNullOrEmpty(dataMember) ? itemProperties[0] : itemProperties.Find(dataMember, true));
                         if (descriptor != null)
                         {
                             object component = list[0];
@@ -62,8 +62,7 @@ namespace System
         {
             if (expression == null)
                 throw new ArgumentNullException("expression");
-            expression = expression.Trim();
-            if (expression.Length == 0)
+            if ((expression = expression.Trim()).Length == 0)
                 throw new ArgumentNullException("expression");
             if (container == null)
                 return null;
@@ -78,13 +77,13 @@ namespace System
         /// <returns></returns>
         private static object Eval(object container, string[] expressionParts)
         {
-            object propertyValue = container;
-            for (int i = 0; (i < expressionParts.Length) && (propertyValue != null); i++)
+            object expressionValue = container;
+            for (int expressionPartIndex = 0; (expressionPartIndex < expressionParts.Length) && (expressionValue != null); expressionPartIndex++)
             {
-                string propName = expressionParts[i];
-                propertyValue = (propName.IndexOfAny(s_indexExprStartChars) < 0 ? GetPropertyValue(propertyValue, propName) : GetIndexedPropertyValue(propertyValue, propName));
+                string expressionPart = expressionParts[expressionPartIndex];
+                expressionValue = (expressionPart.IndexOfAny(s_indexExpressionStartChars) < 0 ? GetPropertyValue(expressionValue, expressionPart) : GetIndexedPropertyValue(expressionValue, expressionPart));
             }
-            return propertyValue;
+            return expressionValue;
         }
         /// <summary>
         /// Evals the specified container.
@@ -95,10 +94,10 @@ namespace System
         /// <returns></returns>
         public static string Eval(object container, string expression, string format)
         {
-            object obj2 = Eval(container, expression);
-            if ((obj2 == null) || (obj2 == DBNull.Value))
+            object expressionValue = Eval(container, expression);
+            if ((expressionValue == null) || (expressionValue == DBNull.Value))
                 return string.Empty;
-            return (string.IsNullOrEmpty(format) ? obj2.ToString() : string.Format(format, obj2));
+            return (string.IsNullOrEmpty(format) ? expressionValue.ToString() : string.Format(format, expressionValue));
         }
 
         //public static object GetDataItem(object container)
@@ -134,25 +133,25 @@ namespace System
         /// Gets the indexed property value.
         /// </summary>
         /// <param name="container">The container.</param>
-        /// <param name="expr">The expr.</param>
+        /// <param name="propertyName">The expr.</param>
         /// <returns></returns>
-        public static object GetIndexedPropertyValue(object container, string expr)
+        public static object GetIndexedPropertyValue(object container, string propertyName)
         {
             if (container == null)
                 throw new ArgumentNullException("container");
-            if (string.IsNullOrEmpty(expr))
-                throw new ArgumentNullException("expr");
+            if (string.IsNullOrEmpty(propertyName))
+                throw new ArgumentNullException("propertyName");
             object obj2 = null;
             bool flag = false;
-            int length = expr.IndexOfAny(s_indexExprStartChars);
-            int num2 = expr.IndexOfAny(s_indexExprEndChars, length + 1);
+            int length = propertyName.IndexOfAny(s_indexExpressionStartChars);
+            int num2 = propertyName.IndexOfAny(s_indexExpressionEndChars, length + 1);
             if (((length < 0) || (num2 < 0)) || (num2 == (length + 1)))
-                throw new ArgumentException(string.Format("DataBinder_Invalid_Indexed_ExprA[{0}]", expr));
-            string propName = null;
+                throw new ArgumentException(string.Format("DataBinder_Invalid_Indexed_ExprA[{0}]", propertyName));
+            string actualPropertyName = null;
             object obj3 = null;
-            string s = expr.Substring(length + 1, (num2 - length) - 1).Trim();
+            string s = propertyName.Substring(length + 1, (num2 - length) - 1).Trim();
             if (length != 0)
-                propName = expr.Substring(0, length);
+                actualPropertyName = propertyName.Substring(0, length);
             if (s.Length != 0)
             {
                 if (((s[0] == '"') && (s[s.Length - 1] == '"')) || ((s[0] == '\'') && (s[s.Length - 1] == '\'')))
@@ -170,18 +169,14 @@ namespace System
                     obj3 = s;
             }
             if (obj3 == null)
-                throw new ArgumentException(string.Format("DataBinder_Invalid_Indexed_ExprA[{0}]", expr));
-            object propertyValue = null;
-            if ((propName != null) && (propName.Length != 0))
-                propertyValue = GetPropertyValue(container, propName);
-            else
-                propertyValue = container;
+                throw new ArgumentException(string.Format("DataBinder_Invalid_Indexed_ExprA[{0}]", propertyName));
+            object propertyValue = (!string.IsNullOrEmpty(actualPropertyName) ? GetPropertyValue(container, actualPropertyName) : container);
             if (propertyValue == null)
                 return obj2;
-            Array array = (propertyValue as System.Array);
-            if ((array != null) && flag)
+            var array = (propertyValue as System.Array);
+            if ((array != null) && (flag))
                 return array.GetValue((int)obj3);
-            if ((propertyValue is IList) && flag)
+            if ((propertyValue is IList) && (flag))
                 return ((IList)propertyValue)[(int)obj3];
             var info = propertyValue.GetType().GetProperty("Item", BindingFlags.Public | BindingFlags.Instance, null, null, new Type[] { obj3.GetType() }, null);
             if (info == null)
@@ -192,57 +187,50 @@ namespace System
         /// Gets the indexed property value.
         /// </summary>
         /// <param name="container">The container.</param>
-        /// <param name="propName">Name of the prop.</param>
+        /// <param name="propertyName">Name of the prop.</param>
         /// <param name="format">The format.</param>
         /// <returns></returns>
-        public static string GetIndexedPropertyValue(object container, string propName, string format)
+        public static string GetIndexedPropertyValue(object container, string propertyName, string format)
         {
-            object indexedPropertyValue = GetIndexedPropertyValue(container, propName);
-            if ((indexedPropertyValue == null) || (indexedPropertyValue == DBNull.Value))
-                return string.Empty;
-            return (string.IsNullOrEmpty(format) ? indexedPropertyValue.ToString() : string.Format(format, indexedPropertyValue));
-        }
-
-        /// <summary>
-        /// Gets the property value.
-        /// </summary>
-        /// <param name="container">The container.</param>
-        /// <param name="propName">Name of the prop.</param>
-        /// <returns></returns>
-        public static object GetPropertyValue(object container, string propName)
-        {
-            if (container == null)
-                throw new ArgumentNullException("container");
-            if (string.IsNullOrEmpty(propName))
-                throw new ArgumentNullException("propName");
-            var descriptor = TypeDescriptor.GetProperties(container).Find(propName, true);
-            if (descriptor == null)
-                throw new Exception(string.Format("DataBinder_Prop_Not_FoundAB[{0},{1}]", container.GetType().FullName, propName));
-            return descriptor.GetValue(container);
-        }
-        /// <summary>
-        /// Gets the property value.
-        /// </summary>
-        /// <param name="container">The container.</param>
-        /// <param name="propName">Name of the prop.</param>
-        /// <param name="format">The format.</param>
-        /// <returns></returns>
-        public static string GetPropertyValue(object container, string propName, string format)
-        {
-            object propertyValue = GetPropertyValue(container, propName);
+            object propertyValue = GetIndexedPropertyValue(container, propertyName);
             if ((propertyValue == null) || (propertyValue == DBNull.Value))
                 return string.Empty;
             return (string.IsNullOrEmpty(format) ? propertyValue.ToString() : string.Format(format, propertyValue));
         }
 
         /// <summary>
-        /// Determines whether the specified value is null.
+        /// Gets the property value.
         /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>
-        /// 	<c>true</c> if the specified value is null; otherwise, <c>false</c>.
-        /// </returns>
-        internal static bool IsNull(object value)
+        /// <param name="container">The container.</param>
+        /// <param name="propertyName">Name of the prop.</param>
+        /// <returns></returns>
+        public static object GetPropertyValue(object container, string propertyName)
+        {
+            if (container == null)
+                throw new ArgumentNullException("container");
+            if (string.IsNullOrEmpty(propertyName))
+                throw new ArgumentNullException("propertyName");
+            var descriptor = TypeDescriptor.GetProperties(container).Find(propertyName, true);
+            if (descriptor == null)
+                throw new Exception(string.Format("DataBinder_Prop_Not_FoundAB[{0},{1}]", container.GetType().FullName, propertyName));
+            return descriptor.GetValue(container);
+        }
+        /// <summary>
+        /// Gets the property value.
+        /// </summary>
+        /// <param name="container">The container.</param>
+        /// <param name="propertyName">Name of the prop.</param>
+        /// <param name="format">The format.</param>
+        /// <returns></returns>
+        public static string GetPropertyValue(object container, string propertyName, string format)
+        {
+            object propertyValue = GetPropertyValue(container, propertyName);
+            if ((propertyValue == null) || (propertyValue == DBNull.Value))
+                return string.Empty;
+            return (string.IsNullOrEmpty(format) ? propertyValue.ToString() : string.Format(format, propertyValue));
+        }
+
+        private static bool IsNull(object value)
         {
             return (!((value != null) && (!Convert.IsDBNull(value))));
         }

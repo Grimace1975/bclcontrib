@@ -30,8 +30,8 @@ using System.Runtime.InteropServices;
 using System.Windows.Threading;
 using System.Diagnostics;
 using System.Runtime.InteropServices.ComTypes;
-using System.Interopt.AudioVideo.Native_.DirectShow;
-namespace System.Interopt.AudioVideo.DirectShow
+using System.Interop.AudioVideo.Native_.DirectShow;
+namespace System.Interop.AudioVideo.DirectShow
 {
     /// <summary>
     /// CapDevice

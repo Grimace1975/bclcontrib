@@ -34,6 +34,6 @@ namespace System.Net
         /// Sends the specified message.
         /// </summary>
         /// <param name="message">The message.</param>
-        public abstract void Send(SmsMessage message);
+        public abstract void TrySend(SmsMessage message, out Exception ex);
     }
 }

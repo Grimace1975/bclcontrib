@@ -82,6 +82,7 @@
     <Compile Include="Web\Integrate\GoogleSiteMapNode.cs" />
     <Compile Include="Web\Integrate\GoogleSiteMapHandler.cs" />
     <Compile Include="Web\Mvc\Integrate\GoogleSiteMapResult.cs" />
+    <Compile Include="Web\UI\Integrate+Gravatar\GravatarHold.cs" />
     <Compile Include="Web\UI\Integrate+ShareThis\ShareThisObjectMeta.cs" />
     <Compile Include="Web\UI\Integrate+ShareThis\ShareThisObjectLiteral.cs" />
     <Compile Include="Web\UI\Integrate+ShareThis\ShareThisObject.cs" />

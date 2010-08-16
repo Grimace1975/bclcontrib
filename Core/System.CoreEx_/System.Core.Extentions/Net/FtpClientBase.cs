@@ -51,20 +51,20 @@ namespace System.Net
         /// </summary>
         /// <param name="remoteFile">The remote file.</param>
         /// <returns></returns>
-        public abstract bool TryDelete(string remoteFile);
+        public abstract bool TryDelete(string remoteFile, out Exception ex);
         /// <summary>
         /// Tries the get.
         /// </summary>
         /// <param name="remoteFile">The remote file.</param>
         /// <param name="localFile">The local file.</param>
         /// <returns></returns>
-        public abstract bool TryGet(string remoteFile, string localFile);
+        public abstract bool TryGet(string remoteFile, string localFile, out Exception ex);
         /// <summary>
         /// Tries the put.
         /// </summary>
         /// <param name="localFile">The local file.</param>
         /// <param name="remoteFile">The remote file.</param>
         /// <returns></returns>
-        public abstract bool TryPut(string localFile, string remoteFile);
+        public abstract bool TryPut(string localFile, string remoteFile, out Exception ex);
     }
 }

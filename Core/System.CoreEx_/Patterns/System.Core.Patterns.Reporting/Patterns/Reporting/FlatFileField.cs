@@ -36,6 +36,7 @@ namespace System.Patterns.Reporting
             Name = name;
         }
         public string Name { get; protected set; }
+        public bool IsIgnore { get; set; }
         public FlatFileCustomFieldFormatter CustomFieldFormatter { get; set; }
         public IDataTypeFormatter DataTypeFormatter { get; set; }
         public string DefaultValue { get; set; }

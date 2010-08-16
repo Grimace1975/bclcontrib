@@ -23,7 +23,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 #endregion
-namespace System.Interopt.AudioVideo.Win32
+namespace System.Interop.AudioVideo.Win32
 {
     /// <summary>
     /// BufferDoneEventHandler

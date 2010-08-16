@@ -67,7 +67,7 @@
     <Compile Include="EXTENTIONS\ConvertEx.cs" />
     <Compile Include="EXTENTIONS\Threading\ReaderWriterLockExtensions.cs" />
     <Compile Include="EXTENTIONS\Xml\XmlNodeEx.cs" />
-    <Compile Include="Linq\EnumerableExtensionsForMatch.cs" />
+    <Compile Include="Linq\EnumerableExtensionsForCore.cs" />
     <Compile Include="Patterns\Generic\ExtentsRepository.cs" />
     <Compile Include="Patterns\Generic\SimpleFactoryBase.cs" />
     <Compile Include="Patterns\ReleaseManagement\Configuration\ReleaseManagementConfiguration.cs" />

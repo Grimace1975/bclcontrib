@@ -89,7 +89,8 @@ namespace System.Patterns.Forms.SmartFormContracts
                                 CarrierId = (SmsCarrierId)carrierId,
                                 Body = smartForm.CreateMergedText(scopeKey + "textBody"),
                             };
-                            _smsClient.Send(message);
+                            Exception ex;
+                            _smsClient.TrySend(message, out ex);
                             smsSentCount++;
                         }
                         // prevent resends
