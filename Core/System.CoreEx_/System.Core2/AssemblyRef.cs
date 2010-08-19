@@ -28,9 +28,9 @@ namespace System
     internal static class AssemblyRef
     {
 #if !SqlServer
-        internal const string This = "System.CoreEx";
+        internal const string This = "System.CoreEx, Version=1.0.0.0, Culture=neutral, PublicKeyToken=725aceb8081535f0";
 #else
-        internal const string This = "System.CoreEx.SqlServer";
+        internal const string This = "System.CoreEx.SqlServer, Version=1.0.0.0, Culture=neutral, PublicKeyToken=725aceb8081535f0";
 #endif
     }
 }

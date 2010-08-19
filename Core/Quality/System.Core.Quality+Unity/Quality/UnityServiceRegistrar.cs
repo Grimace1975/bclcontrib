@@ -53,37 +53,37 @@ namespace System.Quality
             return (_parent as TServiceLocator);
         }
 
-        public void Register<Source>(Source instance)
-            where Source : class
+        public void Register<TService>(TService instance)
+            where TService : class
         {
-            _container.RegisterInstance<Source>(instance);
+            _container.RegisterInstance<TService>(instance);
         }
 
-        public void Register<Source>(Func<Source> factoryMethod)
-            where Source : class
+        public void Register<TService>(Func<TService> factoryMethod)
+            where TService : class
         {
             Func<IUnityContainer, object> factory = (c => factoryMethod.Invoke());
-            _container.RegisterType<Source>(new InjectionFactory(factory));
+            _container.RegisterType<TService>(new InjectionFactory(factory));
         }
 
-        public void Register<Source>(Type implType)
-           where Source : class
+        public void Register<TService>(Type implType)
+           where TService : class
         {
-            var type = typeof(Source);
+            var type = typeof(TService);
             string name = string.Format("{0}-{1}", type.Name, implType.FullName);
             _container.RegisterType(type, implType, name, new InjectionMember[0]);
         }
 
-        public void Register<Source, Implementation>()
-            where Implementation : class, Source
+        public void Register<TService, TImplementation>()
+            where TImplementation : class, TService
         {
-            _container.RegisterType<Source, Implementation>(new InjectionMember[0]);
+            _container.RegisterType<TService, TImplementation>(new InjectionMember[0]);
         }
 
-        public void Register<Source, Implementation>(string id)
-            where Implementation : class, Source
+        public void Register<TService, TImplementation>(string id)
+            where TImplementation : class, TService
         {
-            _container.RegisterType<Source, Implementation>(id, new InjectionMember[0]);
+            _container.RegisterType<TService, TImplementation>(id, new InjectionMember[0]);
         }
 
         public void Register(string id, Type type)

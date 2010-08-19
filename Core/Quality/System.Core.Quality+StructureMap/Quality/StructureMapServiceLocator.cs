@@ -92,24 +92,24 @@ namespace System.Quality
             Dispose();
         }
 
-        public T Resolve<T>()
-            where T : class
+        public TService Resolve<TService>()
+            where TService : class
         {
             try
             {
-                return Container.GetInstance<T>();
+                return Container.GetInstance<TService>();
             }
-            catch (Exception ex) { throw new ServiceResolutionException(typeof(T), ex); }
+            catch (Exception ex) { throw new ServiceResolutionException(typeof(TService), ex); }
         }
 
-        public T Resolve<T>(string key)
-            where T : class
+        public TService Resolve<TService>(string key)
+            where TService : class
         {
             try
             {
-                return Container.GetInstance<T>(key);
+                return Container.GetInstance<TService>(key);
             }
-            catch (Exception ex) { throw new ServiceResolutionException(typeof(T), ex); }
+            catch (Exception ex) { throw new ServiceResolutionException(typeof(TService), ex); }
         }
 
         public object Resolve(Type type)
@@ -121,10 +121,10 @@ namespace System.Quality
             catch (Exception ex) { throw new ServiceResolutionException(type, ex); }
         }
 
-        public IList<T> ResolveAll<T>()
-            where T : class
+        public IList<TService> ResolveAll<TService>()
+            where TService : class
         {
-            return Container.GetAllInstances<T>();
+            return Container.GetAllInstances<TService>();
         }
 
         [Obsolete("Not used for any real purposes.")]

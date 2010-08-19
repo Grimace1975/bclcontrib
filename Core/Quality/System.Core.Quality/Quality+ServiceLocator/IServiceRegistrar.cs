@@ -34,17 +34,17 @@ namespace System.Quality
         TServiceLocator GetLocator<TServiceLocator>()
             where TServiceLocator : class, IServiceLocator;
         //
-        void Register<Source>(Source instance)
-            where Source : class;
-        void Register<Source>(Func<Source> factoryMethod)
-            where Source : class;
-        void Register<Source>(Type implType)
-            where Source : class;
+        void Register<TService>(TService instance)
+            where TService : class;
+        void Register<TService>(Func<TService> factoryMethod)
+            where TService : class;
+        void Register<TService>(Type implType)
+            where TService : class;
         //
-        void Register<Source, Implementation>()
-            where Implementation : class, Source;
-        void Register<Source, Implementation>(string id)
-            where Implementation : class, Source;
+        void Register<TService, TImplementation>()
+            where TImplementation : class, TService;
+        void Register<TService, TImplementation>(string id)
+            where TImplementation : class, TService;
         //
         void Register(string id, Type type);
         void Register(Type serviceType, Type implType);

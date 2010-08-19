@@ -8,8 +8,8 @@
     <ProjectGuid>{167E0981-C93D-43F9-B982-568469E93F8F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>System.Web.Ex.Integrate.TinyMce</RootNamespace>
-    <AssemblyName>System.Web.Ex.Integrate.TinyMce</AssemblyName>
+    <RootNamespace>System</RootNamespace>
+    <AssemblyName>System.WebEx.Integrate.TinyMce</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <FileUpgradeFlags>
@@ -34,6 +34,12 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>BclContrib.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="MCManager, Version=1.0.0.0, Culture=neutral">
       <SpecificVersion>False</SpecificVersion>
@@ -51,11 +57,11 @@
     <Reference Include="System.Web.Mvc, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Web.MvcEx, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\System.Web.MvcEx\bin\Debug\System.Web.MvcEx.dll</HintPath>
+      <HintPath>..\..\..\Bin\System.Web.MvcEx.dll</HintPath>
     </Reference>
     <Reference Include="System.WebEx, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\System.WebEx\bin\Debug\System.WebEx.dll</HintPath>
+      <HintPath>..\..\..\Bin\System.WebEx.dll</HintPath>
     </Reference>
     <Reference Include="System.XML" />
   </ItemGroup>
@@ -65,6 +71,9 @@
     <Compile Include="Web\Mvc\Html\Integrate\TinyMceTextAreaHelper.cs" />
     <Compile Include="Web\UI\Integrate\TinyMceTextBox.cs" />
     <Compile Include="Web\UI\Integrate\TinyMceTextBox2.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="BclContrib.snk" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

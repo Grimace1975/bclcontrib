@@ -27,7 +27,7 @@ namespace System.Quality
     /// </summary>
     public interface IStructureMapServiceRegistrar : IServiceRegistrar
     {
-        void RegisterAll<TSource>();
+        void RegisterAll<TService>();
     }
 
     /// <summary>
@@ -60,40 +60,40 @@ namespace System.Quality
             _container.Configure(x => x.AddRegistry(this));
         }
 
-        public new void Register<TSource>(TSource instance)
-            where TSource : class
+        public new void Register<TService>(TService instance)
+            where TService : class
         {
-            For<TSource>()
+            For<TService>()
                 .Use(instance);
         }
 
-        public void Register<TSource>(Func<TSource> factoryMethod)
-            where TSource : class
+        public void Register<TService>(Func<TService> factoryMethod)
+            where TService : class
         {
-            For<TSource>()
+            For<TService>()
                 .Use(factoryMethod.Invoke);
-            //Container.Configure(configure => configure.For<Source>()
+            //Container.Configure(configure => configure.For<TService>()
             //    .Use(factoryMethod.Invoke));
         }
 
-        public void Register<TSource>(Type implType)
-            where TSource : class
+        public void Register<TService>(Type implType)
+            where TService : class
         {
-            For(typeof(TSource))
+            For(typeof(TService))
                 .Add(implType);
         }
 
-        public void Register<TSource, TImplementation>()
-            where TImplementation : class, TSource
+        public void Register<TService, TImplementation>()
+            where TImplementation : class, TService
         {
-            For<TSource>()
+            For<TService>()
                 .Add<TImplementation>();
         }
 
-        public void Register<TSource, TImplementation>(string id)
-            where TImplementation : class, TSource
+        public void Register<TService, TImplementation>(string id)
+            where TImplementation : class, TService
         {
-            For(typeof(TSource))
+            For(typeof(TService))
                 .Add(typeof(TImplementation))
                 .Named(id);
         }
@@ -112,9 +112,9 @@ namespace System.Quality
         }
 
         #region Domain extents
-        public void RegisterAll<TSource>()
+        public void RegisterAll<TService>()
         {
-            Scan(scanner => scanner.AddAllTypesOf<TSource>());
+            Scan(scanner => scanner.AddAllTypesOf<TService>());
         }
         #endregion
     }

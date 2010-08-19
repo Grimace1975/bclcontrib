@@ -51,39 +51,39 @@ namespace System.Quality
             return (_parent as TServiceLocator);
         }
 
-        public void Register<Source>(Source instance)
-            where Source : class
+        public void Register<TService>(TService instance)
+            where TService : class
         {
-            Bind<Source>()
+            Bind<TService>()
                 .ToConstant(instance);
         }
 
-        public void Register<Source>(Func<Source> factoryMethod)
-            where Source : class
+        public void Register<TService>(Func<TService> factoryMethod)
+            where TService : class
         {
-            Bind<Source>()
+            Bind<TService>()
                 .ToMethod(c => factoryMethod.Invoke());
         }
 
-        public void Register<Source, Implementation>()
-            where Implementation : class, Source
+        public void Register<TService, TImplementation>()
+            where TImplementation : class, TService
         {
-            Bind<Source>()
-                .To<Implementation>();
+            Bind<TService>()
+                .To<TImplementation>();
         }
 
-        public void Register<Source, Implementation>(string id)
-            where Implementation : class, Source
+        public void Register<TService, TImplementation>(string id)
+            where TImplementation : class, TService
         {
-            Bind<Source>()
-                .To(typeof(Implementation)).Named(id);
+            Bind<TService>()
+                .To(typeof(TImplementation)).Named(id);
         }
 
-        public void Register<Source>(Type implType)
-            where Source : class
+        public void Register<TService>(Type implType)
+            where TService : class
         {
-            string key = string.Format("{0}-{1}", typeof(Source).Name, implType.FullName);
-            Bind<Source>()
+            string key = string.Format("{0}-{1}", typeof(TService).Name, implType.FullName);
+            Bind<TService>()
                 .To(implType)
                 .Named(key);
         }

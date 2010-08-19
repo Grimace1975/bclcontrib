@@ -43,26 +43,27 @@ namespace System.Web.Mvc.Html.Integrate
 
         public MvcHtmlString HtmlTextAreaHelper(HtmlHelper htmlHelper, ModelMetadata modelMetadata, string expression, IDictionary<string, object> rowsAndColumns, IDictionary<string, object> htmlAttributes)
         {
-            ModelState state;
-            string attemptedValue;
-            string fullHtmlFieldName = htmlHelper.ViewContext.ViewData.TemplateInfo.GetFullHtmlFieldName(expression);
-            if (string.IsNullOrEmpty(fullHtmlFieldName))
-                throw new ArgumentException("name");
-            var b = new TagBuilder("textarea");
-            b.GenerateId(fullHtmlFieldName);
-            b.MergeAttributes<string, object>(htmlAttributes, true);
-            b.MergeAttributes<string, object>(rowsAndColumns, rowsAndColumns != TextAreaExtensionsEx._implicitRowsAndColumns);
-            b.MergeAttribute("name", fullHtmlFieldName, true);
-            if (htmlHelper.ViewData.ModelState.TryGetValue(fullHtmlFieldName, out state) && (state.Errors.Count > 0))
-                b.AddCssClass(HtmlHelper.ValidationInputCssClassName);
-            if ((state != null) && (state.Value != null))
-                attemptedValue = state.Value.AttemptedValue;
-            else if (modelMetadata.Model != null)
-                attemptedValue = modelMetadata.Model.ToString();
-            else
-                attemptedValue = string.Empty;
-            b.SetInnerText(Environment.NewLine + attemptedValue);
-            return MvcHtmlString.Create(b.ToString(TagRenderMode.Normal));
+            throw new NotSupportedException();
+            //ModelState state;
+            //string attemptedValue;
+            //string fullHtmlFieldName = htmlHelper.ViewContext.ViewData.TemplateInfo.GetFullHtmlFieldName(expression);
+            //if (string.IsNullOrEmpty(fullHtmlFieldName))
+            //    throw new ArgumentException("name");
+            //var b = new TagBuilder("textarea");
+            //b.GenerateId(fullHtmlFieldName);
+            //b.MergeAttributes<string, object>(htmlAttributes, true);
+            //b.MergeAttributes<string, object>(rowsAndColumns, rowsAndColumns != TextAreaExtensionsEx._implicitRowsAndColumns);
+            //b.MergeAttribute("name", fullHtmlFieldName, true);
+            //if (htmlHelper.ViewData.ModelState.TryGetValue(fullHtmlFieldName, out state) && (state.Errors.Count > 0))
+            //    b.AddCssClass(HtmlHelper.ValidationInputCssClassName);
+            //if ((state != null) && (state.Value != null))
+            //    attemptedValue = state.Value.AttemptedValue;
+            //else if (modelMetadata.Model != null)
+            //    attemptedValue = modelMetadata.Model.ToString();
+            //else
+            //    attemptedValue = string.Empty;
+            //b.SetInnerText(Environment.NewLine + attemptedValue);
+            //return MvcHtmlString.Create(b.ToString(TagRenderMode.Normal));
         }
     }
 }

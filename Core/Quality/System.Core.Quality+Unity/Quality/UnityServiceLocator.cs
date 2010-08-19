@@ -89,24 +89,24 @@ namespace System.Quality
             Dispose();
         }
 
-        public T Resolve<T>()
-            where T : class
+        public TService Resolve<TService>()
+            where TService : class
         {
             try
             {
-                return Container.Resolve<T>();
+                return Container.Resolve<TService>();
             }
-            catch (Exception exception) { throw new ServiceResolutionException(typeof(T), exception); }
+            catch (Exception exception) { throw new ServiceResolutionException(typeof(TService), exception); }
         }
 
-        public T Resolve<T>(string key)
-            where T : class
+        public TService Resolve<TService>(string key)
+            where TService : class
         {
             try
             {
-                return Container.Resolve<T>(key);
+                return Container.Resolve<TService>(key);
             }
-            catch (Exception exception) { throw new ServiceResolutionException(typeof(T), exception); }
+            catch (Exception exception) { throw new ServiceResolutionException(typeof(TService), exception); }
         }
 
         public object Resolve(Type type)
@@ -118,10 +118,10 @@ namespace System.Quality
             catch (Exception exception) { throw new ServiceResolutionException(type, exception); }
         }
 
-        public IList<T> ResolveAll<T>()
-            where T : class
+        public IList<TService> ResolveAll<TService>()
+            where TService : class
         {
-            return new List<T>(Container.ResolveAll<T>());
+            return new List<TService>(Container.ResolveAll<TService>());
         }
 
         public void TearDown<TService>(TService instance)

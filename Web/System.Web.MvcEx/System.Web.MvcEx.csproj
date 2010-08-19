@@ -34,6 +34,12 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>BclContrib.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations">
@@ -76,6 +82,7 @@
     <Compile Include="Web\Mvc+DataAnnotations\ViewModifierAttributeBase.cs" />
     <Compile Include="Web\Mvc+DataAnnotations\DataAnnotationsModelMetadataProvider.cs" />
     <Compile Include="Web\Mvc+DataAnnotations\DataAnnotationsModelMetadataEx.cs" />
+    <Compile Include="Web\Mvc+JQuery\JQueryHtmlHelperExtensions.cs" />
     <Compile Include="Web\Mvc\ModelStateExtensions.cs" />
     <Compile Include="Web\Mvc\TagBuilderExtensions.cs" />
     <Compile Include="Web\Mvc\HtmlHelperExtensions.cs" />
@@ -102,6 +109,9 @@
       <Project>{97493363-7402-4E28-806C-7448AA5AC106}</Project>
       <Name>System.WebEx</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="BclContrib.snk" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

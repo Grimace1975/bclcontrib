@@ -37,18 +37,18 @@ namespace System.Quality
         public static TServiceRegistrar GetRegistrar<TServiceRegistrar>()
             where TServiceRegistrar : class, IServiceRegistrar { return ServiceLocatorManager.Current.GetRegistrar<TServiceRegistrar>(); }
         //
-        public static T Resolve<T>()
-            where T : class { return ServiceLocatorManager.Current.Resolve<T>(); }
-        public static T Resolve<T>(string id, params object[] args)
-            where T : class { return ServiceLocatorManager.Current.Resolve<T>(id); }
+        public static TService Resolve<TService>()
+            where TService : class { return ServiceLocatorManager.Current.Resolve<TService>(); }
+        public static TService Resolve<TService>(string id, params object[] args)
+            where TService : class { return ServiceLocatorManager.Current.Resolve<TService>(id); }
         public static object Resolve(Type type) { return ServiceLocatorManager.Current.Resolve(type); }
         //
-        public static IEnumerable<T> ResolveAll<T>()
-            where T : class { return ServiceLocatorManager.Current.ResolveAll<T>(); }
+        public static IEnumerable<TService> ResolveAll<TService>()
+            where TService : class { return ServiceLocatorManager.Current.ResolveAll<TService>(); }
         public static TService Inject<TService>(TService instance)
             where TService : class { return ServiceLocatorManager.Current.Inject<TService>(instance); }
 
-        public static bool GetWantsToSkipLocator<T>() { return GetWantsToSkipLocator(typeof(T)); }
+        public static bool GetWantsToSkipLocator<TService>() { return GetWantsToSkipLocator(typeof(TService)); }
         public static bool GetWantsToSkipLocator(Type type)
         {
             return ((type == null) || (type.IsAssignableFrom(s_wantToSkipServiceLocatorType)));

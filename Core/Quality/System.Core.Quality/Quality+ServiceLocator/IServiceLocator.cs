@@ -35,14 +35,14 @@ namespace System.Quality
         TServiceRegistrar GetRegistrar<TServiceRegistrar>()
             where TServiceRegistrar : class, IServiceRegistrar;
         //
-        T Resolve<T>()
-            where T : class;
-        T Resolve<T>(string id)
-            where T : class;
+        TService Resolve<TService>()
+            where TService : class;
+        TService Resolve<TService>(string id)
+            where TService : class;
         object Resolve(Type type);
         //
-        IList<T> ResolveAll<T>()
-            where T : class;
+        IList<TService> ResolveAll<TService>()
+            where TService : class;
         TService Inject<TService>(TService instance)
             where TService : class;
         //

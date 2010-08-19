@@ -63,27 +63,27 @@ namespace System.Quality
             return (_parent as TServiceLocator);
         }
 
-        public void Register<Source>(Source instance)
-            where Source : class
+        public void Register<TService>(TService instance)
+            where TService : class
         {
-            var registration = Component.For<Source>()
+            var registration = Component.For<TService>()
                 .Instance(instance);
             _registrations.Add(registration);
         }
 
-        public void Register<Source>(Func<Source> factoryMethod)
-            where Source : class
+        public void Register<TService>(Func<TService> factoryMethod)
+            where TService : class
         {
-            var registration = Component.For<Source>()
-                .UsingFactoryMethod<Source>(factoryMethod.Invoke);
+            var registration = Component.For<TService>()
+                .UsingFactoryMethod<TService>(factoryMethod.Invoke);
             _registrations.Add(registration);
         }
 
-        public void Register<Source>(Type implType)
-             where Source : class
+        public void Register<TService>(Type implType)
+             where TService : class
         {
-            string key = GetKey(typeof(Source), implType);
-            var registration = Component.For<Source>()
+            string key = GetKey(typeof(TService), implType);
+            var registration = Component.For<TService>()
                 .Named(key)
                 .ImplementedBy(implType)
                 .LifeStyle
@@ -91,19 +91,19 @@ namespace System.Quality
             _registrations.Add(registration);
         }
 
-        public void Register<Source, Implementation>()
-            where Implementation : class, Source
+        public void Register<TService, TImplementation>()
+            where TImplementation : class, TService
         {
-            var key = GetKey(typeof(Source), typeof(Implementation));
-            Register<Source, Implementation>(key);
+            var key = GetKey(typeof(TService), typeof(TImplementation));
+            Register<TService, TImplementation>(key);
         }
 
-        public void Register<Source, Implementation>(string id)
-            where Implementation : class, Source
+        public void Register<TService, TImplementation>(string id)
+            where TImplementation : class, TService
         {
-            var registration = Component.For<Source>()
+            var registration = Component.For<TService>()
                 .Named(id)
-                .ImplementedBy<Implementation>()
+                .ImplementedBy<TImplementation>()
                 .LifeStyle
                 .Transient;
             _registrations.Add(registration);
@@ -128,9 +128,9 @@ namespace System.Quality
         }
 
         #region Domain extents
-        public void RegisterAll<Source>()
+        public void RegisterAll<TService>()
         {
-            AllTypes.Of<Source>();
+            AllTypes.Of<TService>();
         }
         #endregion
 

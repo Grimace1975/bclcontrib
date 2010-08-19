@@ -85,31 +85,31 @@ namespace System.Quality
             Dispose();
         }
 
-        public T Resolve<T>()
-            where T : class
+        public TService Resolve<TService>()
+            where TService : class
         {
             try
             {
-                return Container.Get<T>(new IParameter[0]);
+                return Container.Get<TService>(new IParameter[0]);
             }
             //catch (ActivationException activationException)
             //{
             //    return (ResolveTheFirstBindingFromTheContainer(activationException, typeof(T)) as T);
             //}
-            catch (Exception ex) { throw new ServiceResolutionException(typeof(T), ex); }
+            catch (Exception ex) { throw new ServiceResolutionException(typeof(TService), ex); }
         }
 
-        public T Resolve<T>(string key)
-            where T : class
+        public TService Resolve<TService>(string key)
+            where TService : class
         {
             try
             {
-                T value = Container.Get<T>(key, new IParameter[0]);
+                TService value = Container.Get<TService>(key, new IParameter[0]);
                 if (value == null)
-                    throw new ServiceResolutionException(typeof(T));
+                    throw new ServiceResolutionException(typeof(TService));
                 return value;
             }
-            catch (Exception ex) { throw new ServiceResolutionException(typeof(T), ex); }
+            catch (Exception ex) { throw new ServiceResolutionException(typeof(TService), ex); }
         }
 
         public object Resolve(Type type)
@@ -125,10 +125,10 @@ namespace System.Quality
             catch (Exception ex) { throw new ServiceResolutionException(type, ex); }
         }
 
-        public IList<T> ResolveAll<T>()
-            where T : class
+        public IList<TService> ResolveAll<TService>()
+            where TService : class
         {
-            return new List<T>(Container.GetAll<T>(new IParameter[0]));
+            return new List<TService>(Container.GetAll<TService>(new IParameter[0]));
         }
 
         [Obsolete("Not used with this implementation of IServiceLocator.")]

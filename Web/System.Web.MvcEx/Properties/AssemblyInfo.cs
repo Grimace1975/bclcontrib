@@ -34,4 +34,13 @@ using System.Runtime.InteropServices;
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
-[assembly: InternalsVisibleTo("System.Web.Ex.Integrate.TinyMce")]
+[assembly: InternalsVisibleTo("System.Web.Ex.Integrate.TinyMce, PublicKey=00240000048000009400000006020000" +
+    "00240000525341310004000001000100" +
+    "FBEEE6B06211131D43E70A97F3D32F43" +
+    "B78A9F35D78806DFCC0B0FD0A29F6D47" +
+    "24809F5353D1AB5A7FCD71D6B82A76A8" +
+    "8834F3AA6316BE370540268E6EB2CD15" +
+    "A1A12193C2C78A22045E32CDBAA8A2E4" +
+    "193AFF8AB78F145C4F1D92ADFBAA190F" +
+    "BDBCED22539204CC2DC563C84ABD2F88" +
+    "B564D3E33AEA53CDC166F381B6BD56B2")]
