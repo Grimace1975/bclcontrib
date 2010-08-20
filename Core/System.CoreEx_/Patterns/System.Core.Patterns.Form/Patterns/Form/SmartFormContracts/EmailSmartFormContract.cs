@@ -33,7 +33,6 @@ namespace System.Patterns.Forms.SmartFormContracts
     /// IContract implementation that implements the ability to send a SmartForm-defined email.
     /// </summary>
     //+ dont like the mergetext function should just take a string and merge, like the one in POM
-
     public class EmailSmartFormContract : IContract
     {
         private static object[] s_defaultArgs = new object[] { null, string.Empty };
@@ -43,6 +42,8 @@ namespace System.Patterns.Forms.SmartFormContracts
         /// <summary>
         /// Initializes a new instance of the <see cref="SmartForm"/> class.
         /// </summary>
+        public EmailSmartFormContract()
+            : this(new EmailSmartFormBodyBuilder(), new SmtpClient()) { }
         public EmailSmartFormContract(IEmailSmartFormBodyBuilder bodyBuilder, SmtpClient smtpClient)
         {
             if (bodyBuilder == null)

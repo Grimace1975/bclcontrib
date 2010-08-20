@@ -27,29 +27,29 @@ using NServiceBus;
 namespace System.Quality
 {
     /// <summary>
-    /// INServiceBusServiceBus
+    /// INServiceBus
     /// </summary>
-    public interface INServiceBusServiceBus : IServiceBus
+    public interface INServiceBus : IServiceBus
     {
         IBus Bus { get; }
     }
 
     /// <summary>
-    /// NServiceBusServiceBus
+    /// NServiceBusAbstractor
     /// </summary>
-    public class NServiceBusServiceBus : INServiceBusServiceBus
+    public class NServiceBusAbstractor : INServiceBus
     {
-        private static readonly Type s_domainServiceMessageType = typeof(INServiceBusServiceMessage);
+        private static readonly Type s_domainServiceMessageType = typeof(INServiceMessage);
 
-        public NServiceBusServiceBus()
-            : this(new NServiceBus.Unicast.UnicastBus()) { }
-        //public NServiceBusServiceBus()
+        public NServiceBusAbstractor()
+            : this(new global::NServiceBus.Unicast.UnicastBus()) { }
+        //public NServiceBusAbstractor()
         //    : this(Configure.With()
         //        .CreateBus()
         //        .Start()) { }
-        public NServiceBusServiceBus(Func<IBus> busBuilder)
+        public NServiceBusAbstractor(Func<IBus> busBuilder)
             : this(busBuilder()) { }
-        public NServiceBusServiceBus(IBus bus)
+        public NServiceBusAbstractor(IBus bus)
         {
             if (bus == null)
                 throw new ArgumentNullException("bus", "The specified NServiceBus bus cannot be null.");

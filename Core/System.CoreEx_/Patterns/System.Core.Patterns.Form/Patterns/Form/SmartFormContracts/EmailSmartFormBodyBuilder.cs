@@ -44,13 +44,15 @@ namespace System.Patterns.Forms.SmartFormContracts
     {
         private HtmlSchemaBase _htmlSchema;
 
+        public EmailSmartFormBodyBuilder()
+            : this(null) { }
         /// <summary>
         /// Initializes a new instance of the <see cref="EmailSmartFormBodyBuilder"/> class.
         /// </summary>
         public EmailSmartFormBodyBuilder(HtmlSchemaBase htmlSchema)
         {
-            if (htmlSchema == null)
-                throw new ArgumentNullException("htmlSchema");
+            //if (htmlSchema == null)
+            //    throw new ArgumentNullException("htmlSchema");
             _htmlSchema = htmlSchema;
         }
 

@@ -26,7 +26,6 @@ THE SOFTWARE.
 using System;
 using NServiceBus;
 using System.Reflection;
-
 namespace System.Quality
 {
     internal class NServiceBusHelper

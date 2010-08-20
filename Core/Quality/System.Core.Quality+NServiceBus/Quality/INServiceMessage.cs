@@ -29,5 +29,5 @@ namespace System.Quality
     /// <summary>
     /// INServiceBusServiceMessage
     /// </summary>
-    public interface INServiceBusServiceMessage : IServiceMessage, IMessage { }
+    public interface INServiceMessage : IServiceMessage, IMessage { }
 }

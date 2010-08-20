@@ -61,10 +61,11 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Quality\NServiceBusHelper.cs" />
-    <Compile Include="Quality\INServiceBusServiceMessage.cs" />
+    <Compile Include="Quality\INServiceMessageHandler.cs" />
+    <Compile Include="Quality\INServiceMessage.cs" />
     <Compile Include="Quality\MessageWrapper2.cs" />
     <Compile Include="Quality\MessageWrapper.cs" />
-    <Compile Include="Quality\NServiceBusServiceBus.cs" />
+    <Compile Include="Quality\NServiceBusAbstractor.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\System.CoreEx\System.CoreEx.csproj">

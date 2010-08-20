@@ -26,13 +26,12 @@ THE SOFTWARE.
 using System.Linq;
 using NServiceBus;
 using System.Reflection;
-
 namespace System.Quality
 {
     internal class MessageWrapper<TMessage>
         where TMessage : IServiceMessage
     {
-        private static readonly Type s_wrappedType = new DynamicProxyBuilder().CreateProxiedType(typeof(TMessage), new[] { typeof(INServiceBusServiceMessage) });
+        private static readonly Type s_wrappedType = new DynamicProxyBuilder().CreateProxiedType(typeof(TMessage), new[] { typeof(INServiceMessage) });
         private static readonly MethodInfo s_publishMessageBuilderMethod = NServiceBusHelper.SPublishMessageBuilderMethod.MakeGenericMethod(s_wrappedType);
         private static readonly MethodInfo s_publishMessagesMethod = NServiceBusHelper.SPublishMessagesMethod.MakeGenericMethod(s_wrappedType);
         private static readonly MethodInfo s_replyMessageBuilderMethod = NServiceBusHelper.SReplyMessageBuilderMethod.MakeGenericMethod(s_wrappedType);
@@ -65,7 +64,7 @@ namespace System.Quality
 
         public static IMessage[] Wrap(TMessage[] messages)
         {
-            return messages.Cast<INServiceBusServiceMessage>().ToArray();
+            return messages.Cast<INServiceMessage>().ToArray();
         }
 
         public static TMessage MakeMessage()
