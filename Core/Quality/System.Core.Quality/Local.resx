@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="InvalidServiceBusDefaultServiceLocator" xml:space="preserve">
+    <value>A default ServiceLocator could not be bound. Ether setup your default service locator or specify a service locator or none.</value>
+  </data>
   <data name="InvalidServiceTypeA" xml:space="preserve">
     <value>Could not resolve serviceType '{0}'</value>
   </data>

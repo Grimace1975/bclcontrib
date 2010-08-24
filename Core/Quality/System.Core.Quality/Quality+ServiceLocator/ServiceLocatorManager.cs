@@ -59,7 +59,7 @@ namespace System.Quality
                             if (_locator == null)
                                 throw new InvalidOperationException();
                             var registrar = _locator.GetRegistrar();
-                            RegisterSelfLocator(registrar, _locator);
+                            RegisterSelfInLocator(registrar, _locator);
                             if (_registration != null)
                                 _registration(registrar, _locator);
                         }
@@ -67,7 +67,7 @@ namespace System.Quality
             }
         }
 
-        private static void RegisterSelfLocator(IServiceRegistrar registrar, IServiceLocator locator)
+        private static void RegisterSelfInLocator(IServiceRegistrar registrar, IServiceLocator locator)
         {
             registrar.Register<IServiceLocator>(locator);
         }

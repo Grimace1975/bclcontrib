@@ -61,6 +61,15 @@ namespace System {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to A default ServiceLocator could not be bound. Ether setup your default service locator or specify a service locator or none..
+        /// </summary>
+        internal static string InvalidServiceBusDefaultServiceLocator {
+            get {
+                return ResourceManager.GetString("InvalidServiceBusDefaultServiceLocator", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Could not resolve serviceType &apos;{0}&apos;.
         /// </summary>
         internal static string InvalidServiceTypeA {

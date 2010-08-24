@@ -32,13 +32,16 @@ namespace System.Quality
     {
         private static readonly object _lock = new object();
         private static Func<IServiceBus> _provider;
+        private static Func<IServiceLocator> _locator;
         private static Action<IServiceBus> _registration;
         private static IServiceBus _bus;
 
-        public static void SetBusProvider(Func<IServiceBus> provider) { SetBusProvider(provider, (Action<IServiceBus>)null); }
-        public static void SetBusProvider(Func<IServiceBus> provider, Action<IServiceBus> registration)
+        public static void SetBusProvider(Func<IServiceBus> provider) { SetBusProvider(provider, GetDefaultServiceServiceLocator, (Action<IServiceBus>)null); }
+        public static void SetBusProvider(Func<IServiceBus> provider, Action<IServiceBus> registration) { SetBusProvider(provider, GetDefaultServiceServiceLocator, registration); }
+        public static void SetBusProvider(Func<IServiceBus> provider, Func<IServiceLocator> locator, Action<IServiceBus> registration)
         {
             _provider = provider;
+            _locator = locator;
             _registration = registration;
         }
 
@@ -55,11 +58,31 @@ namespace System.Quality
                             _bus = _provider();
                             if (_bus == null)
                                 throw new InvalidOperationException();
+                            IServiceLocator locator;
+                            if ((_locator != null) && ((locator = _locator()) != null))
+                            {
+                                var registrar = locator.GetRegistrar();
+                                RegisterSelfInLocator(registrar, _bus);
+                            }
                             if (_registration != null)
                                 _registration(_bus);
                         }
                 return _bus;
             }
+        }
+
+        private static void RegisterSelfInLocator(IServiceRegistrar registrar, IServiceBus bus)
+        {
+            registrar.Register<IServiceBus>(bus);
+        }
+
+        private static IServiceLocator GetDefaultServiceServiceLocator()
+        {
+            try
+            {
+                return ServiceLocatorManager.Current;
+            }
+            catch (InvalidOperationException) { throw new InvalidOperationException(Local.InvalidServiceBusDefaultServiceLocator); }
         }
     }
 }
