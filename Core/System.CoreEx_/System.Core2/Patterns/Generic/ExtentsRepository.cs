@@ -43,6 +43,7 @@ namespace System.Patterns.Generic
         T Get<T>();
         IEnumerable<T> GetMany<T>();
         object Get(Type type);
+        bool TryGetExtent<T>(out T extent);
     }
 
     /// <summary>
@@ -101,5 +102,16 @@ namespace System.Patterns.Generic
         }
         public object Get(Type type) { return s_hasExtentMethodInfo.MakeGenericMethod(type).Invoke(this, null); }
 
+        public bool TryGetExtent<T>(out T extent)
+        {
+            object value;
+            if ((_extents == null) || (!_extents.TryGetValue(typeof(T), out value)))
+            {
+                extent = default(T);
+                return false;
+            }
+            extent = (T)value;
+            return true;
+        }
     }
 }

@@ -59,7 +59,8 @@ namespace System.Linq
                 yield return (TSource)item;
         }
 
-        public static void ForEachYield<TSource>(this IEnumerable<TSource> source, Action<TSource> action)
+        // Name = ForEachYield | Yield
+        public static void Yield<TSource>(this IEnumerable<TSource> source, Action<TSource> action)
         {
             if (source == null)
                 throw new ArgumentNullException("source");

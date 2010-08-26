@@ -1,0 +1,2 @@
+gnupg: 1.4.10b
+wincsp: 4.28

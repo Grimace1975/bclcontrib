@@ -293,6 +293,9 @@
     <Compile Include="..\System.CoreEx_\System.Core.Extentions\ActivatorEx.cs">
       <Link>System.Core.Extentions\ActivatorEx.cs</Link>
     </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\Collections\EnumerableEx.cs">
+      <Link>System.Core.Extentions\Collections\EnumerableEx.cs</Link>
+    </Compile>
     <Compile Include="..\System.CoreEx_\System.Core.Extentions\Collections\Generic\DictionaryExtensions.cs">
       <Link>System.Core.Extentions\Collections\Generic\DictionaryExtensions.cs</Link>
     </Compile>

@@ -75,6 +75,7 @@ namespace System.Web
         public T Get<T, TShard>() { return GetRepository(typeof(TShard)).Get<T>(); }
         public IEnumerable<T> GetMany<T, TShard>() { return GetRepository(typeof(TShard)).GetMany<T>(); }
         public object Get(Type type) { return _defaultRepository.Get(type); }
+        public bool TryGetExtent<T>(out T extent) { return _defaultRepository.TryGetExtent<T>(out extent); }
 
         public IExtentsRepository GetRepository<TShard>() { return GetRepository(typeof(TShard)); }
         public IExtentsRepository GetRepository(Type shard)

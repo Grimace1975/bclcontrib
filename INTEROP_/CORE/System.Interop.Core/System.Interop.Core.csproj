@@ -47,8 +47,10 @@
     <Compile Include="Net\FtpClient.cs" />
     <Compile Include="Net\SftpClient.cs" />
     <Compile Include="Net\SmsClient.cs" />
-    <Compile Include="Security\GnuPgpInterop.cs" />
-    <Compile Include="Security\GnuPgpSettings.cs" />
+    <Compile Include="Security\SecureCopyInterop.cs" />
+    <Compile Include="Security\SecureCopySettings.cs" />
+    <Compile Include="Security\PrettyGoodPrivacyInterop.cs" />
+    <Compile Include="Security\PrettyGoodPrivacySettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

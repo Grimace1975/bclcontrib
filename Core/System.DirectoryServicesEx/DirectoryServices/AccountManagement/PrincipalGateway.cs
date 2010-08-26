@@ -126,7 +126,6 @@ namespace System.DirectoryServices.AccountManagement
                 return action(GroupPrincipal.FindByIdentity(context, identityType, identity));
         }
 
-
         public void SyncGroupPrincipalMembers<T>(PrincipalContext context, UserPrincipal userPrincipal, IdentityType identityType, IEnumerable<T> items, Func<UserPrincipal, IEnumerable<T>> existingItemsAccessor, Func<T, string> identityAccessor)
         {
             if (context == null)
@@ -165,6 +164,28 @@ namespace System.DirectoryServices.AccountManagement
                         a.Save();
                     }
                 });
+        }
+
+        public static bool MergeGroupPrincipalMembersWithUsers(GroupPrincipal groupPrincipal, IEnumerable<UserPrincipal> userPrincipals, bool wantsMembership) { return MergeGroupPrincipalMembersWithUsers(groupPrincipal, userPrincipals, wantsMembership, true); }
+        public static bool MergeGroupPrincipalMembersWithUsers(GroupPrincipal groupPrincipal, IEnumerable<UserPrincipal> userPrincipals, bool wantsMembership, bool saveOnChange)
+        {
+            var members = groupPrincipal.Members;
+            bool hasChanged = false;
+            foreach (var userPrincipal in userPrincipals)
+            {
+                var hasMembership = members.Contains(userPrincipal);
+                if (hasMembership == wantsMembership)
+                    continue;
+                if (wantsMembership)
+                    members.Add(userPrincipal);
+                else
+                    members.Remove(userPrincipal);
+                if (!hasChanged)
+                    hasChanged = true;
+            }
+            if ((saveOnChange) && (hasChanged))
+                groupPrincipal.Save();
+            return hasChanged;
         }
 
         #endregion

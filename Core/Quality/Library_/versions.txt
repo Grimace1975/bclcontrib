@@ -1,0 +1,2 @@
+masstransit: 0.2
+nservicebus: 2.0.0.1145
