@@ -1,2 +1,3 @@
 gnupg: 1.4.10b
-wincsp: 4.28
+putty: beta 0.60 [http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html]
+winscp: 4.28
