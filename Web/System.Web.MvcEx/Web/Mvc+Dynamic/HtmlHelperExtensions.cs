@@ -23,21 +23,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 #endregion
-using System.Web.Routing;
-namespace System.Web.Mvc
-{
-    /// <summary>
-    /// HtmlHelperExtensions
-    /// </summary>
-    public static partial class HtmlHelperExtensions
-    {
-        public static readonly string ValidationLabelCssClassName = "label-validation-error";
-        public static readonly string ValidationLabelValidCssClassName = "label-validation-valid";
-
-        internal static object GetModelStateValue(this HtmlHelper htmlHelper, string key, Type destinationType)
-        {
-            ModelState state;
-            return ((htmlHelper.ViewData.ModelState.TryGetValue(key, out state)) && (state.Value != null) ? state.Value.ConvertTo(destinationType, null) : null);
-        }
-    }
-}
+//namespace System.Web.Mvc
+//{
+//    /// <summary>
+//    /// HtmlHelperExtensionsEx
+//    /// </summary>
+//    public static partial class HtmlHelperExtensions
+//    {
+//    }
+//}
