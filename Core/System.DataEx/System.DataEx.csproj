@@ -8,7 +8,7 @@
     <ProjectGuid>{54DAA714-DCE5-4620-86ED-DCE48AD85579}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>System.DataEx</RootNamespace>
+    <RootNamespace>System</RootNamespace>
     <AssemblyName>System.DataEx</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -58,6 +58,25 @@
     <Compile Include="Data\SqlClient\SqlEncoder.cs" />
     <Compile Include="Data\SqlClient\SqlExtensions.cs" />
     <Compile Include="Data\SqlClient\SqlParseEx.cs" />
+    <Compile Include="IO\Csv\CachedCsvReader+CsvBindingList.cs" />
+    <Compile Include="IO\Csv\CachedCsvReader+CsvPropertyDescriptor.cs" />
+    <Compile Include="IO\Csv\CachedCsvReader+CsvRecordComparer.cs" />
+    <Compile Include="IO\Csv\CachedCsvReader.cs" />
+    <Compile Include="IO\Csv\CsvReader+DataReaderValidations.cs" />
+    <Compile Include="IO\Csv\CsvReader+RecordEnumerator.cs" />
+    <Compile Include="IO\Csv\CsvReader.cs" />
+    <Compile Include="IO\Csv\CsvReaderSettings.cs" />
+    <Compile Include="IO\Csv\ExceptionMessage.Designer.cs">
+      <DependentUpon>ExceptionMessage.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="IO\Csv\MalformedCsvException.cs" />
+    <Compile Include="IO\Csv\MissingFieldAction.cs" />
+    <Compile Include="IO\Csv\MissingFieldCsvException.cs" />
+    <Compile Include="IO\Csv\ParseErrorAction.cs" />
+    <Compile Include="IO\Csv\ParseErrorEventArgs.cs" />
+    <Compile Include="IO\Csv\ValueTrimmingOptions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -68,6 +87,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="BclContrib.snk" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="IO\Csv\ExceptionMessage.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ExceptionMessage.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
