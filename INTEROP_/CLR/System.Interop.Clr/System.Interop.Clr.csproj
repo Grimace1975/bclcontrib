@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{1393EBE8-600F-4830-AB1A-8A3505DE53D6}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>System.Interop.Clr</RootNamespace>
+    <AssemblyName>System.Interop.Clr</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Intermediate\CliNumericSize.cs" />
+    <Compile Include="Intermediate\CliType.cs" />
+    <Compile Include="Intermediate\Exceptions.cs" />
+    <Compile Include="Intermediate\GenericType.cs" />
+    <Compile Include="Intermediate\IlReader.cs" />
+    <Compile Include="Intermediate\IlReaderWrapper.cs" />
+    <Compile Include="Intermediate\IlWriter.cs" />
+    <Compile Include="Intermediate\IrBasicBlock.cs" />
+    <Compile Include="Intermediate\IrCode.cs" />
+    <Compile Include="Intermediate\IrOpCode.cs" />
+    <Compile Include="Intermediate\IrOpCodes.cs" />
+    <Compile Include="Intermediate\MethodCallInstruction.cs" />
+    <Compile Include="Intermediate\MethodParameter.cs" />
+    <Compile Include="Intermediate\MethodVariable.cs" />
+    <Compile Include="Intermediate\OpCodeGroup.cs" />
+    <Compile Include="Intermediate\StackTypeDescription.cs" />
+    <Compile Include="Intermediate\TreeInstruction.cs" />
+    <Compile Include="Intermediate\TypeDeriver.cs" />
+    <Compile Include="Intermediate\TypeDescription.cs" />
+    <Compile Include="Intermediate\IrTreeBuilder.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
