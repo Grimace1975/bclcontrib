@@ -29,7 +29,7 @@ namespace System.Web.Mvc
     /// <summary>
     /// HtmlHelperExtensions
     /// </summary>
-    internal static class HtmlHelperExtensions
+    public static partial class HtmlHelperExtensions
     {
         public static readonly string ValidationLabelCssClassName = "label-validation-error";
         public static readonly string ValidationLabelValidCssClassName = "label-validation-valid";

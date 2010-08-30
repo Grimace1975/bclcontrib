@@ -133,7 +133,7 @@ namespace System.Web.Mvc.Html
         public static MvcHtmlString DynamicRouteLink(this HtmlHelper htmlHelper, IDynamicRoutingContext routingContext, string routeName, RouteValueDictionary routeValues, IDictionary<string, object> htmlAttributes) { return DynamicRouteLink(htmlHelper, routingContext, (Func<IDynamicNode, string>)null, routeName, routeValues, htmlAttributes); }
         public static MvcHtmlString DynamicRouteLink(this HtmlHelper htmlHelper, IDynamicRoutingContext routingContext, Func<IDynamicNode, string> linkText, string routeName, RouteValueDictionary routeValues, IDictionary<string, object> htmlAttributes)
         {
-            return MvcHtmlString.Create(HtmlHelperEx.DynamicGenerateRouteLink(htmlHelper.ViewContext.RequestContext, htmlHelper.RouteCollection, routingContext, linkText, routeName, routeValues, htmlAttributes));
+            return MvcHtmlString.Create(HtmlHelperEx.GenerateDynamicRouteLink(htmlHelper.ViewContext.RequestContext, htmlHelper.RouteCollection, routingContext, linkText, routeName, routeValues, htmlAttributes));
         }
 
         public static MvcHtmlString DynamicRouteLink(this HtmlHelper htmlHelper, string routeName, string protocol, string hostName, string fragment, object routeValues, object htmlAttributes) { return DynamicRouteLink(htmlHelper, (IDynamicRoutingContext)null, (Func<IDynamicNode, string>)null, routeName, protocol, hostName, fragment, new RouteValueDictionary(routeValues), new RouteValueDictionary(htmlAttributes)); }
@@ -146,7 +146,7 @@ namespace System.Web.Mvc.Html
         public static MvcHtmlString DynamicRouteLink(this HtmlHelper htmlHelper, IDynamicRoutingContext routingContext, string routeName, string protocol, string hostName, string fragment, RouteValueDictionary routeValues, IDictionary<string, object> htmlAttributes) { return DynamicRouteLink(htmlHelper, routingContext, (Func<IDynamicNode, string>)null, routeName, protocol, hostName, fragment, routeValues, htmlAttributes); }
         public static MvcHtmlString DynamicRouteLink(this HtmlHelper htmlHelper, IDynamicRoutingContext routingContext, Func<IDynamicNode, string> linkText, string routeName, string protocol, string hostName, string fragment, RouteValueDictionary routeValues, IDictionary<string, object> htmlAttributes)
         {
-            return MvcHtmlString.Create(HtmlHelperEx.DynamicGenerateRouteLink(htmlHelper.ViewContext.RequestContext, htmlHelper.RouteCollection, routingContext, linkText, routeName, protocol, hostName, fragment, routeValues, htmlAttributes));
+            return MvcHtmlString.Create(HtmlHelperEx.GenerateDynamicRouteLink(htmlHelper.ViewContext.RequestContext, htmlHelper.RouteCollection, routingContext, linkText, routeName, protocol, hostName, fragment, routeValues, htmlAttributes));
         }
     }
 }
