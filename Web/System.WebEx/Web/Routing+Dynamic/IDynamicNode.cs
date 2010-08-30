@@ -29,7 +29,7 @@ namespace System.Web.Routing
     /// <summary>
     /// IDynamicNode
     /// </summary>
-    public interface IDynamicNode
+    public interface IDynamicNode : IExtentsRepository
     {
         string Key { get; }
         string Title { get; }

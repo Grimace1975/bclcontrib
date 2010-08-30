@@ -63,27 +63,23 @@ namespace System.Web.Routing
             var node = GetNode(_routingContext, virtualPath);
             if (node != null)
             {
-                var nodeExtents = (node as IExtentsRepository);
-                if (nodeExtents != null)
-                {
-                    // func
-                    var func = nodeExtents.Get<Func<IDynamicNode, RouteData>>();
-                    if (func != null)
-                        return func(node);
-                    // single
-                    var route = nodeExtents.Get<Route>();
-                    if (route != null)
-                        return route.GetRouteData(httpContext);
-                    // many
-                    var multiRoutes = nodeExtents.GetMany<Route>();
-                    if (multiRoutes != null)
-                        foreach (var multiRoute in multiRoutes)
-                        {
-                            var data = multiRoute.GetRouteData(httpContext);
-                            if (data != null)
-                                return data;
-                        }
-                }
+                // func
+                var func = node.Get<Func<IDynamicNode, RouteData>>();
+                if (func != null)
+                    return func(node);
+                // single
+                var route = node.Get<Route>();
+                if (route != null)
+                    return route.GetRouteData(httpContext);
+                // many
+                var multiRoutes = node.GetMany<Route>();
+                if (multiRoutes != null)
+                    foreach (var multiRoute in multiRoutes)
+                    {
+                        var data = multiRoute.GetRouteData(httpContext);
+                        if (data != null)
+                            return data;
+                    }
             }
             return null;
         }
@@ -95,27 +91,23 @@ namespace System.Web.Routing
             var node = GetNode(_routingContext, values, true);
             if (node != null)
             {
-                var nodeExtents = (node as IExtentsRepository);
-                if (nodeExtents != null)
-                {
-                    // func
-                    var func = nodeExtents.Get<Func<IDynamicNode, VirtualPathData>>();
-                    if (func != null)
-                        return func(node);
-                    // single
-                    var route = nodeExtents.Get<Route>();
-                    if (route != null)
-                        return route.GetVirtualPath(requestContext, values);
-                    // many
-                    var multiRoutes = nodeExtents.GetMany<Route>();
-                    if (multiRoutes != null)
-                        foreach (var multiRoute in multiRoutes)
-                        {
-                            var path = multiRoute.GetVirtualPath(requestContext, values);
-                            if (path != null)
-                                return path;
-                        }
-                }
+                // func
+                var func = node.Get<Func<IDynamicNode, VirtualPathData>>();
+                if (func != null)
+                    return func(node);
+                // single
+                var route = node.Get<Route>();
+                if (route != null)
+                    return route.GetVirtualPath(requestContext, values);
+                // many
+                var multiRoutes = node.GetMany<Route>();
+                if (multiRoutes != null)
+                    foreach (var multiRoute in multiRoutes)
+                    {
+                        var path = multiRoute.GetVirtualPath(requestContext, values);
+                        if (path != null)
+                            return path;
+                    }
             }
             return null;
         }
