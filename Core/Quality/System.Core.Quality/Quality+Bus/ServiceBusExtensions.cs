@@ -26,17 +26,12 @@ THE SOFTWARE.
 namespace System.Quality
 {
     /// <summary>
-    /// IPublishingServiceBus
+    /// ServiceBusExtensions
     /// </summary>
-    public interface IPublishingServiceBus : IServiceBus
+    public static class ServiceBusExtensions
     {
-        void Publish<TMessage>(Action<TMessage> messageBuilder) where TMessage : IServiceMessage;
-        void Publish<TMessage>(params TMessage[] messages) where TMessage : IServiceMessage;
-        void Subscribe<TMessage>() where TMessage : IServiceMessage;
-        void Subscribe<TMessage>(Predicate<TMessage> condition) where TMessage : IServiceMessage;
-        void Subscribe(Type messageType);
-        void Subscribe(Type messageType, Predicate<IServiceMessage> condition);
-        void Unsubscribe<TMessage>() where TMessage : IServiceMessage;
-        void Unsubscribe(Type messageType);
+        public static IServiceBusCallback SendTo<TMessage>(this IServiceBus serviceBus, Action<TMessage> messageBuilder)
+            where TMessage : IServiceMessage { return serviceBus.SendTo<TMessage>(null, messageBuilder); }
+        public static IServiceBusCallback SendTo(this IServiceBus serviceBus, params IServiceMessage[] messages) { return serviceBus.SendTo(null, messages); }
     }
 }
