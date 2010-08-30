@@ -47,6 +47,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Quality+Bus\ServiceBusExtensions.cs" />
     <Compile Include="Quality+Bus\IServiceBus.cs" />
     <Compile Include="Quality+Bus\IServiceMessageHandler.cs" />
     <Compile Include="Quality+Bus\IServiceMessageHandlerFactory.cs" />

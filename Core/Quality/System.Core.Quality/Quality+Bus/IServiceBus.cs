@@ -33,5 +33,7 @@ namespace System.Quality
         TMessage MakeMessage<TMessage>() where TMessage : IServiceMessage, new();
         void Send<TMessage>(Action<TMessage> messageBuilder) where TMessage : IServiceMessage;
         void Send(params IServiceMessage[] messages);
+        IServiceBusCallback SendTo<TMessage>(string destination, Action<TMessage> messageBuilder) where TMessage : IServiceMessage;
+        IServiceBusCallback SendTo(string destination, params IServiceMessage[] messages);
     }
 }

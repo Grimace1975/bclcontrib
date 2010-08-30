@@ -66,12 +66,18 @@ namespace System.Quality
             return this;
         }
 
-        public void Send<TMessage>(TMessage message)
-            where TMessage : IApplicationServiceMessage
-        {
-            foreach (var type in GetTypesOfMessageHandlers<TMessage>())
-                HandleTheMessage<TMessage>(type, message);
-        }
+        //public void Send<TMessage>(TMessage message)
+        //    where TMessage : IApplicationServiceMessage
+        //{
+        //    foreach (var type in GetTypesOfMessageHandlers(typeof(message)))
+        //        HandleTheMessage<TMessage>(type, message);
+        //}
+        //private void HandleTheMessage<TMessage>(Type type, TMessage message)
+        //    where TMessage : IApplicationServiceMessage
+        //{
+        //    _messageHandlerFactory.Create<TMessage>(type)
+        //        .Handle(message);
+        //}
 
         public TMessage MakeMessage<TMessage>()
             where TMessage : IServiceMessage, new()
@@ -82,25 +88,27 @@ namespace System.Quality
         public void Send<TMessage>(Action<TMessage> messageBuilder)
             where TMessage : IServiceMessage
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
         public void Send(params IServiceMessage[] messages)
         {
-            throw new NotImplementedException();
+            if (messages == null)
+                throw new ArgumentNullException("messages");
+            foreach (var message in messages)
+                foreach (var type in GetTypesOfMessageHandlers(message.GetType()))
+                    HandleTheMessage(type, (IApplicationServiceMessage)message);
         }
 
-        private void HandleTheMessage<TMessage>(Type type, TMessage message)
-            where TMessage : IApplicationServiceMessage
+        private void HandleTheMessage(Type type, IApplicationServiceMessage message)
         {
-            _messageHandlerFactory.Create<TMessage>(type)
+            _messageHandlerFactory.Create<IApplicationServiceMessage>(type)
                 .Handle(message);
         }
 
-        private IEnumerable<Type> GetTypesOfMessageHandlers<TMessage>()
-            where TMessage : IApplicationServiceMessage
+        private IEnumerable<Type> GetTypesOfMessageHandlers(Type messageType)
         {
-            return Items.Where(x => (x.MessageType == typeof(TMessage)))
+            return Items.Where(x => (x.MessageType == messageType))
                 .Select(x => x.MessageHandlerType);
         }
 
@@ -111,6 +119,17 @@ namespace System.Quality
                 .Select(h => h.GetGenericArguments()[0])
                 .Where(m => m.GetInterfaces().Any(x => (x == typeof(IApplicationServiceMessage))))
                 .SingleOrDefault();
+        }
+
+        public IServiceBusCallback SendTo<TMessage>(string destination, Action<TMessage> messageBuilder)
+            where TMessage : IServiceMessage
+        {
+            throw new NotSupportedException();
+        }
+
+        public IServiceBusCallback SendTo(string destination, params IServiceMessage[] messages)
+        {
+            throw new NotSupportedException();
         }
     }
 }
