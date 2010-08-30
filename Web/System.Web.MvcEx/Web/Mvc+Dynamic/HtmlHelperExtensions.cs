@@ -1,4 +1,4 @@
-﻿#region License
+#region License
 /*
 The MIT License
 
@@ -23,15 +23,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 #endregion
-using System.Patterns.Generic;
-namespace System.Web.Routing
-{
-    /// <summary>
-    /// IDynamicNode
-    /// </summary>
-    public interface IDynamicNode : IExtentsRepository
-    {
-        string Key { get; }
-        string Title { get; }
-    }
-}
+//namespace System.Web.Mvc
+//{
+//    /// <summary>
+//    /// HtmlHelperExtensionsEx
+//    /// </summary>
+//    public static partial class HtmlHelperExtensions
+//    {
+//    }
+//}
