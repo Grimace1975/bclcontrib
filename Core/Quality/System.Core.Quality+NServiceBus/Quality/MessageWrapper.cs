@@ -24,11 +24,22 @@ THE SOFTWARE.
 */
 #endregion
 using System.Linq;
+using System.Reflection;
 using NServiceBus;
 namespace System.Quality
 {
     internal class MessageWrapper
     {
+        public static readonly MethodInfo PublishMessageBuilderMethod = typeof(IBus).GetGenericMethod("Publish", new[] { typeof(IMessage) }, new[] { typeof(Action<IMessage>) });
+        public static readonly MethodInfo PublishMessagesMethod = typeof(IBus).GetGenericMethod("Publish", new[] { typeof(IMessage) }, new[] { typeof(IMessage[]) });
+        public static readonly MethodInfo ReplyMessageBuilderMethod = typeof(IBus).GetGenericMethod("Reply", new[] { typeof(IMessage) }, new[] { typeof(Action<IMessage>) });
+        public static readonly MethodInfo SendMessageBuilderMethod = typeof(IBus).GetGenericMethod("Send", new[] { typeof(IMessage) }, new[] { typeof(Action<IMessage>) });
+        public static readonly MethodInfo SendMessagesMethod = typeof(IBus).GetGenericMethod("Send", new[] { typeof(IMessage) }, new[] { typeof(string), typeof(Action<IMessage>) });
+        public static readonly MethodInfo SendLocalMessageBuilderMethod = typeof(IBus).GetGenericMethod("SendLocal", new[] { typeof(IMessage) }, new[] { typeof(Action<IMessage>) });
+        public static readonly MethodInfo SubscribeMethod = typeof(IBus).GetGenericMethod("Subscribe", new[] { typeof(IMessage) }, null);
+        public static readonly MethodInfo SubscribeConditionMethod = typeof(IBus).GetGenericMethod("Subscribe", new[] { typeof(IMessage) }, new[] { typeof(Predicate<IMessage>) });
+        public static readonly MethodInfo UnsubscribeMethod = typeof(IBus).GetGenericMethod("Unsubscribe", new[] { typeof(IMessage) }, null);
+
         public class CallbackWrapper : IServiceBusCallback
         {
             private readonly ICallback _callback;
