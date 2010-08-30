@@ -32,16 +32,16 @@ namespace System.Quality
         where TMessage : IServiceMessage
     {
         private static readonly Type s_wrappedType = new DynamicProxyBuilder().CreateProxiedType(typeof(TMessage), new[] { typeof(INServiceMessage) });
-        private static readonly MethodInfo s_publishMessageBuilderMethod = NServiceBusHelper.SPublishMessageBuilderMethod.MakeGenericMethod(s_wrappedType);
-        private static readonly MethodInfo s_publishMessagesMethod = NServiceBusHelper.SPublishMessagesMethod.MakeGenericMethod(s_wrappedType);
-        private static readonly MethodInfo s_replyMessageBuilderMethod = NServiceBusHelper.SReplyMessageBuilderMethod.MakeGenericMethod(s_wrappedType);
-        private static readonly MethodInfo s_sendMessageBuilderMethod = NServiceBusHelper.SSendMessageBuilderMethod.MakeGenericMethod(s_wrappedType);
-        private static readonly MethodInfo s_sendMessagesMethod = NServiceBusHelper.SSendMessagesMethod.MakeGenericMethod(s_wrappedType);
-        private static readonly MethodInfo s_sendLocalMessageBuilderMethod = NServiceBusHelper.SSendLocalMessageBuilderMethod.MakeGenericMethod(s_wrappedType);
-        private static readonly MethodInfo s_subscribeMethod = NServiceBusHelper.SSubscribeMethod.MakeGenericMethod(s_wrappedType);
-        private static readonly MethodInfo s_subscribeConditionMethod = NServiceBusHelper.SSubscribeConditionMethod.MakeGenericMethod(s_wrappedType);
-        private static readonly MethodInfo s_unsubscribeMethod = NServiceBusHelper.SUnsubscribeMethod.MakeGenericMethod(s_wrappedType);
-
+        private static readonly MethodInfo s_publishMessageBuilderMethod = MessageWrapper.PublishMessageBuilderMethod.MakeGenericMethod(s_wrappedType);
+        private static readonly MethodInfo s_publishMessagesMethod = MessageWrapper.PublishMessagesMethod.MakeGenericMethod(s_wrappedType);
+        private static readonly MethodInfo s_replyMessageBuilderMethod = MessageWrapper.ReplyMessageBuilderMethod.MakeGenericMethod(s_wrappedType);
+        private static readonly MethodInfo s_sendMessageBuilderMethod = MessageWrapper.SendMessageBuilderMethod.MakeGenericMethod(s_wrappedType);
+        private static readonly MethodInfo s_sendMessagesMethod = MessageWrapper.SendMessagesMethod.MakeGenericMethod(s_wrappedType);
+        private static readonly MethodInfo s_sendLocalMessageBuilderMethod = MessageWrapper.SendLocalMessageBuilderMethod.MakeGenericMethod(s_wrappedType);
+        private static readonly MethodInfo s_subscribeMethod = MessageWrapper.SubscribeMethod.MakeGenericMethod(s_wrappedType);
+        private static readonly MethodInfo s_subscribeConditionMethod = MessageWrapper.SubscribeConditionMethod.MakeGenericMethod(s_wrappedType);
+        private static readonly MethodInfo s_unsubscribeMethod = MessageWrapper.UnsubscribeMethod.MakeGenericMethod(s_wrappedType);
+        //
         public static void Publish(IBus bus, Action<TMessage> messageBuilder) { s_publishMessageBuilderMethod.Invoke(bus, new object[] { Wrap(messageBuilder) }); }
         public static void Publish(IBus bus, TMessage[] messages) { s_publishMessagesMethod.Invoke(bus, new object[] { Wrap(messages) }); }
         public static void Reply(IBus bus, Action<TMessage> messageBuilder) { s_replyMessageBuilderMethod.Invoke(bus, new object[] { Wrap(messageBuilder) }); }

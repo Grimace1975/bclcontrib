@@ -38,6 +38,7 @@ namespace System.Quality
 
         public static void SetBusProvider(Func<IPublishingServiceBus> provider) { SetBusProvider(provider, GetDefaultServiceServiceLocator, (Action<IPublishingServiceBus>)null); }
         public static void SetBusProvider(Func<IPublishingServiceBus> provider, Action<IPublishingServiceBus> registration) { SetBusProvider(provider, GetDefaultServiceServiceLocator, registration); }
+        public static void SetBusProvider(Func<IPublishingServiceBus> provider, Func<IServiceLocator> locator) { SetBusProvider(provider, locator, (Action<IPublishingServiceBus>)null); }
         public static void SetBusProvider(Func<IPublishingServiceBus> provider, Func<IServiceLocator> locator, Action<IPublishingServiceBus> registration)
         {
             _provider = provider;
