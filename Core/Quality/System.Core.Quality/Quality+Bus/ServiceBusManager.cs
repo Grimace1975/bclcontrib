@@ -31,21 +31,21 @@ namespace System.Quality
     public static class ServiceBusManager
     {
         private static readonly object _lock = new object();
-        private static Func<IServiceBus> _provider;
+        private static Func<IPublishingServiceBus> _provider;
         private static Func<IServiceLocator> _locator;
-        private static Action<IServiceBus> _registration;
-        private static IServiceBus _bus;
+        private static Action<IPublishingServiceBus> _registration;
+        private static IPublishingServiceBus _bus;
 
-        public static void SetBusProvider(Func<IServiceBus> provider) { SetBusProvider(provider, GetDefaultServiceServiceLocator, (Action<IServiceBus>)null); }
-        public static void SetBusProvider(Func<IServiceBus> provider, Action<IServiceBus> registration) { SetBusProvider(provider, GetDefaultServiceServiceLocator, registration); }
-        public static void SetBusProvider(Func<IServiceBus> provider, Func<IServiceLocator> locator, Action<IServiceBus> registration)
+        public static void SetBusProvider(Func<IPublishingServiceBus> provider) { SetBusProvider(provider, GetDefaultServiceServiceLocator, (Action<IPublishingServiceBus>)null); }
+        public static void SetBusProvider(Func<IPublishingServiceBus> provider, Action<IPublishingServiceBus> registration) { SetBusProvider(provider, GetDefaultServiceServiceLocator, registration); }
+        public static void SetBusProvider(Func<IPublishingServiceBus> provider, Func<IServiceLocator> locator, Action<IPublishingServiceBus> registration)
         {
             _provider = provider;
             _locator = locator;
             _registration = registration;
         }
 
-        public static IServiceBus Current
+        public static IPublishingServiceBus Current
         {
             get
             {
@@ -71,9 +71,9 @@ namespace System.Quality
             }
         }
 
-        private static void RegisterSelfInLocator(IServiceRegistrar registrar, IServiceBus bus)
+        private static void RegisterSelfInLocator(IServiceRegistrar registrar, IPublishingServiceBus bus)
         {
-            registrar.Register<IServiceBus>(bus);
+            registrar.Register<IPublishingServiceBus>(bus);
         }
 
         private static IServiceLocator GetDefaultServiceServiceLocator()

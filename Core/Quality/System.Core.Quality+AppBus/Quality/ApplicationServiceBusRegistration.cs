@@ -25,13 +25,9 @@ THE SOFTWARE.
 #endregion
 namespace System.Quality
 {
-    /// <summary>
-    /// IServiceBus
-    /// </summary>
-    public interface IServiceBus
+    public class ApplicationServiceBusRegistration
     {
-        TMessage MakeMessage<TMessage>() where TMessage : IServiceMessage, new();
-        void Send<TMessage>(Action<TMessage> messageBuilder) where TMessage : IServiceMessage;
-        void Send(params IServiceMessage[] messages);
+        public Type MessageHandlerType { get; set; }
+        public Type MessageType { get; set; }
     }
 }

@@ -26,12 +26,8 @@ THE SOFTWARE.
 namespace System.Quality
 {
     /// <summary>
-    /// IServiceBus
+    /// IApplicationServiceMessageHandler
     /// </summary>
-    public interface IServiceBus
-    {
-        TMessage MakeMessage<TMessage>() where TMessage : IServiceMessage, new();
-        void Send<TMessage>(Action<TMessage> messageBuilder) where TMessage : IServiceMessage;
-        void Send(params IServiceMessage[] messages);
-    }
+    public interface IApplicationServiceMessageHandler<TMessage> : IServiceMessageHandler<TMessage>
+        where TMessage : IApplicationServiceMessage { }
 }

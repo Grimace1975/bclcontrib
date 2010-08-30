@@ -26,12 +26,21 @@ THE SOFTWARE.
 namespace System.Quality
 {
     /// <summary>
-    /// IServiceBus
+    /// IPublishingServiceBus
     /// </summary>
-    public interface IServiceBus
+    public interface IPublishingServiceBus : IServiceBus
     {
-        TMessage MakeMessage<TMessage>() where TMessage : IServiceMessage, new();
-        void Send<TMessage>(Action<TMessage> messageBuilder) where TMessage : IServiceMessage;
-        void Send(params IServiceMessage[] messages);
+        void Publish<TMessage>(Action<TMessage> messageBuilder) where TMessage : IServiceMessage;
+        void Publish<TMessage>(params TMessage[] messages) where TMessage : IServiceMessage;
+        IServiceBusCallback SendTo<TMessage>(Action<TMessage> messageBuilder) where TMessage : IServiceMessage;
+        IServiceBusCallback SendTo<TMessage>(string destination, Action<TMessage> messageBuilder) where TMessage : IServiceMessage;
+        IServiceBusCallback SendTo(params IServiceMessage[] messages);
+        IServiceBusCallback SendTo(string destination, params IServiceMessage[] messages);
+        void Subscribe<TMessage>() where TMessage : IServiceMessage;
+        void Subscribe<TMessage>(Predicate<TMessage> condition) where TMessage : IServiceMessage;
+        void Subscribe(Type messageType);
+        void Subscribe(Type messageType, Predicate<IServiceMessage> condition);
+        void Unsubscribe<TMessage>() where TMessage : IServiceMessage;
+        void Unsubscribe(Type messageType);
     }
 }

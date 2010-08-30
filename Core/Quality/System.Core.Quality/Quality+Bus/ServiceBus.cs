@@ -35,10 +35,10 @@ namespace System.Quality
             where TMessage : IServiceMessage, new() { return ServiceBusManager.Current.MakeMessage<TMessage>(); }
 
         public static IServiceBusCallback Send<TMessage>(Action<TMessage> messageBuilder)
-            where TMessage : IServiceMessage { return ServiceBusManager.Current.Send<TMessage>(messageBuilder); }
+            where TMessage : IServiceMessage { return ServiceBusManager.Current.SendTo<TMessage>(messageBuilder); }
         public static IServiceBusCallback Send<TMessage>(string destination, Action<TMessage> messageBuilder)
-            where TMessage : IServiceMessage { return ServiceBusManager.Current.Send<TMessage>(destination, messageBuilder); }
-        public static IServiceBusCallback Send(params IServiceMessage[] messages) { return ServiceBusManager.Current.Send(messages); }
-        public static IServiceBusCallback Send(string destination, params IServiceMessage[] messages) { return ServiceBusManager.Current.Send(destination, messages); }
+            where TMessage : IServiceMessage { return ServiceBusManager.Current.SendTo<TMessage>(destination, messageBuilder); }
+        public static IServiceBusCallback Send(params IServiceMessage[] messages) { return ServiceBusManager.Current.SendTo(messages); }
+        public static IServiceBusCallback Send(string destination, params IServiceMessage[] messages) { return ServiceBusManager.Current.SendTo(destination, messages); }
     }
 }

@@ -29,8 +29,11 @@ namespace System.Quality
     /// <summary>
     /// INServiceBus
     /// </summary>
-    public interface INServiceBus : IServiceBus
+    public interface INServiceBus : IPublishingServiceBus
     {
+        void Reply<TMessage>(Action<TMessage> messageBuilder) where TMessage : IServiceMessage;
+        void Reply(params IServiceMessage[] messages);
+        void Return<T>(T value);
         IBus Bus { get; }
     }
 
@@ -56,17 +59,34 @@ namespace System.Quality
             Bus = bus;
         }
 
-        public IBus Bus { get; private set; }
-
         public TMessage MakeMessage<TMessage>()
             where TMessage : IServiceMessage, new()
         {
+            return MessageWrapper<TMessage>.MakeMessage();
+        }
+
+        public void Send<TMessage>(Action<TMessage> messageBuilder)
+            where TMessage : IServiceMessage
+        {
+            if (!typeof(TMessage).IsAssignableFrom(s_domainServiceMessageType))
+                throw new ArgumentException("TMessage");
             try
             {
-                return MessageWrapper<TMessage>.MakeMessage();
+                MessageWrapper<TMessage>.SendLocal(Bus, messageBuilder);
             }
             catch (Exception exception) { throw new ServiceBusException(exception); }
         }
+
+        public void Send(params IServiceMessage[] messages)
+        {
+            try
+            {
+                Bus.SendLocal(MessageWrapper.Wrap(messages));
+            }
+            catch (Exception exception) { throw new ServiceBusException(exception); }
+        }
+
+        #region Publishing ServiceBus
 
         public void Publish<TMessage>(Action<TMessage> messageBuilder)
             where TMessage : IServiceMessage
@@ -92,39 +112,7 @@ namespace System.Quality
             catch (Exception exception) { throw new ServiceBusException(exception); }
         }
 
-        public void Reply<TMessage>(Action<TMessage> messageBuilder)
-            where TMessage : IServiceMessage
-        {
-            if (!typeof(TMessage).IsAssignableFrom(s_domainServiceMessageType))
-                throw new ArgumentException("TMessage");
-            try
-            {
-                MessageWrapper<TMessage>.Reply(Bus, messageBuilder);
-            }
-            catch (Exception exception) { throw new ServiceBusException(exception); }
-        }
-
-        public void Reply(params IServiceMessage[] messages)
-        {
-            try
-            {
-                Bus.Reply(MessageWrapper.Wrap(messages));
-            }
-            catch (Exception exception) { throw new ServiceBusException(exception); }
-        }
-
-        public void Return<T>(T value)
-        {
-            if (typeof(T) != typeof(int))
-                throw new NotSupportedException();
-            try
-            {
-                Bus.Return(Convert.ToInt32(value));
-            }
-            catch (Exception exception) { throw new ServiceBusException(exception); }
-        }
-
-        public IServiceBusCallback Send<TMessage>(Action<TMessage> messageBuilder)
+        public IServiceBusCallback SendTo<TMessage>(Action<TMessage> messageBuilder)
             where TMessage : IServiceMessage
         {
             if (!typeof(TMessage).IsAssignableFrom(s_domainServiceMessageType))
@@ -136,7 +124,7 @@ namespace System.Quality
             catch (Exception exception) { throw new ServiceBusException(exception); }
         }
 
-        public IServiceBusCallback Send<TMessage>(string destination, Action<TMessage> messageBuilder)
+        public IServiceBusCallback SendTo<TMessage>(string destination, Action<TMessage> messageBuilder)
             where TMessage : IServiceMessage
         {
             if (!typeof(TMessage).IsAssignableFrom(s_domainServiceMessageType))
@@ -148,7 +136,7 @@ namespace System.Quality
             catch (Exception exception) { throw new ServiceBusException(exception); }
         }
 
-        public IServiceBusCallback Send(params IServiceMessage[] messages)
+        public IServiceBusCallback SendTo(params IServiceMessage[] messages)
         {
             try
             {
@@ -157,32 +145,11 @@ namespace System.Quality
             catch (Exception exception) { throw new ServiceBusException(exception); }
         }
 
-        public IServiceBusCallback Send(string destination, params IServiceMessage[] messages)
+        public IServiceBusCallback SendTo(string destination, params IServiceMessage[] messages)
         {
             try
             {
                 return MessageWrapper.Wrap(Bus.Send(destination, MessageWrapper.Wrap(messages)));
-            }
-            catch (Exception exception) { throw new ServiceBusException(exception); }
-        }
-
-        public void SendLocal<TMessage>(Action<TMessage> messageBuilder)
-            where TMessage : IServiceMessage
-        {
-            if (!typeof(TMessage).IsAssignableFrom(s_domainServiceMessageType))
-                throw new ArgumentException("TMessage");
-            try
-            {
-                MessageWrapper<TMessage>.SendLocal(Bus, messageBuilder);
-            }
-            catch (Exception exception) { throw new ServiceBusException(exception); }
-        }
-
-        public void SendLocal(params IServiceMessage[] messages)
-        {
-            try
-            {
-                Bus.SendLocal(MessageWrapper.Wrap(messages));
             }
             catch (Exception exception) { throw new ServiceBusException(exception); }
         }
@@ -249,5 +216,44 @@ namespace System.Quality
             }
             catch (Exception exception) { throw new ServiceBusException(exception); }
         }
+        #endregion
+
+        #region Domain-specific
+
+        public IBus Bus { get; private set; }
+
+        public void Reply<TMessage>(Action<TMessage> messageBuilder)
+            where TMessage : IServiceMessage
+        {
+            if (!typeof(TMessage).IsAssignableFrom(s_domainServiceMessageType))
+                throw new ArgumentException("TMessage");
+            try
+            {
+                MessageWrapper<TMessage>.Reply(Bus, messageBuilder);
+            }
+            catch (Exception exception) { throw new ServiceBusException(exception); }
+        }
+
+        public void Reply(params IServiceMessage[] messages)
+        {
+            try
+            {
+                Bus.Reply(MessageWrapper.Wrap(messages));
+            }
+            catch (Exception exception) { throw new ServiceBusException(exception); }
+        }
+
+        public void Return<T>(T value)
+        {
+            if (typeof(T) != typeof(int))
+                throw new NotSupportedException();
+            try
+            {
+                Bus.Return(Convert.ToInt32(value));
+            }
+            catch (Exception exception) { throw new ServiceBusException(exception); }
+        }
+
+        #endregion
     }
 }
