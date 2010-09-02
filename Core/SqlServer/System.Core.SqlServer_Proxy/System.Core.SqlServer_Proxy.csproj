@@ -3,32 +3,37 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.30703</ProductVersion>
+    <ProjectTypeGuids>{c252feb5-a946-4202-b1d4-9916a0590387};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{87A04E75-9495-4F07-8D85-22B8F1B52272}</ProjectGuid>
+    <ProjectGuid>{2B46D015-F0A4-4B8D-AEEA-867392A21A8D}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>System</RootNamespace>
-    <AssemblyName>System.Core.Quality+Moq</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <NoStandardLibraries>false</NoStandardLibraries>
+    <AssemblyName>System.Core.SqlServer_Proxy</AssemblyName>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
+    <RootNamespace>System</RootNamespace>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <ConnectionString />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
+    <DebugSymbols>false</DebugSymbols>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
     <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
@@ -37,22 +42,23 @@
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>BclContrib.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildToolsPath)\SqlServer.targets" />
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AssemblyRef.cs" />
+    <Compile Include="Patterns\SqlGateway\ISqlDispatch.cs" />
+    <Compile Include="Patterns\SqlGateway\SqlDispatcherProxy+StoredProcedures.cs" />
+    <Compile Include="Patterns\SqlGateway\SqlDispatchProxyType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\System.Core.Quality\System.Core.Quality.csproj">
-      <Project>{A44E9D89-BFF2-41A4-AADC-3C2BDFDAEEB1}</Project>
-      <Name>System.Core.Quality</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="BclContrib.snk" />
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
