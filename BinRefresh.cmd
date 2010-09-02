@@ -3,14 +3,14 @@
 xcopy Abstractions\System.Abstractions\bin\Release\System.Abstractions.* bin\ /Q /R /H /Y
 ::xcopy Abstractions\System.Web.Abstractions\bin\Release\System.Web.Abstractions.* bin\ /Q /R /H /Y
 xcopy Core\Quality\System.Core.Quality\bin\Release\System.Core.Quality.* bin\Quality\ /Q /R /H /Y
-xcopy Core\Quality\System.Core.Quality+Ninject\bin\Release\System.Core.Quality+Ninject.* bin\Quality\ /Q /R /H /Y
-xcopy Core\Quality\System.Core.Quality+NServiceBus\bin\Release\System.Core.Quality+NServiceBus.* bin\Quality\ /Q /R /H /Y
-xcopy Core\Quality\System.Core.Quality+StructureMap\bin\Release\System.Core.Quality+StructureMap.* bin\Quality\ /Q /R /H /Y
-xcopy Core\Quality\System.Core.Quality+Unity\bin\Release\System.Core.Quality+Unity.* bin\Quality\ /Q /R /H /Y
-xcopy Core\Quality\System.Core.Quality+Windsor\bin\Release\System.Core.Quality+Windsor.* bin\Quality\ /Q /R /H /Y
+xcopy Core\Quality\System.Core.Quality_Ninject\bin\Release\System.Core.Quality_Ninject.* bin\Quality\ /Q /R /H /Y
+xcopy Core\Quality\System.Core.Quality_NServiceBus\bin\Release\System.Core.Quality_NServiceBus.* bin\Quality\ /Q /R /H /Y
+xcopy Core\Quality\System.Core.Quality_StructureMap\bin\Release\System.Core.Quality_StructureMap.* bin\Quality\ /Q /R /H /Y
+xcopy Core\Quality\System.Core.Quality_Unity\bin\Release\System.Core.Quality_Unity.* bin\Quality\ /Q /R /H /Y
+xcopy Core\Quality\System.Core.Quality_Windsor\bin\Release\System.Core.Quality_Windsor.* bin\Quality\ /Q /R /H /Y
 xcopy Core\Quality\Library_\* bin\Quality\Library_\ /S /Q /R /H /Y
 xcopy Core\SqlServer\System.Core.SqlServer\bin\Release\System.Core.SqlServer.* bin\SqlServer\ /Q /R /H /Y
-xcopy Core\SqlServer\System.Core.SqlServer+Proxy\bin\Release\System.Core.SqlServer+Proxy.* bin\SqlServer\ /Q /R /H /Y
+xcopy Core\SqlServer\System.Core.SqlServer_Proxy\bin\Release\System.Core.SqlServer_Proxy.* bin\SqlServer\ /Q /R /H /Y
 xcopy Core\System.ComponentModelEx\bin\Release\System.ComponentModelEx.* bin\ /Q /R /H /Y
 xcopy Core\System.CoreEx\bin\Release\System.CoreEx.* bin\ /Q /R /H /Y
 xcopy Core\System.DataEx\bin\Release\System.DataEx.* bin\ /Q /R /H /Y
@@ -27,14 +27,14 @@ xcopy INTEROP_\CORE\System.Interop.Core\bin\Release\System.Interop.Core.* bin\IN
 xcopy Abstractions\System.Abstractions\bin\Debug\System.Abstractions.* bin\Debug\ /Q /R /H /Y
 ::xcopy Abstractions\System.Web.Abstractions\bin\Debug\System.Web.Abstractions.* bin\Debug\ /Q /R /H /Y
 xcopy Core\Quality\System.Core.Quality\bin\Debug\System.Core.Quality.* bin\Debug\Quality\ /Q /R /H /Y
-xcopy Core\Quality\System.Core.Quality+Ninject\bin\Debug\System.Core.Quality+Ninject.* bin\Debug\Quality\ /Q /R /H /Y
-xcopy Core\Quality\System.Core.Quality+NServiceBus\bin\Debug\System.Core.Quality+NServiceBus.* bin\Debug\Quality\ /Q /R /H /Y
-xcopy Core\Quality\System.Core.Quality+StructureMap\bin\Debug\System.Core.Quality+StructureMap.* bin\Debug\Quality\ /Q /R /H /Y
-xcopy Core\Quality\System.Core.Quality+Unity\bin\Debug\System.Core.Quality+Unity.* bin\Debug\Quality\ /Q /R /H /Y
-xcopy Core\Quality\System.Core.Quality+Windsor\bin\Debug\System.Core.Quality+Windsor.* bin\Debug\Quality\ /Q /R /H /Y
+xcopy Core\Quality\System.Core.Quality_Ninject\bin\Debug\System.Core.Quality_Ninject.* bin\Debug\Quality\ /Q /R /H /Y
+xcopy Core\Quality\System.Core.Quality_NServiceBus\bin\Debug\System.Core.Quality_NServiceBus.* bin\Debug\Quality\ /Q /R /H /Y
+xcopy Core\Quality\System.Core.Quality_StructureMap\bin\Debug\System.Core.Quality_StructureMap.* bin\Debug\Quality\ /Q /R /H /Y
+xcopy Core\Quality\System.Core.Quality_Unity\bin\Debug\System.Core.Quality_Unity.* bin\Debug\Quality\ /Q /R /H /Y
+xcopy Core\Quality\System.Core.Quality_Windsor\bin\Debug\System.Core.Quality_Windsor.* bin\Debug\Quality\ /Q /R /H /Y
 xcopy Core\Quality\Library_\* bin\Debug\Quality\Library_\ /S /Q /R /H /Y
 xcopy Core\SqlServer\System.Core.SqlServer\bin\Debug\System.Core.SqlServer.* bin\Debug\SqlServer\ /Q /R /H /Y
-xcopy Core\SqlServer\System.Core.SqlServer+Proxy\bin\Debug\System.Core.SqlServer+Proxy.* bin\Debug\SqlServer\ /Q /R /H /Y
+xcopy Core\SqlServer\System.Core.SqlServer_Proxy\bin\Debug\System.Core.SqlServer_Proxy.* bin\Debug\SqlServer\ /Q /R /H /Y
 xcopy Core\System.ComponentModelEx\bin\Debug\System.ComponentModelEx.* bin\Debug\ /Q /R /H /Y
 xcopy Core\System.CoreEx\bin\Debug\System.CoreEx.* bin\Debug\ /Q /R /H /Y
 xcopy Core\System.DataEx\bin\Debug\System.DataEx.* bin\Debug\ /Q /R /H /Y
@@ -56,3 +56,5 @@ xcopy INTEROP_\CORE\System.Interop.Core\bin\Debug\System.Interop.Core.* bin\Debu
 ::
 robocopy Bin\Debug\ "C:\_APPLICATION\HLLMRKLINK\Library_\Reference Assemblies\BclContrib" /MIR /TEE /NJH /NJS
 ::robocopy Bin\Debug\ "C:\_APPLICATION\TBLCOMMUNITY\Library_\Reference Assemblies\BclContrib" /MIR /TEE /NJH /NJS
+
+pause

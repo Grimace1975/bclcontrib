@@ -296,12 +296,12 @@
   </Target>
   -->
   <ItemGroup>
-    <ProjectReference Include="..\System.Core.SqlServer+Proxy\System.Core.SqlServer+Proxy.csproj">
-      <Project>{2B46D015-F0A4-4B8D-AEEA-867392A21A8D}</Project>
-      <Name>System.Core.SqlServer+Proxy</Name>
-    </ProjectReference>
+    <None Include="BclContrib.snk" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="BclContrib.snk" />
+    <ProjectReference Include="..\System.Core.SqlServer_Proxy\System.Core.SqlServer_Proxy.csproj">
+      <Project>{2B46D015-F0A4-4B8D-AEEA-867392A21A8D}</Project>
+      <Name>System.Core.SqlServer_Proxy</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>
