@@ -27,6 +27,6 @@ namespace System
 {
     internal static class AssemblyRef
     {
-        internal const string This = "System.CoreEx";
+        internal const string This = "System.CoreEx, Version=1.0.0.0, Culture=neutral, PublicKeyToken=725aceb8081535f0";
     }
 }

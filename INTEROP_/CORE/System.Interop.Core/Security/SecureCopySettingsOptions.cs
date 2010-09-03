@@ -1,4 +1,4 @@
-#region License
+﻿#region License
 /*
 The MIT License
 
@@ -23,12 +23,23 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 #endregion
-namespace System
+namespace System.Interop.Core.Security
 {
-    internal static class AssemblyRef
+    [Flags]
+    public enum SecureCopySettingsOptions
     {
-        internal const string This = "System.WebEx, Version=1.0.0.0, Culture=neutral, PublicKeyToken=725aceb8081535f0";
-        internal const string SystemWeb = "System.Web, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a";
-        internal const string SystemWebRouting = "System.Web.Routing, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35";
+        EnableCompression = 0x0001,
+        DisableAgent = 0x0002, 
+        EnableAgent = 0x0004,
+        DisableInteractivePrompts = 0x0008,
+        Unsafe = 0x0010,
+        ForceSftp = 0x0020, 
+        ForceScp = 0x0040,
+        Recursively = 0x0080,
+        PreserveFileAttributes = 0x0100,
+        ForceSshProtocol1 = 0x0200,
+        ForceSshProtocol2 = 0x0400,
+        ForceIPv4 = 0x0800,
+        ForceIPv6 = 0x1000,
     }
 }

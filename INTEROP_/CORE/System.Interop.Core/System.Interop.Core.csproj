@@ -44,9 +44,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Net\SecureFileTransferClient.cs" />
     <Compile Include="Net\FtpClient.cs" />
     <Compile Include="Net\SftpClient.cs" />
     <Compile Include="Net\SmsClient.cs" />
+    <Compile Include="Security\SecureCopyException.cs" />
+    <Compile Include="Security\SecureCopySettingsOptions.cs" />
     <Compile Include="Security\SecureCopyInterop.cs" />
     <Compile Include="Security\SecureCopySettings.cs" />
     <Compile Include="Security\PrettyGoodPrivacyInterop.cs" />

@@ -395,8 +395,8 @@
     <Compile Include="..\System.CoreEx_\System.Core.Extentions\MathEx.cs">
       <Link>System.Core.Extentions\MathEx.cs</Link>
     </Compile>
-    <Compile Include="..\System.CoreEx_\System.Core.Extentions\Net\FtpClientBase.cs">
-      <Link>System.Core.Extentions\Net\FtpClientBase.cs</Link>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\Net\FileTransferClientBase.cs">
+      <Link>System.Core.Extentions\Net\FileTransferClientBase.cs</Link>
     </Compile>
     <Compile Include="..\System.CoreEx_\System.Core.Extentions\Net\SmsCarrierId.cs">
       <Link>System.Core.Extentions\Net\SmsCarrierId.cs</Link>

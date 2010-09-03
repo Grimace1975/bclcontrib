@@ -192,17 +192,15 @@ namespace System.DirectoryServices.AccountManagement
 
         #region UserPrincipal
 
-        public static IEnumerable<UserPrincipal> GetAllUserPrincipals(PrincipalContext context)
+        public static IEnumerable<UserPrincipal> GetAllUserPrincipals(PrincipalContext context) { return GetAllUserPrincipals(context, null); }
+        public static IEnumerable<UserPrincipal> GetAllUserPrincipals(PrincipalContext context, int? maximumItems)
         {
             if (context == null)
                 throw new ArgumentNullException("context");
             var searcher = new PrincipalSearcher(new UserPrincipal(context));
             using (var searchResults = searcher.FindAll())
-                return searchResults
-#if DEBUG
-.Take(100)
-#endif
-.Where(user => user.StructuralObjectClass == "user")
+                return (!maximumItems.HasValue ? searchResults : searchResults.Take(maximumItems.Value))
+                    .Where(user => user.StructuralObjectClass == "user")
                     .OfType<UserPrincipal>()
                     .ToList();
         }
@@ -289,12 +287,13 @@ namespace System.DirectoryServices.AccountManagement
             }
         }
 
-        public TReturn WithUserPrincipals<TReturn>(Func<IEnumerable<UserPrincipal>, TReturn> action)
+        public TReturn WithUserPrincipals<TReturn>(Func<IEnumerable<UserPrincipal>, TReturn> action) { return WithUserPrincipals<TReturn>(action, null); }
+        public TReturn WithUserPrincipals<TReturn>(Func<IEnumerable<UserPrincipal>, TReturn> action, int? maximumItems)
         {
             if (action == null)
                 throw new ArgumentNullException("action");
             using (var context = GetPrincipalContext(_userContainer))
-                return action(GetAllUserPrincipals(context));
+                return action(GetAllUserPrincipals(context, maximumItems));
         }
 
         public TReturn WithUserPrincipalBySid<TReturn>(string sid, Func<UserPrincipal, TReturn> action)

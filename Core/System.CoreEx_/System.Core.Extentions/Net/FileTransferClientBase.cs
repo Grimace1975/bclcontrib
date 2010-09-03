@@ -26,9 +26,9 @@ THE SOFTWARE.
 namespace System.Net
 {
     /// <summary>
-    /// FtpClientBase
+    /// FileTransferClientBase
     /// </summary>
-    public abstract class FtpClientBase
+    public abstract class FileTransferClientBase
     {
         /// <summary>
         /// Gets the credentials.

@@ -31,7 +31,7 @@ THE SOFTWARE.
 //    /// <summary>
 //    /// SftpClient
 //    /// </summary>
-//    public class SftpClient : FtpClient
+//    public class SftpClient : FileTransferClientBase
 //    {
 //        #region Class Types
 //        /// <summary>

@@ -1,4 +1,4 @@
-#region License
+﻿#region License
 /*
 The MIT License
 
@@ -23,12 +23,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 #endregion
-namespace System
+namespace System.Interop.Core.Security
 {
-    internal static class AssemblyRef
+    public class SecureCopyException : InvalidOperationException
     {
-        internal const string This = "System.WebEx, Version=1.0.0.0, Culture=neutral, PublicKeyToken=725aceb8081535f0";
-        internal const string SystemWeb = "System.Web, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a";
-        internal const string SystemWebRouting = "System.Web.Routing, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35";
+        public SecureCopyException(string message)
+            : base(message) { }
     }
 }
