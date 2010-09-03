@@ -88,7 +88,7 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="MathEx.cs" />
-    <Compile Include="Net\FtpClientBase.cs" />
+    <Compile Include="Net\FileTransferClientBase.cs" />
     <Compile Include="Net\SmsCarrierId.cs" />
     <Compile Include="Net\SmsClientBase.cs" />
     <Compile Include="Net\SmsMessage.cs" />

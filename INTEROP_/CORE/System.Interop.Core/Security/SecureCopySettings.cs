@@ -27,6 +27,18 @@ namespace System.Interop.Core.Security
 {
     public class SecureCopySettings
     {
-        public string WinScpPath { get; set; }
+        public SecureCopySettings()
+        {
+            ProcessTimeoutInMilliseconds = 6000;
+        }
+        public int ProcessTimeoutInMilliseconds { get; set; }
+        public string PuTtyPath { get; set; }
+        public string SessionName { get; set; }
+        public int? Port { get; set; }
+        public string UserId { get; set; }
+        public string Password { get; set; }
+        public string PrivateKeyPath { get; set; }
+        public string PrivateKeyPassphase { get; set; }
+        public SecureCopySettingsOptions Options { get; set; }
     }
 }
