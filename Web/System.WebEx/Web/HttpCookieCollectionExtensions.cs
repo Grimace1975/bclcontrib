@@ -23,26 +23,19 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 #endregion
-using System.Configuration;
-namespace System.Patterns.ReleaseManagement.Configuration
+namespace System.Web
 {
     /// <summary>
-    /// ReleaseManagementConfiguration
+    /// HttpCookieCollectionExtensions
     /// </summary>
-	public class ReleaseManagementConfiguration : Patterns.Configuration.Configuration
+    public static partial class HttpCookieCollectionExtensions
     {
-        [ConfigurationProperty("deploymentEnvironment", DefaultValue = DeploymentEnvironment.Production)]
-        public DeploymentEnvironment DeploymentEnvironment
+        public static bool TryGetValue(this HttpCookieCollection collection, string key, out HttpCookie value)
         {
-            get { return (DeploymentEnvironment)this["deploymentEnvironment"]; }
-            set { this["deploymentEnvironment"] = value; }
-        }
-
-        [ConfigurationProperty("developmentStage", DefaultValue = DevelopmentStage.Release)]
-        public DevelopmentStage DevelopmentStage
-        {
-            get { return (DevelopmentStage)this["developmentStage"]; }
-            set { this["developmentStage"] = value; }
+            if (collection == null)
+                throw new ArgumentNullException("collection");
+            value = collection[key];
+            return (value != null);
         }
     }
 }

@@ -36,6 +36,17 @@ namespace System.DirectoryServices.AccountManagement
                     .ToList();
         }
 
+        public static IEnumerable<T> GetGroupsByIdentity<T>(PrincipalContext context, IdentityType identityType, IEnumerable<string> identities, Func<GroupPrincipal, T> selector)
+        {
+            if ((identities == null) || (!identities.GetEnumerator().MoveNext()))
+                return new List<T>();
+            return identities
+                .Select(identity => GroupPrincipal.FindByIdentity(context, identityType, identity))
+                .Where(p => p != null)
+                .Select(selector)
+                .ToList();
+        }
+
         public static IEnumerable<GroupPrincipal> GetGroupPrincipalsByUserIdentity(PrincipalContext context, IdentityType identityType, string identity, string container)
         {
             if (context == null)
@@ -73,15 +84,16 @@ namespace System.DirectoryServices.AccountManagement
             return GroupPrincipal.FindByIdentity(context, identityType, identity);
         }
 
+        public static IEnumerable<T> MapUserPrincipalToGroup<T>(string container, UserPrincipal userPrincipal, Func<string, T> builder) { return MapUserPrincipalToGroup<T>(container, null, userPrincipal, builder); }
         public static IEnumerable<T> MapUserPrincipalToGroup<T>(string container, string suffix, UserPrincipal userPrincipal, Func<string, T> builder)
         {
             if (string.IsNullOrEmpty(container))
                 throw new ArgumentNullException("container");
+            suffix = (suffix ?? string.Empty);
             if (userPrincipal == null)
                 throw new ArgumentNullException("userPrincipal");
             if (builder == null)
                 throw new ArgumentNullException("builder");
-            suffix = (string.IsNullOrEmpty(suffix) ? string.Empty : "-" + suffix);
             var entry = (DirectoryEntry)userPrincipal.GetUnderlyingObject();
             var memberOf = entry.Properties["memberOf"].Value;
             string filter = suffix + "," + container;
@@ -97,6 +109,7 @@ namespace System.DirectoryServices.AccountManagement
             return set
                 .Where(c => c.EndsWith(filter) && (c.LastIndexOf(',', c.Length - filter.Length - 1) == -1))
                 .Select(c => builder(c.Substring(3, c.Length - filter.Length - 3) + suffix))
+                .Where(c => c != null)
                 .ToList();
         }
 
@@ -136,10 +149,9 @@ namespace System.DirectoryServices.AccountManagement
                 throw new ArgumentNullException("existingItemsAccessor");
             if (identityAccessor == null)
                 throw new ArgumentNullException("identityAccessor");
-            // should have at least one item
-            if ((items == null) || (items.Count() == 0))
+            if (items == null)
                 throw new ArgumentNullException("items");
-            var existingItems = existingItemsAccessor(userPrincipal);
+            var existingItems = (existingItemsAccessor(userPrincipal) ?? new List<T>());
             // delete items
             existingItems.Except(items)
                 .Select(c => GetGroupPrincipalByIdentity(context, identityType, identityAccessor(c)))
@@ -203,6 +215,17 @@ namespace System.DirectoryServices.AccountManagement
                     .Where(user => user.StructuralObjectClass == "user")
                     .OfType<UserPrincipal>()
                     .ToList();
+        }
+
+        public static IEnumerable<T> GetUsersByIdentity<T>(PrincipalContext context, IdentityType identityType, IEnumerable<string> identities, Func<UserPrincipal, T> selector)
+        {
+            if ((identities == null) || (!identities.GetEnumerator().MoveNext()))
+                return new List<T>();
+            return identities
+                .Select(identity => UserPrincipal.FindByIdentity(context, identityType, identity))
+                .Where(p => p != null)
+                .Select(selector)
+                .ToList();
         }
 
         public static UserPrincipal GetUserPrincipalByIdentity(PrincipalContext context, IdentityType identityType, string identity)
@@ -329,6 +352,7 @@ namespace System.DirectoryServices.AccountManagement
             using (var context = GetPrincipalContext(container))
                 return action(UserPrincipal.FindByIdentity(context, identityType, identity));
         }
+
         #endregion
 
         #region Context

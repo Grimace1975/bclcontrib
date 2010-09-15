@@ -45,13 +45,7 @@ namespace System.Quality
         private static readonly Type s_domainServiceMessageType = typeof(INServiceMessage);
 
         public NServiceBusAbstractor()
-            : this(new global::NServiceBus.Unicast.UnicastBus()) { }
-        //public NServiceBusAbstractor()
-        //    : this(Configure.With()
-        //        .CreateBus()
-        //        .Start()) { }
-        public NServiceBusAbstractor(Func<IBus> busBuilder)
-            : this(busBuilder()) { }
+            : this(GetCurrentBus()) { }
         public NServiceBusAbstractor(IBus bus)
         {
             if (bus == null)
@@ -59,10 +53,18 @@ namespace System.Quality
             Bus = bus;
         }
 
+        public static IBus GetCurrentBus()
+        {
+            var bus = Configure.Instance.Builder.Build<IBus>();
+            if (bus == null)
+                throw new InvalidOperationException("Need to start bus first");
+            return bus;
+        }
+
         public TMessage MakeMessage<TMessage>()
             where TMessage : IServiceMessage, new()
         {
-            return MessageWrapper<TMessage>.MakeMessage();
+            return MessageCaster<TMessage>.MakeMessage();
         }
 
         public void Send<TMessage>(Action<TMessage> messageBuilder)
@@ -72,18 +74,22 @@ namespace System.Quality
                 throw new ArgumentException("TMessage");
             try
             {
-                MessageWrapper<TMessage>.SendLocal(Bus, messageBuilder);
+                var mb = (messageBuilder as Action<IMessage>);
+                if (mb != null)
+                    Bus.SendLocal(mb);
+                else
+                    MessageCaster<TMessage>.SendLocal(Bus, messageBuilder);
             }
-            catch (Exception exception) { throw new ServiceBusException(exception); }
+            catch (Exception ex) { throw new ServiceBusException(ex); }
         }
 
         public void Send(params IServiceMessage[] messages)
         {
             try
             {
-                Bus.SendLocal(MessageWrapper.Wrap(messages));
+                Bus.SendLocal(MessageCaster.Cast(messages));
             }
-            catch (Exception exception) { throw new ServiceBusException(exception); }
+            catch (Exception ex) { throw new ServiceBusException(ex); }
         }
 
         public IServiceBusCallback SendTo<TMessage>(string destination, Action<TMessage> messageBuilder)
@@ -94,10 +100,14 @@ namespace System.Quality
             try
             {
                 if (destination == null)
-                    return MessageWrapper<TMessage>.Send(Bus, messageBuilder);
-                return MessageWrapper<TMessage>.Send(Bus, destination, messageBuilder);
+                {
+                    var mb = (messageBuilder as Action<IMessage>);
+                    return (mb != null ? MessageCaster.Cast(Bus.Send(mb)) : MessageCaster<TMessage>.Send(Bus, messageBuilder));
+                }
+                var mb2 = (messageBuilder as Action<IMessage>);
+                return (mb2 != null ? MessageCaster.Cast(Bus.Send(destination, mb2)) : MessageCaster<TMessage>.Send(Bus, destination, messageBuilder));
             }
-            catch (Exception exception) { throw new ServiceBusException(exception); }
+            catch (Exception ex) { throw new ServiceBusException(ex); }
         }
 
         public IServiceBusCallback SendTo(string destination, params IServiceMessage[] messages)
@@ -105,10 +115,10 @@ namespace System.Quality
             try
             {
                 if (destination == null)
-                    return MessageWrapper.Wrap(Bus.Send(MessageWrapper.Wrap(messages)));
-                return MessageWrapper.Wrap(Bus.Send(destination, MessageWrapper.Wrap(messages)));
+                    return MessageCaster.Cast(Bus.Send(MessageCaster.Cast(messages)));
+                return MessageCaster.Cast(Bus.Send(destination, MessageCaster.Cast(messages)));
             }
-            catch (Exception exception) { throw new ServiceBusException(exception); }
+            catch (Exception ex) { throw new ServiceBusException(ex); }
         }
 
         #region Publishing ServiceBus
@@ -120,9 +130,9 @@ namespace System.Quality
                 throw new ArgumentException("TMessage");
             try
             {
-                MessageWrapper<TMessage>.Publish(Bus, messageBuilder);
+                MessageCaster<TMessage>.Publish(Bus, messageBuilder);
             }
-            catch (Exception exception) { throw new ServiceBusException(exception); }
+            catch (Exception ex) { throw new ServiceBusException(ex); }
         }
 
         public void Publish<TMessage>(params TMessage[] messages)
@@ -132,9 +142,9 @@ namespace System.Quality
                 throw new ArgumentException("TMessage");
             try
             {
-                MessageWrapper<TMessage>.Publish(Bus, messages);
+                MessageCaster<TMessage>.Publish(Bus, messages);
             }
-            catch (Exception exception) { throw new ServiceBusException(exception); }
+            catch (Exception ex) { throw new ServiceBusException(ex); }
         }
 
         public void Subscribe<TMessage>()
@@ -144,9 +154,9 @@ namespace System.Quality
                 throw new ArgumentException("TMessage");
             try
             {
-                MessageWrapper<TMessage>.Subscribe(Bus);
+                MessageCaster<TMessage>.Subscribe(Bus);
             }
-            catch (Exception exception) { throw new ServiceBusException(exception); }
+            catch (Exception ex) { throw new ServiceBusException(ex); }
         }
 
         public void Subscribe<TMessage>(Predicate<TMessage> condition)
@@ -156,27 +166,27 @@ namespace System.Quality
                 throw new ArgumentException("TMessage");
             try
             {
-                MessageWrapper<TMessage>.Subscribe(Bus, condition);
+                MessageCaster<TMessage>.Subscribe(Bus, condition);
             }
-            catch (Exception exception) { throw new ServiceBusException(exception); }
+            catch (Exception ex) { throw new ServiceBusException(ex); }
         }
 
         public void Subscribe(Type messageType)
         {
             try
             {
-                Bus.Subscribe(MessageWrapper.Wrap(messageType));
+                Bus.Subscribe(MessageCaster.Cast(messageType));
             }
-            catch (Exception exception) { throw new ServiceBusException(exception); }
+            catch (Exception ex) { throw new ServiceBusException(ex); }
         }
 
         public void Subscribe(Type messageType, Predicate<IServiceMessage> condition)
         {
             try
             {
-                Bus.Subscribe(MessageWrapper.Wrap(messageType), MessageWrapper.Wrap(condition));
+                Bus.Subscribe(MessageCaster.Cast(messageType), MessageCaster.Cast(condition));
             }
-            catch (Exception exception) { throw new ServiceBusException(exception); }
+            catch (Exception ex) { throw new ServiceBusException(ex); }
         }
 
         public void Unsubscribe<TMessage>()
@@ -186,18 +196,18 @@ namespace System.Quality
                 throw new ArgumentException("TMessage");
             try
             {
-                MessageWrapper<TMessage>.Unsubscribe(Bus);
+                MessageCaster<TMessage>.Unsubscribe(Bus);
             }
-            catch (Exception exception) { throw new ServiceBusException(exception); }
+            catch (Exception ex) { throw new ServiceBusException(ex); }
         }
 
         public void Unsubscribe(Type messageType)
         {
             try
             {
-                Bus.Unsubscribe(MessageWrapper.Wrap(messageType));
+                Bus.Unsubscribe(MessageCaster.Cast(messageType));
             }
-            catch (Exception exception) { throw new ServiceBusException(exception); }
+            catch (Exception ex) { throw new ServiceBusException(ex); }
         }
         #endregion
 
@@ -212,18 +222,18 @@ namespace System.Quality
                 throw new ArgumentException("TMessage");
             try
             {
-                MessageWrapper<TMessage>.Reply(Bus, messageBuilder);
+                MessageCaster<TMessage>.Reply(Bus, messageBuilder);
             }
-            catch (Exception exception) { throw new ServiceBusException(exception); }
+            catch (Exception ex) { throw new ServiceBusException(ex); }
         }
 
         public void Reply(params IServiceMessage[] messages)
         {
             try
             {
-                Bus.Reply(MessageWrapper.Wrap(messages));
+                Bus.Reply(MessageCaster.Cast(messages));
             }
-            catch (Exception exception) { throw new ServiceBusException(exception); }
+            catch (Exception ex) { throw new ServiceBusException(ex); }
         }
 
         public void Return<T>(T value)
@@ -234,7 +244,7 @@ namespace System.Quality
             {
                 Bus.Return(Convert.ToInt32(value));
             }
-            catch (Exception exception) { throw new ServiceBusException(exception); }
+            catch (Exception ex) { throw new ServiceBusException(ex); }
         }
 
         #endregion

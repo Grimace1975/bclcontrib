@@ -105,7 +105,6 @@
     <Compile Include="Patterns\Versioning\VersionType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\SecurityEx.cs" />
-    <Compile Include="Security\zCrypt.cs" />
     <Compile Include="StringEx.cs" />
     <Compile Include="StringEx+ExtractString.cs" />
     <Compile Include="StringExtensions.cs" />

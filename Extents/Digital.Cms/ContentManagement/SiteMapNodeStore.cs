@@ -43,6 +43,7 @@ namespace Digital.ContentManagement
         where TRouteCreator : ISiteMapNodeStoreRouteCreator, new()
     {
         private string _connect;
+        private int _connectShard;
         private ReaderWriterLockSlim _rwLock;
         private StaticSiteMapProviderEx _provider;
 
@@ -51,6 +52,7 @@ namespace Digital.ContentManagement
         {
             private ISiteMapNodeStoreRouteCreator _routeCreator;
             private string _connect;
+            private int _connectShard;
             private StaticSiteMapProviderEx _provider;
             private SiteMapNode _rootNode;
 
@@ -90,6 +92,7 @@ namespace Digital.ContentManagement
             public Observable(SiteMapNodeStore<TRouteCreator> parent)
             {
                 _connect = parent._connect;
+                _connectShard = parent._connectShard;
                 _provider = parent._provider;
             }
 
@@ -167,7 +170,7 @@ namespace Digital.ContentManagement
                 var sqlConnection = new SqlConnection(connect);
                 var sqlCommand = new SqlCommand("dbo.[cn_Page::SiteMap]", sqlConnection) { CommandType = CommandType.StoredProcedure };
                 sqlCommand.Parameters.AddWithValue("cLastModifyBy", "System");
-                sqlCommand.Parameters.AddWithValue("nShard", 1);
+                sqlCommand.Parameters.AddWithValue("nShard", _connectShard);
                 sqlCommand.Parameters.AddWithValue("cLocalCultureId", "en-US");
                 command = sqlCommand;
                 return sqlConnection;
@@ -306,6 +309,7 @@ namespace Digital.ContentManagement
         {
             _provider = provider;
             _rwLock = rwLock;
+            // connectionStringName
             string connect = config["connectionStringName"];
             if (string.IsNullOrEmpty(connect))
                 throw new ProviderException("Empty or missing connectionStringName");
@@ -315,6 +319,10 @@ namespace Digital.ContentManagement
             _connect = WebConfigurationManager.ConnectionStrings[connect].ConnectionString;
             if (string.IsNullOrEmpty(_connect))
                 throw new ProviderException("Empty connection string");
+            //
+            string connectShard = config["contentShard"];
+            _connectShard = (string.IsNullOrEmpty(connectShard) ? 1 : connectShard.Parse<int>(1));
+            //
             if (config.Count > 0)
             {
                 string attr = config.GetKey(0);

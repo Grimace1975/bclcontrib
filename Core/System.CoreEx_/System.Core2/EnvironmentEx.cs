@@ -31,7 +31,7 @@ namespace System
     /// </summary>
     public static partial class EnvironmentEx
     {
-        private static DeploymentEnvironment s_deploymentEnvironment = DeploymentEnvironment.Live;
+        private static DeploymentEnvironment s_deploymentEnvironment = DeploymentEnvironment.Production;
         private static DevelopmentStage s_developmentStage = DevelopmentStage.Release;
 
         static EnvironmentEx()

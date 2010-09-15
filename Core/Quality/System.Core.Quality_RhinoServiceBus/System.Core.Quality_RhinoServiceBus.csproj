@@ -5,14 +5,13 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{7F717114-B597-4B43-931A-529F696A549A}</ProjectGuid>
+    <ProjectGuid>{2DF1514B-3B8C-4C52-85D6-59B2ED7DB245}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>System</RootNamespace>
-    <AssemblyName>System.Core.Quality_ApplicationBus</AssemblyName>
+    <RootNamespace>System.Core.Quality_RhinoServiceBus</RootNamespace>
+    <AssemblyName>System.Core.Quality_RhinoServiceBus</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -42,16 +41,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Quality\ApplicationServiceBusRegistration.cs" />
-    <Compile Include="Quality\IApplicationServiceMessage.cs" />
-    <Compile Include="Quality\IApplicationServiceMessageHandler.cs" />
-    <Compile Include="Quality\ApplicationServiceBus.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\System.Core.Quality\System.Core.Quality.csproj">
-      <Project>{A44E9D89-BFF2-41A4-AADC-3C2BDFDAEEB1}</Project>
-      <Name>System.Core.Quality</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="BclContrib.snk" />

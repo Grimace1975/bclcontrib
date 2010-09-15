@@ -48,7 +48,7 @@ xcopy INTEGRATE_\WEB\System.WebEx.Integrate\bin\Debug\System.WebEx.Integrate.* b
 xcopy INTEROP_\CORE\System.Interop.Core\bin\Debug\System.Interop.Core.* bin\Debug\INTEROP_\ /Q /R /H /Y
 
 ::
-::robocopy Bin\Debug\ "C:\_APPLICATION\AFIWEB\Library_\Reference Assemblies\BclContrib" /MIR /TEE /NJH /NJS
+robocopy Bin\Debug\ "C:\_APPLICATION\AFIWEB\Library_\Reference Assemblies\BclContrib" /MIR /TEE /NJH /NJS
 ::
 ::robocopy Bin\ "C:\_APPLICATION\CITYOPWEB\Library_\Reference Assemblies\BclContrib" /MIR /TEE /NJH /NJS
 ::robocopy Bin\Debug\ "C:\_APPLICATION\CITYOPWEB\Library_\Reference Assemblies\BclContrib" /MIR /TEE /NJH /NJS
@@ -57,4 +57,4 @@ xcopy INTEROP_\CORE\System.Interop.Core\bin\Debug\System.Interop.Core.* bin\Debu
 robocopy Bin\Debug\ "C:\_APPLICATION\HLLMRKLINK\Library_\Reference Assemblies\BclContrib" /MIR /TEE /NJH /NJS
 ::robocopy Bin\Debug\ "C:\_APPLICATION\TBLCOMMUNITY\Library_\Reference Assemblies\BclContrib" /MIR /TEE /NJH /NJS
 
-pause
+::pause

@@ -443,9 +443,6 @@
     <Compile Include="..\System.CoreEx_\System.Core.Extentions\Security\SecurityEx.cs">
       <Link>System.Core.Extentions\Security\SecurityEx.cs</Link>
     </Compile>
-    <Compile Include="..\System.CoreEx_\System.Core.Extentions\Security\zCrypt.cs">
-      <Link>System.Core.Extentions\Security\zCrypt.cs</Link>
-    </Compile>
     <Compile Include="..\System.CoreEx_\System.Core.Extentions\StringEx+ExtractString.cs">
       <Link>System.Core.Extentions\StringEx+ExtractString.cs</Link>
     </Compile>

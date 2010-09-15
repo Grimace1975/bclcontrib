@@ -63,27 +63,27 @@ namespace System.Web.Mvc.Html
             return dictionary;
         }
 
-        public static MvcHtmlString HtmlTextArea(this HtmlHelper htmlHelper, string name)
+        public static MvcHtmlString HtmlTextEditor(this HtmlHelper htmlHelper, string name)
         {
-            return htmlHelper.HtmlTextArea(name, null, ((IDictionary<string, object>)null));
+            return htmlHelper.HtmlTextEditor(name, null, ((IDictionary<string, object>)null));
         }
 
-        public static MvcHtmlString HtmlTextArea(this HtmlHelper htmlHelper, string name, IDictionary<string, object> htmlAttributes)
+        public static MvcHtmlString HtmlTextEditor(this HtmlHelper htmlHelper, string name, IDictionary<string, object> htmlAttributes)
         {
-            return htmlHelper.HtmlTextArea(name, null, htmlAttributes);
+            return htmlHelper.HtmlTextEditor(name, null, htmlAttributes);
         }
 
-        public static MvcHtmlString HtmlTextArea(this HtmlHelper htmlHelper, string name, object htmlAttributes)
+        public static MvcHtmlString HtmlTextEditor(this HtmlHelper htmlHelper, string name, object htmlAttributes)
         {
-            return htmlHelper.HtmlTextArea(name, null, ((IDictionary<string, object>)new RouteValueDictionary(htmlAttributes)));
+            return htmlHelper.HtmlTextEditor(name, null, ((IDictionary<string, object>)new RouteValueDictionary(htmlAttributes)));
         }
 
-        public static MvcHtmlString HtmlTextArea(this HtmlHelper htmlHelper, string name, string value)
+        public static MvcHtmlString HtmlTextEditor(this HtmlHelper htmlHelper, string name, string value)
         {
-            return htmlHelper.HtmlTextArea(name, value, ((IDictionary<string, object>)null));
+            return htmlHelper.HtmlTextEditor(name, value, ((IDictionary<string, object>)null));
         }
 
-        public static MvcHtmlString HtmlTextArea(this HtmlHelper htmlHelper, string name, string value, IDictionary<string, object> htmlAttributes)
+        public static MvcHtmlString HtmlTextEditor(this HtmlHelper htmlHelper, string name, string value, IDictionary<string, object> htmlAttributes)
         {
             var modelMetadata = ModelMetadata.FromStringExpression(name, htmlHelper.ViewContext.ViewData);
             if (value != null)
@@ -92,7 +92,7 @@ namespace System.Web.Mvc.Html
             return editor.HtmlTextAreaHelper(htmlHelper, modelMetadata, name, _implicitRowsAndColumns, htmlAttributes);
         }
 
-        private static IHtmlTextBox GetEditor(IDictionary<string, object> htmlAttributes)
+        private static IHtmlTextEditor GetEditor(IDictionary<string, object> htmlAttributes)
         {
             object value;
             bool inDebugMode = (!htmlAttributes.TryGetValue("resourceFolder", out value) ? (bool)value : false);
@@ -103,15 +103,15 @@ namespace System.Web.Mvc.Html
             var htmlTextBoxContext = ServiceLocator.Resolve<IHtmlTextBoxContext>(htmlTextEditorId, toolbarId, resourceFolder);
             if (inDebugMode)
                 htmlTextBoxContext.InDebugMode = true;
-            return ServiceLocator.Resolve<IHtmlTextBox>(null, htmlTextBoxContext);
+            return ServiceLocator.Resolve<IHtmlTextEditor>(null, htmlTextBoxContext);
         }
 
-        public static MvcHtmlString HtmlTextArea(this HtmlHelper htmlHelper, string name, string value, object htmlAttributes)
+        public static MvcHtmlString HtmlTextEditor(this HtmlHelper htmlHelper, string name, string value, object htmlAttributes)
         {
-            return htmlHelper.HtmlTextArea(name, value, ((IDictionary<string, object>)new RouteValueDictionary(htmlAttributes)));
+            return htmlHelper.HtmlTextEditor(name, value, ((IDictionary<string, object>)new RouteValueDictionary(htmlAttributes)));
         }
 
-        public static MvcHtmlString HtmlTextArea(this HtmlHelper htmlHelper, string name, string value, int rows, int columns, IDictionary<string, object> htmlAttributes)
+        public static MvcHtmlString HtmlTextEditor(this HtmlHelper htmlHelper, string name, string value, int rows, int columns, IDictionary<string, object> htmlAttributes)
         {
             var modelMetadata = ModelMetadata.FromStringExpression(name, htmlHelper.ViewContext.ViewData);
             if (value != null)
@@ -120,17 +120,17 @@ namespace System.Web.Mvc.Html
             return editor.HtmlTextAreaHelper(htmlHelper, modelMetadata, name, GetRowsAndColumnsDictionary(rows, columns), htmlAttributes);
         }
 
-        public static MvcHtmlString HtmlTextArea(this HtmlHelper htmlHelper, string name, string value, int rows, int columns, object htmlAttributes)
+        public static MvcHtmlString HtmlTextEditor(this HtmlHelper htmlHelper, string name, string value, int rows, int columns, object htmlAttributes)
         {
-            return htmlHelper.HtmlTextArea(name, value, rows, columns, ((IDictionary<string, object>)new RouteValueDictionary(htmlAttributes)));
+            return htmlHelper.HtmlTextEditor(name, value, rows, columns, ((IDictionary<string, object>)new RouteValueDictionary(htmlAttributes)));
         }
 
-        public static MvcHtmlString HtmlTextAreaFor<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression)
+        public static MvcHtmlString HtmlTextEditorFor<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression)
         {
-            return htmlHelper.HtmlTextAreaFor<TModel, TProperty>(expression, ((IDictionary<string, object>)null));
+            return htmlHelper.HtmlTextEditorFor<TModel, TProperty>(expression, ((IDictionary<string, object>)null));
         }
 
-        public static MvcHtmlString HtmlTextAreaFor<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression, IDictionary<string, object> htmlAttributes)
+        public static MvcHtmlString HtmlTextEditorFor<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression, IDictionary<string, object> htmlAttributes)
         {
             if (expression == null)
                 throw new ArgumentNullException("expression");
@@ -138,12 +138,12 @@ namespace System.Web.Mvc.Html
             return editor.HtmlTextAreaHelper(htmlHelper, ModelMetadata.FromLambdaExpression<TModel, TProperty>(expression, htmlHelper.ViewData), ExpressionHelper.GetExpressionText(expression), _implicitRowsAndColumns, htmlAttributes);
         }
 
-        public static MvcHtmlString HtmlTextAreaFor<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression, object htmlAttributes)
+        public static MvcHtmlString HtmlTextEditorFor<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression, object htmlAttributes)
         {
-            return htmlHelper.HtmlTextAreaFor<TModel, TProperty>(expression, ((IDictionary<string, object>)new RouteValueDictionary(htmlAttributes)));
+            return htmlHelper.HtmlTextEditorFor<TModel, TProperty>(expression, ((IDictionary<string, object>)new RouteValueDictionary(htmlAttributes)));
         }
 
-        public static MvcHtmlString HtmlTextAreaFor<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression, int rows, int columns, IDictionary<string, object> htmlAttributes)
+        public static MvcHtmlString HtmlTextEditorFor<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression, int rows, int columns, IDictionary<string, object> htmlAttributes)
         {
             if (expression == null)
                 throw new ArgumentNullException("expression");
@@ -151,9 +151,9 @@ namespace System.Web.Mvc.Html
             return editor.HtmlTextAreaHelper(htmlHelper, ModelMetadata.FromLambdaExpression<TModel, TProperty>(expression, htmlHelper.ViewData), ExpressionHelper.GetExpressionText(expression), GetRowsAndColumnsDictionary(rows, columns), htmlAttributes);
         }
 
-        public static MvcHtmlString HtmlTextAreaFor<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression, int rows, int columns, object htmlAttributes)
+        public static MvcHtmlString HtmlTextEditorFor<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression, int rows, int columns, object htmlAttributes)
         {
-            return htmlHelper.HtmlTextAreaFor<TModel, TProperty>(expression, rows, columns, ((IDictionary<string, object>)new RouteValueDictionary(htmlAttributes)));
+            return htmlHelper.HtmlTextEditorFor<TModel, TProperty>(expression, rows, columns, ((IDictionary<string, object>)new RouteValueDictionary(htmlAttributes)));
         }
     }
 }
