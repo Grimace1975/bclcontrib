@@ -23,14 +23,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 #endregion
-using System.Collections.Generic;
-namespace System.Web.Mvc.Html
+namespace System.Quality
 {
     /// <summary>
-    /// IHtmlTextBox
+    /// IDomainEvent
     /// </summary>
-    public interface IHtmlTextBox
+    public interface IDomainEvent
     {
-        MvcHtmlString HtmlTextAreaHelper(HtmlHelper htmlHelper, ModelMetadata modelMetadata, string expression, IDictionary<string, object> rowsAndColumns, IDictionary<string, object> htmlAttributes);
     }
 }

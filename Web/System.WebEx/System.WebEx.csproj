@@ -73,6 +73,7 @@
     <Compile Include="Patterns\Caching\WebEnvironmentDebugStaticCacheProvider.cs" />
     <Compile Include="Patterns\Reporting\FlatFileCsvEmitterExtensions.cs" />
     <Compile Include="Web+SiteMap\IHaveVirtualUrlSiteMapNode.cs" />
+    <Compile Include="Web\HttpCookieCollectionExtensions.cs" />
     <Compile Include="Web\Routing+Dynamic\IDynamicNode.cs" />
     <Compile Include="Web\Routing+Dynamic\SiteMapDynamicRoutingContext.cs" />
     <Compile Include="Web+SiteMap\ISiteMapProvider.cs" />

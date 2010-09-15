@@ -35,6 +35,6 @@ namespace System.Patterns.ReleaseManagement
 		Development,
 		AlphaTesting,
 		BetaTesting,
-		Live,
+        Production, //Live
 	}
 }

@@ -47,16 +47,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Quality+Bus\ServiceBusExtensions.cs" />
-    <Compile Include="Quality+Bus\IServiceBus.cs" />
-    <Compile Include="Quality+Bus\IServiceMessageHandler.cs" />
-    <Compile Include="Quality+Bus\IServiceMessageHandlerFactory.cs" />
-    <Compile Include="Quality+Bus\ServiceBusManager.cs" />
-    <Compile Include="Quality+Bus\IServiceBusCallback.cs" />
-    <Compile Include="Quality+Bus\IServiceMessage.cs" />
-    <Compile Include="Quality+Bus\IPublishingServiceBus.cs" />
-    <Compile Include="Quality+Bus\ServiceBus.cs" />
-    <Compile Include="Quality+Bus\ServiceBusException.cs" />
+    <Compile Include="Quality+Cqrs\ICommand.cs" />
+    <Compile Include="Quality+EventSourcing\IDomainEvent.cs" />
+    <Compile Include="Quality+ServiceBus\ServiceBusExtensions.cs" />
+    <Compile Include="Quality+ServiceBus\IServiceBus.cs" />
+    <Compile Include="Quality+ServiceBus\IServiceMessageHandler.cs" />
+    <Compile Include="Quality+ServiceBus\IServiceMessageHandlerFactory.cs" />
+    <Compile Include="Quality+ServiceBus\ServiceBusManager.cs" />
+    <Compile Include="Quality+ServiceBus\IServiceBusCallback.cs" />
+    <Compile Include="Quality+ServiceBus\IServiceMessage.cs" />
+    <Compile Include="Quality+ServiceBus\IPublishingServiceBus.cs" />
+    <Compile Include="Quality+ServiceBus\ServiceBus.cs" />
+    <Compile Include="Quality+ServiceBus\ServiceBusException.cs" />
     <Compile Include="Quality+ServiceLocator\IWantToSkipServiceLocator.cs" />
     <Compile Include="Local.Designer.cs">
       <DependentUpon>Local.resx</DependentUpon>

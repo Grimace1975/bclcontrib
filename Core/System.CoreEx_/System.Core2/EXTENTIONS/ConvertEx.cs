@@ -53,21 +53,11 @@ namespace System
         /// <summary>
         /// Returns a Hex string of the byte array provided.
         /// </summary>
-        /// <param name="array">The array.</param>
+        /// <param name="data">The array.</param>
         /// <returns></returns>
-        public static string ToBase16String(byte[] array)
+        public static string ToBase16String(byte[] data)
         {
-            if ((array == null) || (array.Length == 0))
-                return string.Empty;
-            return BitConverter.ToString(array).Replace("-", string.Empty).ToUpper();
-            //byte[] bytes = new byte[array.Length << 1];
-            //for (int index = 0, byteIndex = 0; index < array.Length; index++, byteIndex += 2)
-            //{
-            //    byte value = array[index];
-            //    bytes[byteIndex] = s_hexValues[value >> 4];
-            //    bytes[byteIndex + 1] = s_hexValues[value & 0x0f];
-            //}
-            //return Encoding.UTF8.GetString(bytes);
+            return ((data != null) && (data.Length != 0) ? BitConverter.ToString(data).Replace("-", string.Empty).ToUpper() : string.Empty);
         }
 
         #region ToStrings

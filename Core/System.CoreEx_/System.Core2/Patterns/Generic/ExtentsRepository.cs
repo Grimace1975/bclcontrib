@@ -44,6 +44,7 @@ namespace System.Patterns.Generic
         IEnumerable<T> GetMany<T>();
         object Get(Type type);
         bool TryGetExtent<T>(out T extent);
+        void AddRange(IEnumerable<object> extents);
     }
 
     /// <summary>
@@ -112,6 +113,14 @@ namespace System.Patterns.Generic
             }
             extent = (T)value;
             return true;
+        }
+
+        public void AddRange(IEnumerable<object> extents)
+        {
+            if (extents == null)
+                throw new ArgumentNullException("extents");
+            foreach (var extent in extents)
+                Set(extent.GetType(), extent);
         }
     }
 }

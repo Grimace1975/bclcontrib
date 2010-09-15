@@ -23,26 +23,14 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 #endregion
-using System.Configuration;
-namespace System.Patterns.ReleaseManagement.Configuration
+using System.Collections.Generic;
+namespace System.Web.Mvc.Html
 {
     /// <summary>
-    /// ReleaseManagementConfiguration
+    /// IHtmlTextEditor
     /// </summary>
-	public class ReleaseManagementConfiguration : Patterns.Configuration.Configuration
+    public interface IHtmlTextEditor
     {
-        [ConfigurationProperty("deploymentEnvironment", DefaultValue = DeploymentEnvironment.Production)]
-        public DeploymentEnvironment DeploymentEnvironment
-        {
-            get { return (DeploymentEnvironment)this["deploymentEnvironment"]; }
-            set { this["deploymentEnvironment"] = value; }
-        }
-
-        [ConfigurationProperty("developmentStage", DefaultValue = DevelopmentStage.Release)]
-        public DevelopmentStage DevelopmentStage
-        {
-            get { return (DevelopmentStage)this["developmentStage"]; }
-            set { this["developmentStage"] = value; }
-        }
+        MvcHtmlString HtmlTextAreaHelper(HtmlHelper htmlHelper, ModelMetadata modelMetadata, string expression, IDictionary<string, object> rowsAndColumns, IDictionary<string, object> htmlAttributes);
     }
 }

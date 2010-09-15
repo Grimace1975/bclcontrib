@@ -28,7 +28,7 @@ using System.Reflection;
 using NServiceBus;
 namespace System.Quality
 {
-    internal class MessageWrapper
+    internal class MessageCaster
     {
         public static readonly MethodInfo PublishMessageBuilderMethod = typeof(IBus).GetGenericMethod("Publish", new[] { typeof(IMessage) }, new[] { typeof(Action<IMessage>) });
         public static readonly MethodInfo PublishMessagesMethod = typeof(IBus).GetGenericMethod("Publish", new[] { typeof(IMessage) }, new[] { typeof(IMessage[]) });
@@ -53,22 +53,22 @@ namespace System.Quality
             public IAsyncResult Register(AsyncCallback callback, object state) { return _callback.Register(callback, state); }
         }
 
-        public static Type Wrap(Type messageType)
+        public static Type Cast(Type messageType)
         {
             return messageType;
         }
 
-        public static Predicate<IMessage> Wrap(Predicate<IServiceMessage> condition)
+        public static Predicate<IMessage> Cast(Predicate<IServiceMessage> condition)
         {
             return (c => condition((INServiceMessage)c));
         }
 
-        public static IMessage[] Wrap(IServiceMessage[] messages)
+        public static IMessage[] Cast(IServiceMessage[] messages)
         {
             return messages.Cast<INServiceMessage>().ToArray();
         }
 
-        public static IServiceBusCallback Wrap(ICallback callback)
+        public static IServiceBusCallback Cast(ICallback callback)
         {
             return new CallbackWrapper(callback);
         }

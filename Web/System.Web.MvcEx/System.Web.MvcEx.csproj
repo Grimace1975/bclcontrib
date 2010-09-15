@@ -78,8 +78,8 @@
     <Compile Include="Web\Mvc+Forms\Html+ViewModifier\SelectExtensionsEx.cs" />
     <Compile Include="Web\Mvc+Forms\Html\SelectListLayout.cs" />
     <Compile Include="Web\Mvc+Forms\Html\SelectExtensionsEx.cs" />
-    <Compile Include="Web\Mvc+HtmlTextBox\Html\IHtmlTextBox.cs" />
-    <Compile Include="Web\Mvc+HtmlTextBox\Html\TextAreaExtensionsEx.cs" />
+    <Compile Include="Web\Mvc+HtmlTextEditor\Html\IHtmlTextEditor.cs" />
+    <Compile Include="Web\Mvc+HtmlTextEditor\Html\TextAreaExtensionsEx.cs" />
     <Compile Include="Web\Mvc+DataAnnotations\IViewModifier.cs" />
     <Compile Include="Web\Mvc+DataAnnotations\ViewModifierAttributeBase.cs" />
     <Compile Include="Web\Mvc+DataAnnotations\DataAnnotationsModelMetadataProvider.cs" />

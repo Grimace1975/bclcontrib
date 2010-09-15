@@ -31,6 +31,9 @@ namespace System.Quality
     /// </summary>
     public static class ServiceBus
     {
+        // Kuldge : Remove
+        public static void Touch() { var o = ServiceBusManager.Current; }
+
         public static TMessage MakeMessage<TMessage>()
             where TMessage : IServiceMessage, new() { return ServiceBusManager.Current.MakeMessage<TMessage>(); }
         public static void Send<TMessage>(Action<TMessage> messageBuilder)

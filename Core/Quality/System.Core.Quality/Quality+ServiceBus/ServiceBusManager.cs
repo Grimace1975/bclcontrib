@@ -34,7 +34,7 @@ namespace System.Quality
         private static Func<IPublishingServiceBus> _provider;
         private static Func<IServiceLocator> _locator;
         private static Action<IPublishingServiceBus> _registration;
-        private static IPublishingServiceBus _bus;
+        private static IPublishingServiceBus _serviceBus;
 
         public static void SetBusProvider(Func<IPublishingServiceBus> provider) { SetBusProvider(provider, GetDefaultServiceServiceLocator, (Action<IPublishingServiceBus>)null); }
         public static void SetBusProvider(Func<IPublishingServiceBus> provider, Action<IPublishingServiceBus> registration) { SetBusProvider(provider, GetDefaultServiceServiceLocator, registration); }
@@ -52,29 +52,32 @@ namespace System.Quality
             {
                 if (_provider == null)
                     throw new InvalidOperationException(Local.UndefinedServiceBusProvider);
-                if (_bus == null)
+                if (_serviceBus == null)
                     lock (_lock)
-                        if (_bus == null)
+                        if (_serviceBus == null)
                         {
-                            _bus = _provider();
-                            if (_bus == null)
+                            _serviceBus = _provider();
+                            if (_serviceBus == null)
                                 throw new InvalidOperationException();
                             IServiceLocator locator;
                             if ((_locator != null) && ((locator = _locator()) != null))
                             {
                                 var registrar = locator.GetRegistrar();
-                                RegisterSelfInLocator(registrar, _bus);
+                                RegisterSelfInLocator(registrar, _serviceBus);
                             }
                             if (_registration != null)
-                                _registration(_bus);
+                                _registration(_serviceBus);
                         }
-                return _bus;
+                return _serviceBus;
             }
         }
 
-        private static void RegisterSelfInLocator(IServiceRegistrar registrar, IPublishingServiceBus bus)
+        private static void RegisterSelfInLocator(IServiceRegistrar registrar, IServiceBus serviceBus)
         {
-            registrar.Register<IPublishingServiceBus>(bus);
+            registrar.Register<IServiceBus>(serviceBus);
+            var publishingServiceBus = (serviceBus as IPublishingServiceBus);
+            if (publishingServiceBus != null)
+                registrar.Register<IPublishingServiceBus>(publishingServiceBus);
         }
 
         private static IServiceLocator GetDefaultServiceServiceLocator()
