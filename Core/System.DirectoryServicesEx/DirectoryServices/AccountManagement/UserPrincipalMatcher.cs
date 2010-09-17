@@ -8,9 +8,14 @@ namespace System.DirectoryServices.AccountManagement
             get { return (u => u.StructuralObjectClass == "user"); }
         }
 
-        public IEnumerable<Principal> MakeQueryFilters(PrincipalContext context)
+        public IEnumerable<Principal> GetQueryFilters(PrincipalContext context)
         {
             yield return new UserPrincipal(context);
+        }
+
+        public IEnumerable<Type> GetPrincipalTypes()
+        {
+            yield return typeof(UserPrincipal);
         }
     }
 }

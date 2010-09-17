@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Security.Principal;
 using System.Collections.Generic;
+using System.Reflection;
 namespace System.DirectoryServices.AccountManagement
 {
     public class PrincipalGateway : DirectoryGateway
@@ -167,15 +168,22 @@ namespace System.DirectoryServices.AccountManagement
             if (context == null)
                 throw new ArgumentNullException("context");
             var list = new List<TPrincipal>();
-            foreach (var queryFilter in principalMatcher.MakeQueryFilters(context))
+            foreach (var queryFilter in principalMatcher.GetQueryFilters(context))
             {
-                var searcher = new PrincipalSearcher();
+                var searcher = new PrincipalSearcher(queryFilter);
                 using (var searchResults = searcher.FindAll())
-                    list.AddRange((!maximumItems.HasValue ? searchResults : searchResults.Take(maximumItems.Value))
+                    list.AddRange((!maximumItems.HasValue ? searchResults : searchResults.Take(maximumItems.Value)) // - list.Count))
                         .Where(principalMatcher.Determiner)
                         .OfType<TPrincipal>());
+                //if ((maximumItems.HasValue) && (list.Count >= maximumItems.Value))
+                //    break;
             }
             return list;
+        }
+
+        private class PrincipalProtectedAccessor : Principal
+        {
+            public static Principal FindByIdentityWithTypeWrapper(PrincipalContext context, Type principalType, IdentityType identityType, string identityValue) { return FindByIdentityWithType(context, principalType, identityType, identityValue); }
         }
 
         // SINGLE
@@ -190,7 +198,13 @@ namespace System.DirectoryServices.AccountManagement
                 throw new ArgumentNullException("context");
             if (string.IsNullOrEmpty(identity))
                 throw new ArgumentNullException("identity");
-            return (TPrincipal)Principal.FindByIdentity(context, identityType, identity);
+            foreach (var principalType in principalMatcher.GetPrincipalTypes())
+            {
+                var principal = (PrincipalProtectedAccessor.FindByIdentityWithTypeWrapper(context, principalType, identityType, identity) as TPrincipal);
+                if (principal != null)
+                    return principal;
+            }
+            return null;
         }
 
         public TResult WithPrincipalBySid<TPrincipal, TResult>(IPrincipalMatcher principalMatcher, string container, string sid, Func<TPrincipal, TResult> action)

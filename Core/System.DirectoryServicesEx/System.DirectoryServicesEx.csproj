@@ -51,7 +51,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DirectoryServices\AccountManagement\UserPrincipal2Matcher.cs" />
+    <Compile Include="DirectoryServices\AccountManagement\MixedUserPrincipalTypes.cs" />
+    <Compile Include="DirectoryServices\AccountManagement\MixedUserPrincipalMatcher.cs" />
     <Compile Include="DirectoryServices\AccountManagement\GroupPrincipalMatcher.cs" />
     <Compile Include="DirectoryServices\AccountManagement\IPrincipalMatcher.cs" />
     <Compile Include="DirectoryServices\AccountManagement\UserPrincipalMatcher.cs" />
