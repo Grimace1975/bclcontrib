@@ -51,6 +51,23 @@ namespace System.Linq
         //    };
         //}
 
+        public static TSource SingleOr<TSource>(this IEnumerable<TSource> source, Func<TSource> missingValue)
+        {
+            if (source == null)
+                throw new ArgumentNullException("source");
+            if (missingValue == null)
+                throw new ArgumentNullException("missingValue");
+            using (var iterator = source.GetEnumerator())
+            {
+                if (!iterator.MoveNext())
+                    return missingValue();
+                var first = iterator.Current;
+                if (iterator.MoveNext())
+                    throw new InvalidOperationException("Sequence contains more than one element");
+                return first;
+            }
+        }
+
         public static IEnumerable<TSource> AsEnumerableYield<TSource>(this IEnumerable source)
         {
             if (source == null)
@@ -81,21 +98,39 @@ namespace System.Linq
             }
         }
 
-        /// <summary>
-        /// Coalesces with the specified null value.
-        /// </summary>
-        /// <param name="nullValue">The null value.</param>
-        /// <param name="parameterArray">The parameter array.</param>
-        /// <returns>
-        /// First null value as defined by parameter nullValue.
-        /// </returns>
         public static TSource Coalesce<TSource>(this IEnumerable<TSource> source, TSource nullValue)
         {
             if (source == null)
                 throw new ArgumentNullException("source");
-            foreach (TSource value in source)
+            foreach (var value in source)
                 if ((value != null) && (!value.Equals(nullValue)))
                     return value;
+            return nullValue;
+        }
+
+        public static TSource CoalesceFunc<TSource>(this IEnumerable<Func<TSource>> source, TSource nullValue)
+        {
+            if (source == null)
+                throw new ArgumentNullException("source");
+            foreach (var func in source)
+            {
+                var value = func();
+                if ((value != null) && (!value.Equals(nullValue)))
+                    return value;
+            }
+            return nullValue;
+        }
+
+        public static TSource CoalesceFunc<TSource, TTag>(this IEnumerable<Func<TTag, TSource>> source, TTag tag, TSource nullValue)
+        {
+            if (source == null)
+                throw new ArgumentNullException("source");
+            foreach (var func in source)
+            {
+                var value = func(tag);
+                if ((value != null) && (!value.Equals(nullValue)))
+                    return value;
+            }
             return nullValue;
         }
 
@@ -122,14 +157,6 @@ namespace System.Linq
             return minValue;
         }
 
-        /// <summary>
-        /// Mins the skip null.
-        /// </summary>
-        /// <param name="nullValue">The null value.</param>
-        /// <param name="parameterArray">The parameter array.</param>
-        /// <returns>
-        /// minumum value excluding null's as defined by parameter nullValue.
-        /// </returns>
         public static int MinSkipNull(this IEnumerable<int> source, int nullValue)
         {
             if (source == null)

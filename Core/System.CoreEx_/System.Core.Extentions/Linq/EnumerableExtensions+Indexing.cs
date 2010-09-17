@@ -23,30 +23,37 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 #endregion
-using System.Linq.Expressions;
 using System.Collections.Generic;
+using System.Collections;
 namespace System.Linq
 {
     /// <summary>
-    /// QueryableExtensions
+    /// EnumerableExtensions
     /// </summary>
-    public static partial class QueryableExtensions
+    public static partial class EnumerableExtensions
     {
-        public static IQueryable<TSource> WhereIn<TSource, TKey>(this IQueryable<TSource> source1, IEnumerable<TKey> source2, Expression<Func<TSource, TKey>> keySelector)
+        public static IEnumerable<IEnumerable<TSource>> GroupAt<TSource>(this IEnumerable<TSource> source, int size) { return GroupAt(source, size, x => x); }
+        public static IEnumerable<TResult> GroupAt<TSource, TResult>(this IEnumerable<TSource> source, int size, Func<IEnumerable<TSource>, TResult> resultSelector)
         {
-            if (source1 == null)
-                throw new ArgumentNullException("source1");
-            if (keySelector == null)
-                throw new ArgumentNullException("keySelector");
-            if (source2 == null)
-                throw new ArgumentNullException("source2");
-            Expression where = null;
-            foreach (TKey value in source2)
+            if (source == null)
+                throw new ArgumentNullException("source");
+            if (size <= 0)
+                throw new ArgumentOutOfRangeException("size");
+            if (resultSelector == null)
+                throw new ArgumentNullException("resultSelector");
+            int index = 0;
+            var items = new TSource[size];
+            foreach (var item in source)
             {
-                var equal = Expression.Equal(keySelector.Body, Expression.Constant(value, typeof(TKey)));
-                where = (where != null ? Expression.OrElse(where, equal) : equal);
+                items[index++] = item;
+                if (index != size)
+                    continue;
+                yield return resultSelector(items);
+                index = 0;
+                items = new TSource[size];
             }
-            return source1.Where<TSource>(Expression.Lambda<Func<TSource, bool>>(where, keySelector.Parameters));
+            if (index > 0)
+                yield return resultSelector(items.Take(index));
         }
     }
 }
