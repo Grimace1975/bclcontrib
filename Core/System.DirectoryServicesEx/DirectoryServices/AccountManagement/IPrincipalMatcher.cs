@@ -4,6 +4,7 @@ namespace System.DirectoryServices.AccountManagement
     public interface IPrincipalMatcher
     {
         Func<Principal, bool> Determiner { get; }
-        IEnumerable<Principal> MakeQueryFilters(PrincipalContext context);
+        IEnumerable<Principal> GetQueryFilters(PrincipalContext context);
+        IEnumerable<Type> GetPrincipalTypes();
     }
 }

@@ -8,9 +8,14 @@ namespace System.DirectoryServices.AccountManagement
             get { return (g => g.StructuralObjectClass == "group"); }
         }
 
-        public IEnumerable<Principal> MakeQueryFilters(PrincipalContext context)
+        public IEnumerable<Principal> GetQueryFilters(PrincipalContext context)
         {
             yield return new GroupPrincipal(context);
+        }
+
+        public IEnumerable<Type> GetPrincipalTypes()
+        {
+            yield return typeof(GroupPrincipal);
         }
     }
 }
