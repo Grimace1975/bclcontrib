@@ -72,6 +72,7 @@
     <Compile Include="Linq+Paging\LinqPagedMetadataProviders.cs" />
     <Compile Include="Linq+Paging\LinqPagedMetadata.cs" />
     <Compile Include="Linq+Paging\QueryableExtensions.cs" />
+    <Compile Include="Linq\EnumerableExtensions+Indexing.cs" />
     <Compile Include="Linq\QueryableExtensions.cs" />
     <Compile Include="Linq\EnumerableExtensions+Tightest.cs" />
     <None Include="Linq\+zEnumerableExtensions\WhereSelectListIterator.cs" />
