@@ -42,7 +42,7 @@ namespace System.IO
             return ((!string.IsNullOrEmpty(extension)) &&
                 ((registryKey = Registry.ClassesRoot.OpenSubKey(extension.ToLowerInvariant())) != null) &&
                 ((contentTypeAsObject = registryKey.GetValue("Content Type")) != null)
-            ? contentTypeAsObject.ToString() : "application/unknown");
+            ? contentTypeAsObject.ToString() : "application/octet-stream");
         }
     }
 }

@@ -12,7 +12,7 @@ namespace System.DirectoryServices.AccountManagement
             _types = types;
         }
 
-        public Func<Principal, bool> Determiner
+        public Func<Principal, bool> IsStructuralObjectClass
         {
             get { return (u => u.StructuralObjectClass.IndexOf("user") > -1); }
         }
@@ -27,6 +27,20 @@ namespace System.DirectoryServices.AccountManagement
                 yield return new UserProxyFullPrincipal(context);
         }
 
+        public IEnumerable<string> GetQueryFilters()
+        {
+            if ((_types & MixedUserPrincipalTypes.UseWildcard) == MixedUserPrincipalTypes.UseWildcard)
+                yield return "(&(objectClass=user*){0})";
+            else
+            {
+                if ((_types & MixedUserPrincipalTypes.UserPrincipal) == MixedUserPrincipalTypes.UserPrincipal)
+                    yield return "(&(objectCategory=user)(objectClass=user){0})";
+                if ((_types & MixedUserPrincipalTypes.UserProxyPrincipal) == MixedUserPrincipalTypes.UserProxyPrincipal)
+                    yield return "(&(objectClass=userProxy){0})";
+                if ((_types & MixedUserPrincipalTypes.UserProxyFullPrincipal) == MixedUserPrincipalTypes.UserProxyFullPrincipal)
+                    yield return "(&(objectClass=userProxyFull){0})";
+            }
+        }
         public IEnumerable<Type> GetPrincipalTypes()
         {
             if ((_types & MixedUserPrincipalTypes.UserPrincipal) == MixedUserPrincipalTypes.UserPrincipal)

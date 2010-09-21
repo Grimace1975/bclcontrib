@@ -57,17 +57,20 @@ namespace System.Patterns.Reporting
             // header
             var fields = (context != null ? context.Fields : null);
             var b = new StringBuilder();
-            foreach (var itemProperty in itemProperties)
+            if (context.HasHeaderRow)
             {
-                string name = itemProperty.Name;
-                FlatFileField field;
-                if ((fields != null) && (fields.TryGetValue(name, out field)) && (field == null))
-                    continue;
-                b.Append(CsvCodec.Encode(name) + ",");
+                foreach (var itemProperty in itemProperties)
+                {
+                    string name = itemProperty.Name;
+                    FlatFileField field;
+                    if ((fields != null) && (fields.TryGetValue(name, out field)) && (field == null))
+                        continue;
+                    b.Append(CsvCodec.Encode(name) + ",");
+                }
+                if (b.Length > 0)
+                    b.Length--;
+                w.Write(b.ToString() + Environment.NewLine);
             }
-            if (b.Length > 0)
-                b.Length--;
-            w.Write(b.ToString() + Environment.NewLine);
             // rows
             int flushCountDown = FLUSHCOUNTDOWN;
             foreach (var item in set)

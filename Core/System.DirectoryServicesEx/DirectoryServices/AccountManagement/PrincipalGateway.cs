@@ -127,7 +127,7 @@ namespace System.DirectoryServices.AccountManagement
                 single = (singleBuilder != null ? singleBuilder(groupPrincipal) : default(TSingle));
                 //
                 return groupPrincipal.GetMembers()
-                    .Where(principalMatcher.Determiner)
+                    .Where(principalMatcher.IsStructuralObjectClass)
                     .OfType<TPrincipal>()
                     .ToList();
             }
@@ -159,8 +159,10 @@ namespace System.DirectoryServices.AccountManagement
 
         // ALL
         public static IEnumerable<TPrincipal> GetAllPrincipals<TPrincipal>(IPrincipalMatcher principalMatcher, PrincipalContext context)
-            where TPrincipal : Principal { return GetAllPrincipals<TPrincipal>(principalMatcher, context, null); }
-        public static IEnumerable<TPrincipal> GetAllPrincipals<TPrincipal>(IPrincipalMatcher principalMatcher, PrincipalContext context, int? maximumItems)
+            where TPrincipal : Principal { return GetAllPrincipals<TPrincipal>(principalMatcher, context, null, null); }
+        public static IEnumerable<TPrincipal> GetAllPrincipals<TPrincipal>(IPrincipalMatcher principalMatcher, PrincipalContext context, Action<IPrincipalMatcher, PrincipalSearcher> limiter)
+            where TPrincipal : Principal { return GetAllPrincipals<TPrincipal>(principalMatcher, context, limiter, null); }
+        public static IEnumerable<TPrincipal> GetAllPrincipals<TPrincipal>(IPrincipalMatcher principalMatcher, PrincipalContext context, Action<IPrincipalMatcher, PrincipalSearcher> limiter, int? maximumItems)
             where TPrincipal : Principal
         {
             if (principalMatcher == null)
@@ -170,10 +172,13 @@ namespace System.DirectoryServices.AccountManagement
             var list = new List<TPrincipal>();
             foreach (var queryFilter in principalMatcher.GetQueryFilters(context))
             {
-                var searcher = new PrincipalSearcher(queryFilter);
-                using (var searchResults = searcher.FindAll())
-                    list.AddRange((!maximumItems.HasValue ? searchResults : searchResults.Take(maximumItems.Value)) // - list.Count))
-                        .Where(principalMatcher.Determiner)
+                var principalSearcher = new PrincipalSearcher(queryFilter);
+                if (limiter != null)
+                    limiter(principalMatcher, principalSearcher);
+                using (var searchResults = principalSearcher.FindAll())
+                    //list.AddRange((!maximumItems.HasValue ? searchResults : searchResults.Take(maximumItems.Value - list.Count))
+                    list.AddRange((!maximumItems.HasValue ? searchResults : searchResults.Take(maximumItems.Value - list.Count))
+                        .Where(principalMatcher.IsStructuralObjectClass)
                         .OfType<TPrincipal>());
                 //if ((maximumItems.HasValue) && (list.Count >= maximumItems.Value))
                 //    break;
@@ -270,7 +275,7 @@ namespace System.DirectoryServices.AccountManagement
             if (string.IsNullOrEmpty(container))
                 throw new ArgumentNullException("container");
             return principal.GetGroups()
-                .Where(g => (groupPrincipalMatcher.Determiner(g)) && (g.DistinguishedName.EndsWith(container)))
+                .Where(g => (groupPrincipalMatcher.IsStructuralObjectClass(g)) && (g.DistinguishedName.EndsWith(container)))
                 .OfType<TGroupPrincipal>()
                 .ToList();
         }
