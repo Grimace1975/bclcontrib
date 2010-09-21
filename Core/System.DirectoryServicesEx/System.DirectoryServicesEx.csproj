@@ -60,11 +60,18 @@
     <Compile Include="DirectoryServices\AccountManagement\UserProxyPrincipal.cs" />
     <Compile Include="DirectoryServices\AccountManagement\PrincipalGateway.cs" />
     <Compile Include="DirectoryServices\DirectoryGateway.cs" />
+    <Compile Include="DirectoryServices\IDirectoryEntryMatcher.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DirectoryServices\PropertyValueCollectionExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="BclContrib.snk" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\System.CoreEx\System.CoreEx.csproj">
+      <Project>{21FC5068-FABA-4CC9-A9F5-95D299655422}</Project>
+      <Name>System.CoreEx</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

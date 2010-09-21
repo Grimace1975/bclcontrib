@@ -32,10 +32,12 @@ namespace System.Patterns.Reporting
     {
         public FlatFileContext()
         {
+            HasHeaderRow = true;
             FilterMode = FlatFileFilterMode.ExceptionsInFields;
             Fields = new FlatFileFieldCollection();
         }
 
+        public bool HasHeaderRow { get; set; }
         public FlatFileFilterMode FilterMode { get; set; }
         public FlatFileFieldCollection Fields { get; private set; }
     }

@@ -1,10 +1,12 @@
 ﻿using System.Linq;
 using System.Security.Principal;
 using System.Collections.Generic;
+using System.Collections;
 namespace System.DirectoryServices
 {
     public class DirectoryGateway
     {
+        private const int BatchSize = 1000;
         public static readonly SecurityIdentifier WorldSid = new SecurityIdentifier(WellKnownSidType.WorldSid, null);
         public static readonly SecurityIdentifier AnonymousSid = new SecurityIdentifier(WellKnownSidType.AnonymousSid, null);
 
@@ -43,18 +45,35 @@ namespace System.DirectoryServices
             //return userPath[userPath.Length - 1];
         }
 
-        public static IEnumerable<T> GetDirectoryEntriesByIdentity<T>(DirectoryEntry directoryEntry, string[] propertiesToLoad, IEnumerable<string> identities, Func<SearchResult, T> selector)
+        public static IEnumerable<T> GetDirectoryEntriesByIdentity<T>(IDirectoryEntryMatcher directoryEntryMatcher, DirectoryEntry directoryEntry, string identityProperty, string[] propertiesToLoad, IEnumerable<string> identities, Func<SearchResult, T> selector) { return GetDirectoryEntriesByIdentity(directoryEntryMatcher, directoryEntry, identityProperty, propertiesToLoad, identities, selector, null); }
+        public static IEnumerable<T> GetDirectoryEntriesByIdentity<T>(IDirectoryEntryMatcher directoryEntryMatcher, DirectoryEntry directoryEntry, string identityProperty, string[] propertiesToLoad, IEnumerable<string> identities, Func<SearchResult, T> selector, Action<DirectorySearcher> limiter)
         {
-            if ((identities == null) || (!identities.GetEnumerator().MoveNext()))
-                return new List<T>();
+            if (directoryEntryMatcher == null)
+                throw new ArgumentNullException("directoryEntryMatcher");
+            if (directoryEntry == null)
+                throw new ArgumentNullException("directoryEntry");
+            if (EnumerableEx.IsNullOrEmptyArray(propertiesToLoad))
+                throw new ArgumentNullException("propertiesToLoad");
+            if (selector == null)
+                throw new ArgumentNullException("selector");
             //
-            var searcher = new DirectorySearcher(directoryEntry, "query", propertiesToLoad);
-            //return identities
-            //    .Select(identity => UserPrincipal.FindByIdentity(context, identityType, identity))
-            //    .Where(p => p != null)
-            //    .Select(selector)
-            //    .ToList();
-            return null;
+            if (EnumerableEx.IsNullOrEmpty(identities))
+                return new List<T>();
+            var list = new List<T>();
+            foreach (var queryFilter in directoryEntryMatcher.GetQueryFilters())
+                foreach (var batch in identities.GroupAt(BatchSize))
+                {
+                    var filterPart = "(" + identityProperty + "=" + string.Join(")(" + identityProperty + "=", batch.ToArray()) + ")";
+                    var directorySearcher = new DirectorySearcher(directoryEntry, string.Format(queryFilter, "(|" + filterPart + ")"), propertiesToLoad);
+                    if (limiter != null)
+                        limiter(directorySearcher);
+                    list.AddRange(
+                        directorySearcher.FindAll()
+                        .Cast<SearchResult>()
+                        .Select(selector)
+                        .OfType<T>());
+                }
+            return list;
         }
 
         public static IEnumerable<T> GetDirectoryEntryMemberOf<T>(string container, DirectoryEntry directoryEntry, Func<string, T> selector) { return GetDirectoryEntryMemberOf<T>(container, null, directoryEntry, selector); }

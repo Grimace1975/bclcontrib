@@ -3,7 +3,7 @@ namespace System.DirectoryServices.AccountManagement
 {
     public class GroupPrincipalMatcher : IPrincipalMatcher
     {
-        public Func<Principal, bool> Determiner
+        public Func<Principal, bool> IsStructuralObjectClass
         {
             get { return (g => g.StructuralObjectClass == "group"); }
         }
@@ -11,6 +11,11 @@ namespace System.DirectoryServices.AccountManagement
         public IEnumerable<Principal> GetQueryFilters(PrincipalContext context)
         {
             yield return new GroupPrincipal(context);
+        }
+
+        public IEnumerable<string> GetQueryFilters()
+        {
+            yield return "(&(objectCategory=group)(objectClass=group){0})";
         }
 
         public IEnumerable<Type> GetPrincipalTypes()
