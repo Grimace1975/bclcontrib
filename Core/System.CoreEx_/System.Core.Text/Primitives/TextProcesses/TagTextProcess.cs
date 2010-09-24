@@ -24,19 +24,19 @@ namespace System.Primitives.TextProcesses
             return singleText;
         }
 
-        private string ProcessInternal(string texts, Nattrib attrib)
+        private string ProcessInternal(string text, Nattrib attrib)
         {
-            if (texts == null)
+            if (text == null)
                 throw new ArgumentNullException("text");
             int openTagIndex;
             int closeTagIndex;
             int startIndex = 0;
             var b = new StringBuilder();
-            var textSearcher = new StringSearcher(texts, "<![CDATA[", "]]>");
+            var textSearcher = new StringSearcher(text, "<![CDATA[", "]]>");
             // 1. expand tag
             while (textSearcher.FindTextSpan(startIndex, "[[", "]]", out openTagIndex, out closeTagIndex))
             {
-                b.Append(texts.Substring(startIndex, openTagIndex - startIndex));
+                b.Append(text.Substring(startIndex, openTagIndex - startIndex));
                 startIndex = openTagIndex + 2;
                 //
                 string tagKey;
@@ -47,15 +47,15 @@ namespace System.Primitives.TextProcesses
                 if (((openArgIndex = textSearcher.IndexOf("{", startIndex, closeTagIndex - startIndex - 1)) > -1) && ((closeArgIndex = textSearcher.IndexOf("}", openArgIndex, closeTagIndex - openArgIndex - 1)) > -1))
                 {
                     // has arguments
-                    tagKey = texts.Substring(startIndex, openArgIndex - startIndex).Trim();
-                    string arg = texts.Substring(openArgIndex + 1, closeArgIndex - openArgIndex - 1);
-                    string arg2 = texts.Substring(closeArgIndex + 1, closeTagIndex - closeArgIndex - 2);
+                    tagKey = text.Substring(startIndex, openArgIndex - startIndex).Trim();
+                    string arg = text.Substring(openArgIndex + 1, closeArgIndex - openArgIndex - 1);
+                    string arg2 = text.Substring(closeArgIndex + 1, closeTagIndex - closeArgIndex - 2);
                     args = new[] { arg, arg2 };
                 }
                 else
                 {
                     // tag only - no arguments
-                    tagKey = texts.Substring(startIndex, closeTagIndex - startIndex - 1).Trim();
+                    tagKey = text.Substring(startIndex, closeTagIndex - startIndex - 1).Trim();
                     args = null;
                 }
                 //
@@ -63,10 +63,10 @@ namespace System.Primitives.TextProcesses
                 if ((tagKey.Length > 0) && ((tag = TextProcessBase.Get(tagKey)) != null))
                     b.Append(tag.Process(args));
                 else
-                    b.Append(texts.Substring(openTagIndex, closeTagIndex - openTagIndex + 2));
+                    b.Append(text.Substring(openTagIndex, closeTagIndex - openTagIndex + 2));
                 startIndex = closeTagIndex + 1;
             }
-            b.Append(texts.Substring(startIndex));
+            b.Append(text.Substring(startIndex));
             return b.ToString();
         }
     }

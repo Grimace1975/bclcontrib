@@ -23,24 +23,41 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 #endregion
-using System.Linq;
 using System.Collections.Generic;
-namespace System.Web
+namespace System.Web.Mvc
 {
     /// <summary>
-    /// SiteMapNodeExExtensions
+    /// InferredActionDescriptor
     /// </summary>
-    public static class SiteMapNodeExExtensions
+    public class InferredActionDescriptor : ActionDescriptor
     {
-        public static IEnumerable<SiteMapNodeEx> GetVisibleChildNodes(this SiteMapNodeEx node)
+        private readonly string _actionName;
+        private readonly ControllerDescriptor _controllerDescriptor;
+
+        public InferredActionDescriptor(string actionName, ControllerDescriptor controllerDescriptor)
         {
-            if (node == null)
-                throw new ArgumentNullException("node");
-            if (node.ChildNodes == null)
-                return new List<SiteMapNodeEx> { };
-            return node.ChildNodes.Cast<SiteMapNodeEx>()
-                .Where(c => c.Visible)
-                .ToList();
+            _actionName = actionName;
+            _controllerDescriptor = controllerDescriptor;
+        }
+
+        public override object Execute(ControllerContext controllerContext, IDictionary<string, object> parameters)
+        {
+            return new InferredViewResult { ViewName = ActionName };
+        }
+
+        public override ParameterDescriptor[] GetParameters()
+        {
+            return new ParameterDescriptor[] { new InferredParameterDescriptor(this, ActionName) };
+        }
+
+        public override string ActionName
+        {
+            get { return _actionName; }
+        }
+
+        public override ControllerDescriptor ControllerDescriptor
+        {
+            get { return _controllerDescriptor; }
         }
     }
 }

@@ -33,10 +33,16 @@ namespace System.Collections
             return ((values == null) || (values.Length == 0));
         }
 
-        public static bool IsNullOrEmpty(IEnumerable values)
+        public static bool IsNullOrEmptyEnumerable(IEnumerable values)
         {
             return ((values == null) || (!values.GetEnumerator().MoveNext()));
         }
+
+        public static bool IsNullOrEmpty<TSource>(IList<TSource> values)
+        {
+            return ((values == null) || (values.Count == 0));
+        }
+
         public static bool IsNullOrEmpty<TSource>(IEnumerable<TSource> values)
         {
             if (values != null)

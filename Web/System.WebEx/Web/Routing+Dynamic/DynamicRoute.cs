@@ -36,7 +36,9 @@ namespace System.Web.Routing
         private IDynamicRoutingContext _routingContext;
 
         public DynamicRoute()
-            : this(new SiteMapDynamicRoutingContext(SiteMap.Provider)) { }
+            : this(new SiteMapDynamicRoutingContext((ISiteMapProvider)SiteMap.Provider)) { }
+        public DynamicRoute(ISiteMapProvider siteMapProvider)
+            : this(new SiteMapDynamicRoutingContext(siteMapProvider)) { }
         public DynamicRoute(IDynamicRoutingContext routingContext)
         {
             _routingContext = routingContext;

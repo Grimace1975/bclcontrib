@@ -69,5 +69,8 @@ namespace System
                 }
             return ((type.BaseType != null) && (type.BaseType != CoreEx.ObjectType) ? FindIEnumerable(type.BaseType) : null);
         }
+
+        //use (value is Type)
+        //public static bool IsType<TType>(this Type type) { return typeof(TType).IsAssignableFrom(type); }
     }
 }

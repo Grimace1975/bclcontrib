@@ -23,24 +23,13 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 #endregion
-using System.Linq;
-using System.Collections.Generic;
-namespace System.Web
+namespace System.Web.Mvc
 {
     /// <summary>
-    /// SiteMapNodeExExtensions
+    /// IInjectedModelBinder
     /// </summary>
-    public static class SiteMapNodeExExtensions
+    public interface IInjectableModelBinder : IModelBinder
     {
-        public static IEnumerable<SiteMapNodeEx> GetVisibleChildNodes(this SiteMapNodeEx node)
-        {
-            if (node == null)
-                throw new ArgumentNullException("node");
-            if (node.ChildNodes == null)
-                return new List<SiteMapNodeEx> { };
-            return node.ChildNodes.Cast<SiteMapNodeEx>()
-                .Where(c => c.Visible)
-                .ToList();
-        }
+        bool InjectForModelType(Type modelType);
     }
 }
