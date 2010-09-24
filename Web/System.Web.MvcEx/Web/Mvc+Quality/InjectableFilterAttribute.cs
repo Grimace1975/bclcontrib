@@ -23,18 +23,14 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 #endregion
-using System.Web.Routing;
-using System.Quality;
 namespace System.Web.Mvc
 {
     /// <summary>
-    /// ServiceLocatorControllerFactory
+    /// InjectableFilterAttribute
     /// </summary>
-    public class ServiceLocatorControllerFactory : DefaultControllerFactory
+    [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, Inherited = true, AllowMultiple = true)]
+    public abstract class InjectableFilterAttribute : FilterAttribute
     {
-        protected override IController GetControllerInstance(RequestContext requestContext, Type controllerType)
-        {
-            return (!ServiceLocator.GetWantsToSkipLocator(controllerType) ? (IController)ServiceLocator.Resolve(controllerType) : base.GetControllerInstance(requestContext, controllerType));
-        }
+        public abstract Type FilterType { get; }
     }
 }

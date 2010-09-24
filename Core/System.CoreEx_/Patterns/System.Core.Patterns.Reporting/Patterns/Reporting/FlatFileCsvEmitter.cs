@@ -57,14 +57,16 @@ namespace System.Patterns.Reporting
             // header
             var fields = (context != null ? context.Fields : null);
             var b = new StringBuilder();
-            if (context.HasHeaderRow)
+            if ((context == null) || (context.HasHeaderRow))
             {
                 foreach (var itemProperty in itemProperties)
                 {
+                    // decode value
                     string name = itemProperty.Name;
                     FlatFileField field;
-                    if ((fields != null) && (fields.TryGetValue(name, out field)) && (field == null))
-                        continue;
+                    if ((fields != null) && (fields.TryGetValue(name, out field)) && (field != null))
+                        if (field.IsIgnore)
+                            continue;
                     b.Append(CsvCodec.Encode(name) + ",");
                 }
                 if (b.Length > 0)
@@ -82,7 +84,7 @@ namespace System.Patterns.Reporting
                     object value = itemProperty.GetValue(item, null);
                     // decode value
                     FlatFileField field;
-                    if ((fields != null) && (fields.TryGetValue(itemProperty.Name, out field)))
+                    if ((fields != null) && (fields.TryGetValue(itemProperty.Name, out field)) && (field != null))
                     {
                         if (field.IsIgnore)
                             continue;

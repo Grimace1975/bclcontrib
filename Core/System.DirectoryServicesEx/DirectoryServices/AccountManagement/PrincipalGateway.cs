@@ -73,6 +73,7 @@ namespace System.DirectoryServices.AccountManagement
             // delete items
             existingItems.Except(items)
                 .Select(c => GetPrincipalByIdentity<TGroupPrincipal>(groupPrincipalMatcher, context, identityType, identityAccessor(c)))
+                .Where(p => p != null)
                 .ToList()
                 .ForEach(g =>
                 {
@@ -85,6 +86,7 @@ namespace System.DirectoryServices.AccountManagement
             // add items
             items.Except(existingItems)
                 .Select(c => GetPrincipalByIdentity<TGroupPrincipal>(groupPrincipalMatcher, context, identityType, identityAccessor(c)))
+                .Where(p => p != null)
                 .ToList()
                 .ForEach(g =>
                 {
@@ -176,12 +178,11 @@ namespace System.DirectoryServices.AccountManagement
                 if (limiter != null)
                     limiter(principalMatcher, principalSearcher);
                 using (var searchResults = principalSearcher.FindAll())
-                    //list.AddRange((!maximumItems.HasValue ? searchResults : searchResults.Take(maximumItems.Value - list.Count))
                     list.AddRange((!maximumItems.HasValue ? searchResults : searchResults.Take(maximumItems.Value - list.Count))
                         .Where(principalMatcher.IsStructuralObjectClass)
                         .OfType<TPrincipal>());
-                //if ((maximumItems.HasValue) && (list.Count >= maximumItems.Value))
-                //    break;
+                if ((maximumItems.HasValue) && (list.Count >= maximumItems.Value))
+                    break;
             }
             return list;
         }

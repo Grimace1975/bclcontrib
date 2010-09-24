@@ -34,5 +34,7 @@ namespace System.Quality
                 throw new ArgumentNullException("locator");
             return (locator as TServiceLocator);
         }
+
+        public static TService Resolve<TService>(this IServiceLocator locator, Type type) { return (TService)locator.Resolve(type); }
     }
 }

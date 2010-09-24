@@ -31,20 +31,20 @@ namespace System.Web.Routing
     /// </summary>
     public class SiteMapDynamicRoutingContext : IDynamicRoutingContext
     {
-        private SiteMapProvider _siteMapProvider;
+        private ISiteMapProvider _siteMapProvider;
 
-        public SiteMapDynamicRoutingContext(SiteMapProvider siteMapProvider)
+        public SiteMapDynamicRoutingContext(ISiteMapProvider siteMapProvider)
         {
             _siteMapProvider = siteMapProvider;
         }
 
         public IDynamicNode FindNode(string path)
         {
-            return (_siteMapProvider.FindSiteMapNode(path) as IDynamicNode);
+            return (_siteMapProvider.FindSiteMapNode<SiteMapNode>(path) as IDynamicNode);
         }
         public IDynamicNode FindNodeById(string id)
         {
-            return (_siteMapProvider.FindSiteMapNodeFromKey(id) as IDynamicNode);
+            return (_siteMapProvider.FindSiteMapNodeFromKey<SiteMapNode>(id) as IDynamicNode);
         }
 
         #region UriScheme

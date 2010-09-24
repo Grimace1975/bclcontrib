@@ -85,6 +85,16 @@
     <Compile Include="Web\Mvc+DataAnnotations\DataAnnotationsModelMetadataProvider.cs" />
     <Compile Include="Web\Mvc+DataAnnotations\DataAnnotationsModelMetadataEx.cs" />
     <Compile Include="Web\Mvc+JQuery\JQueryHtmlHelperExtensions.cs" />
+    <Compile Include="Web\Mvc+Quality\InjectableFilterAttribute.cs" />
+    <Compile Include="Web\Mvc+Quality\InferredViewResult.cs" />
+    <Compile Include="Web\Mvc+Quality\InferredParameterDescriptor.cs" />
+    <Compile Include="Web\Mvc+Quality\InferredActionDescriptor.cs" />
+    <Compile Include="Web\Mvc+Quality\MergedFilterInfo.cs" />
+    <Compile Include="Web\Mvc+Quality\ServiceLocatorFilterFinder.cs" />
+    <Compile Include="Web\Mvc+Quality\IFilterInfoFinder.cs" />
+    <Compile Include="Web\Mvc+Quality\ServiceLocatorActionInvoker.cs" />
+    <Compile Include="Web\Mvc+Quality\IInjectableModelBinder.cs" />
+    <Compile Include="Web\Mvc+Quality\ServiceLocatorModelBinder.cs" />
     <Compile Include="Web\Mvc\ModelStateExtensions.cs" />
     <Compile Include="Web\Mvc\TagBuilderExtensions.cs" />
     <Compile Include="Web\Mvc\HtmlHelperExtensions.cs" />
@@ -94,7 +104,7 @@
     <Compile Include="Web\Mvc\PathHelpers.cs" />
     <Compile Include="Web\Mvc+Dynamic\ControllerExtensions.cs" />
     <Compile Include="Web\Mvc+Dynamic\RouteValuesHelpers.cs" />
-    <Compile Include="Web\Mvc\ServiceLocatorControllerFactory.cs" />
+    <Compile Include="Web\Mvc+Quality\ServiceLocatorControllerFactory.cs" />
     <Compile Include="Web\Mvc+Route\MvcRouteHandlerExtensions.cs" />
     <Compile Include="Web\Mvc+Route\RouteCollectionExtensions.cs" />
   </ItemGroup>

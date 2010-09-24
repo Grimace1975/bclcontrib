@@ -23,24 +23,22 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 #endregion
-using System.Linq;
-using System.Collections.Generic;
-namespace System.Web
+namespace System.Web.Mvc
 {
     /// <summary>
-    /// SiteMapNodeExExtensions
+    /// InferredViewResult
     /// </summary>
-    public static class SiteMapNodeExExtensions
+    public class InferredViewResult : ViewResult
     {
-        public static IEnumerable<SiteMapNodeEx> GetVisibleChildNodes(this SiteMapNodeEx node)
+        protected override ViewEngineResult FindView(ControllerContext context)
         {
-            if (node == null)
-                throw new ArgumentNullException("node");
-            if (node.ChildNodes == null)
-                return new List<SiteMapNodeEx> { };
-            return node.ChildNodes.Cast<SiteMapNodeEx>()
-                .Where(c => c.Visible)
-                .ToList();
+            ViewEngineResult result;
+            try
+            {
+                result = base.FindView(context);
+            }
+            catch (InvalidOperationException exception) { throw new HttpException(0x194, exception.Message); }
+            return result;
         }
     }
 }

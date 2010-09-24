@@ -32,6 +32,7 @@ namespace System.Quality
     /// </summary>
     public static class ServiceLocatorManager
     {
+        private static readonly Type s_wantToSkipServiceLocatorType = typeof(IWantToSkipServiceLocator);
         private static readonly object _lock = new object();
         private static Func<IServiceLocator> _provider;
         private static Action<IServiceRegistrar, IServiceLocator> _registration;
@@ -97,6 +98,13 @@ namespace System.Quality
                     .ToList()
                     .ForEach(t => registrar.Register(interfaceType, t));
             }
+        }
+
+        public static bool GetWantsToSkipLocator<TService>(object service) { return ((service == null) || (GetWantsToSkipLocator(service.GetType()))); }
+        public static bool GetWantsToSkipLocator<TService>() { return GetWantsToSkipLocator(typeof(TService)); }
+        public static bool GetWantsToSkipLocator(Type type)
+        {
+            return ((type == null) || (type.IsAssignableFrom(s_wantToSkipServiceLocatorType)));
         }
     }
 }
