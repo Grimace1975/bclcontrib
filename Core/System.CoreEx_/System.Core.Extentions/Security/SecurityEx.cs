@@ -153,7 +153,7 @@ namespace System.Security
 
         #region Decrypt
 
-        public static string SymmetricDecrypt(SymmetricAlgorithm algorithm, string data) { return Convert.ToBase64String(SymmetricDecrypt(algorithm, Encoding.UTF8.GetBytes(data))); }
+        public static string SymmetricDecrypt(SymmetricAlgorithm algorithm, string data) { return Encoding.UTF8.GetString(SymmetricDecrypt(algorithm, Convert.FromBase64String(data))); }
         public static byte[] SymmetricDecrypt(SymmetricAlgorithm algorithm, byte[] data)
         {
             if (algorithm == null)
@@ -163,7 +163,7 @@ namespace System.Security
             using (var decryptor = algorithm.CreateDecryptor())
                 return SymmetricTransform(data, decryptor);
         }
-        public static string SymmetricDecrypt(SymmetricAlgorithm algorithm, string data, int ivSize) { return Convert.ToBase64String(SymmetricDecrypt(algorithm, Encoding.UTF8.GetBytes(data), ivSize)); }
+        public static string SymmetricDecrypt(SymmetricAlgorithm algorithm, string data, int ivSize) { return Encoding.UTF8.GetString(SymmetricDecrypt(algorithm, Convert.FromBase64String(data), ivSize)); }
         public static byte[] SymmetricDecrypt(SymmetricAlgorithm algorithm, byte[] data, int ivSize)
         {
             if (algorithm == null)
@@ -175,8 +175,8 @@ namespace System.Security
             using (var decryptor = algorithm.CreateDecryptor())
                 return SymmetricDecryptTransform(data, ivSize, decryptor);
         }
-        public static string SymmetricDecrypt(string data, byte[] key, byte[] iv) { using (var algorithm = SymmetricAlgorithm.Create()) return Convert.ToBase64String(SymmetricDecrypt(algorithm, Encoding.UTF8.GetBytes(data), key, iv)); }
-        public static string SymmetricDecrypt(SymmetricAlgorithm algorithm, string data, byte[] key, byte[] iv) { return Convert.ToBase64String(SymmetricDecrypt(algorithm, Encoding.UTF8.GetBytes(data), key, iv)); }
+        public static string SymmetricDecrypt(string data, byte[] key, byte[] iv) { using (var algorithm = SymmetricAlgorithm.Create()) return Encoding.UTF8.GetString(SymmetricDecrypt(algorithm, Convert.FromBase64String(data), key, iv)); }
+        public static string SymmetricDecrypt(SymmetricAlgorithm algorithm, string data, byte[] key, byte[] iv) { return Encoding.UTF8.GetString(SymmetricDecrypt(algorithm, Convert.FromBase64String(data), key, iv)); }
         public static byte[] SymmetricDecrypt(byte[] data, byte[] key, byte[] iv) { using (var algorithm = SymmetricAlgorithm.Create()) return SymmetricDecrypt(algorithm, data, key, iv); }
         public static byte[] SymmetricDecrypt(SymmetricAlgorithm algorithm, byte[] data, byte[] key, byte[] iv)
         {
@@ -191,8 +191,8 @@ namespace System.Security
             using (var decryptor = algorithm.CreateDecryptor(key, iv))
                 return SymmetricTransform(data, decryptor);
         }
-        public static string SymmetricDecrypt(string data, int ivSize, byte[] key, byte[] iv) { using (var algorithm = SymmetricAlgorithm.Create()) return Convert.ToBase64String(SymmetricDecrypt(algorithm, Encoding.UTF8.GetBytes(data), ivSize, key, iv)); }
-        public static string SymmetricDecrypt(SymmetricAlgorithm algorithm, string data, int ivSize, byte[] key, byte[] iv) { return Convert.ToBase64String(SymmetricDecrypt(algorithm, Encoding.UTF8.GetBytes(data), ivSize, key, iv)); }
+        public static string SymmetricDecrypt(string data, int ivSize, byte[] key, byte[] iv) { using (var algorithm = SymmetricAlgorithm.Create()) return Encoding.UTF8.GetString(SymmetricDecrypt(algorithm, Convert.FromBase64String(data), ivSize, key, iv)); }
+        public static string SymmetricDecrypt(SymmetricAlgorithm algorithm, string data, int ivSize, byte[] key, byte[] iv) { return Encoding.UTF8.GetString(SymmetricDecrypt(algorithm, Convert.FromBase64String(data), ivSize, key, iv)); }
         public static byte[] SymmetricDecrypt(byte[] data, int ivSize, byte[] key, byte[] iv) { using (var algorithm = SymmetricAlgorithm.Create()) return SymmetricDecrypt(algorithm, data, ivSize, key, iv); }
         public static byte[] SymmetricDecrypt(SymmetricAlgorithm algorithm, byte[] data, int ivSize, byte[] key, byte[] iv)
         {
