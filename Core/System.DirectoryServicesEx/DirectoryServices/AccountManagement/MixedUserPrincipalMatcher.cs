@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Text;
 namespace System.DirectoryServices.AccountManagement
 {
     public class MixedUserPrincipalMatcher : IPrincipalMatcher
@@ -17,6 +18,11 @@ namespace System.DirectoryServices.AccountManagement
             get { return (u => u.StructuralObjectClass.IndexOf("user") > -1); }
         }
 
+        public Func<DirectoryEntry, bool> IsSchemaClassName
+        {
+            get { return (u => u.SchemaClassName.IndexOf("user") > -1); }
+        }
+
         public IEnumerable<Principal> GetQueryFilters(PrincipalContext context)
         {
             if ((_types & MixedUserPrincipalTypes.UserPrincipal) == MixedUserPrincipalTypes.UserPrincipal)
@@ -30,7 +36,17 @@ namespace System.DirectoryServices.AccountManagement
         public IEnumerable<string> GetQueryFilters()
         {
             if ((_types & MixedUserPrincipalTypes.UseWildcard) == MixedUserPrincipalTypes.UseWildcard)
-                yield return "(&(objectClass=user*){0})";
+            {
+                var b = new StringBuilder();
+                if ((_types & MixedUserPrincipalTypes.UserPrincipal) == MixedUserPrincipalTypes.UserPrincipal)
+                    b.Append("(&(objectCategory=user)(objectClass=user))");
+                if ((_types & MixedUserPrincipalTypes.UserProxyPrincipal) == MixedUserPrincipalTypes.UserProxyPrincipal)
+                    b.Append("(objectClass=userProxy)");
+                if ((_types & MixedUserPrincipalTypes.UserProxyFullPrincipal) == MixedUserPrincipalTypes.UserProxyFullPrincipal)
+                    b.Append("(objectClass=userProxyFull)");
+                if (b.Length > 0)
+                    yield return "(&(|" + b.ToString() + "){0})";
+            }
             else
             {
                 if ((_types & MixedUserPrincipalTypes.UserPrincipal) == MixedUserPrincipalTypes.UserPrincipal)

@@ -2,6 +2,7 @@
 using System.Security.Principal;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Collections;
 namespace System.DirectoryServices.AccountManagement
 {
     public class PrincipalGateway : DirectoryGateway
@@ -59,6 +60,8 @@ namespace System.DirectoryServices.AccountManagement
             where TGroupPrincipal : GroupPrincipal
             where TPrincipal : Principal
         {
+            if (groupPrincipalMatcher == null)
+                throw new ArgumentNullException("groupPrincipalMatcher");
             if (context == null)
                 throw new ArgumentNullException("context");
             if (principal == null)
@@ -103,16 +106,30 @@ namespace System.DirectoryServices.AccountManagement
         #region UserPrincipal
 
         public static IEnumerable<TPrincipal> GetPrincipalMembersBySingleIdentity<TPrincipal>(IPrincipalMatcher principalMatcher, PrincipalContext context, IdentityType identityType, string identity)
-            where TPrincipal : Principal { object single; return GetPrincipalMembersBySingleIdentity<GroupPrincipal, TPrincipal, object>(GroupPrincipalMatcher, principalMatcher, context, identityType, identity, null, out single); }
+            where TPrincipal : Principal { object single; return GetPrincipalMembersBySingleIdentity<GroupPrincipal, TPrincipal, object>(GroupPrincipalMatcher, principalMatcher, context, identityType, identity, null, out single, null); }
+        public static IEnumerable<TPrincipal> GetPrincipalMembersBySingleIdentity<TPrincipal>(IPrincipalMatcher principalMatcher, PrincipalContext context, IdentityType identityType, string identity, Func<IEnumerable<SidAndObjectClass>, IEnumerable<TPrincipal>> missingPrincipalMapper)
+            where TPrincipal : Principal { object single; return GetPrincipalMembersBySingleIdentity<GroupPrincipal, TPrincipal, object>(GroupPrincipalMatcher, principalMatcher, context, identityType, identity, null, out single, missingPrincipalMapper); }
+        public static IEnumerable<TPrincipal> GetPrincipalMembersBySingleIdentity<TPrincipal, TSingle>(IPrincipalMatcher principalMatcher, PrincipalContext context, IdentityType identityType, string identity, Func<GroupPrincipal, TSingle> singleBuilder, out TSingle single)
+            where TPrincipal : Principal { return GetPrincipalMembersBySingleIdentity<GroupPrincipal, TPrincipal, TSingle>(GroupPrincipalMatcher, principalMatcher, context, identityType, identity, singleBuilder, out single, null); }
+        public static IEnumerable<TPrincipal> GetPrincipalMembersBySingleIdentity<TPrincipal, TSingle>(IPrincipalMatcher principalMatcher, PrincipalContext context, IdentityType identityType, string identity, Func<GroupPrincipal, TSingle> singleBuilder, out TSingle single, Func<IEnumerable<SidAndObjectClass>, IEnumerable<TPrincipal>> missingPrincipalMapper)
+            where TPrincipal : Principal { return GetPrincipalMembersBySingleIdentity<GroupPrincipal, TPrincipal, TSingle>(GroupPrincipalMatcher, principalMatcher, context, identityType, identity, singleBuilder, out single, missingPrincipalMapper); }
         public static IEnumerable<TPrincipal> GetPrincipalMembersBySingleIdentity<TGroupPrincipal, TPrincipal>(IPrincipalMatcher groupPrincipalMatcher, IPrincipalMatcher principalMatcher, PrincipalContext context, IdentityType identityType, string identity)
             where TGroupPrincipal : GroupPrincipal
-            where TPrincipal : Principal { object single; return GetPrincipalMembersBySingleIdentity<TGroupPrincipal, TPrincipal, object>(groupPrincipalMatcher, principalMatcher, context, identityType, identity, null, out single); }
-        public static IEnumerable<TPrincipal> GetPrincipalMembersBySingleIdentity<TPrincipal, TSingle>(IPrincipalMatcher principalMatcher, PrincipalContext context, IdentityType identityType, string identity, Func<GroupPrincipal, TSingle> singleBuilder, out TSingle single)
-            where TPrincipal : Principal { return GetPrincipalMembersBySingleIdentity<GroupPrincipal, TPrincipal, TSingle>(GroupPrincipalMatcher, principalMatcher, context, identityType, identity, singleBuilder, out single); }
+            where TPrincipal : Principal { object single; return GetPrincipalMembersBySingleIdentity<TGroupPrincipal, TPrincipal, object>(groupPrincipalMatcher, principalMatcher, context, identityType, identity, null, out single, null); }
+        public static IEnumerable<TPrincipal> GetPrincipalMembersBySingleIdentity<TGroupPrincipal, TPrincipal>(IPrincipalMatcher groupPrincipalMatcher, IPrincipalMatcher principalMatcher, PrincipalContext context, IdentityType identityType, string identity, Func<IEnumerable<SidAndObjectClass>, IEnumerable<TPrincipal>> missingPrincipalMapper)
+            where TGroupPrincipal : GroupPrincipal
+            where TPrincipal : Principal { object single; return GetPrincipalMembersBySingleIdentity<TGroupPrincipal, TPrincipal, object>(groupPrincipalMatcher, principalMatcher, context, identityType, identity, null, out single, missingPrincipalMapper); }
         public static IEnumerable<TPrincipal> GetPrincipalMembersBySingleIdentity<TGroupPrincipal, TPrincipal, TSingle>(IPrincipalMatcher groupPrincipalMatcher, IPrincipalMatcher principalMatcher, PrincipalContext context, IdentityType identityType, string identity, Func<TGroupPrincipal, TSingle> singleBuilder, out TSingle single)
+            where TGroupPrincipal : GroupPrincipal
+            where TPrincipal : Principal { return GetPrincipalMembersBySingleIdentity<TGroupPrincipal, TPrincipal, TSingle>(groupPrincipalMatcher, principalMatcher, context, identityType, identity, singleBuilder, out single, null); }
+        public static IEnumerable<TPrincipal> GetPrincipalMembersBySingleIdentity<TGroupPrincipal, TPrincipal, TSingle>(IPrincipalMatcher groupPrincipalMatcher, IPrincipalMatcher principalMatcher, PrincipalContext context, IdentityType identityType, string identity, Func<TGroupPrincipal, TSingle> singleBuilder, out TSingle single, Func<IEnumerable<SidAndObjectClass>, IEnumerable<TPrincipal>> missingPrincipalMapper)
             where TGroupPrincipal : GroupPrincipal
             where TPrincipal : Principal
         {
+            if (groupPrincipalMatcher == null)
+                throw new ArgumentNullException("groupPrincipalMatcher");
+            if (principalMatcher == null)
+                throw new ArgumentNullException("principalMatcher");
             if (context == null)
                 throw new ArgumentNullException("context");
             if (string.IsNullOrEmpty(identity))
@@ -127,12 +144,39 @@ namespace System.DirectoryServices.AccountManagement
                     return null;
                 }
                 single = (singleBuilder != null ? singleBuilder(groupPrincipal) : default(TSingle));
-                //
-                return groupPrincipal.GetMembers()
+                // find members. will only search for objectclass user
+                var members = groupPrincipal.GetMembers()
                     .Where(principalMatcher.IsStructuralObjectClass)
                     .OfType<TPrincipal>()
                     .ToList();
+                // if missingPrincipalMapper not provided then return as is
+                if (missingPrincipalMapper == null)
+                    return members;
+                // for nonusers, get directory entry members
+                var directoryEntryMembers = ((IEnumerable)((DirectoryEntry)groupPrincipal.GetUnderlyingObject()).Invoke("Members", null)).AsEnumerableYield<object>()
+                    .Select(e => new DirectoryEntry(e))
+                    .Where(principalMatcher.IsSchemaClassName);
+                var missingItems = directoryEntryMembers.Select(c => new SidAndObjectClass { Sid = c.GetSid(), ObjectClass = c.SchemaClassName })
+                    .Except(members.Select(c => new SidAndObjectClass { Sid = c.Sid, ObjectClass = c.StructuralObjectClass }), SidAndObjectClass.EqualityComparer);
+                if (missingItems.Count() > 0)
+                    members.AddRange(missingPrincipalMapper(missingItems)
+                        .Where(x => x != null));
+                return members;
             }
+        }
+
+        public class SidAndObjectClass
+        {
+            public static readonly IEqualityComparer<SidAndObjectClass> EqualityComparer = new SidAndClassComparer();
+
+            private class SidAndClassComparer : IEqualityComparer<SidAndObjectClass>
+            {
+                public bool Equals(SidAndObjectClass x, SidAndObjectClass y) { return (x.Sid == y.Sid); }
+                public int GetHashCode(SidAndObjectClass obj) { return obj.Sid.GetHashCode(); }
+            }
+
+            public SecurityIdentifier Sid { get; internal set; }
+            public string ObjectClass { get; internal set; }
         }
 
         public static TPrincipal GetUserPrincipalByEmail<TPrincipal>(PrincipalContext context, string email)

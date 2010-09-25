@@ -18,9 +18,20 @@
             get
             {
                 var values = ExtensionGet("objectSid");
-                return (values != null ? values[0].ToString() : null);
+                return ((values != null) && (values.Length > 0) ? values[0].ToString() : null);
             }
             set { ExtensionSet("objectSid", value); }
+        }
+
+        [DirectoryProperty("name")]
+        public new string Name
+        {
+            get
+            {
+                var values = ExtensionGet("name");
+                return ((values != null) && (values.Length > 0) ? values[0].ToString() : null);
+            }
+            set { ExtensionSet("name", value); }
         }
     }
 }

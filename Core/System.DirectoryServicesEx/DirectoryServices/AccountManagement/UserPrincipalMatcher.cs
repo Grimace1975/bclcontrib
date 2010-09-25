@@ -8,6 +8,11 @@ namespace System.DirectoryServices.AccountManagement
             get { return (u => u.StructuralObjectClass == "user"); }
         }
 
+        public Func<DirectoryEntry, bool> IsSchemaClassName
+        {
+            get { return (u => u.SchemaClassName == "user"); }
+        }
+
         public IEnumerable<Principal> GetQueryFilters(PrincipalContext context)
         {
             yield return new UserPrincipal(context);
