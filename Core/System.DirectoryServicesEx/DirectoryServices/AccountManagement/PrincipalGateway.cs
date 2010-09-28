@@ -1,4 +1,29 @@
-﻿using System.Linq;
+﻿#region License
+/*
+The MIT License
+
+Copyright (c) 2008 Sky Morey
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+*/
+#endregion
+using System.Linq;
 using System.Security.Principal;
 using System.Collections.Generic;
 using System.Reflection;
@@ -10,7 +35,7 @@ namespace System.DirectoryServices.AccountManagement
         static PrincipalGateway()
         {
             SetGroupPrincipalMatcher(new GroupPrincipalMatcher());
-            SetUserPrincipalMatcher(new UserPrincipalMatcher());
+            SetUserPrincipalMatcher(new UserPrincipalExMatcher());
         }
         public PrincipalGateway(string domain, string userId, string password, string userContainer)
             : base(domain, userId, password, userContainer) { }
@@ -205,10 +230,12 @@ namespace System.DirectoryServices.AccountManagement
 
         // ALL
         public static IEnumerable<TPrincipal> GetAllPrincipals<TPrincipal>(IPrincipalMatcher principalMatcher, PrincipalContext context)
-            where TPrincipal : Principal { return GetAllPrincipals<TPrincipal>(principalMatcher, context, null, null); }
-        public static IEnumerable<TPrincipal> GetAllPrincipals<TPrincipal>(IPrincipalMatcher principalMatcher, PrincipalContext context, Action<IPrincipalMatcher, PrincipalSearcher> limiter)
-            where TPrincipal : Principal { return GetAllPrincipals<TPrincipal>(principalMatcher, context, limiter, null); }
-        public static IEnumerable<TPrincipal> GetAllPrincipals<TPrincipal>(IPrincipalMatcher principalMatcher, PrincipalContext context, Action<IPrincipalMatcher, PrincipalSearcher> limiter, int? maximumItems)
+            where TPrincipal : Principal { return GetAllPrincipals<TPrincipal>(principalMatcher, context, null, null, null); }
+        public static IEnumerable<TPrincipal> GetAllPrincipals<TPrincipal>(IPrincipalMatcher principalMatcher, PrincipalContext context, int? maximumItems)
+            where TPrincipal : Principal { return GetAllPrincipals<TPrincipal>(principalMatcher, context, null, null, maximumItems); }
+        public static IEnumerable<TPrincipal> GetAllPrincipals<TPrincipal>(IPrincipalMatcher principalMatcher, PrincipalContext context, Action<IPrincipalMatcher, PrincipalSearcher> searchLimiter, Func<IEnumerable<TPrincipal>, IEnumerable<TPrincipal>> resultLimiter)
+            where TPrincipal : Principal { return GetAllPrincipals<TPrincipal>(principalMatcher, context, searchLimiter, resultLimiter, null); }
+        public static IEnumerable<TPrincipal> GetAllPrincipals<TPrincipal>(IPrincipalMatcher principalMatcher, PrincipalContext context, Action<IPrincipalMatcher, PrincipalSearcher> searchLimiter, Func<IEnumerable<TPrincipal>, IEnumerable<TPrincipal>> resultLimiter, int? maximumItems)
             where TPrincipal : Principal
         {
             if (principalMatcher == null)
@@ -219,12 +246,17 @@ namespace System.DirectoryServices.AccountManagement
             foreach (var queryFilter in principalMatcher.GetQueryFilters(context))
             {
                 var principalSearcher = new PrincipalSearcher(queryFilter);
-                if (limiter != null)
-                    limiter(principalMatcher, principalSearcher);
+                if (searchLimiter != null)
+                    searchLimiter(principalMatcher, principalSearcher);
                 using (var searchResults = principalSearcher.FindAll())
-                    list.AddRange((!maximumItems.HasValue ? searchResults : searchResults.Take(maximumItems.Value - list.Count))
-                        .Where(principalMatcher.IsStructuralObjectClass)
-                        .OfType<TPrincipal>());
+                {
+                    var results = (!maximumItems.HasValue ? searchResults : searchResults.Take(maximumItems.Value - list.Count))
+                            .Where(principalMatcher.IsStructuralObjectClass)
+                            .OfType<TPrincipal>();
+                    if (resultLimiter != null)
+                        results = resultLimiter(results);
+                    list.AddRange(results);
+                }
                 if ((maximumItems.HasValue) && (list.Count >= maximumItems.Value))
                     break;
             }

@@ -23,34 +23,31 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 #endregion
-using System.Collections.Generic;
 namespace System.DirectoryServices.AccountManagement
 {
-    public class UserPrincipalMatcher : IPrincipalMatcher
+    public class UserAdvancedFilters : AdvancedFilters
     {
-        public Func<Principal, bool> IsStructuralObjectClass
+        public UserAdvancedFilters(Principal p)
+            : base(p) { }
+
+        public void LogonCount(int value, MatchType mt)
         {
-            get { return (u => u.StructuralObjectClass == "user"); }
+            AdvancedFilterSet("LogonCount", value, typeof(int), mt);
         }
 
-        public Func<DirectoryEntry, bool> IsSchemaClassName
+        public void Created(DateTime? created, MatchType matchType)
         {
-            get { return (u => u.SchemaClassName == "user"); }
+            const string WhenCreatedDateFormat = "yyyyMMddHHmmss.0Z";
+            if (!created.HasValue)
+                return;
+            AdvancedFilterSet("whenCreated", created.Value.ToUniversalTime().ToString(WhenCreatedDateFormat), typeof(string), matchType);
         }
 
-        public IEnumerable<Principal> GetQueryFilters(PrincipalContext context)
+        public void MemberOf(string distinguishedName, MatchType matchType)
         {
-            yield return new UserPrincipal(context);
-        }
-
-        public IEnumerable<string> GetQueryFilters()
-        {
-            yield return "(&(objectCategory=user)(objectClass=user){0})";
-        }
-
-        public IEnumerable<Type> GetPrincipalTypes()
-        {
-            yield return typeof(UserPrincipal);
+            if (distinguishedName == null)
+                throw new ArgumentNullException("distinguishedName");
+            AdvancedFilterSet("memberOf", distinguishedName, typeof(string), matchType);
         }
     }
 }

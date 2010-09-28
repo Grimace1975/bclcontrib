@@ -26,7 +26,7 @@ THE SOFTWARE.
 using System.Collections.Generic;
 namespace System.DirectoryServices.AccountManagement
 {
-    public class UserPrincipalMatcher : IPrincipalMatcher
+    public class UserPrincipalExMatcher : IPrincipalMatcher
     {
         public Func<Principal, bool> IsStructuralObjectClass
         {
@@ -40,17 +40,17 @@ namespace System.DirectoryServices.AccountManagement
 
         public IEnumerable<Principal> GetQueryFilters(PrincipalContext context)
         {
-            yield return new UserPrincipal(context);
+            yield return new UserPrincipalEx(context);
         }
 
         public IEnumerable<string> GetQueryFilters()
         {
-            yield return "(&(objectCategory=user)(objectClass=user){0})";
+            yield return "(&(objectClass=user){0})";
         }
 
         public IEnumerable<Type> GetPrincipalTypes()
         {
-            yield return typeof(UserPrincipal);
+            yield return typeof(UserPrincipalEx);
         }
     }
 }

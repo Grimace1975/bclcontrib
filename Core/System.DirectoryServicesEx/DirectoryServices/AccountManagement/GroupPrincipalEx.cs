@@ -23,34 +23,30 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 #endregion
-using System.Collections.Generic;
 namespace System.DirectoryServices.AccountManagement
 {
-    public class UserPrincipalMatcher : IPrincipalMatcher
+    [DirectoryRdnPrefix("CN")]
+    [DirectoryObjectClass("group")]
+    public class GroupPrincipalEx : GroupPrincipal
     {
-        public Func<Principal, bool> IsStructuralObjectClass
+        private GroupAdvancedFilters _advancedFilters;
+
+        public GroupPrincipalEx(PrincipalContext context)
+            : base(context) { }
+        public GroupPrincipalEx(PrincipalContext context, string samAccountName)
+            : base(context, samAccountName) { }
+
+        public new GroupAdvancedFilters AdvancedSearchFilter
         {
-            get { return (u => u.StructuralObjectClass == "user"); }
+            get
+            {
+                if (_advancedFilters == null)
+                    _advancedFilters = new GroupAdvancedFilters(this);
+                return _advancedFilters;
+            }
         }
 
-        public Func<DirectoryEntry, bool> IsSchemaClassName
-        {
-            get { return (u => u.SchemaClassName == "user"); }
-        }
-
-        public IEnumerable<Principal> GetQueryFilters(PrincipalContext context)
-        {
-            yield return new UserPrincipal(context);
-        }
-
-        public IEnumerable<string> GetQueryFilters()
-        {
-            yield return "(&(objectCategory=user)(objectClass=user){0})";
-        }
-
-        public IEnumerable<Type> GetPrincipalTypes()
-        {
-            yield return typeof(UserPrincipal);
-        }
+        public static new GroupPrincipalEx FindByIdentity(PrincipalContext context, string identityValue) { return (GroupPrincipalEx)FindByIdentityWithType(context, typeof(GroupPrincipalEx), identityValue); }
+        public static new GroupPrincipalEx FindByIdentity(PrincipalContext context, IdentityType identityType, string identityValue) { return (GroupPrincipalEx)FindByIdentityWithType(context, typeof(GroupPrincipalEx), identityType, identityValue); }
     }
 }

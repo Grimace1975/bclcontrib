@@ -26,37 +26,33 @@ THE SOFTWARE.
 namespace System.DirectoryServices.AccountManagement
 {
     [DirectoryRdnPrefix("CN")]
-    [DirectoryObjectClass("userProxyFull")]
-    public class UserProxyFullPrincipal : UserPrincipalEx
+    [DirectoryObjectClass("user")]
+    public class UserPrincipalEx : UserPrincipal
     {
-        public UserProxyFullPrincipal(PrincipalContext context)
+        private UserAdvancedFilters _advancedFilters;
+
+        public UserPrincipalEx(PrincipalContext context)
             : base(context) { }
-        public UserProxyFullPrincipal(PrincipalContext context, string samAccountName, string password, bool enabled)
+        public UserPrincipalEx(PrincipalContext context, string samAccountName, string password, bool enabled)
             : base(context, samAccountName, password, enabled) { }
 
-        public static new UserProxyFullPrincipal FindByIdentity(PrincipalContext context, string identityValue) { return (UserProxyFullPrincipal)FindByIdentityWithType(context, typeof(UserProxyFullPrincipal), identityValue); }
-        public static new UserProxyFullPrincipal FindByIdentity(PrincipalContext context, IdentityType identityType, string identityValue) { return (UserProxyFullPrincipal)FindByIdentityWithType(context, typeof(UserProxyFullPrincipal), identityType, identityValue); }
-
-        [DirectoryProperty("objectSid")]
-        public string ObjectSid
+        public new UserAdvancedFilters AdvancedSearchFilter
         {
             get
             {
-                var values = ExtensionGet("objectSid");
-                return ((values != null) && (values.Length > 0) ? values[0].ToString() : null);
+                if (_advancedFilters == null)
+                    _advancedFilters = new UserAdvancedFilters(this);
+                return _advancedFilters;
             }
-            set { ExtensionSet("objectSid", value); }
         }
 
-        [DirectoryProperty("name")]
-        public new string Name
+        public static new UserPrincipalEx FindByIdentity(PrincipalContext context, string identityValue) { return (UserPrincipalEx)FindByIdentityWithType(context, typeof(UserPrincipalEx), identityValue); }
+        public static new UserPrincipalEx FindByIdentity(PrincipalContext context, IdentityType identityType, string identityValue) { return (UserPrincipalEx)FindByIdentityWithType(context, typeof(UserPrincipalEx), identityType, identityValue); }
+
+        [DirectoryProperty("LogonCount")]
+        public int? LogonCount
         {
-            get
-            {
-                var values = ExtensionGet("name");
-                return ((values != null) && (values.Length > 0) ? values[0].ToString() : null);
-            }
-            set { ExtensionSet("name", value); }
+            get { return (ExtensionGet("LogonCount").Length != 1 ? null : ((int?)ExtensionGet("LogonCount")[0])); }
         }
     }
 }
