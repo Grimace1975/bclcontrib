@@ -23,34 +23,19 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 #endregion
-using System.Collections.Generic;
 namespace System.DirectoryServices.AccountManagement
 {
-    public class UserPrincipalMatcher : IPrincipalMatcher
+    public class GroupAdvancedFilters : AdvancedFilters
     {
-        public Func<Principal, bool> IsStructuralObjectClass
-        {
-            get { return (u => u.StructuralObjectClass == "user"); }
-        }
+        public GroupAdvancedFilters(Principal p)
+            : base(p) { }
 
-        public Func<DirectoryEntry, bool> IsSchemaClassName
+        public void Created(DateTime? created, MatchType matchType)
         {
-            get { return (u => u.SchemaClassName == "user"); }
-        }
-
-        public IEnumerable<Principal> GetQueryFilters(PrincipalContext context)
-        {
-            yield return new UserPrincipal(context);
-        }
-
-        public IEnumerable<string> GetQueryFilters()
-        {
-            yield return "(&(objectCategory=user)(objectClass=user){0})";
-        }
-
-        public IEnumerable<Type> GetPrincipalTypes()
-        {
-            yield return typeof(UserPrincipal);
+            const string WhenCreatedDateFormat = "yyyyMMddHHmmss.0Z";
+            if (!created.HasValue)
+                return;
+            AdvancedFilterSet("whenCreated", created.Value.ToUniversalTime().ToString(WhenCreatedDateFormat), typeof(string), matchType);
         }
     }
 }

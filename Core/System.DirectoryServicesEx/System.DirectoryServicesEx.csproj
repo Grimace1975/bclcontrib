@@ -51,11 +51,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DirectoryServices\AccountManagement\GroupAdvancedFilters.cs" />
+    <Compile Include="DirectoryServices\AccountManagement\GroupPrincipalEx.cs" />
+    <Compile Include="DirectoryServices\AccountManagement\UserPrincipalMatcher.cs" />
+    <Compile Include="DirectoryServices\AccountManagement\UserAdvancedFilters.cs" />
+    <Compile Include="DirectoryServices\AccountManagement\InetOrgPersonPrincipal.cs" />
+    <Compile Include="DirectoryServices\AccountManagement\UserPrincipalEx.cs" />
     <Compile Include="DirectoryServices\AccountManagement\MixedUserPrincipalTypes.cs" />
     <Compile Include="DirectoryServices\AccountManagement\MixedUserPrincipalMatcher.cs" />
     <Compile Include="DirectoryServices\AccountManagement\GroupPrincipalMatcher.cs" />
     <Compile Include="DirectoryServices\AccountManagement\IPrincipalMatcher.cs" />
-    <Compile Include="DirectoryServices\AccountManagement\UserPrincipalMatcher.cs" />
+    <Compile Include="DirectoryServices\AccountManagement\UserPrincipalExMatcher.cs" />
     <Compile Include="DirectoryServices\AccountManagement\UserProxyFullPrincipal.cs" />
     <Compile Include="DirectoryServices\AccountManagement\UserProxyPrincipal.cs" />
     <Compile Include="DirectoryServices\AccountManagement\PrincipalGateway.cs" />
