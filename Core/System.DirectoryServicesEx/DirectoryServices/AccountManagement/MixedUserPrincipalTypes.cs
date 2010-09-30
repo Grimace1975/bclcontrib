@@ -35,7 +35,8 @@ namespace System.DirectoryServices.AccountManagement
         UserProxyFullPrincipal = 0x08 | OfUserClass_,
         InetOrgPersonPrincipal = 0x10,
         UseWildcard = 0x100,
-        OfUserClass_ = 0x102,
+        OfUserClass_ = 0x200,
+        Normal_ = UserPrincipal,
         All_ = 0xFFFF,
     }
 }

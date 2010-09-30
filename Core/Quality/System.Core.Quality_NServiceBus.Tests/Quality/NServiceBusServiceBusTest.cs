@@ -15,7 +15,7 @@ namespace System.Quality
         [TestInitialize]
         public void TestInitialize()
         {
-            ServiceBusManager.SetBusProvider(() => new NServiceBusAbstractor(), () => null);
+            //ServiceBusManager.SetBusProvider(() => new NServiceBusAbstractor(), () => null);
             //ServiceBusManager.SetBusProvider(() => new NServiceBusServiceBus(Configure.With(typeof(CompletionMessage).Assembly)
             //    .DefaultBuilder()
             //    .XmlSerializer()

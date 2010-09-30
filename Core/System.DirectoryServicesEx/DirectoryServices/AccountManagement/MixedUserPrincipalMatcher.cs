@@ -32,7 +32,7 @@ namespace System.DirectoryServices.AccountManagement
         private MixedUserPrincipalTypes _types;
 
         public MixedUserPrincipalMatcher()
-            : this(MixedUserPrincipalTypes.All_) { }
+            : this(MixedUserPrincipalTypes.Normal_) { }
         public MixedUserPrincipalMatcher(MixedUserPrincipalTypes types)
         {
             _types = types;
@@ -112,6 +112,8 @@ namespace System.DirectoryServices.AccountManagement
                 yield return typeof(UserPrincipalEx);
             if ((_types & MixedUserPrincipalTypes.UserProxyPrincipal) == MixedUserPrincipalTypes.UserProxyPrincipal)
                 yield return typeof(UserProxyPrincipal);
+            if ((_types & MixedUserPrincipalTypes.UserProxyFullPrincipal) == MixedUserPrincipalTypes.UserProxyFullPrincipal)
+                yield return typeof(UserProxyFullPrincipal);
             if ((_types & MixedUserPrincipalTypes.InetOrgPersonPrincipal) == MixedUserPrincipalTypes.InetOrgPersonPrincipal)
                 yield return typeof(InetOrgPersonPrincipal);
         }
