@@ -289,6 +289,8 @@ namespace System.DirectoryServices.AccountManagement
             return null;
         }
 
+        public void WithPrincipalBySid<TPrincipal>(IPrincipalMatcher principalMatcher, string container, string sid, Action<TPrincipal> action)
+            where TPrincipal : Principal { WithPrincipalByIdentity<TPrincipal, object>(principalMatcher, container, IdentityType.Sid, sid, a => { action(a); return null; }); }
         public TResult WithPrincipalBySid<TPrincipal, TResult>(IPrincipalMatcher principalMatcher, string container, string sid, Func<TPrincipal, TResult> action)
             where TPrincipal : Principal { return WithPrincipalByIdentity<TPrincipal, TResult>(principalMatcher, container, IdentityType.Sid, sid, action); }
         public TResult WithPrincipalByIdentity<TPrincipal, TResult>(IPrincipalMatcher principalMatcher, string container, IdentityType identityType, string identity, Func<TPrincipal, TResult> action)

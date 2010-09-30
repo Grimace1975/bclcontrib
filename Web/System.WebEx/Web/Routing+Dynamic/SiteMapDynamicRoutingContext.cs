@@ -35,6 +35,8 @@ namespace System.Web.Routing
 
         public SiteMapDynamicRoutingContext(ISiteMapProvider siteMapProvider)
         {
+            if (siteMapProvider == null)
+                throw new ArgumentNullException("siteMapProvider");
             _siteMapProvider = siteMapProvider;
         }
 

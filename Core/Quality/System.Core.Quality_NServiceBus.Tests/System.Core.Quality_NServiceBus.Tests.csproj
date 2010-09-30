@@ -58,7 +58,7 @@
     <Compile Include="Quality\NServiceBusServiceBusTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Core\Quality\System.Core.Quality\System.Core.Quality.csproj">
+    <ProjectReference Include="..\System.Core.Quality\System.Core.Quality.csproj">
       <Project>{A44E9D89-BFF2-41A4-AADC-3C2BDFDAEEB1}</Project>
       <Name>System.Core.Quality</Name>
     </ProjectReference>
