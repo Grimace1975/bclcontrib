@@ -33,7 +33,8 @@ namespace System.Web.Routing
     /// </summary>
     public class DynamicRoute : RouteBase
     {
-        private IDynamicRoutingContext _routingContext;
+        private IDynamicRoutingContext _routingContextAsFixed;
+        private Func<DynamicRoute, IDynamicRoutingContext> _routingContext;
 
         public DynamicRoute()
             : this(new SiteMapDynamicRoutingContext((ISiteMapProvider)SiteMap.Provider)) { }
@@ -41,7 +42,12 @@ namespace System.Web.Routing
             : this(new SiteMapDynamicRoutingContext(siteMapProvider)) { }
         public DynamicRoute(IDynamicRoutingContext routingContext)
         {
-            _routingContext = routingContext;
+            _routingContextAsFixed = routingContext;
+            RoutingContext = (r => _routingContextAsFixed);
+        }
+        public DynamicRoute(Func<DynamicRoute, IDynamicRoutingContext> routingContext)
+        {
+            RoutingContext = routingContext;
         }
 
         public static void SetRouteDefaults(IEnumerable<Route> routes, IDynamicNode node)
@@ -62,7 +68,7 @@ namespace System.Web.Routing
             // virtualPath modeled from Route::GetRouteData
             string virtualPath = httpRequest.AppRelativeCurrentExecutionFilePath.Substring(1) + httpRequest.PathInfo;
             //var requestUri = _siteMapExRouteContext.GetRequestUri(httpContext);
-            var node = GetNode(_routingContext, virtualPath);
+            var node = GetNode(_routingContext(this), virtualPath);
             if (node != null)
             {
                 // func
@@ -90,7 +96,7 @@ namespace System.Web.Routing
         {
             if (requestContext == null)
                 throw new ArgumentNullException("requestContext");
-            var node = GetNode(_routingContext, values, true);
+            var node = GetNode(_routingContext(this), values, true);
             if (node != null)
             {
                 // func
@@ -114,6 +120,17 @@ namespace System.Web.Routing
             return null;
         }
 
+        public Func<DynamicRoute, IDynamicRoutingContext> RoutingContext
+        {
+            get { return _routingContext; }
+            set
+            {
+                if (value == null)
+                    throw new ArgumentNullException("value");
+                _routingContext = value;
+            }
+        }
+
         private static IDynamicNode GetNode(IDynamicRoutingContext routingContext, string path)
         {
             return routingContext.FindNode(path);
@@ -132,4 +149,3 @@ namespace System.Web.Routing
         }
     }
 }
-;

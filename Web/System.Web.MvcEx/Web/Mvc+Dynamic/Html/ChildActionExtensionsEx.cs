@@ -23,18 +23,13 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 #endregion
-using System.Linq;
 using System.IO;
 using System.Web.Routing;
 using System.Globalization;
-using System.Collections.Generic;
-using System.Reflection;
 namespace System.Web.Mvc.Html
 {
-    public static class ChildActionExtensionsEx
+    public static partial class ChildActionExtensionsEx
     {
-        private static readonly MethodInfo s_wrapForServerExecuteMethod = Type.GetType("System.Web.Mvc.HttpHandlerUtil").GetMethod("WrapForServerExecute");
-
         public static MvcHtmlString DynamicAction(this HtmlHelper htmlHelper, string actionName) { return DynamicAction(htmlHelper, actionName, null, ((RouteValueDictionary)null)); }
         public static MvcHtmlString DynamicAction(this HtmlHelper htmlHelper, string actionName, object routeValues) { return DynamicAction(htmlHelper, actionName, null, new RouteValueDictionary(routeValues)); }
         public static MvcHtmlString DynamicAction(this HtmlHelper htmlHelper, string actionName, string dynamicId) { return DynamicAction(htmlHelper, actionName, dynamicId, ((RouteValueDictionary)null)); }
@@ -78,35 +73,6 @@ namespace System.Web.Mvc.Html
             var context = new RequestContext(httpContext, data2);
             var httpHandler = new ChildActionMvcHandler(context);
             httpContext.Server.Execute((IHttpHandler)s_wrapForServerExecuteMethod.Invoke(null, new object[] { httpHandler }), textWriter, true);
-        }
-
-        private static RouteData CreateRouteData(RouteBase route, RouteValueDictionary routeValues, RouteValueDictionary dataTokens, ViewContext parentViewContext)
-        {
-            var data = new RouteData();
-            foreach (KeyValuePair<string, object> pair in routeValues)
-                data.Values.Add(pair.Key, pair.Value);
-            foreach (KeyValuePair<string, object> pair2 in dataTokens)
-                data.DataTokens.Add(pair2.Key, pair2.Value);
-            data.Route = route;
-            data.DataTokens["ParentActionViewContext"] = parentViewContext;
-            return data;
-        }
-
-        private static RouteValueDictionary MergeDictionaries(params RouteValueDictionary[] dictionaries)
-        {
-            var dictionary = new RouteValueDictionary();
-            foreach (var dictionary2 in dictionaries.Where(d => d != null))
-                foreach (var pair in dictionary2)
-                    if (!dictionary.ContainsKey(pair.Key))
-                        dictionary.Add(pair.Key, pair.Value);
-            return dictionary;
-        }
-
-        internal class ChildActionMvcHandler : MvcHandler
-        {
-            public ChildActionMvcHandler(RequestContext context)
-                : base(context) { }
-            protected override void AddVersionHeader(HttpContextBase httpContext) { }
         }
     }
 }

@@ -38,7 +38,7 @@ namespace System.Collections
             return ((values == null) || (!values.GetEnumerator().MoveNext()));
         }
 
-        public static bool IsNullOrEmpty<TSource>(IList<TSource> values)
+        public static bool IsNullOrEmpty<TSource>(ICollection<TSource> values)
         {
             return ((values == null) || (values.Count == 0));
         }
@@ -49,6 +49,18 @@ namespace System.Collections
                 using (var enumerator = values.GetEnumerator())
                     return !enumerator.MoveNext();
             return true;
+        }
+
+        public static ICollection<TSource> NullIf<TSource>(ICollection<TSource> values) { return NullIf<TSource>(values, IsNullOrEmpty<TSource>); }
+        public static ICollection<TSource> NullIf<TSource>(ICollection<TSource> values, Predicate<ICollection<TSource>> condition)
+        {
+            return ((values != null) && (!condition(values)) ? values : null);
+        }
+
+        public static IEnumerable<TSource> NullIf<TSource>(IEnumerable<TSource> values) { return NullIf<TSource>(values, IsNullOrEmpty<TSource>); }
+        public static IEnumerable<TSource> NullIf<TSource>(IEnumerable<TSource> values, Predicate<IEnumerable<TSource>> condition)
+        {
+            return ((values != null) && (!condition(values)) ? values : null);
         }
     }
 }
