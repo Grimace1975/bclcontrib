@@ -95,6 +95,7 @@
     <Compile Include="Web\Mvc+Quality\ServiceLocatorActionInvoker.cs" />
     <Compile Include="Web\Mvc+Quality\IInjectableModelBinder.cs" />
     <Compile Include="Web\Mvc+Quality\ServiceLocatorModelBinder.cs" />
+    <Compile Include="Web\Mvc\Html\ChildActionExtensionsEx.cs" />
     <Compile Include="Web\Mvc\ModelStateExtensions.cs" />
     <Compile Include="Web\Mvc\TagBuilderExtensions.cs" />
     <Compile Include="Web\Mvc\HtmlHelperExtensions.cs" />

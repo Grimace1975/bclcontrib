@@ -228,6 +228,11 @@ namespace System
             return ((text != null) && (string.Compare(text, nullIfText, StringComparison.OrdinalIgnoreCase) != 0) ? text : null);
         }
 
+        public static string NullIf(this string text, Predicate<string> condition)
+        {
+            return ((text != null) && (!condition(text)) ? text : null);
+        }
+
         /// <summary>
         /// Returns a section of the provided text starting at the startIndex.
         /// </summary>

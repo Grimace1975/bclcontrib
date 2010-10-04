@@ -32,48 +32,58 @@ namespace System
     {
         private static readonly Type s_enumNameAttributeType = typeof(EnumNameAttribute);
 
-		/// <summary>
-		/// Toes the name.
-		/// </summary>
-		/// <param name="enumType">Type of the enum.</param>
-		/// <param name="value">The value.</param>
-		/// <returns></returns>
-        public static string ToString(Type enumType, object value)
+        public static bool TryParse<T>(string s, out T result)
         {
-			return InternalGetValueAsString(enumType, value, 0);
-        }
-		/// <summary>
-		/// Toes the name.
-		/// </summary>
-		/// <typeparam name="TEnum">The type of the enum.</typeparam>
-		/// <param name="value">The value.</param>
-		/// <returns></returns>
-		public static string ToString<TEnum>(TEnum value)
-			where TEnum : struct
-        {
-			return InternalGetValueAsString(typeof(TEnum), value, 0);
+            try
+            {
+                result = (T)Enum.Parse(typeof(T), s);
+                return true;
+            }
+            catch { result = default(T); return false; }
         }
 
-		/// <summary>
-		/// Toes the name.
-		/// </summary>
-		/// <param name="enumType">Type of the enum.</param>
-		/// <param name="value">The value.</param>
-		/// <returns></returns>
+        /// <summary>
+        /// Toes the name.
+        /// </summary>
+        /// <param name="enumType">Type of the enum.</param>
+        /// <param name="value">The value.</param>
+        /// <returns></returns>
+        public static string ToString(Type enumType, object value)
+        {
+            return InternalGetValueAsString(enumType, value, 0);
+        }
+        /// <summary>
+        /// Toes the name.
+        /// </summary>
+        /// <typeparam name="TEnum">The type of the enum.</typeparam>
+        /// <param name="value">The value.</param>
+        /// <returns></returns>
+        public static string ToString<TEnum>(TEnum value)
+            where TEnum : struct
+        {
+            return InternalGetValueAsString(typeof(TEnum), value, 0);
+        }
+
+        /// <summary>
+        /// Toes the name.
+        /// </summary>
+        /// <param name="enumType">Type of the enum.</param>
+        /// <param name="value">The value.</param>
+        /// <returns></returns>
         public static string ToName(Type enumType, object value)
         {
-			return InternalGetValueAsString(enumType, value, 1);
+            return InternalGetValueAsString(enumType, value, 1);
         }
-		/// <summary>
-		/// Toes the name.
-		/// </summary>
-		/// <typeparam name="TEnum">The type of the enum.</typeparam>
-		/// <param name="value">The value.</param>
-		/// <returns></returns>
-		public static string ToName<TEnum>(TEnum value)
-			where TEnum : struct
+        /// <summary>
+        /// Toes the name.
+        /// </summary>
+        /// <typeparam name="TEnum">The type of the enum.</typeparam>
+        /// <param name="value">The value.</param>
+        /// <returns></returns>
+        public static string ToName<TEnum>(TEnum value)
+            where TEnum : struct
         {
-			return InternalGetValueAsString(typeof(TEnum), value, 1);
+            return InternalGetValueAsString(typeof(TEnum), value, 1);
         }
 
         /// <summary>
