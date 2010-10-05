@@ -32,6 +32,11 @@ namespace System
     {
         private static readonly Type s_enumNameAttributeType = typeof(EnumNameAttribute);
 
+        public static T Parse<T>(string s)
+        {
+            return (T)Enum.Parse(typeof(T), s);
+        }
+
         public static bool TryParse<T>(string s, out T result)
         {
             try

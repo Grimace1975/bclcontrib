@@ -26,14 +26,22 @@ THE SOFTWARE.
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
+using System.Collections.Generic;
+using System.Web.Routing;
 namespace System.Web.Mvc.Html
 {
     public static class LabelExtensionsEx
     {
-        public static MvcHtmlString LabelEx(this HtmlHelper htmlHelper, string expression) { return LabelHelperEx(htmlHelper, ModelMetadata.FromStringExpression(expression, htmlHelper.ViewData), expression); }
-        public static MvcHtmlString LabelForEx<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression) { return LabelHelperEx(htmlHelper, ModelMetadata.FromLambdaExpression<TModel, TProperty>(expression, htmlHelper.ViewData), ExpressionHelper.GetExpressionText(expression)); }
-        public static MvcHtmlString LabelForModelEx(this HtmlHelper htmlHelper) { return LabelHelperEx(htmlHelper, htmlHelper.ViewData.ModelMetadata, string.Empty); }
-        internal static MvcHtmlString LabelHelperEx(HtmlHelper htmlHelper, ModelMetadata metadata, string htmlFieldName)
+        public static MvcHtmlString LabelEx(this HtmlHelper htmlHelper, string expression) { return LabelEx(htmlHelper, expression, ((IDictionary<string, object>)null)); }
+        public static MvcHtmlString LabelEx(this HtmlHelper htmlHelper, string expression, IDictionary<string, object> htmlAttributes) { return LabelHelperEx(htmlHelper, ModelMetadata.FromStringExpression(expression, htmlHelper.ViewData), expression, htmlAttributes); }
+        public static MvcHtmlString LabelEx(this HtmlHelper htmlHelper, string expression, object htmlAttributes) { return LabelEx(htmlHelper, expression, ((IDictionary<string, object>)new RouteValueDictionary(htmlAttributes))); }
+
+        public static MvcHtmlString LabelForEx<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression) { return LabelForEx<TModel, TProperty>(htmlHelper, expression, ((IDictionary<string, object>)null)); }
+        public static MvcHtmlString LabelForEx<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression, IDictionary<string, object> htmlAttributes) { return LabelHelperEx(htmlHelper, ModelMetadata.FromLambdaExpression<TModel, TProperty>(expression, htmlHelper.ViewData), ExpressionHelper.GetExpressionText(expression), htmlAttributes); }
+        public static MvcHtmlString LabelForEx<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression, object htmlAttributes) { return LabelForEx<TModel, TProperty>(htmlHelper, expression, ((IDictionary<string, object>)new RouteValueDictionary(htmlAttributes))); }
+
+        public static MvcHtmlString LabelForModelEx(this HtmlHelper htmlHelper) { return LabelHelperEx(htmlHelper, htmlHelper.ViewData.ModelMetadata, string.Empty, null); }
+        internal static MvcHtmlString LabelHelperEx(HtmlHelper htmlHelper, ModelMetadata metadata, string htmlFieldName, IDictionary<string, object> htmlAttributes)
         {
             string text = (metadata.DisplayName ?? (metadata.PropertyName ?? htmlFieldName.Split(new char[] { '.' }).Last<string>()));
             if (string.IsNullOrEmpty(text))
@@ -41,6 +49,7 @@ namespace System.Web.Mvc.Html
             var templateInfo = htmlHelper.ViewContext.ViewData.TemplateInfo;
             var fullFieldName = templateInfo.GetFullHtmlFieldName(htmlFieldName);
             var labelTag = new TagBuilder("label");
+            labelTag.MergeAttributes<string, object>(htmlAttributes);
             ModelState state;
             if ((!string.IsNullOrEmpty(fullFieldName)) && (htmlHelper.ViewData.ModelState.TryGetValue(fullFieldName, out state)) && (state.Errors.Count > 0))
                 labelTag.AddCssClass(HtmlHelperExtensions.ValidationLabelCssClassName);

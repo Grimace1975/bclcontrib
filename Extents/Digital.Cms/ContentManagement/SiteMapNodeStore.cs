@@ -87,6 +87,9 @@ namespace Digital.ContentManagement
                     Virtualize = r.GetOrdinal("Virtualize");
                 }
             }
+
+            protected virtual PageOrdinal CreatePageOrdinal(IDataReader r) { return new PageOrdinal(r); }
+
             #endregion
 
             public Observable(SiteMapNodeStore<TRouteCreator> parent)
@@ -128,7 +131,7 @@ namespace Digital.ContentManagement
                                 observer.OnNext(new StaticSiteMapProviderEx.NodeToAdd { Node = _rootNode });
                                 // build a tree of SiteMapNodes underneath the root node
                                 r.NextResult();
-                                var pageOrdinal = new PageOrdinal(r);
+                                var pageOrdinal = CreatePageOrdinal(r);
                                 string hiddenRootTreeId = null;
                                 var virtualNodes = new List<KeyValuePair<SiteMapVirtualNode, string>>();
                                 while (r.Read())
@@ -182,7 +185,7 @@ namespace Digital.ContentManagement
                 return (string.IsNullOrEmpty(attribAsText) ? null : s_xmlTextPack.PackDecode(attribAsText));
             }
 
-            private SiteMapNode CreateSiteMapNodeFromDataReader(Dictionary<string, SiteMapNodeEx> nodes, List<KeyValuePair<SiteMapVirtualNode, string>> virtualNodes, PageOrdinal ordinal, IDataReader r, ref string hiddenRootTreeId)
+            protected virtual SiteMapNode CreateSiteMapNodeFromDataReader(Dictionary<string, SiteMapNodeEx> nodes, List<KeyValuePair<SiteMapVirtualNode, string>> virtualNodes, PageOrdinal ordinal, IDataReader r, ref string hiddenRootTreeId)
             {
                 if (r.IsDBNull(ordinal.TreeId))
                     throw new ProviderException("Missing node ID");
@@ -305,7 +308,7 @@ namespace Digital.ContentManagement
         }
         #endregion
 
-        public void Initialize(StaticSiteMapProviderEx provider, ReaderWriterLockSlim rwLock, NameValueCollection config)
+        public virtual void Initialize(StaticSiteMapProviderEx provider, ReaderWriterLockSlim rwLock, NameValueCollection config)
         {
             _provider = provider;
             _rwLock = rwLock;
@@ -331,10 +334,7 @@ namespace Digital.ContentManagement
             }
         }
 
-        public StaticSiteMapProviderEx.ObservableBase CreateObservable()
-        {
-            return new Observable(this);
-        }
+        public virtual StaticSiteMapProviderEx.ObservableBase CreateObservable() { return new Observable(this); }
 
         public void Clear() { }
     }
