@@ -35,27 +35,27 @@ namespace System.Web.Mvc.Html
     {
         private static readonly MethodInfo s_wrapForServerExecuteMethod = Type.GetType("System.Web.Mvc.HttpHandlerUtil").GetMethod("WrapForServerExecute");
 
-        public static MvcHtmlString ActionEx(this HtmlHelper htmlHelper, string actionName) { return ActionEx(htmlHelper, actionName, null, ((RouteValueDictionary)null)); }
-        public static MvcHtmlString ActionEx(this HtmlHelper htmlHelper, string actionName, object routeValues) { return ActionEx(htmlHelper, actionName, null, new RouteValueDictionary(routeValues)); }
-        public static MvcHtmlString ActionEx(this HtmlHelper htmlHelper, string actionName, string controllerName) { return ActionEx(htmlHelper, actionName, controllerName, ((RouteValueDictionary)null)); }
-        public static MvcHtmlString ActionEx(this HtmlHelper htmlHelper, string actionName, RouteValueDictionary routeValues) { return ActionEx(htmlHelper, actionName, null, routeValues); }
-        public static MvcHtmlString ActionEx(this HtmlHelper htmlHelper, string actionName, string controllerName, object routeValues) { return ActionEx(htmlHelper, actionName, controllerName, new RouteValueDictionary(routeValues)); }
-        public static MvcHtmlString ActionEx(this HtmlHelper htmlHelper, string actionName, string controllerName, RouteValueDictionary routeValues)
-        {
-            var textWriter = new StringWriter(CultureInfo.CurrentCulture);
-            ActionHelperEx(htmlHelper, actionName, controllerName, routeValues, textWriter);
-            return MvcHtmlString.Create(textWriter.ToString());
-        }
+        //public static MvcHtmlString ActionEx(this HtmlHelper htmlHelper, string actionName) { return ActionEx(htmlHelper, actionName, null, ((RouteValueDictionary)null)); }
+        //public static MvcHtmlString ActionEx(this HtmlHelper htmlHelper, string actionName, object routeValues) { return ActionEx(htmlHelper, actionName, null, new RouteValueDictionary(routeValues)); }
+        //public static MvcHtmlString ActionEx(this HtmlHelper htmlHelper, string actionName, string controllerName) { return ActionEx(htmlHelper, actionName, controllerName, ((RouteValueDictionary)null)); }
+        //public static MvcHtmlString ActionEx(this HtmlHelper htmlHelper, string actionName, RouteValueDictionary routeValues) { return ActionEx(htmlHelper, actionName, null, routeValues); }
+        //public static MvcHtmlString ActionEx(this HtmlHelper htmlHelper, string actionName, string controllerName, object routeValues) { return ActionEx(htmlHelper, actionName, controllerName, new RouteValueDictionary(routeValues)); }
+        //public static MvcHtmlString ActionEx(this HtmlHelper htmlHelper, string actionName, string controllerName, RouteValueDictionary routeValues)
+        //{
+        //    var textWriter = new StringWriter(CultureInfo.CurrentCulture);
+        //    ActionHelperEx(htmlHelper, actionName, controllerName, routeValues, textWriter);
+        //    return MvcHtmlString.Create(textWriter.ToString());
+        //}
 
-        public static void RenderActionEx(this HtmlHelper htmlHelper, string actionName) { RenderActionEx(htmlHelper, actionName, null, (RouteValueDictionary)null); }
-        public static void RenderActionEx(this HtmlHelper htmlHelper, string actionName, object routeValues) { RenderActionEx(htmlHelper, actionName, null, new RouteValueDictionary(routeValues)); }
-        public static void RenderActionEx(this HtmlHelper htmlHelper, string actionName, string controllerName) { RenderActionEx(htmlHelper, actionName, controllerName, (RouteValueDictionary)null); }
-        public static void RenderActionEx(this HtmlHelper htmlHelper, string actionName, RouteValueDictionary routeValues) { RenderActionEx(htmlHelper, actionName, null, routeValues); }
-        public static void RenderActionEx(this HtmlHelper htmlHelper, string actionName, string controllerName, object routeValues) { RenderActionEx(htmlHelper, actionName, controllerName, new RouteValueDictionary(routeValues)); }
-        public static void RenderActionEx(this HtmlHelper htmlHelper, string actionName, string controllerName, RouteValueDictionary routeValues)
-        {
-            ActionHelperEx(htmlHelper, actionName, controllerName, routeValues, htmlHelper.ViewContext.Writer);
-        }
+        //public static void RenderActionEx(this HtmlHelper htmlHelper, string actionName) { RenderActionEx(htmlHelper, actionName, null, (RouteValueDictionary)null); }
+        //public static void RenderActionEx(this HtmlHelper htmlHelper, string actionName, object routeValues) { RenderActionEx(htmlHelper, actionName, null, new RouteValueDictionary(routeValues)); }
+        //public static void RenderActionEx(this HtmlHelper htmlHelper, string actionName, string controllerName) { RenderActionEx(htmlHelper, actionName, controllerName, (RouteValueDictionary)null); }
+        //public static void RenderActionEx(this HtmlHelper htmlHelper, string actionName, RouteValueDictionary routeValues) { RenderActionEx(htmlHelper, actionName, null, routeValues); }
+        //public static void RenderActionEx(this HtmlHelper htmlHelper, string actionName, string controllerName, object routeValues) { RenderActionEx(htmlHelper, actionName, controllerName, new RouteValueDictionary(routeValues)); }
+        //public static void RenderActionEx(this HtmlHelper htmlHelper, string actionName, string controllerName, RouteValueDictionary routeValues)
+        //{
+        //    ActionHelperEx(htmlHelper, actionName, controllerName, routeValues, htmlHelper.ViewContext.Writer);
+        //}
 
         internal static void ActionHelperEx(HtmlHelper htmlHelper, string actionName, string controllerName, RouteValueDictionary routeValues, TextWriter textWriter)
         {
