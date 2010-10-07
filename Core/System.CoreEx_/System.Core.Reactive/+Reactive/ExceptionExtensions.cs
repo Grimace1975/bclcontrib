@@ -10,7 +10,7 @@ namespace System
     {
         private const string ExceptionPrepForRemotingMethodName = "PrepForRemoting";
         private static readonly MethodInfo s_prepForRemotingMethod = typeof(Exception).GetMethod("PrepForRemoting", BindingFlags.NonPublic | BindingFlags.Instance);
-        private static readonly MethodInfo s_internalPreserveStackTraceMethod = typeof(Exception).GetMethod("InternalPreserveStackTrace()", BindingFlags.NonPublic | BindingFlags.Instance);
+        private static readonly MethodInfo s_internalPreserveStackTraceMethod = typeof(Exception).GetMethod("InternalPreserveStackTrace", BindingFlags.NonPublic | BindingFlags.Instance);
 
         public static bool IsCritical(this Exception exception)
         {

@@ -30,7 +30,6 @@ namespace System.Web.SessionState
     /// <summary>
     /// SessionIDManagerEx
     /// </summary>
-
     public static class SessionIDManagerEx
     {
         // should base.SaveSessionID be used instead
