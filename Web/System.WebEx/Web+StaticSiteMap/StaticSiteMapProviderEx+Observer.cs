@@ -52,7 +52,7 @@ namespace System.Web
 
 			public void OnError(Exception ex)
 			{
-                throw ex;
+                throw ex.PrepareForRethrow();
 			}
 
 			public void OnNext(NodeToAdd nodeToAdd)

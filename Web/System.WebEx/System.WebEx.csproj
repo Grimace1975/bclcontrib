@@ -102,7 +102,7 @@
     <Compile Include="Web\Routing\WebFormRouteHandler2.cs" />
     <Compile Include="Patterns\Caching\DataStoreHttpExtensions.cs" />
     <Compile Include="Patterns\Caching\WebEnvironmentCacheProvider.cs" />
-    <Compile Include="Patterns\Session\HttpSessionProviderBase.cs" />
+    <Compile Include="Patterns\Session\HttpSessionExProviderBase.cs" />
     <Compile Include="Primitives\Codecs\HtmlCodec.cs" />
     <Compile Include="Primitives\TextProcess\ExpandTag.cs" />
     <Compile Include="Web\UI+Controls\HtmlControls\HtmlAnchorEx.cs" />

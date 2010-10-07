@@ -57,6 +57,7 @@ namespace Digital.ContentManagement
             private SiteMapNode _rootNode;
 
             #region Class Types
+
             protected class RootOrdinal
             {
                 public int Name, Uri;
@@ -146,18 +147,14 @@ namespace Digital.ContentManagement
                             return null;
                         }
                     }
-                    catch (Exception ex)
-                    {
-                        observer.OnError(ex);
-                        return null;
-                    }
+                    catch (Exception ex) { observer.OnError(ex); return null; }
                 }
             }
 
             private static void LinkVirtualNodes(Dictionary<string, SiteMapNodeEx> nodes, List<KeyValuePair<SiteMapVirtualNode, string>> virtualNodes)
             {
                 SiteMapNodeEx node;
-                foreach (var virtualNode in virtualNodes)
+                foreach (var virtualNode in virtualNodes.Where(x => x.Value != null))
                     if (nodes.TryGetValue(virtualNode.Value, out node))
                     {
                         var key = virtualNode.Key;
