@@ -263,6 +263,10 @@ namespace Digital.ContentManagement
                         throw new InvalidOperationException();
                 }
                 node.Visible = visible;
+                // map attrib
+                if (attrib != null)
+                    foreach (var attribKey in attrib.Keys)
+                        node[attribKey] = attrib[attribKey];
                 // content
                 var sectionNode = GetParentNodeFromDataReader(nodes, _rootNode, ordinal, r, true);
                 node.Set<SiteMapNodeContentExtent>(new SiteMapNodeContentExtent { Key = key, TreeId = treeId, SectionNode = sectionNode });
