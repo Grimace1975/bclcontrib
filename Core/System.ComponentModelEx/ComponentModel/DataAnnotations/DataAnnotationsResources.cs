@@ -1,5 +1,4 @@
-﻿using System.Primitives.DataTypes;
-using System.Resources;
+﻿using System.Resources;
 using System.Globalization;
 
 namespace System.ComponentModel.DataAnnotations

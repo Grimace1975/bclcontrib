@@ -52,6 +52,13 @@
   <ItemGroup>
     <Compile Include="ComponentModel\DataAnnotations\DataAnnotationsResources.cs" />
     <Compile Include="ComponentModel\DataAnnotations\RequiredNullIfAttribute.cs" />
+    <Compile Include="ComponentModel\DataAnnotations+Flow\CreateMetadataArguments.cs" />
+    <Compile Include="ComponentModel\DataAnnotations+Flow\CustomMetadataProvider.cs" />
+    <Compile Include="ComponentModel\DataAnnotations+Flow\IMetadataAttributeHandler.cs" />
+    <Compile Include="ComponentModel\DataAnnotations+Flow\Mapping.cs" />
+    <Compile Include="ComponentModel\DataAnnotations+Flow\MetadataAttribute.cs" />
+    <Compile Include="ComponentModel\DataAnnotations+Flow\MetadataAttributeRetriever.cs" />
+    <Compile Include="ComponentModel\DataAnnotations+Flow\MetadataProviderBlade.cs" />
     <Compile Include="ComponentModel\TypeDescriptorEvaluator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ComponentModel\DataAnnotations\DataTypeExAttribute.cs" />
