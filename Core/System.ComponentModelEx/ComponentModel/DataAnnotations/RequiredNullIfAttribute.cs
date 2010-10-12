@@ -1,5 +1,4 @@
-﻿using System.Primitives.DataTypes;
-using System.Collections;
+﻿using System.Collections;
 
 namespace System.ComponentModel.DataAnnotations
 {
