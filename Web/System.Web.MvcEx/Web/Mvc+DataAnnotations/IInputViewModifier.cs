@@ -24,14 +24,11 @@ THE SOFTWARE.
 */
 #endregion
 using System.Collections.Generic;
+using System.Linq.Expressions;
 namespace System.Web.Mvc
 {
-    public static class ViewModifierExtensions
+    public interface IInputViewModifier
     {
-        public static void MapToHtmlAttributes(this IEnumerable<IViewModifier> viewModifiers, ref IDictionary<string, object> htmlAttributes)
-        {
-            foreach (var viewModifier in viewModifiers)
-                viewModifier.MapToHtmlAttributes(ref htmlAttributes);
-        }
+        void MapInputToHtmlAttributes<TModel, TProperty>(ref Expression<Func<TModel, TProperty>> expression, ref IDictionary<string, object> htmlAttributes);
     }
 }

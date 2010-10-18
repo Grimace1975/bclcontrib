@@ -1,4 +1,4 @@
-﻿#region License
+#region License
 /*
 The MIT License
 
@@ -23,19 +23,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 #endregion
-using System.ComponentModel.DataAnnotations;
-using System.Collections.Generic;
-
 namespace System.Web.Mvc
 {
-    /// <summary>
-    /// DataAnnotationsModelMetadataEx
-    /// </summary>
-    public class DataAnnotationsModelMetadataEx : DataAnnotationsModelMetadata, IModelMetadataEx
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
+    public abstract class FieldViewModifierAttributeBase : Attribute
     {
-        public DataAnnotationsModelMetadataEx(DataAnnotationsModelMetadataProvider provider, Type containerType, Func<object> modelAccessor, Type modelType, string propertyName, DisplayColumnAttribute displayColumnAttribute)
-            : base(provider, containerType, modelAccessor, modelType, propertyName, displayColumnAttribute) { }
-
-        public IEnumerable<IViewModifier> ViewModifiers { get; set; }
+        public abstract IInputViewModifier GetInputViewModifier();
+        public abstract ILabelViewModifier GetLabelViewModifier();
     }
 }

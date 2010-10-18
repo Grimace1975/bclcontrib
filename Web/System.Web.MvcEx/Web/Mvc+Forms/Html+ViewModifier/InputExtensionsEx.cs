@@ -34,9 +34,10 @@ namespace System.Web.Mvc.Html
         public static MvcHtmlString CheckBoxForEx<TModel>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, bool>> expression, object htmlAttributes) { return CheckBoxForEx<TModel>(htmlHelper, expression, ((IDictionary<string, object>)new RouteValueDictionary(htmlAttributes))); }
         public static MvcHtmlString CheckBoxForEx<TModel>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, bool>> expression, IDictionary<string, object> htmlAttributes)
         {
-            var metadataEx = (ModelMetadata.FromLambdaExpression<TModel, bool>(expression, htmlHelper.ViewData) as IModelMetadataEx);
-            if (metadataEx != null)
-                metadataEx.ViewModifiers.MapToHtmlAttributes(ref htmlAttributes);
+            IEnumerable<IInputViewModifier> modifier;
+            var metadata = ModelMetadata.FromLambdaExpression<TModel, bool>(expression, htmlHelper.ViewData);
+            if ((metadata != null) && (metadata.TryGetExtent<IEnumerable<IInputViewModifier>>(out modifier)))
+                modifier.MapInputToHtmlAttributes(ref expression, ref htmlAttributes);
             return htmlHelper.CheckBoxFor<TModel>(expression, htmlAttributes);
         }
 
@@ -44,9 +45,10 @@ namespace System.Web.Mvc.Html
         public static MvcHtmlString HiddenForEx<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression, object htmlAttributes) { return HiddenForEx<TModel, TProperty>(htmlHelper, expression, ((IDictionary<string, object>)new RouteValueDictionary(htmlAttributes))); }
         public static MvcHtmlString HiddenForEx<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression, IDictionary<string, object> htmlAttributes)
         {
-            var metadataEx = (ModelMetadata.FromLambdaExpression<TModel, TProperty>(expression, htmlHelper.ViewData) as IModelMetadataEx);
-            if (metadataEx != null)
-                metadataEx.ViewModifiers.MapToHtmlAttributes(ref htmlAttributes);
+            IEnumerable<IInputViewModifier> modifier;
+            var metadata = ModelMetadata.FromLambdaExpression<TModel, TProperty>(expression, htmlHelper.ViewData);
+            if ((metadata != null) && (metadata.TryGetExtent<IEnumerable<IInputViewModifier>>(out modifier)))
+                modifier.MapInputToHtmlAttributes(ref expression, ref htmlAttributes);
             return htmlHelper.HiddenFor<TModel, TProperty>(expression, htmlAttributes);
         }
 
@@ -54,9 +56,10 @@ namespace System.Web.Mvc.Html
         public static MvcHtmlString PasswordForEx<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression, object htmlAttributes) { return PasswordForEx<TModel, TProperty>(htmlHelper, expression, ((IDictionary<string, object>)new RouteValueDictionary(htmlAttributes))); }
         public static MvcHtmlString PasswordForEx<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression, IDictionary<string, object> htmlAttributes)
         {
-            var metadataEx = (ModelMetadata.FromLambdaExpression<TModel, TProperty>(expression, htmlHelper.ViewData) as IModelMetadataEx);
-            if (metadataEx != null)
-                metadataEx.ViewModifiers.MapToHtmlAttributes(ref htmlAttributes);
+            IEnumerable<IInputViewModifier> modifier;
+            var metadata = ModelMetadata.FromLambdaExpression<TModel, TProperty>(expression, htmlHelper.ViewData);
+            if ((metadata != null) && (metadata.TryGetExtent<IEnumerable<IInputViewModifier>>(out modifier)))
+                modifier.MapInputToHtmlAttributes(ref expression, ref htmlAttributes);
             return htmlHelper.PasswordFor<TModel, TProperty>(expression, htmlAttributes);
         }
 
@@ -64,9 +67,10 @@ namespace System.Web.Mvc.Html
         public static MvcHtmlString RadioButtonFor<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression, object value, object htmlAttributes) { return RadioButtonForEx<TModel, TProperty>(htmlHelper, expression, value, ((IDictionary<string, object>)new RouteValueDictionary(htmlAttributes))); }
         public static MvcHtmlString RadioButtonForEx<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression, object value, IDictionary<string, object> htmlAttributes)
         {
-            var metadataEx = (ModelMetadata.FromLambdaExpression<TModel, TProperty>(expression, htmlHelper.ViewData) as IModelMetadataEx);
-            if (metadataEx != null)
-                metadataEx.ViewModifiers.MapToHtmlAttributes(ref htmlAttributes);
+            IEnumerable<IInputViewModifier> modifier;
+            var metadata = ModelMetadata.FromLambdaExpression<TModel, TProperty>(expression, htmlHelper.ViewData);
+            if ((metadata != null) && (metadata.TryGetExtent<IEnumerable<IInputViewModifier>>(out modifier)))
+                modifier.MapInputToHtmlAttributes(ref expression, ref htmlAttributes);
             return htmlHelper.RadioButtonFor<TModel, TProperty>(expression, value, htmlAttributes);
         }
 
@@ -74,9 +78,10 @@ namespace System.Web.Mvc.Html
         public static MvcHtmlString TextBoxForEx<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression, object htmlAttributes) { return TextBoxForEx<TModel, TProperty>(htmlHelper, expression, ((IDictionary<string, object>)new RouteValueDictionary(htmlAttributes))); }
         public static MvcHtmlString TextBoxForEx<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression, IDictionary<string, object> htmlAttributes)
         {
-            var metadataEx = (ModelMetadata.FromLambdaExpression<TModel, TProperty>(expression, htmlHelper.ViewData) as IModelMetadataEx);
-            if (metadataEx != null)
-                metadataEx.ViewModifiers.MapToHtmlAttributes(ref htmlAttributes);
+            IEnumerable<IInputViewModifier> modifier;
+            var metadata = ModelMetadata.FromLambdaExpression<TModel, TProperty>(expression, htmlHelper.ViewData);
+            if ((metadata != null) && (metadata.TryGetExtent<IEnumerable<IInputViewModifier>>(out modifier)))
+                modifier.MapInputToHtmlAttributes(ref expression, ref htmlAttributes);
             return htmlHelper.TextBoxFor<TModel, TProperty>(expression, htmlAttributes);
         }
     }

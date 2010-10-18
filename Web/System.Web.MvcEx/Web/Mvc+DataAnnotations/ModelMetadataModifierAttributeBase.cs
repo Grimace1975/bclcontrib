@@ -26,8 +26,9 @@ THE SOFTWARE.
 using System.Collections.Generic;
 namespace System.Web.Mvc
 {
-    public interface IViewModifier
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
+    public abstract class ModelMetadataModifierAttributeBase : Attribute
     {
-        void MapToHtmlAttributes(ref IDictionary<string, object> htmlAttributes);
+        public abstract Action<ModelMetadata, ModelMetadataModifierArguments> Modifier { get; }
     }
 }

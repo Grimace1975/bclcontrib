@@ -26,8 +26,12 @@ THE SOFTWARE.
 using System.Collections.Generic;
 namespace System.Web.Mvc
 {
-    public interface IModelMetadataEx
+    public class ModelMetadataModifierArguments
     {
-        IEnumerable<IViewModifier> ViewModifiers { get; set; }
+        public IEnumerable<Attribute> Attributes { get; set; }
+        public Type ContainerType { get; set; }
+        public Func<object> ModelAccessor { get; set; }
+        public Type ModelType { get; set; }
+        public string PropertyName { get; set; }
     }
 }

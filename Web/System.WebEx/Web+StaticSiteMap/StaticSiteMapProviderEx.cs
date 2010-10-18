@@ -36,7 +36,7 @@ namespace System.Web
     public partial class StaticSiteMapProviderEx : StaticSiteMapProvider, ISiteMapProvider, IDynamicRoutingContext
     {
         private IStaticSiteMapProviderExNodeStore _nodeStore;
-        private ReaderWriterLockSlim _rwLock = new ReaderWriterLockSlim();
+        private ReaderWriterLockSlim _rwLock = new ReaderWriterLockSlim(LockRecursionPolicy.SupportsRecursion);
         private SiteMapNode _rootNode;
         private object _baseLock = typeof(SiteMapProvider).GetField("_lock", BindingFlags.NonPublic | BindingFlags.Instance);
         private MethodInfo _providerRemoveNode = typeof(SiteMapProvider).GetMethod("RemoveNode", BindingFlags.NonPublic | BindingFlags.Instance);
