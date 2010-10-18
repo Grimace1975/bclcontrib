@@ -35,6 +35,19 @@ namespace System.Web
     {
         private static readonly object s_sessionExProviderKey = new object();
 
+        public static void SetSessionExProvider(this HttpContext httpContext, HttpSessionExProviderBase sessionExProvider)
+        {
+            if (sessionExProvider == null)
+                throw new ArgumentNullException("sessionExProvider");
+            httpContext.Items[s_sessionExProviderKey] = sessionExProvider;
+        }
+
+        public static HttpSessionExProviderBase GetSessionExProvider(this HttpContext httpContext)
+        {
+            return (HttpSessionExProviderBase)httpContext.Items[s_sessionExProviderKey];
+        }
+
+        // HTTPCONTEXT
         public static bool HasExtent<T>(this HttpContext httpContext)
         {
             if (httpContext == null)
@@ -45,6 +58,8 @@ namespace System.Web
         {
             if (httpContext == null)
                 throw new ArgumentNullException("httpContext");
+            if (type == null)
+                throw new ArgumentNullException("type");
             return httpContext.Items.Contains(type);
         }
 
@@ -58,6 +73,8 @@ namespace System.Web
         {
             if (httpContext == null)
                 throw new ArgumentNullException("httpContext");
+            if (type == null)
+                throw new ArgumentNullException("type");
             httpContext.Items[type] = null;
         }
 
@@ -77,6 +94,8 @@ namespace System.Web
         {
             if (httpContext == null)
                 throw new ArgumentNullException("httpContext");
+            if (type == null)
+                throw new ArgumentNullException("type");
             return httpContext.Items[type];
         }
 
@@ -96,9 +115,36 @@ namespace System.Web
         {
             if (httpContext == null)
                 throw new ArgumentNullException("httpContext");
+            if (type == null)
+                throw new ArgumentNullException("type");
             httpContext.Items[type] = value;
         }
 
+        public static bool TryGetExtent<T>(this HttpContext httpContext, out T extent)
+        {
+            if (httpContext == null)
+                throw new ArgumentNullException("httpContext");
+            string key = typeof(T).ToString();
+            if (!httpContext.Items.Contains(key))
+            {
+                extent = default(T);
+                return false;
+            }
+            extent = (T)httpContext.Items[key];
+            return true;
+        }
+
+        public static void AddRange(this HttpContext httpContext, IEnumerable<object> extents)
+        {
+            if (httpContext == null)
+                throw new ArgumentNullException("httpContext");
+            if (extents == null)
+                throw new ArgumentNullException("extents");
+            foreach (var extent in extents)
+                Set(httpContext, extent.GetType(), extent);
+        }
+
+        // HTTPCONTEXTBASE
         public static bool HasExtent<T>(this HttpContextBase httpContext)
         {
             if (httpContext == null)
@@ -109,6 +155,8 @@ namespace System.Web
         {
             if (httpContext == null)
                 throw new ArgumentNullException("httpContext");
+            if (type == null)
+                throw new ArgumentNullException("type");
             return httpContext.Items.Contains(type);
         }
 
@@ -122,6 +170,8 @@ namespace System.Web
         {
             if (httpContext == null)
                 throw new ArgumentNullException("httpContext");
+            if (type == null)
+                throw new ArgumentNullException("type");
             httpContext.Items[type] = null;
         }
 
@@ -141,6 +191,8 @@ namespace System.Web
         {
             if (httpContext == null)
                 throw new ArgumentNullException("httpContext");
+            if (type == null)
+                throw new ArgumentNullException("type");
             return httpContext.Items[type];
         }
 
@@ -160,19 +212,32 @@ namespace System.Web
         {
             if (httpContext == null)
                 throw new ArgumentNullException("httpContext");
+            if (type == null)
+                throw new ArgumentNullException("type");
             httpContext.Items[type] = value;
         }
-
-        public static void SetSessionExProvider(this HttpContext httpContext, HttpSessionExProviderBase sessionExProvider)
+        public static bool TryGetExtent<T>(this HttpContextBase httpContext, out T extent)
         {
-            if (sessionExProvider == null)
-                throw new ArgumentNullException("sessionExProvider");
-            httpContext.Items[s_sessionExProviderKey] = sessionExProvider;
+            if (httpContext == null)
+                throw new ArgumentNullException("httpContext");
+            string key = typeof(T).ToString();
+            if (!httpContext.Items.Contains(key))
+            {
+                extent = default(T);
+                return false;
+            }
+            extent = (T)httpContext.Items[key];
+            return true;
         }
 
-        public static HttpSessionExProviderBase GetSessionExProvider(this HttpContext httpContext)
+        public static void AddRange(this HttpContextBase httpContext, IEnumerable<object> extents)
         {
-            return (HttpSessionExProviderBase)httpContext.Items[s_sessionExProviderKey];
-        }
+            if (httpContext == null)
+                throw new ArgumentNullException("httpContext");
+            if (extents == null)
+                throw new ArgumentNullException("extents");
+            foreach (var extent in extents)
+                Set(httpContext, extent.GetType(), extent);
+        }        
     }
 }

@@ -23,11 +23,13 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 #endregion
+using System.Collections.Generic;
+using System.Linq.Expressions;
 namespace System.Web.Mvc
 {
-    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
-    public abstract class ViewModifierAttributeBase : Attribute
+    public interface ILabelViewModifier
     {
-        public abstract IViewModifier GetViewModifier();
+        void MapLabelToHtmlAttributes(ref string expression, ref IDictionary<string, object> htmlAttributes);
+        void MapLabelToHtmlAttributes<TModel, TProperty>(ref Expression<Func<TModel, TProperty>> expression, ref IDictionary<string, object> htmlAttributes);
     }
 }
