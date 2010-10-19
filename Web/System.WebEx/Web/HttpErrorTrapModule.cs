@@ -73,7 +73,7 @@ namespace System.Web
                 httpResponse.ClearHeaders();
                 httpResponse.StatusCode = statusId;
                 if (!string.IsNullOrEmpty(redirect))
-                    httpContext.Server.Transfer(redirect);
+                    httpContext.Server.TransferRequest(redirect);
                 else
                     httpResponse.Flush();
             }
