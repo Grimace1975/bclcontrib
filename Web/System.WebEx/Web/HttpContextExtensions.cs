@@ -55,6 +55,7 @@ namespace System.Web
                 throw new ArgumentNullException("path");
             if (handlerBuilder == null)
                 throw new ArgumentNullException("handlerBuilder");
+            httpContext.ClearError();
             string originalPath = httpContext.Request.Path;
             httpContext.RewritePath(path, false);
             var httpHandler = handlerBuilder();

@@ -49,16 +49,28 @@ namespace System.Configuration
                 //}
                 return this[property];
             }
-            set { SetPropertyValue(Properties[propertyName], value, false); }
+            set
+            {
+                if (Syn == null)
+                    throw new InvalidOperationException();
+                SetPropertyValue(Properties[propertyName], value, false);
+            }
         }
 
         protected internal object this[ConfigurationProperty prop]
         {
             get
             {
+                if (Syn == null)
+                    throw new InvalidOperationException();
                 return ConfigurationElementExtensions.ItemProperty.GetValue(Syn, new[] { prop });
             }
-            set { SetPropertyValue(prop, value, false); }
+            set
+            {
+                if (Syn == null)
+                    throw new InvalidOperationException();
+                SetPropertyValue(prop, value, false);
+            }
         }
 
         protected internal virtual ConfigurationPropertyCollection Properties
@@ -77,6 +89,8 @@ namespace System.Configuration
 
         protected void SetPropertyValue(ConfigurationProperty prop, object value, bool ignoreLocks)
         {
+            if (prop == null)
+                throw new ArgumentNullException("prop");
             ConfigurationElementExtensions.SetPropertyValueMethod.Invoke(Syn, new[] { prop, value, ignoreLocks });
         }
 
