@@ -41,6 +41,8 @@ namespace System.Web.Mvc.Html
             var metadata = ModelMetadata.FromStringExpression(expression, htmlHelper.ViewData);
             if ((metadata != null) && (metadata.TryGetExtent<IEnumerable<ILabelViewModifier>>(out modifier)))
                 modifier.MapLabelToHtmlAttributes(ref expression, ref htmlAttributes);
+            if (metadataModifer != null)
+                metadataModifer(metadata);
             return LabelHelperEx(htmlHelper, metadata, expression, htmlAttributes);
         }
         public static MvcHtmlString LabelEx(this HtmlHelper htmlHelper, string expression, object htmlAttributes) { return LabelEx(htmlHelper, expression, (IDictionary<string, object>)new RouteValueDictionary(htmlAttributes), null); }
@@ -55,6 +57,8 @@ namespace System.Web.Mvc.Html
             var metadata = ModelMetadata.FromLambdaExpression<TModel, TProperty>(expression, htmlHelper.ViewData);
             if ((metadata != null) && (metadata.TryGetExtent<IEnumerable<ILabelViewModifier>>(out modifier)))
                 modifier.MapLabelToHtmlAttributes(ref expression, ref htmlAttributes);
+            if (metadataModifer != null)
+                metadataModifer(metadata);
             return LabelHelperEx(htmlHelper, metadata, ExpressionHelper.GetExpressionText(expression), htmlAttributes);
         }
         public static MvcHtmlString LabelForEx<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression, object htmlAttributes) { return LabelForEx<TModel, TProperty>(htmlHelper, expression, (IDictionary<string, object>)new RouteValueDictionary(htmlAttributes), null); }

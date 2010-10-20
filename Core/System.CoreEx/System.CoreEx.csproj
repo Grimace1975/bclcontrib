@@ -1004,6 +1004,12 @@
     <Compile Include="..\System.CoreEx_\System.Core2\Collections\SortDirection.cs">
       <Link>System.Core2\Collections\SortDirection.cs</Link>
     </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core2\Configuration\ConfigurationElementExtensions.cs">
+      <Link>System.Core2\Configuration\ConfigurationElementExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core2\Configuration\ConfigurationElementSyn.cs">
+      <Link>System.Core2\Configuration\ConfigurationElementSyn.cs</Link>
+    </Compile>
     <Compile Include="..\System.CoreEx_\System.Core2\CoreEx.cs">
       <Link>System.Core2\CoreEx.cs</Link>
     </Compile>

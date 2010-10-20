@@ -27,6 +27,7 @@ using System.Text;
 using System.Xml;
 using System.Diagnostics;
 using System.Web.Configuration;
+using System.Configuration;
 namespace System.Web
 {
     /// <summary>
@@ -63,17 +64,32 @@ namespace System.Web
                 // get the web application configuration.
                 // WARNING: "~/web.config" fails/questionable if in a sub-application, because trys to map to the root web.config (should be parameter)
                 var configuration = WebConfigurationManager.OpenWebConfiguration("~/web.config");
-                var customErrorConfigSection = (CustomErrorsSection)configuration.GetSection("system.web/customErrors");
-                var customErrorConfigHash = customErrorConfigSection.Errors;
-                var customErrorConfig = customErrorConfigHash[statusId.ToString()];
+                var customErrorsSection = (CustomErrorsSection)configuration.GetSection("system.web/customErrors");
+                var customErrors = customErrorsSection.Errors;
+                var customError = customErrors[statusId.ToString()];
                 // find redirect
-                string redirect = (customErrorConfig == null ? customErrorConfigSection.DefaultRedirect : customErrorConfig.Redirect);
+                string redirect = (customError == null ? customErrorsSection.DefaultRedirect : customError.Redirect);
+                // find httpHandlerType
+                Type httpHandlerType;
+                try
+                {
+                    var customErrorsSectionSyn = new CustomErrorsSectionSyn(customErrorsSection);
+                    var customErrorSyn = new CustomErrorSyn(customError);
+                    httpHandlerType = (customErrorsSectionSyn.DefaultUrlRoutingType == null ? (Type)null : customErrorsSectionSyn.DefaultUrlRoutingType);
+                    if ((customErrorSyn != null) && (customErrorSyn.UrlRoutingType != null))
+                        httpHandlerType = customErrorSyn.UrlRoutingType;
+                }
+                catch { httpHandlerType = null; }
+                var handlerBuilder = (httpHandlerType == null ? (Func<IHttpHandler>)null : () => (IHttpHandler)Activator.CreateInstance(httpHandlerType));
                 // clears existing response headers and sets the desired ones.
                 var httpResponse = application.Context.Response;
                 httpResponse.ClearHeaders();
                 httpResponse.StatusCode = statusId;
                 if (!string.IsNullOrEmpty(redirect))
-                    httpContext.Server.TransferRequest(redirect);
+                    if (handlerBuilder == null)
+                        httpContext.Server.ModernTransfer(redirect);
+                    else
+                        httpContext.Server.ModernTransferForUrlRouting(redirect, handlerBuilder);
                 else
                     httpResponse.Flush();
             }

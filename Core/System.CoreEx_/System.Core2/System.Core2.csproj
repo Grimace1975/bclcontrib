@@ -61,6 +61,8 @@
     <Compile Include="Collections\ICollectionKey.cs" />
     <Compile Include="Collections\IValue.cs" />
     <Compile Include="Collections\SortDirection.cs" />
+    <Compile Include="Configuration\ConfigurationElementSyn.cs" />
+    <Compile Include="Configuration\ConfigurationElementExtensions.cs" />
     <Compile Include="EXTENTIONS\Configuration\ConfigurationManagerEx.cs" />
     <Compile Include="EnvironmentExMapper.cs" />
     <Compile Include="DefaultAppUnit.cs" />
