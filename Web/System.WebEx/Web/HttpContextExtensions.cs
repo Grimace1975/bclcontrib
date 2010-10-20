@@ -47,6 +47,23 @@ namespace System.Web
             return (HttpSessionExProviderBase)httpContext.Items[s_sessionExProviderKey];
         }
 
+        public static void TransferForUrlRouting(this HttpContext httpContext, string path, Func<IHttpHandler> handlerBuilder)
+        {
+            if (httpContext == null)
+                throw new ArgumentNullException("httpContext");
+            if (string.IsNullOrEmpty(path))
+                throw new ArgumentNullException("path");
+            if (handlerBuilder == null)
+                throw new ArgumentNullException("handlerBuilder");
+            string originalPath = httpContext.Request.Path;
+            httpContext.RewritePath(path, false);
+            var httpHandler = handlerBuilder();
+            if (httpHandler == null)
+                throw new InvalidOperationException();
+            httpHandler.ProcessRequest(httpContext);
+            httpContext.RewritePath(originalPath, false);
+        }
+
         // HTTPCONTEXT
         public static bool HasExtent<T>(this HttpContext httpContext)
         {
@@ -238,6 +255,6 @@ namespace System.Web
                 throw new ArgumentNullException("extents");
             foreach (var extent in extents)
                 Set(httpContext, extent.GetType(), extent);
-        }        
+        }
     }
 }

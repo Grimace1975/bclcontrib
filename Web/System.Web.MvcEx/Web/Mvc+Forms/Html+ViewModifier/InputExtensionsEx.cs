@@ -64,7 +64,7 @@ namespace System.Web.Mvc.Html
         }
 
         public static MvcHtmlString RadioButtonForEx<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression, object value) { return RadioButtonForEx<TModel, TProperty>(htmlHelper, expression, value, ((IDictionary<string, object>)null)); }
-        public static MvcHtmlString RadioButtonFor<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression, object value, object htmlAttributes) { return RadioButtonForEx<TModel, TProperty>(htmlHelper, expression, value, ((IDictionary<string, object>)new RouteValueDictionary(htmlAttributes))); }
+        public static MvcHtmlString RadioButtonForEx<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression, object value, object htmlAttributes) { return RadioButtonForEx<TModel, TProperty>(htmlHelper, expression, value, ((IDictionary<string, object>)new RouteValueDictionary(htmlAttributes))); }
         public static MvcHtmlString RadioButtonForEx<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression, object value, IDictionary<string, object> htmlAttributes)
         {
             IEnumerable<IInputViewModifier> modifier;
