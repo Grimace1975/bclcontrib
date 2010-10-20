@@ -34,6 +34,7 @@ namespace System.Web
     /// HttpErrorTrapModule
     /// </summary>
     //: [CustomerError Transfer]http://www.colincochrane.com/post/2008/01/ASP-NET-Custom-Errors-Preventing-302-Redirects-To-Custom-Error-Pages.aspx
+    // defaultUrlRoutingType="System.Web.UI.Page, System.Web, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"
     public class HttpErrorTrapModule : Patterns.Disposeable, IHttpModule
     {
         /// <summary>
@@ -71,15 +72,11 @@ namespace System.Web
                 string redirect = (customError == null ? customErrorsSection.DefaultRedirect : customError.Redirect);
                 // find httpHandlerType
                 Type httpHandlerType;
-                try
-                {
-                    var customErrorsSectionSyn = new CustomErrorsSectionSyn(customErrorsSection);
-                    var customErrorSyn = new CustomErrorSyn(customError);
-                    httpHandlerType = (customErrorsSectionSyn.DefaultUrlRoutingType == null ? (Type)null : customErrorsSectionSyn.DefaultUrlRoutingType);
-                    if ((customErrorSyn != null) && (customErrorSyn.UrlRoutingType != null))
-                        httpHandlerType = customErrorSyn.UrlRoutingType;
-                }
-                catch { httpHandlerType = null; }
+                var customErrorsSectionSyn = new CustomErrorsSectionSyn(customErrorsSection);
+                var customErrorSyn = new CustomErrorSyn(customError);
+                httpHandlerType = (customErrorsSectionSyn.DefaultUrlRoutingType == null ? (Type)null : customErrorsSectionSyn.DefaultUrlRoutingType);
+                if ((customErrors != null) && (customErrorSyn.UrlRoutingType != null))
+                    httpHandlerType = customErrorSyn.UrlRoutingType;
                 var handlerBuilder = (httpHandlerType == null ? (Func<IHttpHandler>)null : () => (IHttpHandler)Activator.CreateInstance(httpHandlerType));
                 // clears existing response headers and sets the desired ones.
                 var httpResponse = application.Context.Response;
