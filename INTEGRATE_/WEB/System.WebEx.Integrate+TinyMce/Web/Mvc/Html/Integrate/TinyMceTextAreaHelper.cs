@@ -30,7 +30,7 @@ namespace System.Web.Mvc.Html.Integrate
     /// <summary>
     /// TinyMceTextAreaHelper
     /// </summary>
-    public class TinyMceTextAreaHelper : IHtmlTextBox
+    public class TinyMceTextAreaHelper : IHtmlTextEditor
     {
         private IHtmlTextBoxContext _htmlTextBoxContext;
 

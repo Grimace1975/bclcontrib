@@ -82,6 +82,7 @@
     <Compile Include="Web+SiteMap\ISiteMapProvider.cs" />
     <Compile Include="Web+StaticSiteMap\IStaticSiteMapProviderEx.cs" />
     <Compile Include="Web+StaticSiteMap\SiteMapNodeSeoExtent.cs" />
+    <Compile Include="Web\Routing\GenericUrlRoutingHandler.cs" />
     <Compile Include="Web\UI+HttpPage\IHttpPageMetatag.cs" />
     <Compile Include="Web\UI+HtmlTextBox\Configuration\HtmlTextBoxConfigurationSet.cs" />
     <Compile Include="Web\UI+HtmlTextBox\Configuration\HtmlTextBoxCssStyleConfiguration.cs" />

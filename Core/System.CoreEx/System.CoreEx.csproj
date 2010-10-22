@@ -455,8 +455,29 @@
     <Compile Include="..\System.CoreEx_\System.Core.Extentions\StringExtensions.cs">
       <Link>System.Core.Extentions\StringExtensions.cs</Link>
     </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\Threading\Async\AsyncResultWrapper.cs">
+      <Link>System.Core.Extentions\Threading\Async\AsyncResultWrapper.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\Threading\Async\AsyncVoid.cs">
+      <Link>System.Core.Extentions\Threading\Async\AsyncVoid.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\Threading\Async\BeginInvokeDelegate.cs">
+      <Link>System.Core.Extentions\Threading\Async\BeginInvokeDelegate.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\Threading\Async\EndInvokeDelegate.cs">
+      <Link>System.Core.Extentions\Threading\Async\EndInvokeDelegate.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\Threading\Async\EndInvokeDelegate2.cs">
+      <Link>System.Core.Extentions\Threading\Async\EndInvokeDelegate2.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\Threading\Async\SimpleAsyncResult.cs">
+      <Link>System.Core.Extentions\Threading\Async\SimpleAsyncResult.cs</Link>
+    </Compile>
     <Compile Include="..\System.CoreEx_\System.Core.Extentions\Threading\FrugalThreadPool.cs">
       <Link>System.Core.Extentions\Threading\FrugalThreadPool.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\Threading\SingleEntryGate.cs">
+      <Link>System.Core.Extentions\Threading\SingleEntryGate.cs</Link>
     </Compile>
     <Compile Include="..\System.CoreEx_\System.Core.Extentions\UriExtensions.cs">
       <Link>System.Core.Extentions\UriExtensions.cs</Link>

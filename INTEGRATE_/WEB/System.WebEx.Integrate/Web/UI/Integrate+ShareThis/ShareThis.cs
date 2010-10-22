@@ -43,7 +43,7 @@ namespace System.Web.UI.Integrate
         public ShareThis()
             : base()
         {
-            DeploymentTarget = DeploymentEnvironment.Live;
+            DeploymentTarget = DeploymentEnvironment.Production;
             Include = new ShareThisInclude();
             Inject = true;
         }

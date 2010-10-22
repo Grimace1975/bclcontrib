@@ -109,7 +109,14 @@
     <Compile Include="StringEx.cs" />
     <Compile Include="StringEx+ExtractString.cs" />
     <Compile Include="StringExtensions.cs" />
+    <Compile Include="Threading\Async\AsyncResultWrapper.cs" />
+    <Compile Include="Threading\Async\AsyncVoid.cs" />
+    <Compile Include="Threading\Async\BeginInvokeDelegate.cs" />
+    <Compile Include="Threading\Async\EndInvokeDelegate.cs" />
+    <Compile Include="Threading\Async\EndInvokeDelegate2.cs" />
+    <Compile Include="Threading\Async\SimpleAsyncResult.cs" />
     <Compile Include="Threading\FrugalThreadPool.cs" />
+    <Compile Include="Threading\SingleEntryGate.cs" />
     <Compile Include="UriExtensions.cs" />
     <Compile Include="Xml\XmlExtensions.cs" />
   </ItemGroup>
