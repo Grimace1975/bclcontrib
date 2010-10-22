@@ -51,11 +51,11 @@ xcopy INTEROP_\CORE\System.Interop.Core\bin\Debug\System.Interop.Core.* bin\Debu
 ::robocopy Bin\Debug\ "C:\_APPLICATION\AFIWEB\Library_\Reference Assemblies\BclContrib" /MIR /TEE /NJH /NJS
 ::
 ::robocopy Bin\ "C:\_APPLICATION\CITYOPWEB\Library_\Reference Assemblies\BclContrib" /MIR /TEE /NJH /NJS
-::robocopy Bin\Debug\ "C:\_APPLICATION\CITYOPWEB\Library_\Reference Assemblies\BclContrib" /MIR /TEE /NJH /NJS
+robocopy Bin\Debug\ "C:\_APPLICATION\CITYOPWEB\Library_\Reference Assemblies\BclContrib" /MIR /TEE /NJH /NJS
 ::
 robocopy Bin\Debug\ "C:\_APPLICATION\HLLMRKLINK\Library_\Reference Assemblies\BclContrib" /MIR /TEE /NJH /NJS
 ::robocopy Bin\Debug\ "C:\_APPLICATION\TBLCOMMUNITY\Library_\Reference Assemblies\BclContrib" /MIR /TEE /NJH /NJS
-robocopy Bin\Debug\ "C:\_APPLICATION\CBIBENEFITSWEB\Library_\Reference Assemblies\BclContrib" /MIR /TEE /NJH /NJS
+::robocopy Bin\Debug\ "C:\_APPLICATION\CBIBENEFITSWEB\Library_\Reference Assemblies\BclContrib" /MIR /TEE /NJH /NJS
 ::robocopy Bin\Debug\ "C:\_APPLICATION\KCHBRMEBWEB\Library_\Reference Assemblies\BclContrib" /MIR /TEE /NJH /NJS
 
 

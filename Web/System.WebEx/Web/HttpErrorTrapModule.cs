@@ -79,7 +79,8 @@ namespace System.Web
                     httpHandlerType = customErrorSyn.UrlRoutingType;
                 var handlerBuilder = (httpHandlerType == null ? (Func<IHttpHandler>)null : () => (IHttpHandler)Activator.CreateInstance(httpHandlerType));
                 // clears existing response headers and sets the desired ones.
-                var httpResponse = application.Context.Response;
+                httpContext.ClearError();
+                var httpResponse = httpContext.Response;
                 httpResponse.ClearHeaders();
                 httpResponse.StatusCode = statusId;
                 if (!string.IsNullOrEmpty(redirect))
