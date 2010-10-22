@@ -37,6 +37,14 @@ namespace System.Web.UI.Integrate
         private static readonly Type s_trackerOperationModeType = typeof(TrackerOperationMode);
 
         #region Class Types
+
+        public class AnalyticsAttributes
+        {
+            public bool? AllowLinker { get; set; }
+            public string DomainName { get; set; }
+            public bool? AllowHash { get; set; }
+        }
+
         /// <summary>
         /// TrackerOperationMode
         /// </summary>
@@ -72,42 +80,42 @@ namespace System.Web.UI.Integrate
             /// <summary>
             /// OrderId
             /// </summary>
-            public string OrderId;
+            public string OrderId { get; set; }
 
             /// <summary>
             /// AffiliationId
             /// </summary>
-            public string AffiliationId;
+            public string AffiliationId { get; set; }
 
             /// <summary>
             /// TotalAmount
             /// </summary>
-            public decimal TotalAmount;
+            public decimal TotalAmount { get; set; }
 
             /// <summary>
             /// TaxAmount
             /// </summary>
-            public decimal TaxAmount;
+            public decimal TaxAmount { get; set; }
 
             /// <summary>
             /// ShippingAmount
             /// </summary>
-            public decimal ShippingAmount;
+            public decimal ShippingAmount { get; set; }
 
             /// <summary>
             /// City
             /// </summary>
-            public string City;
+            public string City { get; set; }
 
             /// <summary>
             /// State
             /// </summary>
-            public string State;
+            public string State { get; set; }
 
             /// <summary>
             /// Country
             /// </summary>
-            public string Country;
+            public string Country { get; set; }
         }
 
         /// <summary>
@@ -123,40 +131,40 @@ namespace System.Web.UI.Integrate
             /// <summary>
             /// OrderId
             /// </summary>
-            public string OrderId;
+            public string OrderId { get; set; }
 
             /// <summary>
             /// SkuId
             /// </summary>
-            public string SkuId;
+            public string SkuId { get; set; }
 
             /// <summary>
             /// ProductName
             /// </summary>
-            public string ProductName;
+            public string ProductName { get; set; }
 
             /// <summary>
             /// CategoryName
             /// </summary>
-            public string CategoryName;
+            public string CategoryName { get; set; }
 
             /// <summary>
             /// Price
             /// </summary>
-            public decimal Price;
+            public decimal Price { get; set; }
 
             /// <summary>
             /// Count
             /// </summary>
-            public int Count;
+            public int Count { get; set; }
         }
         #endregion
 
         public GoogleAnalyticsTracker()
             : base()
         {
-            DeploymentTarget = DeploymentEnvironment.Live;
-            Version = 2;
+            DeploymentTarget = DeploymentEnvironment.Production;
+            Version = 3;
             //var hash = Kernel.Instance.Hash;
             //// determine operationMode
             //object operationMode;
@@ -195,6 +203,9 @@ namespace System.Web.UI.Integrate
                     bool emitCommented = (operationMode == TrackerOperationMode.Commented);
                     switch (Version)
                     {
+                        case 3:
+                            EmitVersion3(w, emitCommented);
+                            break;
                         case 2:
                             EmitVersion2(w, emitCommented);
                             break;
@@ -222,23 +233,8 @@ namespace System.Web.UI.Integrate
         public DeploymentEnvironment DeploymentTarget { get; set; }
 
         #region Emit
-        /// <summary>
-        /// Emits the version2.
-        /// </summary>
-        /// <param name="writer">The writer.</param>
-        private void EmitVersion2(HtmlTextWriter w, bool emitCommented)
+        private void EmitCommerceVersion2(HtmlTextWriter w, bool emitCommented)
         {
-            w.Write(!emitCommented ? "<script type=\"text/javascript\">\n" : "<!--script type=\"text/javascript\">\n");
-            w.Write(@"//<![CDATA[
-var gaJsHost = ((""https:"" == document.location.protocol) ? ""https://ssl."" : ""http://www."");
-document.write(unescape(""%3Cscript src='"" + gaJsHost + ""google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E""));
-//]]>");
-            w.Write(!emitCommented ? "</script><script type=\"text/javascript\">\n" : "</script--><!--script type=\"text/javascript\">\n");
-            w.Write(@"//<![CDATA[
-try {
-var pageTracker = _gat._getTracker("""); w.Write(TrackerId); w.Write("\");\n");
-            w.Write("pageTracker._trackPageview();\n");
-            //
             var commerceTransaction = CommerceTransaction;
             var commerceItems = CommerceItems;
             if ((commerceTransaction != null) || (commerceItems != null))
@@ -276,6 +272,61 @@ var pageTracker = _gat._getTracker("""); w.Write(TrackerId); w.Write("\");\n");
                 }
                 w.Write("pageTracker._trackTrans();\n");
             }
+        }
+
+        /// <summary>
+        /// Emits the version3.
+        /// </summary>
+        /// <param name="writer">The writer.</param>
+        private void EmitVersion3(HtmlTextWriter w, bool emitCommented)
+        {
+            w.Write(!emitCommented ? "<script type=\"text/javascript\">\n" : "<!--script type=\"text/javascript\">\n");
+            w.Write(@"//<![CDATA[
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', '"); w.Write(TrackerId); w.WriteLine(@"']);");
+            if (Attributes != null)
+            {
+                if (!string.IsNullOrEmpty(Attributes.DomainName))
+                {
+                    w.Write(@"_gaq.push(['_setDomainName', "); w.Write(ClientScript.EncodeText(Attributes.DomainName)); w.WriteLine(@"]);");
+                }
+                if (Attributes.AllowLinker.HasValue)
+                {
+                    w.Write(@"_gaq.push(['setAllowLinker', "); w.Write(ClientScript.EncodeBool(Attributes.AllowLinker.Value)); w.WriteLine(@"]);");
+                }
+                if (Attributes.AllowHash.HasValue)
+                {
+                    w.Write(@"_gaq.push(['setAllowHash', "); w.Write(ClientScript.EncodeBool(Attributes.AllowHash.Value)); w.WriteLine(@"]);");
+                }
+            }
+            w.Write(@"_gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+            //]]>");
+            w.Write(!emitCommented ? "</script>\n" : "</script-->");
+        }
+
+        /// <summary>
+        /// Emits the version2.
+        /// </summary>
+        /// <param name="writer">The writer.</param>
+        private void EmitVersion2(HtmlTextWriter w, bool emitCommented)
+        {
+            w.Write(!emitCommented ? "<script type=\"text/javascript\">\n" : "<!--script type=\"text/javascript\">\n");
+            w.Write(@"//<![CDATA[
+var gaJsHost = ((""https:"" == document.location.protocol) ? ""https://ssl."" : ""http://www."");
+document.write(unescape(""%3Cscript src='"" + gaJsHost + ""google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E""));
+//]]>");
+            w.Write(!emitCommented ? "</script><script type=\"text/javascript\">\n" : "</script--><!--script type=\"text/javascript\">\n");
+            w.Write(@"//<![CDATA[
+try {
+var pageTracker = _gat._getTracker("""); w.Write(TrackerId); w.Write("\");\n");
+            w.Write("pageTracker._trackPageview();\n");
+            EmitCommerceVersion2(w, emitCommented);
             w.Write(@"} catch(err) {}
 //]]>");
             w.Write(!emitCommented ? "</script>\n" : "</script-->");
@@ -295,6 +346,8 @@ urchinTracker();
             w.Write(!emitCommented ? "</script>" : "</script-->");
         }
         #endregion
+
+        public AnalyticsAttributes Attributes { get; set; }
 
         /// <summary>
         /// Gets or sets the commerce transaction.

@@ -34,7 +34,7 @@ namespace System.Web.UI.Integrate
         public SiteCatalyst()
             : base()
         {
-            DeploymentTarget = DeploymentEnvironment.Live;
+            DeploymentTarget = DeploymentEnvironment.Production;
         }
 
         protected override void Render(HtmlTextWriter w)
