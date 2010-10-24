@@ -494,6 +494,9 @@
     <Compile Include="..\System.CoreEx_\System.Core.Nattrib\+Nattrib\NattribExtensions.cs">
       <Link>System.Core.Nattrib\+Nattrib\NattribExtensions.cs</Link>
     </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Nattrib\+Nattrib\NewAttrib.cs">
+      <Link>System.Core.Nattrib\+Nattrib\NewAttrib.cs</Link>
+    </Compile>
     <Compile Include="..\System.CoreEx_\System.Core.Objects\Collections\Frugal\ArrayItemList.cs">
       <Link>System.Core.Objects\Collections\Frugal\ArrayItemList.cs</Link>
     </Compile>

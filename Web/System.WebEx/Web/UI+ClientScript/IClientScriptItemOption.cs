@@ -1,4 +1,4 @@
-﻿#region License
+#region License
 /*
 The MIT License
 
@@ -23,16 +23,13 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 #endregion
-namespace System
+namespace System.Web.UI
 {
     /// <summary>
-    /// NattribExtensions
+    /// IClientScriptItemOption
     /// </summary>
-    public static class NattribExtensions
+    public interface IClientScriptItemOption
     {
-        public static T Get<T>(this Nattrib attrib)
-        {
-            return default(T);
-        }
+        NewAttrib MakeOption();
     }
 }

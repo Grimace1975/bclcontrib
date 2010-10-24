@@ -1,4 +1,4 @@
-﻿#region License
+#region License
 /*
 The MIT License
 
@@ -23,16 +23,15 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 #endregion
-namespace System
+using System.Text;
+namespace System.Web.UI
 {
     /// <summary>
-    /// NattribExtensions
+    /// IncludeForResourceClientScriptItem
     /// </summary>
-    public static class NattribExtensions
+    public class IncludeForResourceClientScriptItem : IncludeClientScriptItem
     {
-        public static T Get<T>(this Nattrib attrib)
-        {
-            return default(T);
-        }
+        public IncludeForResourceClientScriptItem(Type type, string resourceId)
+            : base(ClientScriptManagerEx.GetWebResourceUrl(type, resourceId), "text/javascript") { }
     }
 }

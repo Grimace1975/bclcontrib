@@ -34,7 +34,6 @@ namespace System.Web.UI
         private string _literal;
 
         public LiteralClientScriptItem(string literal)
-            : base()
         {
             _literal = literal;
         }

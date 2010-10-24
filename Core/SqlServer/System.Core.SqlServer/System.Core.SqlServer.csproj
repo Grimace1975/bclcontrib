@@ -78,6 +78,9 @@
     <Compile Include="..\..\System.CoreEx_\System.Core.Nattrib\+Nattrib\NattribExtensions.cs">
       <Link>SystemCoreEx+\+Nattrib\NattribExtensions.cs</Link>
     </Compile>
+    <Compile Include="..\..\System.CoreEx_\System.Core.Nattrib\+Nattrib\NewAttrib.cs">
+      <Link>SystemCoreEx+\+Nattrib\NewAttrib.cs</Link>
+    </Compile>
     <Compile Include="..\..\System.CoreEx_\System.Core.ParseFormat\FormatterEx+ObjectFormatter.cs">
       <Link>System.CoreEx+\System.Core.ParseFormat\Primitives\FormatterEx+ObjectFormatter.cs</Link>
     </Compile>

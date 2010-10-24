@@ -44,6 +44,7 @@
     <Compile Include="+Nattrib\AttribBase.cs" />
     <Compile Include="+Nattrib\Nattrib.cs" />
     <Compile Include="+Nattrib\NattribExtensions.cs" />
+    <Compile Include="+Nattrib\NewAttrib.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
