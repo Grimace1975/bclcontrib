@@ -33,7 +33,30 @@ namespace System.Web.UI
     /// </summary>
     public static class ClientScript
     {
+        /// <summary>
+        /// EmptyFunction
+        /// </summary>
+        public static string EmptyFunction = "function(){}";
+        /// <summary>
+        /// EmptyObject
+        /// </summary>
+        public static string EmptyObject = "{}";
+        /// <summary>
+        /// EmptyArray
+        /// </summary>
+        public static string EmptyArray = "[]";
+
         #region Encode
+        /// <summary>
+        /// Encodes the array.
+        /// </summary>
+        /// <param name="array">The array.</param>
+        /// <returns></returns>
+        public static string EncodeArray(string[] array)
+        {
+            return (array != null ? "[" + string.Join(",", array) + "]" : "null");
+        }
+
         /// <summary>
         /// Encodes the bool.
         /// </summary>
@@ -85,20 +108,53 @@ namespace System.Web.UI
         }
 
         /// <summary>
-        /// Encodes the hash.
+        /// Encodes the dictionary.
         /// </summary>
         /// <param name="value">The value.</param>
         /// <returns></returns>
-        public static string EncodeHash(Dictionary<string, string> value)
+        public static string EncodeDictionary(IDictionary<string, string> value) { return EncodeDictionary(value, false); }
+        public static string EncodeDictionary(IDictionary<string, string> value, bool includeNewLine)
         {
             if (value == null)
                 return "null";
             if (value.Count == 0)
                 return "{}";
             var b = new StringBuilder("{");
-            foreach (string key in value.Keys)
-                b.Append(key + ": " + value[key] + ", ");
-            b.Length -= 2;
+            if (includeNewLine)
+            {
+                foreach (string key in value.Keys)
+                    b.AppendLine(key + ": " + value[key] + ",");
+                b.Length -= 3;
+            }
+            else
+            {
+                foreach (string key in value.Keys)
+                    b.Append(key + ": " + value[key] + ", ");
+                b.Length -= 2;
+            }
+            b.Append("}");
+            return b.ToString();
+        }
+        public static string EncodeDictionary(IDictionary<string, object> value) { return EncodeDictionary(value, false); }
+        public static string EncodeDictionary(IDictionary<string, object> value, bool includeNewLine)
+        {
+            if (value == null)
+                return "null";
+            if (value.Count == 0)
+                return "{}";
+            var b = new StringBuilder("{");
+            if (includeNewLine)
+            {
+                foreach (string key in value.Keys)
+                    b.AppendLine(key + ": " + value[key] + ", ");
+                b.Length -= 4;
+            }
+            else
+            {
+                foreach (string key in value.Keys)
+                    b.Append(key + ": " + value[key] + ", ");
+                b.Length -= 2;
+            }
             b.Append("}");
             return b.ToString();
         }

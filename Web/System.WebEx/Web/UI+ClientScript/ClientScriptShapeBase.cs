@@ -1,4 +1,4 @@
-﻿#region License
+#region License
 /*
 The MIT License
 
@@ -23,16 +23,16 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 #endregion
-namespace System
+using System.Text;
+namespace System.Web.UI
 {
     /// <summary>
-    /// NattribExtensions
+    /// ClientScriptShapeBase
     /// </summary>
-    public static class NattribExtensions
+    public abstract class ClientScriptShapeBase
     {
-        public static T Get<T>(this Nattrib attrib)
-        {
-            return default(T);
-        }
+        public ClientScriptShapeBase() { }
+
+        public abstract void Render(StringBuilder b);
     }
 }

@@ -8,7 +8,7 @@
     <ProjectGuid>{A0473035-FA9B-4205-886C-9FF1ABAC41DD}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>System.WebEx.Integrate</RootNamespace>
+    <RootNamespace>System</RootNamespace>
     <AssemblyName>System.WebEx.Integrate</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -84,10 +84,16 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Primitives\TextProcess\Integrate\FlashTag.cs" />
     <Compile Include="Primitives\TextProcess\Integrate\VideoTag.cs" />
+    <Compile Include="Web\UI\ClientShapes+SwfUpload\SwfUploadShapeSwfObjectPlugin.cs" />
+    <Compile Include="Web\UI\ClientShapes+SwfUpload\SwfUploadShapeQueuePlugin.cs" />
+    <Compile Include="Web\UI\ClientShapes+SwfUpload\SwfUploadShape.cs" />
     <Compile Include="Web\Integrate\GoogleSiteMapObserver.cs" />
     <Compile Include="Web\Integrate\GoogleSiteMapNode.cs" />
     <Compile Include="Web\Integrate\GoogleSiteMapHandler.cs" />
     <Compile Include="Web\Mvc\Integrate\GoogleSiteMapResult.cs" />
+    <Compile Include="Web\UI\ClientShapes+SwfUpload\ClientScriptRegistrarSwfUploadShape.cs" />
+    <Compile Include="Web\UI\ClientShapes+SwfObject\ClientScriptRegistrarSwfObject.cs" />
+    <Compile Include="Web\UI\ClientShapes+SwfObject\SwfObjectShape.cs" />
     <Compile Include="Web\UI\Integrate+Gravatar\GravatarHold.cs" />
     <Compile Include="Web\UI\Integrate+ShareThis\ShareThisObjectMeta.cs" />
     <Compile Include="Web\UI\Integrate+ShareThis\ShareThisObjectLiteral.cs" />
@@ -107,6 +113,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="BclContrib.snk" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resource_\SwfUpload2.2.0.1.js" />
+    <EmbeddedResource Include="Resource_\SwfUpload2_2_0_1\cookies.js" />
+    <EmbeddedResource Include="Resource_\SwfUpload2_2_0_1\queue.js" />
+    <EmbeddedResource Include="Resource_\SwfUpload2_2_0_1\speed.js" />
+    <EmbeddedResource Include="Resource_\SwfUpload2_2_0_1\swfobject.js" />
+    <EmbeddedResource Include="Resource_\SwfUpload2_2_0_1\swfupload.swf" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resource_\SwfObject2.1.js" />
+    <EmbeddedResource Include="Resource_\SwfObject2_1\expressInstall.swf" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

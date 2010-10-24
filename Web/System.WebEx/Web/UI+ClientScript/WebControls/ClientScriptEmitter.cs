@@ -34,7 +34,6 @@ namespace System.Web.UI.WebControls
     public class ClientScriptEmitter : Control
     {
         public ClientScriptEmitter()
-            : base()
         {
             Inject = true;
         }
@@ -47,8 +46,15 @@ namespace System.Web.UI.WebControls
 
         public Type Shard { get; set; }
 
+        public bool InHtmlHead { get; set; }
+
         protected override void OnPreRender(EventArgs e)
         {
+            if (InHtmlHead)
+                if (Shard == null)
+                    Shard = typeof(System.Web.UI.HtmlControls.HtmlHead);
+                else
+                    throw new InvalidOperationException("Cant set shard and InHtmlHead");
             if (Inject)
             {
                 ServiceLocator.Inject(this);
@@ -62,18 +68,18 @@ namespace System.Web.UI.WebControls
             if (ClientScriptManager == null)
                 throw new InvalidOperationException("ClientScriptManager required");
             var repository = ClientScriptManager.GetRepository(Shard ?? typeof(IClientScriptManager));
-            RenderBlocks(w, repository.Includes, false);
-            RenderBlocks(w, repository.Items, true);
+            RenderItems(w, repository.Includes, false);
+            RenderItems(w, repository.Items, true);
         }
 
-        private static void RenderBlocks(HtmlTextWriter w, Dictionary<string, ClientScriptItemBase> blocks, bool addScriptTags)
+        private static void RenderItems(HtmlTextWriter w, Dictionary<string, ClientScriptItemBase> items, bool addScriptTags)
         {
-            if (blocks.Count > 0)
+            if (items.Count > 0)
             {
                 var b = new StringBuilder();
-                foreach (var block in blocks.Values)
+                foreach (var block in items.Values)
                     block.Render(b);
-                blocks.Clear();
+                items.Clear();
                 //
                 if (addScriptTags)
                 {

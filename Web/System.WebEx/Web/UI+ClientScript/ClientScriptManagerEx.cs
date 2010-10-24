@@ -25,8 +25,11 @@ THE SOFTWARE.
 #endregion
 using System.Collections.Generic;
 using System.Reflection;
+using System.Web.Handlers;
 namespace System.Web.UI
 {
+    internal delegate string GetWebResourceUrlDelegate(Type type, string resourceName, bool htmlEncoded);
+
     /// <summary>
     /// IClientScriptManager
     /// </summary>
@@ -51,6 +54,7 @@ namespace System.Web.UI
     /// </summary>
     public class ClientScriptManagerEx : IClientScriptManager
     {
+        private static readonly GetWebResourceUrlDelegate s_getWebResourceUrl = (GetWebResourceUrlDelegate)Delegate.CreateDelegate(typeof(GetWebResourceUrlDelegate), typeof(AssemblyResourceLoader).GetMethod("GetWebResourceUrl", BindingFlags.NonPublic | BindingFlags.Static, null, new[] { typeof(Type), typeof(string), typeof(bool) }, null));
         private static readonly Type s_type = typeof(IClientScriptManager);
         private static readonly Type s_htmlHeadType = typeof(System.Web.UI.HtmlControls.HtmlHead);
         private IClientScriptRepository _defaultRepository = new ClientScriptRepository();
@@ -94,6 +98,16 @@ namespace System.Web.UI
             if (_repositories == null)
                 _repositories = new Dictionary<Type, IClientScriptRepository>();
             _repositories[shard] = repository;
+        }
+
+        public static string GetWebResourceUrl(Type type, string resourceName) { return GetWebResourceUrl(type, resourceName, false); }
+        public static string GetWebResourceUrl(Type type, string resourceName, bool htmlEncoded)
+        {
+            if (type == null)
+                throw new ArgumentNullException("type");
+            if (string.IsNullOrEmpty(resourceName))
+                throw new ArgumentNullException("resourceName");
+            return s_getWebResourceUrl(type, resourceName, htmlEncoded);
         }
     }
 }

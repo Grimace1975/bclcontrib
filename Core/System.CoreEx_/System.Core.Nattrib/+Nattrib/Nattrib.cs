@@ -42,15 +42,9 @@ namespace System
             get { return 0; }
         }
 
-        public static Nattrib Parse(string[] args)
-        {
-            return null;
-        }
-
-        public static Nattrib Parse(object args)
-        {
-            return null;
-        }
+        public static Nattrib Parse(Nattrib args) { return (args != null ? args : null); }
+        public static Nattrib Parse(string[] args) { return (args != null ? (Nattrib)null : null); }
+        public static Nattrib Parse(object args) { return (args != null ? (Nattrib)null : null); }
 
         public IEnumerable<string> Names
         {

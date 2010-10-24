@@ -90,5 +90,21 @@ namespace System.Web.Mvc
             var serializer = new JavaScriptSerializer();
             return "JSER:" + serializer.Serialize(items);
         }
+
+        public static void AddModelErrorFor<TModel, TProperty>(this ViewDataDictionary viewData, Expression<Func<TModel, TProperty>> expression, Exception exception) { AddModelError(viewData, ExpressionHelper.GetExpressionText(expression), exception); }
+        public static void AddModelError(this ViewDataDictionary viewData, string expression, Exception exception)
+        {
+            var templateInfo = viewData.TemplateInfo;
+            var fullFieldName = templateInfo.GetFullHtmlFieldName(expression);
+            viewData.ModelState.AddModelError(fullFieldName, exception);
+        }
+
+        public static void AddModelErrorFor<TModel, TProperty>(this ViewDataDictionary viewData, Expression<Func<TModel, TProperty>> expression, string errorMessage) { AddModelError(viewData, ExpressionHelper.GetExpressionText(expression), errorMessage); }
+        public static void AddModelError(ViewDataDictionary viewData, string expression, string errorMessage)
+        {
+            var templateInfo = viewData.TemplateInfo;
+            var fullFieldName = templateInfo.GetFullHtmlFieldName(expression);
+            viewData.ModelState.AddModelError(fullFieldName, errorMessage);
+        }
     }
 }
