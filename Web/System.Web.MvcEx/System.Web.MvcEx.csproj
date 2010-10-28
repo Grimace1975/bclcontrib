@@ -97,6 +97,10 @@
     <Compile Include="Web\Mvc+Quality\ServiceLocatorActionInvoker.cs" />
     <Compile Include="Web\Mvc+Quality\IInjectableModelBinder.cs" />
     <Compile Include="Web\Mvc+Quality\ServiceLocatorModelBinder.cs" />
+    <Compile Include="Web\Mvc\MobileIndirectViewDirector.cs" />
+    <Compile Include="Web\Mvc\IndirectViewDirector.cs" />
+    <Compile Include="Web\Mvc\IndirectWebFormViewEngine.cs" />
+    <Compile Include="Web\Mvc\ResourceFileStreamResult.cs" />
     <Compile Include="Web\Mvc\Html\ChildActionExtensionsEx.cs" />
     <Compile Include="Web\Mvc\ModelStateExtensions.cs" />
     <Compile Include="Web\Mvc\TagBuilderExtensions.cs" />

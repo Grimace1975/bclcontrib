@@ -75,6 +75,7 @@
     <Compile Include="Web+SiteMap\IHaveVirtualUrlSiteMapNode.cs" />
     <Compile Include="Web\Configuration\CustomErrorSyn.cs" />
     <Compile Include="Web\Configuration\CustomErrorsSectionSyn.cs" />
+    <Compile Include="Web\WebResourceRegex.cs" />
     <Compile Include="Web\HttpServerUtilityExtensions.cs" />
     <Compile Include="Web\HttpCookieCollectionExtensions.cs" />
     <Compile Include="Web\Routing+Dynamic\IDynamicNode.cs" />

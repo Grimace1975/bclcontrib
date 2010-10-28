@@ -43,29 +43,26 @@ namespace System.Web.UI.ClientShapes
             SwfObject = 0x1,
         }
 
-        static ClientScriptRegistrarSwfObjectShape() { Current = new ClientScriptRegistrarSwfObjectShape { }; }
-
-        public static ClientScriptRegistrarSwfObjectShape Current { get; set; }
-
-        public void Register(Registrations registrations, Nattrib attrib)
+        public static void Register(IClientScriptManager manager, Registrations registrations, Nattrib attrib)
         {
+            if (manager == null)
+                throw new ArgumentNullException("manager");
             if ((registrations & Registrations.SwfObject) == Registrations.SwfObject)
             {
-                var clientScriptManager = ClientScriptManager;
-                if (clientScriptManager == null)
-                    throw new InvalidOperationException("ClientScriptManager must be set first");
                 //string swfObjectVersion;
                 string version = SwfObjectVersion; // ((attrib != null) && attrib.TryGetValue("swfObjectVersion", out swfObjectVersion) ? swfObjectVersion : SwfObjectVersion);
                 if (string.IsNullOrEmpty(version))
                     throw new InvalidOperationException("version");
                 string versionFolder = "System.Resource_.SwfObject" + version.Replace(".", "_");
+                // STATE
+                HttpContext.Current.Set<ClientScriptRegistrarSwfObjectShape>(new ClientScriptRegistrarSwfObjectShape
+                {
+                    SwfObjectExpressInstallFlashUrl = ClientScriptManagerEx.GetWebResourceUrl(s_type, versionFolder + ".expressInstall.swf"),
+                });
                 // INCLUDES
-                SwfObjectExpressInstallFlashUrl = ClientScriptManagerEx.GetWebResourceUrl(s_type, versionFolder + ".expressInstall.swf");
-                clientScriptManager.EnsureItem<HtmlHead>(null, () => new IncludeForResourceClientScriptItem(s_type, "System.Resource_.SwfObject" + version + ".js"));
+                manager.EnsureItem<HtmlHead>(null, () => new IncludeForResourceClientScriptItem(s_type, "System.Resource_.SwfObject" + version + ".js"));
             }
         }
-
-        protected IClientScriptManager ClientScriptManager { get; set; }
 
         public string SwfObjectExpressInstallFlashUrl { get; private set; }
     }
