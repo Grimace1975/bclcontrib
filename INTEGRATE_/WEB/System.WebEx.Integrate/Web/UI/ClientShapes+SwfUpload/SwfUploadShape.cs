@@ -39,8 +39,8 @@ namespace System.Web.UI.ClientShapes
             : this(NewAttrib.Parse(settings)) { }
         public SwfUploadShape(NewAttrib settings)
         {
-            var state = HttpContext.Current.Get<ClientScriptRegistrarSwfUploadShape.State>();
-            if (state == null)
+            var registrar = HttpContext.Current.Get<ClientScriptRegistrarSwfUploadShape>();
+            if (registrar == null)
                 throw new InvalidOperationException("ClientScriptRegistrarSwfUploadShape.PerRequest must be set first");
             Settings = settings;
             // set defaults
@@ -59,7 +59,7 @@ namespace System.Web.UI.ClientShapes
             ButtonTextStyle = DefaultValues.ButtonTextStyle;
             ButtonAction = DefaultValues.ButtonAction;
             //
-            FlashUrl = state.SwfUploadFlashUrl;
+            FlashUrl = registrar.SwfUploadFlashUrl;
         }
 
         protected ClientScriptRegistrarSwfUploadShape Registrar { get; set; }

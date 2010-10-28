@@ -104,7 +104,7 @@ namespace System.Quality
         public static bool GetWantsToSkipLocator<TService>() { return GetWantsToSkipLocator(typeof(TService)); }
         public static bool GetWantsToSkipLocator(Type type)
         {
-            return ((type == null) || (type.IsAssignableFrom(s_wantToSkipServiceLocatorType)));
+            return ((type == null) || (s_wantToSkipServiceLocatorType.IsAssignableFrom(type)));
         }
     }
 }
