@@ -148,7 +148,7 @@ namespace System.Web.UI
             }
             // page title
             if (!string.IsNullOrEmpty(text = pageHead.Title))
-                htmlHeadControls.Add(new HtmlTitle { ID = HeaderControlId.Title, Text = text });
+                htmlHeadControls.Add(new HtmlTitle { ID = HeaderControlId.Title, Text = HttpUtility.HtmlEncode(text) });
             // page keyword
             if (!string.IsNullOrEmpty(text = pageHead.Keywords))
                 htmlHeadControls.Add(new HtmlMeta { ID = HeaderControlId.Keyword, Name = "keywords", Content = text });
