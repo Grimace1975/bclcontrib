@@ -1094,6 +1094,9 @@
     <Compile Include="..\System.CoreEx_\System.Core2\Patterns\ReleaseManagement\DeploymentEnvironment.cs">
       <Link>System.Core2\Patterns\ReleaseManagement\DeploymentEnvironment.cs</Link>
     </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core2\Patterns\ReleaseManagement\DeploymentEnvironmentExtensions.cs">
+      <Link>System.Core2\Patterns\ReleaseManagement\DeploymentEnvironmentExtensions.cs</Link>
+    </Compile>
     <Compile Include="..\System.CoreEx_\System.Core2\Patterns\ReleaseManagement\DevelopmentStage.cs">
       <Link>System.Core2\Patterns\ReleaseManagement\DevelopmentStage.cs</Link>
     </Compile>

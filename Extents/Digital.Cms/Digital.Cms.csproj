@@ -8,7 +8,7 @@
     <ProjectGuid>{772CCA21-8CE3-426B-B9F4-F450E0B4458D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Digital.Cms</RootNamespace>
+    <RootNamespace>Digital</RootNamespace>
     <AssemblyName>Digital.Cms</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

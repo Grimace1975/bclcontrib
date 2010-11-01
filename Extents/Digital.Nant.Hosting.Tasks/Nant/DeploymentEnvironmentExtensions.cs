@@ -23,19 +23,22 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 #endregion
-namespace System.Patterns.ReleaseManagement
+using NAnt.Core;
+using System.Patterns.ReleaseManagement;
+namespace Digital.Nant.Hosting
 {
-	/// <summary>
-    /// DeploymentEnvironment
-	/// </summary>
-    // [Wiki] http://en.wikipedia.org/wiki/Software_testing
-	public enum DeploymentEnvironment
-	{
-        ProofOfConcept,
-        Private,
-		Development,
-		AlphaTesting,
-		BetaTesting,
-        Production, //Live
-	}
+    internal static class DeploymentEnvironmentExtensions
+    {
+        public static string CreateAccountUserId(this DeploymentEnvironment stage, string applicationId, string kind)
+        {
+            return applicationId + "_" + stage.ToCode() + kind;
+        }
+
+        public static string CreateAccountPassword(this DeploymentEnvironment stage, string applicationId, string kind)
+        {
+            if (kind == "IUSR")
+                return (stage.GetExternalDeployment() ? "a" : applicationId + "." + stage.ToShortName() + "_IPWD");
+            return (stage.GetExternalDeployment() ? "a" : applicationId + "." + stage.ToShortName() + "_PWD");
+        }
+    }
 }
