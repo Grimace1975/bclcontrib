@@ -23,19 +23,33 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 #endregion
-namespace System.Patterns.ReleaseManagement
+using NAnt.Core;
+namespace Digital.Nant.Hosting.Tasks
 {
-	/// <summary>
-    /// DeploymentEnvironment
-	/// </summary>
-    // [Wiki] http://en.wikipedia.org/wiki/Software_testing
-	public enum DeploymentEnvironment
+	public partial class ManageIisTask
 	{
-        ProofOfConcept,
-        Private,
-		Development,
-		AlphaTesting,
-		BetaTesting,
-        Production, //Live
+		public interface IIis
+		{
+			Project Project { get; set; }
+			void CreateSite(IisContext iis);
+			void RemoveSite(IisContext iis);
+		}
+
+		public class IisContext
+		{
+			public struct Binding
+			{
+				public string Information;
+				public string Protocol;
+			}
+			public decimal LayoutVersion { get; set; }
+			public string ApplicationPoolId { get; set; }
+			public string ApplicationPoolUserId { get; set; }
+			public string ApplicationPoolPassword { get; set; }
+			public string SiteId { get; set; }
+			public string Domain { get; set; }
+			public Binding[] Bindings { get; set; }
+			public string RootPath { get; set; }
+		}
 	}
 }

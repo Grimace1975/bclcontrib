@@ -23,19 +23,19 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 #endregion
-namespace System.Patterns.ReleaseManagement
+using NAnt.Core;
+using NAnt.Core.Attributes;
+namespace Digital.Nant.Hosting.Tasks
 {
-	/// <summary>
-    /// DeploymentEnvironment
-	/// </summary>
-    // [Wiki] http://en.wikipedia.org/wiki/Software_testing
-	public enum DeploymentEnvironment
+	public partial class ManageIisTask
 	{
-        ProofOfConcept,
-        Private,
-		Development,
-		AlphaTesting,
-		BetaTesting,
-        Production, //Live
+		public class Binding : Element
+		{
+			[TaskAttribute("information"), StringValidator(AllowEmpty = false)]
+			public string Information { get; set; }
+
+			[TaskAttribute("protocol"), StringValidator(AllowEmpty = false)]
+			public string Protocol { get; set; }
+		}
 	}
 }
