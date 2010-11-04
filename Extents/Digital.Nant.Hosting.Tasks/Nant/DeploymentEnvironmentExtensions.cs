@@ -29,16 +29,14 @@ namespace Digital.Nant.Hosting
 {
     internal static class DeploymentEnvironmentExtensions
     {
-        public static string CreateAccountUserId(this DeploymentEnvironment stage, string applicationId, string kind)
+        public static string CreateAccountUserId(this DeploymentEnvironment environment, string applicationId, string kind)
         {
-            return applicationId + "_" + stage.ToCode() + kind;
+            return applicationId + "_" + environment.ToCode() + kind;
         }
 
-        public static string CreateAccountPassword(this DeploymentEnvironment stage, string applicationId, string kind)
+        public static string CreateAccountPassword(this DeploymentEnvironment environment, string applicationId, string kind)
         {
-            if (kind == "IUSR")
-                return (stage.GetExternalDeployment() ? "a" : applicationId + "." + stage.ToShortName() + "_IPWD");
-            return (stage.GetExternalDeployment() ? "a" : applicationId + "." + stage.ToShortName() + "_PWD");
+            return (environment.GetExternalDeployment() ? "!" : applicationId + "." + environment.ToShortName() + "_" + kind[0] + "PWD");
         }
     }
 }

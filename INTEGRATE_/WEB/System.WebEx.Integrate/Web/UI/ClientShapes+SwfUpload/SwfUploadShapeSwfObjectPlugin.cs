@@ -30,6 +30,11 @@ namespace System.Web.UI.ClientShapes
     /// </summary>
     public class SwfUploadShapeSwfObjectPlugin : IClientScriptItemOption
     {
+        public SwfUploadShapeSwfObjectPlugin()
+        {
+            ClientScriptRegistrarSwfObjectShape.AssertRegistered();
+        }
+
         NewAttrib IClientScriptItemOption.MakeOption()
         {
             var options = new NewAttrib();

@@ -68,7 +68,7 @@ namespace Digital.Nant.Hosting.Tasks
 				ApplicationPoolPassword = DeploymentEnvironment.CreateAccountPassword(ApplicationId, "IUSR"),
 				Bindings = bindings,
 				SiteId = ApplicationId,
-				Domain = ApplicationId + "." + DeploymentEnvironment.ToShortName() + (DeploymentEnvironment.GetExternalDeployment() ? ".deghosting.com" : ".degdarwin.com"),
+				Domain = ApplicationId + "." + DeploymentEnvironment.ToShortName() + (DeploymentEnvironment.GetExternalDeployment() ? ".x.com" : ".x.com"),
 				RootPath = ApplicationPath + @"\" + ApplicationId,
 			};
 			if (!Remove)

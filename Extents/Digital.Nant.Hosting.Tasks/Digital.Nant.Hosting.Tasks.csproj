@@ -66,15 +66,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Nant\DeploymentEnvironmentExtensions.cs" />
-    <Compile Include="Nant\Hosting\Tasks+OS\ManageScheduledTasksTask.cs" />
-    <Compile Include="Nant\Hosting\Tasks+Abstract\ManageApplicationTask.cs" />
+    <Compile Include="Nant\Hosting\Tasks+System\ManageScheduledTasksTask.cs" />
+    <Compile Include="Nant\Hosting\Tasks+Packages\ManageApplicationTask.cs" />
     <Compile Include="Nant\Hosting\Tasks+Web\ManageIisTask+Iis.cs" />
     <Compile Include="Nant\Hosting\Tasks+Web\ManageIisTask+Binding.cs" />
     <Compile Include="Nant\Hosting\Tasks+Web\ManageDirectoryTask.cs" />
     <Compile Include="Nant\Hosting\Tasks+Web\ManageIisTask+Iis7.cs" />
     <Compile Include="Nant\Hosting\Tasks+Web\ManageIisTask+Iis6.cs" />
     <Compile Include="Nant\Hosting\Tasks+Web\ManageIisTask.cs" />
-    <Compile Include="Nant\Hosting\Tasks+OS\ManageAccountTask.cs" />
+    <Compile Include="Nant\Hosting\Tasks+System\ManageAccountTask.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
