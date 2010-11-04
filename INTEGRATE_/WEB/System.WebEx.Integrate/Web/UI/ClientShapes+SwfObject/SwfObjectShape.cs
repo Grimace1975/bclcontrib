@@ -36,9 +36,7 @@ namespace System.Web.UI.ClientShapes
     {
         public SwfObjectShape()
         {
-            var registrar = HttpContext.Current.Get<ClientScriptRegistrarSwfObjectShape>();
-            if (registrar == null)
-                throw new InvalidOperationException("ClientScriptRegistrarSwfUploadShape.Current must be set first");
+            var registrar = ClientScriptRegistrarSwfObjectShape.AssertRegistered();
             FlashVersionId = "7.0.0";
             ExpressInstallSwfUrl = registrar.SwfObjectExpressInstallFlashUrl;
         }

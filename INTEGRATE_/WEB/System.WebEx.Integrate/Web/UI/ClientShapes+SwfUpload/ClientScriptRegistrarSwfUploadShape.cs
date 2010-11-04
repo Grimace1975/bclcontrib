@@ -83,6 +83,15 @@ namespace System.Web.UI.ClientShapes
 
         public string SwfUploadFlashUrl { get; internal set; }
 
+        public static ClientScriptRegistrarSwfUploadShape AssertRegistered()
+        {
+            var registrar = HttpContext.Current.Get<ClientScriptRegistrarSwfUploadShape>();
+            if (registrar == null)
+                throw new InvalidOperationException("ClientScriptRegistrarSwfUploadShape.PerRequest must be set first");
+            return registrar;
+        }
+
+
         //Fix for the Flash Player Cookie bug in Non-IE browsers.
         //Since Flash Player always sends the IE cookies even in FireFox we have to bypass the cookies by sending the values as part of the POST or GET and overwrite the cookies with the passed in values.
         //The theory is that at this point (BeginRequest) the cookies have not been read by the Session and Authentication logic and if we update the cookies here we'll get our Session and Authentication restored correctly

@@ -53,18 +53,18 @@ namespace Digital.Nant.Hosting.Tasks
             // admin user
             string userId = DeploymentEnvironment.CreateAccountUserId(ApplicationId, null);
             if (!Remove)
-                CreateUser(userId, DeploymentEnvironment.CreateAccountPassword(ApplicationId, null));
+                InstallUser(userId, DeploymentEnvironment.CreateAccountPassword(ApplicationId, null));
             else
                 RemoveUser(userId);
             // iusr user
             userId = DeploymentEnvironment.CreateAccountUserId(ApplicationId, "IUSR");
             if (!Remove)
-                CreateUser(userId, DeploymentEnvironment.CreateAccountPassword(ApplicationId, "IUSR"), "IIS_IUSRS");
+                InstallUser(userId, DeploymentEnvironment.CreateAccountPassword(ApplicationId, "IUSR"), "IIS_IUSRS");
             else
                 RemoveUser(userId);
         }
 
-        private void CreateUser(string userId, string password, params string[] groups)
+        private void InstallUser(string userId, string password, params string[] groups)
         {
             //const int ADS_UF_PASSWD_NOTREQD = 0x0020;
             const int ADS_UF_PASSWD_CANT_CHANGE = 0x0040;
@@ -100,7 +100,6 @@ namespace Digital.Nant.Hosting.Tasks
                     {
                         var groupEntry = directory.Children.Find(group, "group");
                         if (groupEntry != null)
-                        {
                             try
                             {
                                 groupEntry.Invoke("Add", new object[] { userEntry.Path.ToString() });
@@ -111,7 +110,6 @@ namespace Digital.Nant.Hosting.Tasks
                                 if ((innerException == null) || ((uint)innerException.ErrorCode != 0x80070562))
                                     throw;
                             }
-                        }
                     }
                 //Project.Log(Level.Info, "Account created: " + userId);
             }

@@ -60,10 +60,18 @@ namespace System.Web.UI.ClientShapes
                     SwfObjectExpressInstallFlashUrl = ClientScriptManagerEx.GetWebResourceUrl(s_type, versionFolder + ".expressInstall.swf"),
                 });
                 // INCLUDES
-                manager.EnsureItem<HtmlHead>(null, () => new IncludeForResourceClientScriptItem(s_type, "System.Resource_.SwfObject" + version + ".js"));
+                manager.EnsureItem<HtmlHead>("SwfObject", () => new IncludeForResourceClientScriptItem(s_type, "System.Resource_.SwfObject" + version + ".js"));
             }
         }
 
         public string SwfObjectExpressInstallFlashUrl { get; private set; }
+
+        public static ClientScriptRegistrarSwfObjectShape AssertRegistered()
+        {
+            var registrar = HttpContext.Current.Get<ClientScriptRegistrarSwfObjectShape>();
+            if (registrar == null)
+                throw new InvalidOperationException("ClientScriptRegistrarSwfUploadShape.Current must be set first");
+            return registrar;
+        }
     }
 }

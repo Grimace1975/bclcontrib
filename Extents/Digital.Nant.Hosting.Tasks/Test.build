@@ -5,8 +5,8 @@
     <!--<manageIis stage="Develop" applicationId="NEW" remove="false">
       <binding information="*:80:" protocol="http" />
     </manageIis>-->
-    <manageApplication deploymentEnvironment="Develop" applicationId="TYRONE" remove="true">
+    <manageApplicationPackage deploymentEnvironment="Develop" applicationId="TYRONE" remove="true">
       <binding information="*:80:" protocol="http" />
-    </manageApplication>
+    </manageApplicationPackage>
   </target>
 </project>

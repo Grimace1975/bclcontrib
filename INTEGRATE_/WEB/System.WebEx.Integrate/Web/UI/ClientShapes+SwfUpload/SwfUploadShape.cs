@@ -39,9 +39,7 @@ namespace System.Web.UI.ClientShapes
             : this(NewAttrib.Parse(settings)) { }
         public SwfUploadShape(NewAttrib settings)
         {
-            var registrar = HttpContext.Current.Get<ClientScriptRegistrarSwfUploadShape>();
-            if (registrar == null)
-                throw new InvalidOperationException("ClientScriptRegistrarSwfUploadShape.PerRequest must be set first");
+            var registrar = ClientScriptRegistrarSwfUploadShape.AssertRegistered();
             Settings = settings;
             // set defaults
             UploadUrl = DefaultValues.UploadUrl;
@@ -138,7 +136,7 @@ namespace System.Web.UI.ClientShapes
             public static readonly Cursor ButtonCursor = Cursor.Arrow;
             public static readonly WindowMode ButtonWindowMode = WindowMode.Window;
             // EVENT HANDLERS
-            public static readonly string SwfuploadLoadedHandler = null;
+            public static readonly string SwfUploadLoadedHandler = null;
             public static readonly string FileDialogStartHandler = null;
             public static readonly string FileQueuedHandler = null;
             public static readonly string FileQueueErrorHandler = null;
@@ -261,8 +259,8 @@ namespace System.Web.UI.ClientShapes
                         throw new InvalidOperationException();
                 }
             // EVENT HANDLERS
-            if (SwfuploadLoadedHandler != DefaultValues.SwfuploadLoadedHandler)
-                options["swfupload_loaded_handler"] = ClientScript.EncodeExpression(SwfuploadLoadedHandler);
+            if (SwfUploadLoadedHandler != DefaultValues.SwfUploadLoadedHandler)
+                options["swfupload_loaded_handler"] = ClientScript.EncodeExpression(SwfUploadLoadedHandler);
             if (FileDialogStartHandler != DefaultValues.FileDialogStartHandler)
                 options["file_dialog_start_handler"] = ClientScript.EncodeExpression(FileDialogStartHandler);
             if (FileQueuedHandler != DefaultValues.FileQueuedHandler)
@@ -596,7 +594,7 @@ namespace System.Web.UI.ClientShapes
         /// Gets or sets the swfupload loaded handler.
         /// </summary>
         /// <value>The swfupload loaded handler.</value>
-        public string SwfuploadLoadedHandler { get; set; }
+        public string SwfUploadLoadedHandler { get; set; }
 
         /// <summary>
         /// Gets or sets the file dialog start handler.

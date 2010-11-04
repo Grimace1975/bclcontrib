@@ -45,12 +45,12 @@ namespace Digital.Nant.Hosting.Tasks
 		protected override void ExecuteTask()
 		{
 			if (!Remove)
-				CreateWinTasks();
+				InstallSchTasks();
 			else
 				RemoveWinTasks();
 		}
 
-		private void CreateWinTasks()
+		private void InstallSchTasks()
 		{
 			Project.Log(Level.Info, "Creating wintasks: " + ApplicationId);
 			//Environment.MachineName + @"\" + Stage."UserId"
