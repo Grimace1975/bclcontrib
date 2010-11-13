@@ -60,6 +60,9 @@ namespace System.Primitives.DataTypes
 				: base(Prime.TryParse, DateTime.MinValue, DateTime.MinValue.ToString()) { }
 		}
 
+        /// <summary>
+        /// Prime
+        /// </summary>
 		public static class Prime
 		{
 			public static string Format(DateTime value, FormatAttrib attrib)
@@ -79,8 +82,7 @@ namespace System.Primitives.DataTypes
 			{
 				if (string.IsNullOrEmpty(text))
 				{
-					value = DateTime.MinValue;
-					return false;
+					value = DateTime.MinValue; return false;
 				}
 				// static has cached version
 				var match = Regex.Match(text, @"^\d{1,2}([/\-])\d{1,2}$", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Singleline);

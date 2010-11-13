@@ -33,6 +33,9 @@ namespace System.Primitives.DataTypes
 		public NotBoolDataType()
 			: base() { }
 
+        /// <summary>
+        /// Prime
+        /// </summary>
 		public new static class Prime
 		{
 			public static bool TransformIn(bool value) { return !value; }

@@ -63,7 +63,7 @@ namespace System.Primitives.DataTypes
         }
 
         /// <summary>
-        /// 
+        /// Prime
         /// </summary>
         public static class Prime
         {
@@ -76,17 +76,14 @@ namespace System.Primitives.DataTypes
             {
                 if (string.IsNullOrEmpty(text))
                 {
-                    value = string.Empty;
-                    return false;
+                    value = string.Empty; return false;
                 }
                 // static has cached version
                 if (!Regex.IsMatch(text, EmailPattern, RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Singleline))
                 {
-                    value = string.Empty;
-                    return false;
+                    value = string.Empty; return false;
                 }
-                value = text;
-                return true;
+                value = text; return true;
             }
 
             public static Type Type

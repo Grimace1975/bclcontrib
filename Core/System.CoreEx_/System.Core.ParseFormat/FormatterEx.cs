@@ -23,11 +23,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 #endregion
-using System.Reflection;
-using System.Globalization;
 using System.Collections.Generic;
 using System.Text;
-using System.Primitives;
 namespace System
 {
     /// <summary>
@@ -35,13 +32,8 @@ namespace System
     /// </summary>
     public static partial class FormatterEx
     {
-        /// <summary>
-        /// Formats the ranges.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="ranges">The ranges.</param>
-        /// <param name="formater">The formater.</param>
-        /// <returns></returns>
+        public class CanFormatAttribute : Attribute { }
+
         public static string FormatRanges<T, TAttrib>(ICollection<Range<T>> ranges, Func<T, TAttrib, string> formater, TAttrib attrib)
         {
             if (ranges == null)
@@ -63,27 +55,20 @@ namespace System
             return b.ToString();
         }
 
-        /// <summary>
-        /// Formats the specified value.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="value">The value.</param>
-        /// <returns></returns>
+        #region Object
         public static string Format<T>(object value) { return Format<T>(value, null); }
         public static string Format<T>(object value, Nattrib attribs)
         {
             return ObjectFormatterDelegateFactory<T>.Format(value);
         }
-        /// <summary>
-        /// Formats the specified value.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="value">The value.</param>
-        /// <returns></returns>
+        #endregion
+
+        #region Value
         public static string Format<T>(T value) { return Format<T>(value, null); }
         public static string Format<T>(T value, Nattrib attribs)
         {
             return ValueFormatterDelegateFactory<T>.Format(value);
         }
+        #endregion
     }
 }

@@ -26,13 +26,12 @@ THE SOFTWARE.
 using System.Reflection;
 using System.Globalization;
 using System.Collections.Generic;
-using System.Text;
-using System.Primitives;
 using System.Primitives.DataTypes;
 namespace System
 {
     public static partial class FormatterEx
     {
+        #region Registration
         private static Dictionary<Type, object> s_valueFormatterProviders = null;
 
         public interface IValueFormatterBuilder
@@ -45,35 +44,56 @@ namespace System
             string Format(T value);
         }
 
-        /// <summary>
-        /// ValueFormatterDelegateFactory
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
+        private static IValueFormatter<T> ScanForValueFormatter<T>(Type type)
+        {
+            if (s_valueFormatterProviders != null)
+                foreach (var valueFormatter2 in s_valueFormatterProviders)
+                    if (type.IsSubclassOf(valueFormatter2.Key))
+                        return ((IValueFormatter<T>)valueFormatter2.Value);
+            Type key;
+            IValueFormatter<T> valueFormatter;
+            if (FormatterEx.TryScanForValueFormatter<T>(out key, out valueFormatter))
+            {
+                if (s_valueFormatterProviders == null)
+                    s_valueFormatterProviders = new Dictionary<Type, object>();
+                s_valueFormatterProviders.Add(key, valueFormatter);
+                return valueFormatter;
+            }
+            return null;
+        }
+
+        private static bool TryScanForValueFormatter<T>(out Type key, out IValueFormatter<T> valueFormatter)
+        {
+            //var interfaces = type.FindInterfaces(((m, filterCriteria) => m == s_objectParserBuilderType), null);
+            throw new NotImplementedException();
+        }
+        #endregion
+
         internal static class ValueFormatterDelegateFactory<T>
         {
             private static readonly Type s_type = typeof(T);
             public static readonly Func<T, string> Format = CreateFormatter(s_type);
 
-            /// <summary>
-            /// Initializes the <see cref="ValueDelegateFactory&lt;T&gt;"/> class.
-            /// </summary>
             static ValueFormatterDelegateFactory() { }
 
-            /// <summary>
-            /// Creates the format.
-            /// </summary>
-            /// <param name="type">The type.</param>
-            /// <returns></returns>
             private static Func<T, string> CreateFormatter(Type type)
             {
                 if (type == CoreEx.BoolType)
                     return (Func<T, string>)Delegate.CreateDelegate(typeof(Func<T, string>), typeof(ValueFormatterDelegateFactory<T>).GetMethod("Formatter_Bool", BindingFlags.NonPublic | BindingFlags.Static));
+                if (type == CoreEx.NBoolType)
+                    return (Func<T, string>)Delegate.CreateDelegate(typeof(Func<T, string>), typeof(ValueFormatterDelegateFactory<T>).GetMethod("Formatter_NBool", BindingFlags.NonPublic | BindingFlags.Static));
                 if (type == CoreEx.DateTimeType)
                     return (Func<T, string>)Delegate.CreateDelegate(typeof(Func<T, string>), typeof(ValueFormatterDelegateFactory<T>).GetMethod("Formatter_DateTime", BindingFlags.NonPublic | BindingFlags.Static));
+                if (type == CoreEx.NDateTimeType)
+                    return (Func<T, string>)Delegate.CreateDelegate(typeof(Func<T, string>), typeof(ValueFormatterDelegateFactory<T>).GetMethod("Formatter_NDateTime", BindingFlags.NonPublic | BindingFlags.Static));
                 if (type == CoreEx.DecimalType)
                     return (Func<T, string>)Delegate.CreateDelegate(typeof(Func<T, string>), typeof(ValueFormatterDelegateFactory<T>).GetMethod("Formatter_Decimal", BindingFlags.NonPublic | BindingFlags.Static));
+                if (type == CoreEx.NDecimalType)
+                    return (Func<T, string>)Delegate.CreateDelegate(typeof(Func<T, string>), typeof(ValueFormatterDelegateFactory<T>).GetMethod("Formatter_NDecimal", BindingFlags.NonPublic | BindingFlags.Static));
                 if (type == CoreEx.Int32Type)
                     return (Func<T, string>)Delegate.CreateDelegate(typeof(Func<T, string>), typeof(ValueFormatterDelegateFactory<T>).GetMethod("Formatter_Int32", BindingFlags.NonPublic | BindingFlags.Static));
+                if (type == CoreEx.NInt32Type)
+                    return (Func<T, string>)Delegate.CreateDelegate(typeof(Func<T, string>), typeof(ValueFormatterDelegateFactory<T>).GetMethod("Formatter_NInt32", BindingFlags.NonPublic | BindingFlags.Static));
                 if (type == CoreEx.StringType)
                     return (Func<T, string>)Delegate.CreateDelegate(typeof(Func<T, string>), typeof(ValueFormatterDelegateFactory<T>).GetMethod("Formatter_String", BindingFlags.NonPublic | BindingFlags.Static));
                 if (s_valueFormatterProviders != null)
@@ -87,12 +107,6 @@ namespace System
             }
 
             #region Default
-            /// <summary>
-            /// Values the field.
-            /// </summary>
-            /// <param name="text">The text.</param>
-            /// <param name="defaultValue">The default value.</param>
-            /// <returns></returns>
             private static string Formatter_Default(T value)
             {
                 return (value != null ? value.ToString() : string.Empty);
@@ -100,59 +114,50 @@ namespace System
             #endregion
 
             #region Bool
-            /// <summary>
-            /// Formats the field_ bool.
-            /// </summary>
-            /// <param name="value">if set to <c>true</c> [value].</param>
-            /// <returns></returns>
             private static string Formatter_Bool(bool value)
             {
                 return (value ? BoolDataType.YesString : BoolDataType.NoString);
             }
+            private static string Formatter_NBool(bool? value)
+            {
+                return (value.HasValue ? (value.Value ? BoolDataType.YesString : BoolDataType.NoString) : string.Empty);
+            }
             #endregion
 
             #region DateTime
-            /// <summary>
-            /// Formats the field_ date time.
-            /// </summary>
-            /// <param name="value">The value.</param>
-            /// <returns></returns>
             private static string Formatter_DateTime(DateTime value)
             {
                 return value.ToString("M/d/yyyy hh:mm tt", CultureInfo.InvariantCulture);
             }
+            private static string Formatter_NDateTime(DateTime? value)
+            {
+                return (value.HasValue ? value.Value.ToString("M/d/yyyy hh:mm tt", CultureInfo.InvariantCulture) : string.Empty);
+            }
             #endregion
 
             #region Decimal
-            /// <summary>
-            /// Formats the field_ decimal.
-            /// </summary>
-            /// <param name="value">The value.</param>
-            /// <returns></returns>
             private static string Formatter_Decimal(decimal value)
             {
                 return value.ToString("0.0000", CultureInfo.InvariantCulture);
             }
+            private static string Formatter_NDecimal(decimal? value)
+            {
+                return (value.HasValue ? value.Value.ToString("0.0000", CultureInfo.InvariantCulture) : string.Empty);
+            }
             #endregion
 
             #region Int32
-            /// <summary>
-            /// Formats the field_ int32.
-            /// </summary>
-            /// <param name="value">The value.</param>
-            /// <returns></returns>
             private static string Formatter_Int32(int value)
             {
                 return value.ToString(CultureInfo.InvariantCulture);
             }
+            private static string Formatter_NInt32(int? value)
+            {
+                return (value.HasValue ? value.Value.ToString(CultureInfo.InvariantCulture) : string.Empty);
+            }
             #endregion
 
             #region String
-            /// <summary>
-            /// Formats the field_ text.
-            /// </summary>
-            /// <param name="value">The value.</param>
-            /// <returns></returns>
             private static string Formatter_String(string value)
             {
                 return value;

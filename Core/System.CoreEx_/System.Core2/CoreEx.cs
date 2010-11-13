@@ -41,9 +41,13 @@ namespace System
         /// </summary>
         public const int ScopeLength = 2;
         internal static readonly Type BoolType = typeof(bool);
+        internal static readonly Type NBoolType = typeof(bool?);
         internal static readonly Type DateTimeType = typeof(DateTime);
+        internal static readonly Type NDateTimeType = typeof(DateTime?);
         internal static readonly Type DecimalType = typeof(decimal);
+        internal static readonly Type NDecimalType = typeof(decimal?);
         internal static readonly Type Int32Type = typeof(int);
+        internal static readonly Type NInt32Type = typeof(int?);
         internal static readonly Type StringType = typeof(string);
         internal static readonly Type ObjectType = typeof(object);
         internal static readonly Type XmlReaderType = typeof(XmlReader);

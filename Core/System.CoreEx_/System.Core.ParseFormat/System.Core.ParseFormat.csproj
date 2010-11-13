@@ -45,7 +45,7 @@
     <Compile Include="FormatterEx.cs" />
     <Compile Include="FormatterEx+ObjectFormatter.cs" />
     <Compile Include="FormatterEx+ValueFormatter.cs" />
-    <Compile Include="ObjectExtensions.cs" />
+    <Compile Include="ObjectEx\ObjectExtensions.cs" />
     <Compile Include="ParserEx.cs" />
     <Compile Include="ParserEx+ObjectParser.cs" />
     <Compile Include="ParserEx+StringParser.cs" />

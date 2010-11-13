@@ -66,7 +66,7 @@ namespace System.Primitives.DataTypes
         }
 
         /// <summary>
-        /// 
+        /// Prime
         /// </summary>
         public static class Prime
         {
@@ -96,8 +96,7 @@ namespace System.Primitives.DataTypes
             {
                 if (string.IsNullOrEmpty(text))
                 {
-                    value = 0;
-                    return false;
+                    value = 0; return false;
                 }
                 if (!int.TryParse(text, out value))
                     return false;

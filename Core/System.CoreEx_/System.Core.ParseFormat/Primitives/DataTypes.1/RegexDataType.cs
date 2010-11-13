@@ -57,9 +57,9 @@ namespace System.Primitives.DataTypes
 				: base(Prime.TryParse) { }
 		}
 
-		/// <summary>
-		/// 
-		/// </summary>
+        /// <summary>
+        /// Prime
+        /// </summary>
 		public static class Prime
 		{
 			public static string Format(string value, FormatAttrib attrib)
@@ -71,8 +71,7 @@ namespace System.Primitives.DataTypes
 			{
 				if (string.IsNullOrEmpty(text))
 				{
-					value = string.Empty;
-					return false;
+					value = string.Empty; return false;
 				}
 				value = text;
 				// check attrib

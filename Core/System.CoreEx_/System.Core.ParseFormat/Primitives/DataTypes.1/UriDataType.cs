@@ -28,93 +28,90 @@ namespace System.Primitives.DataTypes
     /// <summary>
     /// UriDataType
     /// </summary>
-	public class UriDataType : DataTypeBase
-	{
-		public class FormatAttrib { }
+    public class UriDataType : DataTypeBase
+    {
+        public class FormatAttrib { }
 
-		public class ParseAttrib
-		{
-			public UriKind? UriKind { get; set; }
-		}
+        public class ParseAttrib
+        {
+            public UriKind? UriKind { get; set; }
+        }
 
-		public UriDataType()
-			: base(Prime.Type, Prime.FormFieldMeta, new DataTypeFormatter(), new DataTypeParser()) { }
+        public UriDataType()
+            : base(Prime.Type, Prime.FormFieldMeta, new DataTypeFormatter(), new DataTypeParser()) { }
 
-		public class DataTypeFormatter : DataTypeFormatterBase<string, FormatAttrib, ParseAttrib>
-		{
-			public DataTypeFormatter()
-				: base(Prime.Format, Prime.TryParse) { }
-		}
+        public class DataTypeFormatter : DataTypeFormatterBase<string, FormatAttrib, ParseAttrib>
+        {
+            public DataTypeFormatter()
+                : base(Prime.Format, Prime.TryParse) { }
+        }
 
-		public class DataTypeParser : DataTypeParserBase<string, ParseAttrib>
-		{
-			public DataTypeParser()
-				: base(Prime.TryParse) { }
-		}
+        public class DataTypeParser : DataTypeParserBase<string, ParseAttrib>
+        {
+            public DataTypeParser()
+                : base(Prime.TryParse) { }
+        }
 
-		/// <summary>
-		/// Determines whether [is valid character for text parsing] [the specified value].
-		/// </summary>
-		/// <param name="value">The value.</param>
-		/// <returns>
-		/// 	<c>true</c> if [is valid character for text parsing] [the specified value]; otherwise, <c>false</c>.
-		/// </returns>
-		public static bool IsValidCharacterForTextParsing(char value)
-		{
-			return ((value >= '!') && (value <= '~'));
-			//return (("-./0123456789:" + "?@ABCDEFGHIJKLMNOPQRSTUVWXYZ" + "abcdefghijklmnopqrstuvwxyz" + ":%=?&+_#").IndexOf(value) > -1);
-			//return (((value >= '-') && (value <= ':'))
-			//|| ((value >= '@') && (value <= 'Z'))
-			//|| ((value >= 'a') && (value <= 'z'))
-			//|| ("+?".IndexOf(value) > -1));
-		}
+        /// <summary>
+        /// Determines whether [is valid character for text parsing] [the specified value].
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <returns>
+        /// 	<c>true</c> if [is valid character for text parsing] [the specified value]; otherwise, <c>false</c>.
+        /// </returns>
+        public static bool IsValidCharacterForTextParsing(char value)
+        {
+            return ((value >= '!') && (value <= '~'));
+            //return (("-./0123456789:" + "?@ABCDEFGHIJKLMNOPQRSTUVWXYZ" + "abcdefghijklmnopqrstuvwxyz" + ":%=?&+_#").IndexOf(value) > -1);
+            //return (((value >= '-') && (value <= ':'))
+            //|| ((value >= '@') && (value <= 'Z'))
+            //|| ((value >= 'a') && (value <= 'z'))
+            //|| ("+?".IndexOf(value) > -1));
+        }
 
-		/// <summary>
-		/// 
-		/// </summary>
-		public static class Prime
-		{
-			public static string Format(string value, FormatAttrib attrib)
-			{
-				return value;
-			}
+        /// <summary>
+        /// Prime
+        /// </summary>
+        public static class Prime
+        {
+            public static string Format(string value, FormatAttrib attrib)
+            {
+                return value;
+            }
 
-			public static bool TryParse(string text, ParseAttrib attrib, out string value)
-			{
-				if (string.IsNullOrEmpty(text))
-				{
-					value = string.Empty;
-					return false;
-				}
-				// pre-check attrib
-				UriKind uriKind = ((attrib == null) || (attrib.UriKind == null) ? UriKind.RelativeOrAbsolute : attrib.UriKind.Value);
-				if ((Uri.IsWellFormedUriString(text, uriKind))
-					|| ((uriKind != UriKind.Absolute) && (Uri.IsWellFormedUriString((text.Contains("://") ? text : "http://domain.com" + text), UriKind.RelativeOrAbsolute))))
-				{
-					value = text;
-					return true;
-				}
-				value = string.Empty;
-				return false;
-			}
+            public static bool TryParse(string text, ParseAttrib attrib, out string value)
+            {
+                if (string.IsNullOrEmpty(text))
+                {
+                    value = string.Empty; return false;
+                }
+                // pre-check attrib
+                UriKind uriKind = ((attrib == null) || (attrib.UriKind == null) ? UriKind.RelativeOrAbsolute : attrib.UriKind.Value);
+                if ((Uri.IsWellFormedUriString(text, uriKind))
+                    || ((uriKind != UriKind.Absolute) && (Uri.IsWellFormedUriString((text.Contains("://") ? text : "http://domain.com" + text), UriKind.RelativeOrAbsolute))))
+                {
+                    value = text; return true;
+                }
+                value = string.Empty; return false;
+            }
 
-			public static Type Type
-			{
-				get { return typeof(string); }
-			}
+            public static Type Type
+            {
+                get { return typeof(string); }
+            }
 
-			public static DataTypeFormFieldMeta FormFieldMeta
-			{
-				get
-				{
-					return new DataTypeFormFieldMeta()
-					{
-						GetBinderType = (int applicationType) => "Text",
-						GetMaxLength = (int applicationType) => 300,
-						GetSize = (int applicationType, int length) => "30",
-					};
-				}
-			}
-		}
-	}
+            public static DataTypeFormFieldMeta FormFieldMeta
+            {
+                get
+                {
+                    return new DataTypeFormFieldMeta()
+                    {
+                        GetBinderType = (int applicationType) => "Text",
+                        GetMaxLength = (int applicationType) => 300,
+                        GetSize = (int applicationType, int length) => "30",
+                    };
+                }
+            }
+        }
+    }
 }

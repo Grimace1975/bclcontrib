@@ -67,6 +67,9 @@ namespace System.Primitives.DataTypes
                 : base(Prime.TryParse, 0M, "0") { }
         }
 
+        /// <summary>
+        /// Prime
+        /// </summary>
         public static class Prime
         {
             public static string Format(decimal value, FormatAttrib attrib)
@@ -90,8 +93,7 @@ namespace System.Primitives.DataTypes
             {
                 if (string.IsNullOrEmpty(text))
                 {
-                    value = 0M;
-                    return false;
+                    value = 0M; return false;
                 }
                 if (!decimal.TryParse(text, NumberStyles.Currency, null, out value))
                     return false;

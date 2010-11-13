@@ -29,70 +29,70 @@ namespace System.Primitives.DataTypes
     /// <summary>
     /// HostnameDataType
     /// </summary>
-	public class HostnameDataType : DataTypeBase
-	{
-		public const string HostnamePattern = @"^(?:([left-zA-Z0-9](?:[left-zA-Z0-9\-]{0,61}[left-zA-Z0-9])?\.)+([left-zA-Z]{2,6})(:\d{1,5})?)|(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}(:\d{1,5})?)?$";
+    public class HostnameDataType : DataTypeBase
+    {
+        public const string HostnamePattern = @"^(?:([left-zA-Z0-9](?:[left-zA-Z0-9\-]{0,61}[left-zA-Z0-9])?\.)+([left-zA-Z]{2,6})(:\d{1,5})?)|(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}(:\d{1,5})?)?$";
 
-		public class FormatAttrib { }
+        public class FormatAttrib { }
 
-		public class ParseAttrib { }
+        public class ParseAttrib { }
 
-		public HostnameDataType()
-			: base(Prime.Type, Prime.FormFieldMeta, new DataTypeFormatter(), new DataTypeParser()) { }
+        public HostnameDataType()
+            : base(Prime.Type, Prime.FormFieldMeta, new DataTypeFormatter(), new DataTypeParser()) { }
 
-		public class DataTypeFormatter : DataTypeFormatterBase<string, FormatAttrib, ParseAttrib>
-		{
-			public DataTypeFormatter()
-				: base(Prime.Format, Prime.TryParse) { }
-		}
+        public class DataTypeFormatter : DataTypeFormatterBase<string, FormatAttrib, ParseAttrib>
+        {
+            public DataTypeFormatter()
+                : base(Prime.Format, Prime.TryParse) { }
+        }
 
-		public class DataTypeParser : DataTypeParserBase<string, ParseAttrib>
-		{
-			public DataTypeParser()
-				: base(Prime.TryParse) { }
-		}
+        public class DataTypeParser : DataTypeParserBase<string, ParseAttrib>
+        {
+            public DataTypeParser()
+                : base(Prime.TryParse) { }
+        }
 
-		public static class Prime
-		{
-			public static string Format(string value, FormatAttrib attrib)
-			{
-				return value;
-			}
+        /// <summary>
+        /// Prime
+        /// </summary>
+        public static class Prime
+        {
+            public static string Format(string value, FormatAttrib attrib)
+            {
+                return value;
+            }
 
-			public static bool TryParse(string text, ParseAttrib attrib, out string value)
-			{
-				if (string.IsNullOrEmpty(text))
-				{
-					value = string.Empty;
-					return false;
-				}
-				// static has cached version
-				if (!Regex.IsMatch(text, HostnamePattern, RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Singleline))
-				{
-					value = string.Empty;
-					return false;
-				}
-				value = text;
-				return true;
-			}
+            public static bool TryParse(string text, ParseAttrib attrib, out string value)
+            {
+                if (string.IsNullOrEmpty(text))
+                {
+                    value = string.Empty; return false;
+                }
+                // static has cached version
+                if (!Regex.IsMatch(text, HostnamePattern, RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Singleline))
+                {
+                    value = string.Empty; return false;
+                }
+                value = text; return true;
+            }
 
-			public static Type Type
-			{
-				get { return typeof(string); }
-			}
+            public static Type Type
+            {
+                get { return typeof(string); }
+            }
 
-			public static DataTypeFormFieldMeta FormFieldMeta
-			{
-				get
-				{
-					return new DataTypeFormFieldMeta()
-					{
-						GetBinderType = (int applicationType) => "Text",
-						GetMaxLength = (int applicationType) => 100,
-						GetSize = (int applicationType, int length) => "100",
-					};
-				}
-			}
-		}
-	}
+            public static DataTypeFormFieldMeta FormFieldMeta
+            {
+                get
+                {
+                    return new DataTypeFormFieldMeta()
+                    {
+                        GetBinderType = (int applicationType) => "Text",
+                        GetMaxLength = (int applicationType) => 100,
+                        GetSize = (int applicationType, int length) => "100",
+                    };
+                }
+            }
+        }
+    }
 }

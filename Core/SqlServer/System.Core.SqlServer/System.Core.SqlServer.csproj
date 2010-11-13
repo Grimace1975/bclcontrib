@@ -82,25 +82,25 @@
       <Link>SystemCoreEx+\+Nattrib\NewAttrib.cs</Link>
     </Compile>
     <Compile Include="..\..\System.CoreEx_\System.Core.ParseFormat\FormatterEx+ObjectFormatter.cs">
-      <Link>System.CoreEx+\System.Core.ParseFormat\Primitives\FormatterEx+ObjectFormatter.cs</Link>
+      <Link>System.CoreEx+\System.Core.ParseFormat\FormatterEx+ObjectFormatter.cs</Link>
     </Compile>
     <Compile Include="..\..\System.CoreEx_\System.Core.ParseFormat\FormatterEx+ValueFormatter.cs">
-      <Link>System.CoreEx+\System.Core.ParseFormat\Primitives\FormatterEx+ValueFormatter.cs</Link>
+      <Link>System.CoreEx+\System.Core.ParseFormat\FormatterEx+ValueFormatter.cs</Link>
     </Compile>
     <Compile Include="..\..\System.CoreEx_\System.Core.ParseFormat\FormatterEx.cs">
-      <Link>System.CoreEx+\System.Core.ParseFormat\Primitives\FormatterEx.cs</Link>
+      <Link>System.CoreEx+\System.Core.ParseFormat\FormatterEx.cs</Link>
     </Compile>
-    <Compile Include="..\..\System.CoreEx_\System.Core.ParseFormat\ObjectExtensions.cs">
-      <Link>System.CoreEx+\System.Core.ParseFormat\Primitives\ObjectExtensions.cs</Link>
+    <Compile Include="..\..\System.CoreEx_\System.Core.ParseFormat\ObjectEx\ObjectExtensions.cs">
+      <Link>System.CoreEx+\System.Core.ParseFormat\ObjectEx\ObjectExtensions.cs</Link>
     </Compile>
     <Compile Include="..\..\System.CoreEx_\System.Core.ParseFormat\ParserEx+ObjectParser.cs">
-      <Link>System.CoreEx+\System.Core.ParseFormat\Primitives\ParserEx+ObjectParser.cs</Link>
+      <Link>System.CoreEx+\System.Core.ParseFormat\ParserEx+ObjectParser.cs</Link>
     </Compile>
     <Compile Include="..\..\System.CoreEx_\System.Core.ParseFormat\ParserEx+StringParser.cs">
-      <Link>System.CoreEx+\System.Core.ParseFormat\Primitives\ParserEx+StringParser.cs</Link>
+      <Link>System.CoreEx+\System.Core.ParseFormat\ParserEx+StringParser.cs</Link>
     </Compile>
     <Compile Include="..\..\System.CoreEx_\System.Core.ParseFormat\ParserEx.cs">
-      <Link>System.CoreEx+\System.Core.ParseFormat\Primitives\ParserEx.cs</Link>
+      <Link>System.CoreEx+\System.Core.ParseFormat\ParserEx.cs</Link>
     </Compile>
     <Compile Include="..\..\System.CoreEx_\System.Core.ParseFormat\Primitives\DataTypes.1\BoolDataType.cs">
       <Link>System.CoreEx+\System.Core.ParseFormat\Primitives\DataTypes.1\BoolDataType.cs</Link>
@@ -214,7 +214,7 @@
       <Link>System.CoreEx+\System.Core.ParseFormat\Primitives\DataTypes\IDataTypeParser.cs</Link>
     </Compile>
     <Compile Include="..\..\System.CoreEx_\System.Core.ParseFormat\StringExtensions.cs">
-      <Link>System.CoreEx+\System.Core.ParseFormat\Primitives\StringExtensions.cs</Link>
+      <Link>System.CoreEx+\System.Core.ParseFormat\StringExtensions.cs</Link>
     </Compile>
     <Compile Include="..\..\System.CoreEx_\System.Core2\+Mock\CoreMock.cs">
       <Link>SystemCoreEx+\+Mock\CoreMock.cs</Link>

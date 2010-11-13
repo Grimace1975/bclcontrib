@@ -58,7 +58,7 @@ namespace System.Primitives.DataTypes
         }
 
         /// <summary>
-        /// 
+        /// Prime
         /// </summary>
         public new static class Prime
         {
