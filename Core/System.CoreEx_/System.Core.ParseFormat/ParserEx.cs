@@ -23,11 +23,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 #endregion
-using System.Reflection;
-using System.Globalization;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using System.Text;
 namespace System
 {
     /// <summary>
@@ -35,21 +32,8 @@ namespace System
     /// </summary>
     public static partial class ParserEx
     {
-        /// <summary>
-        /// EnumInt32Parser
-        /// </summary>
-        public class EnumInt32Parser : Dictionary<string, int> { }
+        public class CanParseAttribute : Attribute { }
 
-        /// <summary>
-        /// Tries the parse ranges.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <typeparam name="TAttrib">The type of the attrib.</typeparam>
-        /// <param name="value">The value.</param>
-        /// <param name="parser">The parser.</param>
-        /// <param name="attrib">The attrib.</param>
-        /// <param name="ranges">The ranges.</param>
-        /// <returns></returns>
         public static bool TryParseRanges<T, TAttrib>(string value, Func<string, bool, string, TAttrib, Range<T>> parser, TAttrib attrib, out ICollection<Range<T>> ranges)
         {
             if (string.IsNullOrEmpty(value))
@@ -81,121 +65,103 @@ namespace System
             return true;
         }
 
-        /// <summary>
-        /// Creates the enum int32 parser.
-        /// </summary>
-        /// <param name="type">The type.</param>
-        /// <returns></returns>
-        public static EnumInt32Parser CreateEnumInt32Parser(Type type)
+        #region Enum
+        public class EnumParser : Dictionary<string, int> { }
+        public static EnumParser MakeEnumParser(Type type)
         {
-            string[] names = Enum.GetNames(type);
-            int[] values = (int[])Enum.GetValues(type);
-            var parser = new EnumInt32Parser();
+            var names = Enum.GetNames(type);
+            var values = (int[])Enum.GetValues(type);
+            var parser = new EnumParser();
             for (int index = 0; index < names.Length; index++)
                 parser.Add(names[index], values[index]);
             return parser;
         }
+        #endregion
 
-        /// <summary>
-        /// Parses the specified @object.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="value">The value.</param>
-        /// <returns></returns>
-        public static T Parse<T>(object value) { return Parse<T>(value, null); }
-        public static T Parse<T>(object value, Nattrib attribs)
+        #region Object
+        public static T Parse<T>(object value) { return Parse<T, T>(value, null); }
+        public static T Parse<T>(object value, Nattrib attribs) { return Parse<T, T>(value, attribs); }
+        public static TResult Parse<T, TResult>(object value) { return Parse<T, TResult>(value, null); }
+        public static TResult Parse<T, TResult>(object value, Nattrib attribs)
         {
-            return ObjectParserDelegateFactory<T>.Parse(value, default(T));
+            return ObjectParserDelegateFactory<T, TResult>.Parse(value, default(TResult), attribs);
         }
-        /// <summary>
-        /// Parses the specified @object.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="value">The value.</param>
-        /// <param name="defaultValue">The default value.</param>
-        /// <returns></returns>
-        public static T Parse<T>(object value, T defaultValue)
+        public static T Parse<T>(object value, T defaultValue) { return Parse<T, T>(value, defaultValue, null); }
+        public static T Parse<T>(object value, T defaultValue, Nattrib attribs) { return Parse<T, T>(value, defaultValue, attribs); }
+        public static TResult Parse<T, TResult>(object value, TResult defaultValue) { return Parse<T, TResult>(value, defaultValue, null); }
+        public static TResult Parse<T, TResult>(object value, TResult defaultValue, Nattrib attribs)
         {
-            return ObjectParserDelegateFactory<T>.Parse(value, defaultValue);
+            return ObjectParserDelegateFactory<T, TResult>.Parse(value, defaultValue, attribs);
         }
-        /// <summary>
-        /// Parses the specified @object.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="value">The value.</param>
-        /// <param name="defaultValue">The default value.</param>
-        /// <returns></returns>
-        public static object Parse<T>(object value, object defaultValue)
+        public static object Parse<T>(object value, object defaultValue) { return Parse<T>(value, defaultValue, null); }
+        public static object Parse<T>(object value, object defaultValue, Nattrib attribs)
         {
-            return ObjectParserDelegateFactory<T>.Parse2(value, defaultValue);
-        }
-        /// <summary>
-        /// Parses the specified @string.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="text">The text.</param>
-        /// <returns></returns>
-        public static T Parse<T>(string text) { return Parse<T>(text, null); }
-        public static T Parse<T>(string text, Nattrib attribs)
-        {
-            return StringParserDelegateFactory<T>.Parse(text, default(T));
-        }
-        /// <summary>
-        /// Parses the specified @string.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="text">The text.</param>
-        /// <param name="defaultValue">The default value.</param>
-        /// <returns></returns>
-        public static T Parse<T>(string text, T defaultValue)
-        {
-            return StringParserDelegateFactory<T>.Parse(text, defaultValue);
+            return ObjectParserDelegateFactory<T, object>.Parse2(value, defaultValue, attribs);
         }
 
-        /// <summary>
-        /// Tries the parse.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="value">The value.</param>
-        /// <param name="validValue">The valid value.</param>
-        /// <returns></returns>
-        public static bool TryParse<T>(object value, out T validValue)
+        public static bool TryParse<T>(object value, out T validValue) { return TryParse<T, T>(value, null, out validValue); }
+        public static bool TryParse<T>(object value, Nattrib attribs, out T validValue) { return TryParse<T, T>(value, attribs, out validValue); }
+        public static bool TryParse<T, TResult>(object value, out TResult validValue) { return TryParse<T, TResult>(value, null, out validValue); }
+        public static bool TryParse<T, TResult>(object value, Nattrib attribs, out TResult validValue)
         {
-            return ObjectParserDelegateFactory<T>.TryParse(value, out validValue);
-        }
-        /// <summary>
-        /// Tries the parse.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="text">The text.</param>
-        /// <param name="validValue">The valid value.</param>
-        /// <returns></returns>
-        public static bool TryParse<T>(string text, out T validValue)
-        {
-            return StringParserDelegateFactory<T>.TryParse(text, out validValue);
+            return ObjectParserDelegateFactory<T, TResult>.TryParse(value, attribs, out validValue);
         }
 
-        /// <summary>
-        /// Validates the specified @object.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="value">The value.</param>
-        /// <returns></returns>
         public static bool Validate<T>(object value) { return Validate<T>(value, null); }
         public static bool Validate<T>(object value, Nattrib attrib)
         {
-            return ObjectParserDelegateFactory<T>.Validate(value);
+            return ObjectParserDelegateFactory<T, bool>.Validate(value, attrib);
         }
-        /// <summary>
-        /// Validates the specified @string.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="text">The text.</param>
-        /// <returns></returns>
+
+        public static string ParseAndFormat<T>(this object obj) { return ParseAndFormat<T>(obj, null); }
+        public static string ParseAndFormat<T>(this object obj, Nattrib attribs)
+        {
+            var value = ObjectParserDelegateFactory<T, object>.Parse(obj, null, attribs);
+            return (value != null ? FormatterEx.ObjectFormatterDelegateFactory<T>.Format(value) : string.Empty);
+        }
+        #endregion
+
+        #region String
+        public static T Parse<T>(string text) { return Parse<T, T>(text, null); }
+        public static T Parse<T>(string text, Nattrib attribs) { return Parse<T, T>(text, attribs); }
+        public static TResult Parse<T, TResult>(string text) { return Parse<T, TResult>(text, null); }
+        public static TResult Parse<T, TResult>(string text, Nattrib attribs)
+        {
+            return StringParserDelegateFactory<T, TResult>.Parse(text, default(TResult), attribs);
+        }
+        public static T Parse<T>(string text, T defaultValue) { return Parse<T, T>(text, defaultValue, null); }
+        public static T Parse<T>(string text, T defaultValue, Nattrib attribs) { return Parse<T, T>(text, defaultValue, attribs); }
+        public static TResult Parse<T, TResult>(string text, TResult defaultValue) { return Parse<T, TResult>(text, defaultValue, null); }
+        public static TResult Parse<T, TResult>(string text, TResult defaultValue, Nattrib attribs)
+        {
+            return StringParserDelegateFactory<T, TResult>.Parse(text, defaultValue, attribs);
+        }
+        public static object Parse<T>(string text, object defaultValue) { return Parse<T>(text, defaultValue, null); }
+        public static object Parse<T>(string text, object defaultValue, Nattrib attrib)
+        {
+            return StringParserDelegateFactory<T, object>.Parse2(text, defaultValue, attrib);
+        }
+
+        public static bool TryParse<T>(string text, out T validValue) { return TryParse<T, T>(text, null, out validValue); }
+        public static bool TryParse<T>(string text, Nattrib attribs, out T validValue) { return TryParse<T, T>(text, attribs, out validValue); }
+        public static bool TryParse<T, TResult>(string text, out TResult validValue) { return TryParse<T, TResult>(text, null, out validValue); }
+        public static bool TryParse<T, TResult>(string text, Nattrib attribs, out TResult validValue)
+        {
+            return StringParserDelegateFactory<T, TResult>.TryParse(text, attribs, out validValue);
+        }
+
         public static bool Validate<T>(string text) { return Validate<T>(text, null); }
         public static bool Validate<T>(string text, Nattrib attribs)
         {
-            return StringParserDelegateFactory<T>.Validate(text);
+            return StringParserDelegateFactory<T, bool>.Validate(text, attribs);
         }
+
+        public static string ParseAndFormat<T>(string text) { return ParseAndFormat<T>(text, null); }
+        public static string ParseAndFormat<T>(string text, Nattrib attribs)
+        {
+            var value = StringParserDelegateFactory<T, T>.Parse(text, default(T), attribs);
+            return (value != null ? FormatterEx.ValueFormatterDelegateFactory<T>.Format(value) : string.Empty);
+        }
+        #endregion
     }
 }

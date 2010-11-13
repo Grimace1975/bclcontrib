@@ -653,8 +653,8 @@
     <Compile Include="..\System.CoreEx_\System.Core.ParseFormat\FormatterEx.cs">
       <Link>System.Core.ParseFormat\FormatterEx.cs</Link>
     </Compile>
-    <Compile Include="..\System.CoreEx_\System.Core.ParseFormat\ObjectExtensions.cs">
-      <Link>System.Core.ParseFormat\ObjectExtensions.cs</Link>
+    <Compile Include="..\System.CoreEx_\System.Core.ParseFormat\ObjectEx\ObjectExtensions.cs">
+      <Link>System.Core.ParseFormat\ObjectEx\ObjectExtensions.cs</Link>
     </Compile>
     <Compile Include="..\System.CoreEx_\System.Core.ParseFormat\ParserEx+ObjectParser.cs">
       <Link>System.Core.ParseFormat\ParserEx+ObjectParser.cs</Link>

@@ -37,7 +37,7 @@ namespace System.Patterns.Forms.SmartFormContracts
     public class SmsSmartFormContract : Patterns.IContract
     {
         private static object[] s_defaultArgs = new object[] { null, string.Empty };
-        private static ParserEx.EnumInt32Parser s_carrierIdParser = ParserEx.CreateEnumInt32Parser(typeof(SmsCarrierId));
+        private static ParserEx.EnumParser s_carrierIdParser = ParserEx.MakeEnumParser(typeof(SmsCarrierId));
         private SmsClientBase _smsClient;
 
         /// <summary>

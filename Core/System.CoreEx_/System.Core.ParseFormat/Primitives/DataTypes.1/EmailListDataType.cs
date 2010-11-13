@@ -55,9 +55,9 @@ namespace System.Primitives.DataTypes
 				: base(Prime.TryParse) { }
 		}
 
-		/// <summary>
-		/// 
-		/// </summary>
+        /// <summary>
+        /// Prime
+        /// </summary>
 		public static class Prime
 		{
 			public static string Format(string value, FormatAttrib attrib)
@@ -69,24 +69,20 @@ namespace System.Primitives.DataTypes
 			{
 				if (string.IsNullOrEmpty(text))
 				{
-					value = string.Empty;
-					return false;
+					value = string.Empty; return false;
 				}
-				StringBuilder valueStream = new StringBuilder();
+				var valueStream = new StringBuilder();
 				string[] emails = text.Replace(',', ';').Split(';');
 				int emailCount = 0;
 				foreach (string email in emails)
 				{
 					string email2 = email.Trim();
 					if (email2.Length == 0)
-					{
 						continue;
-					}
 					// static has cached version
 					if (!Regex.IsMatch(email2, EmailDataType.EmailPattern, RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Singleline))
 					{
-						value = string.Empty;
-						return false;
+						value = string.Empty; return false;
 					}
 					emailCount++;
 					valueStream.Append(email2 + "; ");

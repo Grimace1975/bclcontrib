@@ -53,7 +53,8 @@ namespace System.Primitives.DataTypes
         {
             return TryParseBinder<TValue, TParseAttrib>(_tryParse, text, attrib, out value);
         }
-        public bool TryParse<T>(string text, out T value) where T : TValue { return TryParse<T>(text, null, out value); }
+        public bool TryParse<T>(string text, out T value)
+            where T : TValue { return TryParse<T>(text, null, out value); }
         public bool TryParse<T>(string text, Nattrib attrib, out T value)
             where T : TValue
         {

@@ -29,86 +29,85 @@ namespace System.Primitives.DataTypes
     /// <summary>
     /// SequenceDataType
     /// </summary>
-	public class SequenceDataType : DataTypeBase
-	{
-		public class FormatAttrib
-		{
-			public Formats Formats;
-			public string Format;
-		}
+    public class SequenceDataType : DataTypeBase
+    {
+        public class FormatAttrib
+        {
+            public Formats Formats;
+            public string Format;
+        }
 
-		public enum Formats
-		{
-			Pattern,
-		}
+        public enum Formats
+        {
+            Pattern,
+        }
 
-		public class ParseAttrib { }
+        public class ParseAttrib { }
 
-		public SequenceDataType()
-			: base(Prime.Type, Prime.FormFieldMeta, new DataTypeFormatter(), new DataTypeParser()) { }
+        public SequenceDataType()
+            : base(Prime.Type, Prime.FormFieldMeta, new DataTypeFormatter(), new DataTypeParser()) { }
 
-		public class DataTypeFormatter : DataTypeFormatterBase<int, FormatAttrib, ParseAttrib>
-		{
-			public DataTypeFormatter()
-				: base(Prime.Format, Prime.TryParse) { }
-		}
+        public class DataTypeFormatter : DataTypeFormatterBase<int, FormatAttrib, ParseAttrib>
+        {
+            public DataTypeFormatter()
+                : base(Prime.Format, Prime.TryParse) { }
+        }
 
-		public class DataTypeParser : DataTypeParserBase<int, ParseAttrib>
-		{
-			public DataTypeParser()
-				: base(Prime.TryParse, 0, "0") { }
-		}
+        public class DataTypeParser : DataTypeParserBase<int, ParseAttrib>
+        {
+            public DataTypeParser()
+                : base(Prime.TryParse, 0, "0") { }
+        }
 
-		/// <summary>
-		/// 
-		/// </summary>
-		public static class Prime
-		{
-			public static string Format(int value, FormatAttrib attrib)
-			{
-				if (attrib != null)
-				{
-					switch (attrib.Formats)
-					{
-						case Formats.Pattern:
-							return value.ToString(attrib.Format, CultureInfo.InvariantCulture);
-						default:
-							throw new InvalidOperationException();
-					}
-				}
-				return value.ToString(CultureInfo.InvariantCulture);
-			}
+        /// <summary>
+        /// Prime
+        /// </summary>
+        public static class Prime
+        {
+            public static string Format(int value, FormatAttrib attrib)
+            {
+                if (attrib != null)
+                {
+                    switch (attrib.Formats)
+                    {
+                        case Formats.Pattern:
+                            return value.ToString(attrib.Format, CultureInfo.InvariantCulture);
+                        default:
+                            throw new InvalidOperationException();
+                    }
+                }
+                return value.ToString(CultureInfo.InvariantCulture);
+            }
 
-			public static bool TryParse(string text, ParseAttrib attrib, out int value)
-			{
-				if (string.IsNullOrEmpty(text))
-				{
-					value = 0;
-					return false;
-				}
-				return int.TryParse(text, out value);
-			}
+            public static bool TryParse(string text, ParseAttrib attrib, out int value)
+            {
+                if (string.IsNullOrEmpty(text))
+                {
+                    value = 0; return false;
+                }
+                return int.TryParse(text, out value);
+            }
 
-			public static Type Type
-			{
-				get { return typeof(int); }
-			}
+            public static Type Type
+            {
+                get { return typeof(int); }
+            }
 
-			public static DataTypeFormFieldMeta FormFieldMeta
-			{
-				get
-				{
-					return new DataTypeFormFieldMeta()
-					{
-						GetBinderType = (int applicationType) => "Text",
-						GetMaxLength = (int applicationType) => 10,
-						GetSize = (int applicationType, int length) => "10",
-					};
-				}
-			}
+            public static DataTypeFormFieldMeta FormFieldMeta
+            {
+                get
+                {
+                    return new DataTypeFormFieldMeta()
+                    {
+                        GetBinderType = (int applicationType) => "Text",
+                        GetMaxLength = (int applicationType) => 10,
+                        GetSize = (int applicationType, int length) => "10",
+                    };
+                }
+            }
 
-			public static int TransformIn(int value) { return -value; }
-			public static int TransformOut(int value) { return -value; }
-		}
-	}
+            public static int TransformIn(int value) { return -value; }
+            public static int TransformOut(int value) { return -value; }
+        }
+    }
 }

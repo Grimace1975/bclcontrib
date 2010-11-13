@@ -44,6 +44,9 @@ namespace System.Primitives.DataTypes
 				: base(Prime.TryParse) { }
 		}
 
+        /// <summary>
+        /// Prime
+        /// </summary>
 		public new static class Prime
 		{
 			public static bool TryParse(string text, ParseAttrib attrib, out string value)

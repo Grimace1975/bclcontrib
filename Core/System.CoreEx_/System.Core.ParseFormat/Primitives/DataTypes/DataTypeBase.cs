@@ -34,128 +34,73 @@ namespace System.Primitives.DataTypes
     /// DataTypeBase
     /// </summary>
     public abstract partial class DataTypeBase : SimpleFactoryBase<DataTypeBase>
-	{
+    {
         internal static readonly Type DataTypeBaseType = typeof(DataTypeBase);
 
-		/// <summary>
-		/// Initializes a new instance of the <see cref="DataType"/> class.
-		/// </summary>
-		/// <param name="type">The type.</param>
-		/// <param name="formatter">The formatter.</param>
-		/// <param name="parser">The parser.</param>
-		protected DataTypeBase(Type type, DataTypeFormFieldMeta formFieldMeta, DataTypeFormatterBase formatter, DataTypeParserBase parser)
-		{
-			Type = type;
-			FormFieldMeta = formFieldMeta;
-			Formatter = formatter;
-			Parser = parser;
-		}
+        protected DataTypeBase(Type type, DataTypeFormFieldMeta formFieldMeta, DataTypeFormatterBase formatter, DataTypeParserBase parser)
+        {
+            Type = type;
+            FormFieldMeta = formFieldMeta;
+            Formatter = formatter;
+            Parser = parser;
+        }
 
-		/// <summary>
-		/// Creates the specified key.
-		/// </summary>
-		/// <param name="key">The key.</param>
-		/// <returns></returns>
-        protected static DataTypeBase Create<T>(IAppUnit appUnit)
-            where T : DataTypeBase
-		{
-#if !SqlServer
-            return ServiceLocator.Resolve<T>();
-#else
-			return default(T); //CreatePrime(key);
-#endif
-		}
+        [Flags]
+        public enum CountryId
+        {
+            None,
+            Usa,
+            Canada,
+        }
 
-		/// <summary>
-		/// Creates the prime.
-		/// </summary>
-		/// <param name="key">The key.</param>
-		/// <returns></returns>
-		protected static DataTypeBase CreatePrime(string key)
-		{
-			switch (key)
-			{
-				case "Bool":
-					return new BoolDataType();
-				case "CreditCardId":
-					return new CreditCardIdDataType();
-				case "Date":
-					return new DateDataType();
-				case "DateTime":
-					return new DateTimeDataType();
-				case "Decimal":
-					return new DecimalDataType();
-				case "DecimalRange":
-					return new DecimalRangeDataType();
-				case "Email":
-					return new EmailDataType();
-				case "EmailList":
-					return new EmailListDataType();
-				case "Hostname":
-					return new HostnameDataType();
-				case "HostnameList":
-					return new HostnameListDataType();
-				case "Integer":
-					return new IntegerDataType();
-				case "IntegerRange":
-					return new IntegerRangeDataType();
-				case "Memo":
-					return new MemoDataType();
-				case "Money":
-					return new MoneyDataType();
-				case "MonthAndDay":
-					return new MonthAndDayDataType();
-				case "NotBool":
-					return new NotBoolDataType();
-				case "Percent":
-					return new PercentDataType();
-				case "Phone":
-					return new PhoneDataType();
-				case "Real":
-					return new RealDataType();
-				case "Regex":
-					return new RegexDataType();
-				case "Sequence":
-					return new SequenceDataType();
-				case "Text":
-					return new TextDataType();
-				case "Time":
-					return new TimeDataType();
-				case "Uri":
-					return new UriDataType();
-				case "UriId":
-					return new UriIdDataType();
-				case "Xml":
-					return new XmlDataType();
-				case "Zip":
-					return new ZipDataType();
-			}
-			throw new InvalidOperationException();
-		}
+//        protected static DataTypeBase Create<T>(IAppUnit appUnit)
+//            where T : DataTypeBase
+//        {
+//#if !SqlServer
+//            return ServiceLocator.Resolve<T>();
+//#else
+//            return default(T); //CreatePrime(key);
+//#endif
+//        }
 
-		/// <summary>
-		/// Gets or sets the formatter.
-		/// </summary>
-		/// <value>The formatter.</value>
-		public DataTypeFormatterBase Formatter { get; protected set; }
+        protected static DataTypeBase CreatePrimeById(string id)
+        {
+            switch (id)
+            {
+                case "Bool": return new BoolDataType();
+                case "CreditCardId": return new CreditCardIdDataType();
+                case "Date": return new DateDataType();
+                case "DateTime": return new DateTimeDataType();
+                case "Decimal": return new DecimalDataType();
+                case "DecimalRange": return new DecimalRangeDataType();
+                case "Email": return new EmailDataType();
+                case "EmailList": return new EmailListDataType();
+                case "Hostname": return new HostnameDataType();
+                case "HostnameList": return new HostnameListDataType();
+                case "Integer": return new IntegerDataType();
+                case "IntegerRange": return new IntegerRangeDataType();
+                case "Memo": return new MemoDataType();
+                case "Money": return new MoneyDataType();
+                case "MonthAndDay": return new MonthAndDayDataType();
+                case "NotBool": return new NotBoolDataType();
+                case "Percent": return new PercentDataType();
+                case "Phone": return new PhoneDataType();
+                case "Real": return new RealDataType();
+                case "Regex": return new RegexDataType();
+                case "Sequence": return new SequenceDataType();
+                case "Text": return new TextDataType();
+                case "Time": return new TimeDataType();
+                case "Uri": return new UriDataType();
+                case "UriId": return new UriIdDataType();
+                case "Xml": return new XmlDataType();
+                case "Zip": return new ZipDataType();
+            }
+            throw new InvalidOperationException();
+        }
 
-		/// <summary>
-		/// Gets or sets the parser.
-		/// </summary>
-		/// <value>The parser.</value>
-		public DataTypeParserBase Parser { get; protected set; }
-
-		/// <summary>
-		/// Gets or sets the form field meta.
-		/// </summary>
-		/// <value>The form field meta.</value>
-		public DataTypeFormFieldMeta FormFieldMeta { get; protected set; }
-
-		/// <summary>
-		/// Returns the <see cref="System.TypeCode"/> enum value for data value type appropriate for
-		/// the implementing class.
-		/// </summary>
-		/// <value>A value of type <see cref="System.TypeCode"/></value>
-		public Type Type { get; private set; }
-	}
+        public DataTypeFormatterBase Formatter { get; protected set; }
+        public DataTypeParserBase Parser { get; protected set; }
+        public DataTypeFormFieldMeta FormFieldMeta { get; protected set; }
+        public Type Type { get; private set; }
+    }
 }

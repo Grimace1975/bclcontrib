@@ -35,12 +35,14 @@ namespace System.Primitives.DataTypes
         //    return new Func<object, string>(Formatter_DataTypeBase);
         //}
 
-
+        #region Object
         FormatterEx.IObjectFormatter<T> FormatterEx.IObjectFormatterBuilder.Build<T>()
         {
             throw new NotImplementedException();
         }
+        #endregion
 
+        #region Value
         FormatterEx.IValueFormatter<T> FormatterEx.IValueFormatterBuilder.Build<T>()
         {
             throw new NotImplementedException();
@@ -51,5 +53,6 @@ namespace System.Primitives.DataTypes
             var dataType = s_dataTypeGetter();
             return dataType.Formatter.Format(value);
         }
+        #endregion
     }
 }

@@ -77,7 +77,7 @@ namespace System.Primitives.DataTypes
         }
 
         /// <summary>
-        /// 
+        /// Prime
         /// </summary>
         public static class Prime
         {
@@ -116,8 +116,7 @@ namespace System.Primitives.DataTypes
             {
                 if (string.IsNullOrEmpty(text))
                 {
-                    value = DateTime.MinValue;
-                    return false;
+                    value = DateTime.MinValue; return false;
                 }
                 if (!DateTime.TryParse(text, out value))
                     return false;

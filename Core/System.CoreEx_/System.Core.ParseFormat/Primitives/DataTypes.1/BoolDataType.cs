@@ -66,7 +66,7 @@ namespace System.Primitives.DataTypes
         }
 
         /// <summary>
-        /// 
+        /// Prime
         /// </summary>
         public static class Prime
         {
@@ -96,21 +96,22 @@ namespace System.Primitives.DataTypes
             {
                 if (string.IsNullOrEmpty(text))
                 {
-                    value = false;
-                    return false;
+                    value = false; return false;
                 }
                 switch (text.ToLowerInvariant())
                 {
                     case "1":
+                    case "y":
                     case "true":
                     case "yes":
-                        value = true;
-                        return true;
+                    case "on":
+                        value = true; return true;
                     case "0":
+                    case "n":
                     case "false":
                     case "no":
-                        value = false;
-                        return true;
+                    case "off":
+                        value = false; return true;
                 }
                 return bool.TryParse(text, out value);
             }

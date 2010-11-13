@@ -91,6 +91,9 @@ namespace System
             return InternalGetValueAsString(typeof(TEnum), value, 1);
         }
 
+        public static string ToName<TEnum>(string value)
+            where TEnum : struct { return ToName<TEnum>(Parse<TEnum>(value)); }
+
         /// <summary>
         /// Internals the get value as string.
         /// </summary>

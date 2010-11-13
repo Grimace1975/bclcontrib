@@ -26,7 +26,7 @@ THE SOFTWARE.
 using System.Reflection;
 namespace System.Primitives.DataTypes
 {
-    //[ParserEx.CanParse()]
+    [ParserEx.CanParse()]
     public abstract partial class DataTypeBase : ParserEx.IObjectParserBuilder, ParserEx.IStringParserBuilder
     {
         private static Func<DataTypeBase> s_dataTypeGetter = null; //(Func<DataTypeBase>)Delegate.CreateDelegate(typeof(Func<DataTypeBase>), typeof(SingletonFactoryWithCreate<DataTypeBase>).GetMethod("Get", BindingFlags.Static | BindingFlags.Public, null, new Type[] { }, null).MakeGenericMethod(s_type));
@@ -47,6 +47,7 @@ namespace System.Primitives.DataTypes
         //    return new Func<string, T, T>(Parser_DataTypeBase);
         //}
 
+        #region Object
         public ParserEx.IObjectParser<T> Build<T>()
         {
             throw new NotImplementedException();
@@ -87,7 +88,9 @@ namespace System.Primitives.DataTypes
                 return dataType.Parser.TryParse(value as string, out value2);
             }
         }
+        #endregion
 
+        #region String
         ParserEx.IStringParser<T> ParserEx.IStringParserBuilder.Build<T>()
         {
             throw new NotImplementedException();
@@ -124,5 +127,6 @@ namespace System.Primitives.DataTypes
                 return dataType.Parser.TryParse(text, null, out value);
             }
         }
+        #endregion
     }
 }

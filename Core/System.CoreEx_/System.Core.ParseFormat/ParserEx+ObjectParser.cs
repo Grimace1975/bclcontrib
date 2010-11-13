@@ -26,160 +26,154 @@ THE SOFTWARE.
 using System.Reflection;
 using System.Globalization;
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
-using System.Text;
 namespace System
 {
     public static partial class ParserEx
     {
+        #region Registration
+        //private static readonly Type s_objectParserBuilderType = typeof(IObjectParserBuilder);
         private static Dictionary<Type, object> s_objectParserProviders = null;
-        private static readonly Type s_objectParserBuilderType = typeof(IObjectParserBuilder);
 
         public interface IObjectParserBuilder
         {
-            IObjectParser<T> Build<T>();
+            IObjectParser<TResult> Build<TResult>();
         }
 
-        public interface IObjectParser<T>
+        public interface IObjectParser<TResult>
         {
-            T Parser(object value, T defaultValue);
-            object Parser2(object value, object defaultValue);
-            bool TryParser(object value, out T validValue);
-            bool Validator(object value);
+            TResult Parser(object value, TResult defaultValue, Nattrib attrib);
+            object Parser2(object value, object defaultValue, Nattrib attrib);
+            bool TryParser(object value, Nattrib attrib, out TResult validValue);
+            bool Validator(object value, Nattrib attrib);
         }
 
-        /// <summary>
-        /// ObjectParserDelegateFactory
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        internal static class ObjectParserDelegateFactory<T>
+        private static bool TryScanForObjectParser<TResult>(out Type key, out IObjectParser<TResult> objectParser)
+        {
+            //var interfaces = type.FindInterfaces(((m, filterCriteria) => m == s_objectParserBuilderType), null);
+            throw new NotImplementedException();
+        }
+
+        private static IObjectParser<TResult> ScanForObjectParser<TResult>(Type type)
+        {
+            if (s_objectParserProviders != null)
+                foreach (var objectParser2 in s_objectParserProviders)
+                    if (type.IsSubclassOf(objectParser2.Key))
+                        return ((IObjectParser<TResult>)objectParser2.Value);
+            Type key;
+            IObjectParser<TResult> objectParser;
+            if (ParserEx.TryScanForObjectParser<TResult>(out key, out objectParser))
+            {
+                if (s_objectParserProviders == null)
+                    s_objectParserProviders = new Dictionary<Type, object>();
+                s_objectParserProviders.Add(key, objectParser);
+                return objectParser;
+            }
+            return null;
+        }
+        #endregion
+
+        internal static class ObjectParserDelegateFactory<T, TResult>
         {
             private static readonly Type s_type = typeof(T);
             private static readonly MethodInfo s_tryParseMethodInfo = s_type.GetMethod("TryParse", BindingFlags.Public | BindingFlags.Static, null, new Type[] { CoreEx.StringType, s_type.MakeByRefType() }, null);
-            public static readonly Func<object, T, T> Parse = CreateParser(s_type);
-            public static readonly Func<object, object, object> Parse2 = CreateParser2(s_type);
-            public static readonly TryFunc<object, T> TryParse = CreateTryParser(s_type);
-            public static readonly Func<object, bool> Validate = CreateValidator(s_type);
+            public static readonly Func<object, TResult, Nattrib, TResult> Parse = CreateParser(s_type);
+            public static readonly Func<object, object, Nattrib, object> Parse2 = CreateParser2(s_type);
+            public static readonly TryFunc<object, Nattrib, TResult> TryParse = CreateTryParser(s_type);
+            public static readonly Func<object, Nattrib, bool> Validate = CreateValidator(s_type);
 
-            /// <summary>
-            /// Initializes the <see cref="ObjectParserDelegateFactory&lt;T&gt;"/> class.
-            /// </summary>
             static ObjectParserDelegateFactory() { }
 
-            /// <summary>
-            /// Creates the specified type.
-            /// </summary>
-            /// <param name="type">The type.</param>
-            /// <returns></returns>
-            private static Func<object, T, T> CreateParser(Type type)
+            private static Func<object, TResult, Nattrib, TResult> CreateParser(Type type)
             {
                 if (type == CoreEx.BoolType)
-                    return (Func<object, T, T>)Delegate.CreateDelegate(typeof(Func<object, T, T>), typeof(ObjectParserDelegateFactory<T>).GetMethod("Parser_Bool", BindingFlags.NonPublic | BindingFlags.Static));
+                    return (Func<object, TResult, Nattrib, TResult>)Delegate.CreateDelegate(typeof(Func<object, TResult, Nattrib, TResult>), typeof(ObjectParserDelegateFactory<T, TResult>).GetMethod("Parser_Bool", BindingFlags.NonPublic | BindingFlags.Static));
+                if (type == CoreEx.NBoolType)
+                    return (Func<object, TResult, Nattrib, TResult>)Delegate.CreateDelegate(typeof(Func<object, TResult, Nattrib, TResult>), typeof(ObjectParserDelegateFactory<T, TResult>).GetMethod("Parser_NBool", BindingFlags.NonPublic | BindingFlags.Static));
                 if (type == CoreEx.DateTimeType)
-                    return (Func<object, T, T>)Delegate.CreateDelegate(typeof(Func<object, T, T>), typeof(ObjectParserDelegateFactory<T>).GetMethod("Parser_DateTime", BindingFlags.NonPublic | BindingFlags.Static));
+                    return (Func<object, TResult, Nattrib, TResult>)Delegate.CreateDelegate(typeof(Func<object, TResult, Nattrib, TResult>), typeof(ObjectParserDelegateFactory<T, TResult>).GetMethod("Parser_DateTime", BindingFlags.NonPublic | BindingFlags.Static));
+                if (type == CoreEx.NDateTimeType)
+                    return (Func<object, TResult, Nattrib, TResult>)Delegate.CreateDelegate(typeof(Func<object, TResult, Nattrib, TResult>), typeof(ObjectParserDelegateFactory<T, TResult>).GetMethod("Parser_NDateTime", BindingFlags.NonPublic | BindingFlags.Static));
                 if (type == CoreEx.DecimalType)
-                    return (Func<object, T, T>)Delegate.CreateDelegate(typeof(Func<object, T, T>), typeof(ObjectParserDelegateFactory<T>).GetMethod("Parser_Decimal", BindingFlags.NonPublic | BindingFlags.Static));
+                    return (Func<object, TResult, Nattrib, TResult>)Delegate.CreateDelegate(typeof(Func<object, TResult, Nattrib, TResult>), typeof(ObjectParserDelegateFactory<T, TResult>).GetMethod("Parser_Decimal", BindingFlags.NonPublic | BindingFlags.Static));
+                if (type == CoreEx.NDecimalType)
+                    return (Func<object, TResult, Nattrib, TResult>)Delegate.CreateDelegate(typeof(Func<object, TResult, Nattrib, TResult>), typeof(ObjectParserDelegateFactory<T, TResult>).GetMethod("Parser_NDecimal", BindingFlags.NonPublic | BindingFlags.Static));
                 if (type == CoreEx.Int32Type)
-                    return (Func<object, T, T>)Delegate.CreateDelegate(typeof(Func<object, T, T>), typeof(ObjectParserDelegateFactory<T>).GetMethod("Parser_Int32", BindingFlags.NonPublic | BindingFlags.Static));
+                    return (Func<object, TResult, Nattrib, TResult>)Delegate.CreateDelegate(typeof(Func<object, TResult, Nattrib, TResult>), typeof(ObjectParserDelegateFactory<T, TResult>).GetMethod("Parser_Int32", BindingFlags.NonPublic | BindingFlags.Static));
+                if (type == CoreEx.NInt32Type)
+                    return (Func<object, TResult, Nattrib, TResult>)Delegate.CreateDelegate(typeof(Func<object, TResult, Nattrib, TResult>), typeof(ObjectParserDelegateFactory<T, TResult>).GetMethod("Parser_NInt32", BindingFlags.NonPublic | BindingFlags.Static));
                 if (type == CoreEx.StringType)
-                    return (Func<object, T, T>)Delegate.CreateDelegate(typeof(Func<object, T, T>), typeof(ObjectParserDelegateFactory<T>).GetMethod("Parser_String", BindingFlags.NonPublic | BindingFlags.Static));
-                //var interfaces = type.FindInterfaces(((m, filterCriteria) => m == s_objectParserBuilderType), null);
-                if (s_objectParserProviders != null)
-                    foreach (var objectParser in s_objectParserProviders)
-                        if (type.IsSubclassOf(objectParser.Key))
-                            return ((IObjectParser<T>)objectParser.Value).Parser;
-                //Type key;
-                //IObjectParser<T> objectParser;
-                //if (TryScanForObjectParser(out key, out objectParser))
-                //{
-                //    if (s_objectParserProviders == null)
-                //        s_objectParserProviders = new Dictionary<Type, object>();
-                //    s_objectParserProviders.Add(key, objectParser);
-                //    return objectParser.Parser;
-                //}
+                    return (Func<object, TResult, Nattrib, TResult>)Delegate.CreateDelegate(typeof(Func<object, TResult, Nattrib, TResult>), typeof(ObjectParserDelegateFactory<T, TResult>).GetMethod("Parser_String", BindingFlags.NonPublic | BindingFlags.Static));
+                var parser = ScanForObjectParser<TResult>(type);
+                if (parser != null)
+                    return parser.Parser;
                 EnsureTryParseMethod();
-                return new Func<object, T, T>(Parser_Default);
-            }
-            /// <summary>
-            /// Create2s the specified type.
-            /// </summary>
-            /// <param name="type">The type.</param>
-            /// <returns></returns>
-            private static Func<object, object, object> CreateParser2(Type type)
-            {
-                if (type == CoreEx.BoolType)
-                    return new Func<object, object, object>(Parser2_Bool);
-                if (type == CoreEx.DateTimeType)
-                    return new Func<object, object, object>(Parser2_DateTime);
-                if (type == CoreEx.DecimalType)
-                    return new Func<object, object, object>(Parser2_Decimal);
-                if (type == CoreEx.Int32Type)
-                    return new Func<object, object, object>(Parser2_Int32);
-                if (type == CoreEx.StringType)
-                    return new Func<object, object, object>(Parser2_String);
-                if (s_objectParserProviders != null)
-                    foreach (var objectParser in s_objectParserProviders)
-                        if (type.IsSubclassOf(objectParser.Key))
-                            return ((IObjectParser<T>)objectParser.Value).Parser2;
-                //ScanForSubclassParser();
-                EnsureTryParseMethod();
-                return new Func<object, object, object>(Parser2_Default);
+                return new Func<object, TResult, Nattrib, TResult>(Parser_Default);
             }
 
-            /// <summary>
-            /// Creates the try parse.
-            /// </summary>
-            /// <param name="type">The type.</param>
-            /// <returns></returns>
-            private static TryFunc<object, T> CreateTryParser(Type type)
+            private static Func<object, object, Nattrib, object> CreateParser2(Type type)
             {
-                if (type == CoreEx.BoolType)
-                    return (TryFunc<object, T>)Delegate.CreateDelegate(typeof(TryFunc<object, T>), typeof(ObjectParserDelegateFactory<T>).GetMethod("TryParser_Bool", BindingFlags.NonPublic | BindingFlags.Static));
-                if (type == CoreEx.DateTimeType)
-                    return (TryFunc<object, T>)Delegate.CreateDelegate(typeof(TryFunc<object, T>), typeof(ObjectParserDelegateFactory<T>).GetMethod("TryParser_DateTime", BindingFlags.NonPublic | BindingFlags.Static));
-                if (type == CoreEx.DecimalType)
-                    return (TryFunc<object, T>)Delegate.CreateDelegate(typeof(TryFunc<object, T>), typeof(ObjectParserDelegateFactory<T>).GetMethod("TryParser_Decimal", BindingFlags.NonPublic | BindingFlags.Static));
-                if (type == CoreEx.Int32Type)
-                    return (TryFunc<object, T>)Delegate.CreateDelegate(typeof(TryFunc<object, T>), typeof(ObjectParserDelegateFactory<T>).GetMethod("TryParser_Int32", BindingFlags.NonPublic | BindingFlags.Static));
+                if ((type == CoreEx.BoolType) || (type == CoreEx.NBoolType))
+                    return new Func<object, object, Nattrib, object>(Parser2_Bool);
+                if ((type == CoreEx.DateTimeType) || (type == CoreEx.NDateTimeType))
+                    return new Func<object, object, Nattrib, object>(Parser2_DateTime);
+                if ((type == CoreEx.DecimalType) || (type == CoreEx.NDecimalType))
+                    return new Func<object, object, Nattrib, object>(Parser2_Decimal);
+                if ((type == CoreEx.Int32Type) || (type == CoreEx.NInt32Type))
+                    return new Func<object, object, Nattrib, object>(Parser2_Int32);
                 if (type == CoreEx.StringType)
-                    return (TryFunc<object, T>)Delegate.CreateDelegate(typeof(TryFunc<object, T>), typeof(ObjectParserDelegateFactory<T>).GetMethod("TryParser_String", BindingFlags.NonPublic | BindingFlags.Static));
-                if (s_objectParserProviders != null)
-                    foreach (var objectParser in s_objectParserProviders)
-                        if (type.IsSubclassOf(objectParser.Key))
-                            return ((IObjectParser<T>)objectParser.Value).TryParser;
-                //ScanForSubclassParser();
+                    return new Func<object, object, Nattrib, object>(Parser2_String);
+                var parser = ScanForObjectParser<TResult>(type);
+                if (parser != null)
+                    return parser.Parser2;
                 EnsureTryParseMethod();
-                return new TryFunc<object, T>(TryParser_Default);
+                return new Func<object, object, Nattrib, object>(Parser2_Default);
             }
 
-            /// <summary>
-            /// Creates the specified type.
-            /// </summary>
-            /// <param name="type">The type.</param>
-            /// <returns></returns>
-            private static Func<object, bool> CreateValidator(Type type)
+            private static TryFunc<object, Nattrib, TResult> CreateTryParser(Type type)
             {
                 if (type == CoreEx.BoolType)
-                    return new Func<object, bool>(Validator_Bool);
+                    return (TryFunc<object, Nattrib, TResult>)Delegate.CreateDelegate(typeof(TryFunc<object, Nattrib, TResult>), typeof(ObjectParserDelegateFactory<T, TResult>).GetMethod("TryParser_Bool", BindingFlags.NonPublic | BindingFlags.Static));
+                if (type == CoreEx.NBoolType)
+                    return (TryFunc<object, Nattrib, TResult>)Delegate.CreateDelegate(typeof(TryFunc<object, Nattrib, TResult>), typeof(ObjectParserDelegateFactory<T, TResult>).GetMethod("TryParser_NBool", BindingFlags.NonPublic | BindingFlags.Static));
+                if (type == CoreEx.DateTimeType)
+                    return (TryFunc<object, Nattrib, TResult>)Delegate.CreateDelegate(typeof(TryFunc<object, Nattrib, TResult>), typeof(ObjectParserDelegateFactory<T, TResult>).GetMethod("TryParser_DateTime", BindingFlags.NonPublic | BindingFlags.Static));
+                if (type == CoreEx.NDateTimeType)
+                    return (TryFunc<object, Nattrib, TResult>)Delegate.CreateDelegate(typeof(TryFunc<object, Nattrib, TResult>), typeof(ObjectParserDelegateFactory<T, TResult>).GetMethod("TryParser_NDateTime", BindingFlags.NonPublic | BindingFlags.Static));
+                if (type == CoreEx.DecimalType)
+                    return (TryFunc<object, Nattrib, TResult>)Delegate.CreateDelegate(typeof(TryFunc<object, Nattrib, TResult>), typeof(ObjectParserDelegateFactory<T, TResult>).GetMethod("TryParser_Decimal", BindingFlags.NonPublic | BindingFlags.Static));
+                if (type == CoreEx.NDecimalType)
+                    return (TryFunc<object, Nattrib, TResult>)Delegate.CreateDelegate(typeof(TryFunc<object, Nattrib, TResult>), typeof(ObjectParserDelegateFactory<T, TResult>).GetMethod("TryParser_NDecimal", BindingFlags.NonPublic | BindingFlags.Static));
+                if (type == CoreEx.Int32Type)
+                    return (TryFunc<object, Nattrib, TResult>)Delegate.CreateDelegate(typeof(TryFunc<object, Nattrib, TResult>), typeof(ObjectParserDelegateFactory<T, TResult>).GetMethod("TryParser_Int32", BindingFlags.NonPublic | BindingFlags.Static));
+                if (type == CoreEx.NInt32Type)
+                    return (TryFunc<object, Nattrib, TResult>)Delegate.CreateDelegate(typeof(TryFunc<object, Nattrib, TResult>), typeof(ObjectParserDelegateFactory<T, TResult>).GetMethod("TryParser_NInt32", BindingFlags.NonPublic | BindingFlags.Static));
+                if (type == CoreEx.StringType)
+                    return (TryFunc<object, Nattrib, TResult>)Delegate.CreateDelegate(typeof(TryFunc<object, Nattrib, TResult>), typeof(ObjectParserDelegateFactory<T, TResult>).GetMethod("TryParser_String", BindingFlags.NonPublic | BindingFlags.Static));
+                var parser = ScanForObjectParser<TResult>(type);
+                if (parser != null)
+                    return parser.TryParser;
+                EnsureTryParseMethod();
+                return new TryFunc<object, Nattrib, TResult>(TryParser_Default);
+            }
+
+            private static Func<object, Nattrib, bool> CreateValidator(Type type)
+            {
+                if (type == CoreEx.BoolType)
+                    return new Func<object, Nattrib, bool>(Validator_Bool);
                 else if (type == CoreEx.DateTimeType)
-                    return new Func<object, bool>(Validator_DateTime);
+                    return new Func<object, Nattrib, bool>(Validator_DateTime);
                 else if (type == CoreEx.DecimalType)
-                    return new Func<object, bool>(Validator_Decimal);
+                    return new Func<object, Nattrib, bool>(Validator_Decimal);
                 else if (type == CoreEx.Int32Type)
-                    return new Func<object, bool>(Validator_Int32);
+                    return new Func<object, Nattrib, bool>(Validator_Int32);
                 else if (type == CoreEx.StringType)
-                    return new Func<object, bool>(Validator_String);
-                if (s_objectParserProviders != null)
-                    foreach (var objectParser in s_objectParserProviders)
-                        if (type.IsSubclassOf(objectParser.Key))
-                            return ((IObjectParser<T>)objectParser.Value).Validator;
-                //ScanForSubclassParser();
-                return new Func<object, bool>(Validator_Default);
+                    return new Func<object, Nattrib, bool>(Validator_String);
+                var parser = ScanForObjectParser<TResult>(type);
+                if (parser != null)
+                    return parser.Validator;
+                return new Func<object, Nattrib, bool>(Validator_Default);
             }
 
-            /// <summary>
-            /// Ensures the try parse method.
-            /// </summary>
             private static void EnsureTryParseMethod()
             {
                 if (s_tryParseMethodInfo == null)
@@ -187,94 +181,70 @@ namespace System
             }
 
             #region Default
-            /// <summary>
-            /// Values the field.
-            /// </summary>
-            /// <param name="value">The value.</param>
-            /// <returns></returns>
-            private static T Parser_Default(object value, T defaultValue)
+            private static TResult Parser_Default(object value, TResult defaultValue, Nattrib attrib)
             {
                 if (value != null)
                 {
-                    if (value is T)
-                        return (T)value;
+                    if (value is TResult)
+                        return (TResult)value;
                     string text;
                     if (((text = (value as string)) != null) && (text.Length > 0))
                     {
-                        var args = new object[] { text, default(T) };
+                        var args = new object[] { text, default(TResult) };
                         if ((bool)s_tryParseMethodInfo.Invoke(null, BindingFlags.Default, null, args, null))
-                            return (T)args[1];
+                            return (TResult)args[1];
                     }
                 }
                 return defaultValue;
             }
-            /// <summary>
-            /// Values the field.
-            /// </summary>
-            /// <param name="value">The value.</param>
-            /// <returns></returns>
-            private static object Parser2_Default(object value, object defaultValue)
+            private static object Parser2_Default(object value, object defaultValue, Nattrib attrib)
             {
                 if (value != null)
                 {
-                    if (value is T)
+                    if (value is TResult)
                         return value;
                     string text;
                     if (((text = (value as string)) != null) && (text.Length > 0))
                     {
-                        var args = new object[] { text, default(T) };
+                        var args = new object[] { text, default(TResult) };
                         if ((bool)s_tryParseMethodInfo.Invoke(null, BindingFlags.Default, null, args, null))
-                            return (T)args[1];
+                            return (TResult)args[1];
                     }
                 }
                 return defaultValue;
             }
 
-            /// <summary>
-            /// Tries the parse field.
-            /// </summary>
-            /// <param name="value">The value.</param>
-            /// <param name="validValue">The valid value.</param>
-            /// <returns></returns>
-            private static bool TryParser_Default(object value, out T validValue)
+            private static bool TryParser_Default(object value, Nattrib attrib, out TResult validValue)
             {
                 if (value != null)
                 {
-                    if (value is T)
+                    if (value is TResult)
                     {
-                        validValue = (T)value;
-                        return true;
+                        validValue = (TResult)value; return true;
                     }
                     string text;
                     if (((text = (value as string)) != null) && (text.Length > 0))
                     {
-                        var args = new object[] { text, default(T) };
+                        var args = new object[] { text, default(TResult) };
                         if ((bool)s_tryParseMethodInfo.Invoke(null, BindingFlags.Default, null, args, null))
                         {
-                            validValue = (T)args[1];
-                            return true;
+                            validValue = (TResult)args[1]; return true;
                         }
                     }
                 }
-                validValue = default(T);
-                return false;
+                validValue = default(TResult); return false;
             }
 
-            /// <summary>
-            /// Values the field.
-            /// </summary>
-            /// <param name="value">The value.</param>
-            /// <returns></returns>
-            private static bool Validator_Default(object value)
+            private static bool Validator_Default(object value, Nattrib attrib)
             {
                 if (value == null)
                     return false;
-                if (value is T)
+                if (value is TResult)
                     return true;
                 string text;
                 if (((text = (value as string)) != null) && (text.Length > 0))
                 {
-                    var args = new object[] { text, default(T) };
+                    var args = new object[] { text, default(TResult) };
                     if ((bool)s_tryParseMethodInfo.Invoke(null, BindingFlags.Default, null, args, null))
                         return true;
                 }
@@ -283,13 +253,7 @@ namespace System
             #endregion
 
             #region Bool
-            /// <summary>
-            /// Values the field_ bool.
-            /// </summary>
-            /// <param name="value">The value.</param>
-            /// <param name="defaultValue">if set to <c>true</c> [default value].</param>
-            /// <returns></returns>
-            private static bool Parser_Bool(object value, bool defaultValue)
+            private static bool Parser_Bool(object value, bool defaultValue, Nattrib attrib)
             {
                 if (value != null)
                 {
@@ -312,11 +276,13 @@ namespace System
                         switch (text.ToLowerInvariant())
                         {
                             case "1":
+                            case "y":
                             case "true":
                             case "yes":
                             case "on":
                                 return true;
                             case "0":
+                            case "n":
                             case "false":
                             case "no":
                             case "off":
@@ -329,17 +295,53 @@ namespace System
                 }
                 return defaultValue;
             }
-            /// <summary>
-            /// Values the field_ bool.
-            /// </summary>
-            /// <param name="value">The value.</param>
-            /// <param name="defaultValue">The default value.</param>
-            /// <returns></returns>
-            private static object Parser2_Bool(object value, object defaultValue)
+            private static bool? Parser_NBool(object value, bool? defaultValue, Nattrib attrib)
             {
                 if (value != null)
                 {
-                    if (value is bool)
+                    if ((value is bool) || (value is bool?))
+                        return (bool?)value;
+                    if (value is int)
+                    {
+                        switch ((int)value)
+                        {
+                            case 1:
+                                return true;
+                            case 0:
+                                return false;
+                        }
+                        return defaultValue;
+                    }
+                    string text;
+                    if (((text = (value as string)) != null) && (text.Length > 0))
+                    {
+                        switch (text.ToLowerInvariant())
+                        {
+                            case "1":
+                            case "y":
+                            case "true":
+                            case "yes":
+                            case "on":
+                                return true;
+                            case "0":
+                            case "n":
+                            case "false":
+                            case "no":
+                            case "off":
+                                return false;
+                        }
+                        bool validValue;
+                        if (bool.TryParse(text, out validValue))
+                            return validValue;
+                    }
+                }
+                return defaultValue;
+            }
+            private static object Parser2_Bool(object value, object defaultValue, Nattrib attrib)
+            {
+                if (value != null)
+                {
+                    if ((value is bool) || (value is bool?))
                         return value;
                     if (value is int)
                     {
@@ -358,11 +360,13 @@ namespace System
                         switch (text.ToLowerInvariant())
                         {
                             case "1":
+                            case "y":
                             case "true":
                             case "yes":
                             case "on":
                                 return true;
                             case "0":
+                            case "n":
                             case "false":
                             case "no":
                             case "off":
@@ -376,34 +380,24 @@ namespace System
                 return defaultValue;
             }
 
-            /// <summary>
-            /// Tries the parse field_ bool.
-            /// </summary>
-            /// <param name="value">The value.</param>
-            /// <param name="validValue">if set to <c>true</c> [valid value].</param>
-            /// <returns></returns>
-            private static bool TryParser_Bool(object value, out bool validValue)
+            private static bool TryParser_Bool(object value, Nattrib attrib, out bool validValue)
             {
                 if (value != null)
                 {
                     if (value is bool)
                     {
-                        validValue = (bool)value;
-                        return true;
+                        validValue = (bool)value; return true;
                     }
                     if (value is int)
                     {
                         switch ((int)value)
                         {
                             case 1:
-                                validValue = true;
-                                return true;
+                                validValue = true; return true;
                             case 0:
-                                validValue = false;
-                                return true;
+                                validValue = false; return true;
                         }
-                        validValue = default(bool);
-                        return false;
+                        validValue = default(bool); return false;
                     }
                     string text;
                     if (((text = (value as string)) != null) && (text.Length > 0))
@@ -411,36 +405,76 @@ namespace System
                         switch (text.ToLowerInvariant())
                         {
                             case "1":
+                            case "y":
                             case "true":
                             case "yes":
                             case "on":
-                                validValue = true;
-                                return true;
+                                validValue = true; return true;
                             case "0":
+                            case "n":
                             case "false":
                             case "no":
                             case "off":
-                                validValue = false;
-                                return true;
+                                validValue = false; return true;
                         }
                         bool validValue2;
                         if (bool.TryParse(text, out validValue2))
                         {
-                            validValue = validValue2;
-                            return true;
+                            validValue = validValue2; return true;
                         }
                     }
                 }
                 validValue = default(bool);
                 return false;
             }
+            private static bool TryParser_NBool(object value, Nattrib attrib, out bool? validValue)
+            {
+                if (value != null)
+                {
+                    if ((value is bool) || (value is bool?))
+                    {
+                        validValue = (bool?)value; return true;
+                    }
+                    if (value is int)
+                    {
+                        switch ((int)value)
+                        {
+                            case 1:
+                                validValue = true; return true;
+                            case 0:
+                                validValue = false; return true;
+                        }
+                        validValue = null; return false;
+                    }
+                    string text;
+                    if (((text = (value as string)) != null) && (text.Length > 0))
+                    {
+                        switch (text.ToLowerInvariant())
+                        {
+                            case "1":
+                            case "y":
+                            case "true":
+                            case "yes":
+                            case "on":
+                                validValue = true; return true;
+                            case "0":
+                            case "n":
+                            case "false":
+                            case "no":
+                            case "off":
+                                validValue = false; return true;
+                        }
+                        bool validValue2;
+                        if (bool.TryParse(text, out validValue2))
+                        {
+                            validValue = validValue2; return true;
+                        }
+                    }
+                }
+                validValue = null; return false;
+            }
 
-            /// <summary>
-            /// Values the field_ bool.
-            /// </summary>
-            /// <param name="value">The value.</param>
-            /// <returns></returns>
-            private static bool Validator_Bool(object value)
+            private static bool Validator_Bool(object value, Nattrib attrib)
             {
                 if (value != null)
                 {
@@ -462,10 +496,13 @@ namespace System
                         switch (text.ToLowerInvariant())
                         {
                             case "1":
+                            case "y":
                             case "true":
                             case "yes":
                             case "on":
+                                return true;
                             case "0":
+                            case "n":
                             case "false":
                             case "no":
                             case "off":
@@ -480,13 +517,7 @@ namespace System
             #endregion
 
             #region DateTime
-            /// <summary>
-            /// Values the field_ date time.
-            /// </summary>
-            /// <param name="value">The value.</param>
-            /// <param name="defaultValue">The default value.</param>
-            /// <returns></returns>
-            private static DateTime Parser_DateTime(object value, DateTime defaultValue)
+            private static DateTime Parser_DateTime(object value, DateTime defaultValue, Nattrib attrib)
             {
                 if (value != null)
                 {
@@ -502,17 +533,28 @@ namespace System
                 }
                 return defaultValue;
             }
-            /// <summary>
-            /// Values the field2_ date time.
-            /// </summary>
-            /// <param name="value">The value.</param>
-            /// <param name="defaultValue">The default value.</param>
-            /// <returns></returns>
-            private static object Parser2_DateTime(object value, object defaultValue)
+            private static DateTime? Parser_DateTime(object value, DateTime? defaultValue, Nattrib attrib)
             {
                 if (value != null)
                 {
-                    if (value is DateTime)
+                    if ((value is DateTime) || (value is DateTime?))
+                        return (DateTime?)value;
+                    string text;
+                    if (((text = (value as string)) != null) && (text.Length > 0))
+                    {
+                        DateTime validValue;
+                        if (DateTime.TryParse(text, DateTimeFormatInfo.CurrentInfo, DateTimeStyles.None, out validValue))
+                            return validValue;
+                    }
+                }
+                return defaultValue;
+            }
+
+            private static object Parser2_DateTime(object value, object defaultValue, Nattrib attrib)
+            {
+                if (value != null)
+                {
+                    if ((value is DateTime) || (value is DateTime?))
                         return value;
                     string text;
                     if (((text = (value as string)) != null) && (text.Length > 0))
@@ -525,20 +567,13 @@ namespace System
                 return defaultValue;
             }
 
-            /// <summary>
-            /// Tries the parse field_ date time.
-            /// </summary>
-            /// <param name="value">The value.</param>
-            /// <param name="validValue">The valid value.</param>
-            /// <returns></returns>
-            private static bool TryParser_DateTime(object value, out DateTime validValue)
+            private static bool TryParser_DateTime(object value, Nattrib attrib, out DateTime validValue)
             {
                 if (value != null)
                 {
                     if (value is DateTime)
                     {
-                        validValue = (DateTime)value;
-                        return true;
+                        validValue = (DateTime)value; return true;
                     }
                     string text;
                     if (((text = (value as string)) != null) && (text.Length > 0))
@@ -546,21 +581,34 @@ namespace System
                         DateTime validValue2;
                         if (DateTime.TryParse(text, DateTimeFormatInfo.CurrentInfo, DateTimeStyles.None, out validValue2))
                         {
-                            validValue = validValue2;
-                            return true;
+                            validValue = validValue2; return true;
                         }
                     }
                 }
-                validValue = default(DateTime);
-                return false;
+                validValue = default(DateTime); return false;
+            }
+            private static bool TryParser_DateTime(object value, Nattrib attrib, out DateTime? validValue)
+            {
+                if (value != null)
+                {
+                    if ((value is DateTime) || (value is DateTime?))
+                    {
+                        validValue = (DateTime?)value; return true;
+                    }
+                    string text;
+                    if (((text = (value as string)) != null) && (text.Length > 0))
+                    {
+                        DateTime validValue2;
+                        if (DateTime.TryParse(text, DateTimeFormatInfo.CurrentInfo, DateTimeStyles.None, out validValue2))
+                        {
+                            validValue = validValue2; return true;
+                        }
+                    }
+                }
+                validValue = null; return false;
             }
 
-            /// <summary>
-            /// Values the field_ date time.
-            /// </summary>
-            /// <param name="value">The value.</param>
-            /// <returns></returns>
-            private static bool Validator_DateTime(object value)
+            private static bool Validator_DateTime(object value, Nattrib attrib)
             {
                 if (value != null)
                 {
@@ -578,13 +626,7 @@ namespace System
             #endregion
 
             #region Decimal
-            /// <summary>
-            /// Values the field_ decimal.
-            /// </summary>
-            /// <param name="value">The value.</param>
-            /// <param name="defaultValue">The default value.</param>
-            /// <returns></returns>
-            private static decimal Parser_Decimal(object value, decimal defaultValue)
+            private static decimal Parser_Decimal(object value, decimal defaultValue, Nattrib attrib)
             {
                 if (value != null)
                 {
@@ -600,17 +642,27 @@ namespace System
                 }
                 return defaultValue;
             }
-            /// <summary>
-            /// Values the field2_ decimal.
-            /// </summary>
-            /// <param name="value">The value.</param>
-            /// <param name="defaultValue">The default value.</param>
-            /// <returns></returns>
-            private static object Parser2_Decimal(object value, object defaultValue)
+            private static decimal? Parser_NDecimal(object value, decimal? defaultValue, Nattrib attrib)
             {
                 if (value != null)
                 {
-                    if (value is decimal)
+                    if ((value is decimal) || (value is decimal?))
+                        return (decimal?)value;
+                    string text;
+                    if (((text = (value as string)) != null) && (text.Length > 0))
+                    {
+                        decimal validValue;
+                        if (decimal.TryParse(text, NumberStyles.Currency, null, out validValue))
+                            return validValue;
+                    }
+                }
+                return defaultValue;
+            }
+            private static object Parser2_Decimal(object value, object defaultValue, Nattrib attrib)
+            {
+                if (value != null)
+                {
+                    if ((value is decimal) || (value is decimal?))
                         return value;
                     string text;
                     if (((text = (value as string)) != null) && (text.Length > 0))
@@ -623,20 +675,13 @@ namespace System
                 return defaultValue;
             }
 
-            /// <summary>
-            /// Tries the parse field_ decimal.
-            /// </summary>
-            /// <param name="value">The value.</param>
-            /// <param name="validValue">The valid value.</param>
-            /// <returns></returns>
-            private static bool TryParser_Decimal(object value, out decimal validValue)
+            private static bool TryParser_Decimal(object value, Nattrib attrib, out decimal validValue)
             {
                 if (value != null)
                 {
                     if (value is decimal)
                     {
-                        validValue = (decimal)value;
-                        return true;
+                        validValue = (decimal)value; return true;
                     }
                     string text;
                     if (((text = (value as string)) != null) && (text.Length > 0))
@@ -644,22 +689,34 @@ namespace System
                         decimal validValue2;
                         if (decimal.TryParse(text, NumberStyles.Currency, null, out validValue2))
                         {
-                            validValue = validValue2;
-                            return true;
+                            validValue = validValue2; return true;
                         }
                     }
                 }
-                validValue = default(decimal);
-                return false;
+                validValue = default(decimal); return false;
+            }
+            private static bool TryParser_Decimal(object value, Nattrib attrib, out decimal? validValue)
+            {
+                if (value != null)
+                {
+                    if ((value is decimal) || (value is decimal?))
+                    {
+                        validValue = (decimal?)value; return true;
+                    }
+                    string text;
+                    if (((text = (value as string)) != null) && (text.Length > 0))
+                    {
+                        decimal validValue2;
+                        if (decimal.TryParse(text, NumberStyles.Currency, null, out validValue2))
+                        {
+                            validValue = validValue2; return true;
+                        }
+                    }
+                }
+                validValue = null; return false;
             }
 
-
-            /// <summary>
-            /// Values the field_ decimal.
-            /// </summary>
-            /// <param name="value">The value.</param>
-            /// <returns></returns>
-            private static bool Validator_Decimal(object value)
+            private static bool Validator_Decimal(object value, Nattrib attrib)
             {
                 if (value != null)
                 {
@@ -677,13 +734,7 @@ namespace System
             #endregion
 
             #region Int32
-            /// <summary>
-            /// Values the field_ int32.
-            /// </summary>
-            /// <param name="value">The value.</param>
-            /// <param name="defaultValue">The default value.</param>
-            /// <returns></returns>
-            private static int Parser_Int32(object value, int defaultValue)
+            private static int Parser_Int32(object value, int defaultValue, Nattrib attrib)
             {
                 if (value != null)
                 {
@@ -701,17 +752,29 @@ namespace System
                 }
                 return defaultValue;
             }
-            /// <summary>
-            /// Values the field2_ int32.
-            /// </summary>
-            /// <param name="value">The value.</param>
-            /// <param name="defaultValue">The default value.</param>
-            /// <returns></returns>
-            private static object Parser2_Int32(object value, object defaultValue)
+            private static int? Parser_NInt32(object value, int? defaultValue, Nattrib attrib)
+            {
+                if (value != null)
+                {
+                    if ((value is int) || (value is int?))
+                        return (int?)value;
+                    if (value is bool)
+                        return (!(bool)value ? 0 : 1);
+                    string text;
+                    if (((text = (value as string)) != null) && (text.Length > 0))
+                    {
+                        int validValue;
+                        if (int.TryParse(text, out validValue))
+                            return validValue;
+                    }
+                }
+                return defaultValue;
+            }
+            private static object Parser2_Int32(object value, object defaultValue, Nattrib attrib)
             {
                 if (value == null)
                 {
-                    if (value is int)
+                    if ((value is int) || (value is int?))
                         return value;
                     if (value is bool)
                         return (!(bool)value ? 0 : 1);
@@ -726,25 +789,17 @@ namespace System
                 return defaultValue;
             }
 
-            /// <summary>
-            /// Tries the parse field_ int32.
-            /// </summary>
-            /// <param name="value">The value.</param>
-            /// <param name="validValue">The valid value.</param>
-            /// <returns></returns>
-            private static bool TryParser_Int32(object value, out int validValue)
+            private static bool TryParser_Int32(object value, Nattrib attrib, out int validValue)
             {
                 if (value != null)
                 {
                     if (value is int)
                     {
-                        validValue = (int)value;
-                        return true;
+                        validValue = (int)value; return true;
                     }
                     if (value is bool)
                     {
-                        validValue = (!(bool)value ? 0 : 1);
-                        return true;
+                        validValue = (!(bool)value ? 0 : 1); return true;
                     }
                     string text;
                     if (((text = (value as string)) != null) && (text.Length > 0))
@@ -752,21 +807,38 @@ namespace System
                         int validValue2;
                         if (int.TryParse(text, out validValue2))
                         {
-                            validValue = validValue2;
-                            return true;
+                            validValue = validValue2; return true;
                         }
                     }
                 }
-                validValue = default(int);
-                return false;
+                validValue = default(int); return false;
+            }
+            private static bool TryParser_NInt32(object value, Nattrib attrib, out int? validValue)
+            {
+                if (value != null)
+                {
+                    if ((value is int) || (value is int?))
+                    {
+                        validValue = (int?)value; return true;
+                    }
+                    if (value is bool)
+                    {
+                        validValue = (!(bool)value ? 0 : 1); return true;
+                    }
+                    string text;
+                    if (((text = (value as string)) != null) && (text.Length > 0))
+                    {
+                        int validValue2;
+                        if (int.TryParse(text, out validValue2))
+                        {
+                            validValue = validValue2; return true;
+                        }
+                    }
+                }
+                validValue = null; return false;
             }
 
-            /// <summary>
-            /// Values the field_ int32.
-            /// </summary>
-            /// <param name="value">The value.</param>
-            /// <returns></returns>
-            private static bool Validator_Int32(object value)
+            private static bool Validator_Int32(object value, Nattrib attrib)
             {
                 if (value != null)
                 {
@@ -784,13 +856,7 @@ namespace System
             #endregion
 
             #region String
-            /// <summary>
-            /// Values the field_ text.
-            /// </summary>
-            /// <param name="value">The value.</param>
-            /// <param name="defaultValue">The default value.</param>
-            /// <returns></returns>
-            private static string Parser_String(object value, string defaultValue)
+            private static string Parser_String(object value, string defaultValue, Nattrib attrib)
             {
                 if (value != null)
                 {
@@ -800,13 +866,7 @@ namespace System
                 }
                 return defaultValue;
             }
-            /// <summary>
-            /// Values the field2_ text.
-            /// </summary>
-            /// <param name="value">The value.</param>
-            /// <param name="defaultValue">The default value.</param>
-            /// <returns></returns>
-            private static object Parser2_String(object value, object defaultValue)
+            private static object Parser2_String(object value, object defaultValue, Nattrib attrib)
             {
                 if (value != null)
                 {
@@ -817,33 +877,20 @@ namespace System
                 return defaultValue;
             }
 
-            /// <summary>
-            /// Tries the parse field_ text.
-            /// </summary>
-            /// <param name="value">The value.</param>
-            /// <param name="validValue">The valid value.</param>
-            /// <returns></returns>
-            private static bool TryParser_String(object value, out string validValue)
+            private static bool TryParser_String(object value, Nattrib attrib, out string validValue)
             {
                 if (value != null)
                 {
                     string text;
                     if (((text = (value as string)) != null) && ((text = text.Trim()).Length > 0))
                     {
-                        validValue = text;
-                        return true;
+                        validValue = text; return true;
                     }
                 }
-                validValue = default(string);
-                return false;
+                validValue = default(string); return false;
             }
 
-            /// <summary>
-            /// Values the field_ text.
-            /// </summary>
-            /// <param name="value">The value.</param>
-            /// <returns></returns>
-            private static bool Validator_String(object value)
+            private static bool Validator_String(object value, Nattrib attrib)
             {
                 string text = (value as string);
                 return ((text != null) && (text.Trim().Length > 0));

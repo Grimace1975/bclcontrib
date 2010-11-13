@@ -59,11 +59,6 @@ namespace System.Primitives.DataTypes
 				: base(Prime.TryParse) { }
 		}
 
-		/// <summary>
-		/// Rangeses to XML.
-		/// </summary>
-		/// <param name="text">The text.</param>
-		/// <returns></returns>
 		public static string RangesToXml(string text, decimal step, Nattrib attrib)
 		{
 			ICollection<Range<decimal>> ranges;
@@ -94,9 +89,9 @@ namespace System.Primitives.DataTypes
 			return b.ToString();
 		}
 
-		/// <summary>
-		/// 
-		/// </summary>
+        /// <summary>
+        /// Prime
+        /// </summary>
 		public static class Prime
 		{
 			public static string Format(string value, FormatAttrib attrib)
@@ -108,17 +103,14 @@ namespace System.Primitives.DataTypes
 			{
 				if (string.IsNullOrEmpty(text))
 				{
-					value = string.Empty;
-					return false;
+					value = string.Empty; return false;
 				}
 				ICollection<Range<decimal>> ranges;
 				if (!ParserEx.TryParseRanges(text, RangeParser, attrib, out ranges))
 				{
-					value = string.Empty;
-					return false;
+					value = string.Empty; return false;
 				}
-				value = text;
-				return true;
+				value = text; return true;
 			}
 
 			public static Type Type
