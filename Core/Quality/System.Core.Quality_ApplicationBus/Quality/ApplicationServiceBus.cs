@@ -66,7 +66,7 @@ namespace System.Quality
             return this;
         }
 
-        //public void Send<TMessage>(TMessage message)
+        //public void SendLocal<TMessage>(TMessage message)
         //    where TMessage : IApplicationServiceMessage
         //{
         //    foreach (var type in GetTypesOfMessageHandlers(typeof(message)))
@@ -85,13 +85,13 @@ namespace System.Quality
             return new TMessage();
         }
 
-        public void Send<TMessage>(Action<TMessage> messageBuilder)
+        public void SendSelf<TMessage>(Action<TMessage> messageBuilder)
             where TMessage : IServiceMessage
         {
             throw new NotSupportedException();
         }
 
-        public void Send(params IServiceMessage[] messages)
+        public void SendSelf(params IServiceMessage[] messages)
         {
             if (messages == null)
                 throw new ArgumentNullException("messages");

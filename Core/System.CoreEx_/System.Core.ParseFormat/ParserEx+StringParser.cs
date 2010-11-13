@@ -48,7 +48,8 @@ namespace System
 
         private static bool TryScanForStringParser<TResult>(out Type key, out IStringParser<TResult> stringParser)
         {
-            throw new NotImplementedException();
+            key = null; stringParser = null; return false;
+            //throw new NotImplementedException();
         }
 
         private static IStringParser<TResult> ScanForStringParser<TResult>(Type type)
