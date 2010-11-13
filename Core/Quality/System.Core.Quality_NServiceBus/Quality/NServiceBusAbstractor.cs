@@ -67,7 +67,7 @@ namespace System.Quality
             return MessageCaster<TMessage>.MakeMessage();
         }
 
-        public void Send<TMessage>(Action<TMessage> messageBuilder)
+        public void SendSelf<TMessage>(Action<TMessage> messageBuilder)
             where TMessage : IServiceMessage
         {
             if (!typeof(TMessage).IsAssignableFrom(s_domainServiceMessageType))
@@ -83,7 +83,7 @@ namespace System.Quality
             catch (Exception ex) { throw new ServiceBusException(ex); }
         }
 
-        public void Send(params IServiceMessage[] messages)
+        public void SendSelf(params IServiceMessage[] messages)
         {
             try
             {
