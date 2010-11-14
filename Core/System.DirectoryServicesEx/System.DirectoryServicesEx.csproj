@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{85BA0CF2-8F5C-4315-87C6-11C5F179898B}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>System.DirectoryServicesEx</RootNamespace>
+    <AssemblyName>System.DirectoryServicesEx</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>BclContrib.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.DirectoryServices.AccountManagement">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DirectoryServices\AccountManagement\GroupAdvancedFilters.cs" />
+    <Compile Include="DirectoryServices\AccountManagement\GroupPrincipalEx.cs" />
+    <Compile Include="DirectoryServices\AccountManagement\UserPrincipalMatcher.cs" />
+    <Compile Include="DirectoryServices\AccountManagement\UserAdvancedFilters.cs" />
+    <Compile Include="DirectoryServices\AccountManagement\InetOrgPersonPrincipal.cs" />
+    <Compile Include="DirectoryServices\AccountManagement\UserPrincipalEx.cs" />
+    <Compile Include="DirectoryServices\AccountManagement\MixedUserPrincipalTypes.cs" />
+    <Compile Include="DirectoryServices\AccountManagement\MixedUserPrincipalMatcher.cs" />
+    <Compile Include="DirectoryServices\AccountManagement\GroupPrincipalMatcher.cs" />
+    <Compile Include="DirectoryServices\AccountManagement\IPrincipalMatcher.cs" />
+    <Compile Include="DirectoryServices\AccountManagement\UserPrincipalExMatcher.cs" />
+    <Compile Include="DirectoryServices\AccountManagement\UserProxyFullPrincipal.cs" />
+    <Compile Include="DirectoryServices\AccountManagement\UserProxyPrincipal.cs" />
+    <Compile Include="DirectoryServices\AccountManagement\PrincipalGateway.cs" />
+    <Compile Include="DirectoryServices\DirectoryEntryExtensions.cs" />
+    <Compile Include="DirectoryServices\DirectoryGateway.cs" />
+    <Compile Include="DirectoryServices\IDirectoryEntryMatcher.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="DirectoryServices\PropertyValueCollectionExtensions.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="BclContrib.snk" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\System.CoreEx\System.CoreEx.csproj">
+      <Project>{21FC5068-FABA-4CC9-A9F5-95D299655422}</Project>
+      <Name>System.CoreEx</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

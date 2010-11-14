@@ -1,0 +1,119 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{6EB37367-D677-4102-86B3-0848C2E41B5B}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>System</RootNamespace>
+    <AssemblyName>System.Core.ParseFormat</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.XML" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="FormatterEx.cs" />
+    <Compile Include="FormatterEx+ObjectFormatter.cs" />
+    <Compile Include="FormatterEx+ValueFormatter.cs" />
+    <Compile Include="ObjectEx\ObjectExtensions.cs" />
+    <Compile Include="ParserEx.cs" />
+    <Compile Include="ParserEx+ObjectParser.cs" />
+    <Compile Include="ParserEx+StringParser.cs" />
+    <Compile Include="Primitives\DataTypeEnum.cs" />
+    <Compile Include="Primitives\DataTypes.1\BoolDataType.cs" />
+    <Compile Include="Primitives\DataTypes.1\CreditCardIdDataType.cs" />
+    <Compile Include="Primitives\DataTypes.1\DateDataType.cs" />
+    <Compile Include="Primitives\DataTypes.1\DateTimeDataType.cs" />
+    <Compile Include="Primitives\DataTypes.1\DecimalDataType.cs" />
+    <Compile Include="Primitives\DataTypes.1\DecimalRangeDataType.cs" />
+    <Compile Include="Primitives\DataTypes.1\EmailDataType.cs" />
+    <Compile Include="Primitives\DataTypes.1\EmailListDataType.cs" />
+    <Compile Include="Primitives\DataTypes.1\HostnameDataType.cs" />
+    <Compile Include="Primitives\DataTypes.1\HostnameListDataType.cs" />
+    <Compile Include="Primitives\DataTypes.1\IntegerDataType.cs" />
+    <Compile Include="Primitives\DataTypes.1\IntegerRangeDataType.cs" />
+    <Compile Include="Primitives\DataTypes.1\MemoDataType.cs" />
+    <Compile Include="Primitives\DataTypes.1\MoneyDataType.cs" />
+    <Compile Include="Primitives\DataTypes.1\MonthAndDayDataType.cs" />
+    <Compile Include="Primitives\DataTypes.1\NotBoolDataType.cs" />
+    <Compile Include="Primitives\DataTypes.1\PercentDataType.cs" />
+    <Compile Include="Primitives\DataTypes.1\PhoneDataType.cs" />
+    <Compile Include="Primitives\DataTypes.1\RealDataType.cs" />
+    <Compile Include="Primitives\DataTypes.1\RegexDataType.cs" />
+    <Compile Include="Primitives\DataTypes.1\SequenceDataType.cs" />
+    <Compile Include="Primitives\DataTypes.1\TextDataType.cs" />
+    <Compile Include="Primitives\DataTypes.1\TimeDataType.cs" />
+    <Compile Include="Primitives\DataTypes.1\UriDataType.cs" />
+    <Compile Include="Primitives\DataTypes.1\UriIdDataType.cs" />
+    <Compile Include="Primitives\DataTypes.1\XmlDataType.cs" />
+    <Compile Include="Primitives\DataTypes.1\ZipDataType.cs" />
+    <Compile Include="Primitives\DataTypes\DataTypeBase+FormatterEx.cs" />
+    <Compile Include="Primitives\DataTypes\DataTypeBase+ParserEx.cs" />
+    <Compile Include="Primitives\DataTypes\DataTypeBase.cs" />
+    <Compile Include="Primitives\DataTypes\DataTypeFormatterBase.cs" />
+    <Compile Include="Primitives\DataTypes\DataTypeFormatterBase2.cs" />
+    <Compile Include="Primitives\DataTypes\DataTypeFormFieldMeta.cs" />
+    <Compile Include="Primitives\DataTypes\DataTypeParserBase.cs" />
+    <Compile Include="Primitives\DataTypes\DataTypeParserBase2.cs" />
+    <Compile Include="Primitives\DataTypes\IDataTypeFormatter.cs" />
+    <Compile Include="Primitives\DataTypes\IDataTypeParser.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StringExtensions.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Quality\System.Core.Quality\System.Core.Quality.csproj">
+      <Project>{A44E9D89-BFF2-41A4-AADC-3C2BDFDAEEB1}</Project>
+      <Name>System.Core.Quality</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\System.Core.Extentions\System.Core.Extentions.csproj">
+      <Project>{31D819FA-9DBB-480E-AC21-DA27C966BC2B}</Project>
+      <Name>System.Core.Extentions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\System.Core.Nattrib\System.Core.Nattrib.csproj">
+      <Project>{55D806D0-B6AF-4E92-B4DC-525F3676A6E5}</Project>
+      <Name>System.Core.Nattrib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\System.Core2\System.Core2.csproj">
+      <Project>{7F64972D-477E-4F38-BC95-BD835D501146}</Project>
+      <Name>System.Core2</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

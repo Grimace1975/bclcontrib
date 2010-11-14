@@ -1,0 +1,145 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{7F64972D-477E-4F38-BC95-BD835D501146}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>System</RootNamespace>
+    <AssemblyName>System.CoreEx</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.XML" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="+Mock\EnvironmentMock.cs" />
+    <Compile Include="Collections.1\CollectionIndexer.cs" />
+    <Compile Include="Collections.1\IIndexerValue.cs" />
+    <Compile Include="Collections.1\Indexer.cs" />
+    <Compile Include="Collections.1\Indexer2.cs" />
+    <Compile Include="Collections.1\Indexer\DictionaryCollectionIndexer.cs" />
+    <Compile Include="Collections.1\Indexer\DictionaryCollectionIndexerWithCreate.cs" />
+    <Compile Include="Collections.1\Indexer\DictionaryICollectionIndexer.cs" />
+    <Compile Include="Collections.1\Indexer\DictionaryICollectionIndexerWithCreate.cs" />
+    <Compile Include="Collections.1\Indexer\DisposeableDictionaryCollectionIndexer.cs" />
+    <Compile Include="Collections.1\Indexer\DisposeableDictionaryCollectionIndexerWithCreate.cs" />
+    <Compile Include="Collections.1\TypeCodeIndexer.cs" />
+    <Compile Include="Collections\ICollectionKey.cs" />
+    <Compile Include="Collections\IValue.cs" />
+    <Compile Include="Collections\SortDirection.cs" />
+    <Compile Include="Configuration\ConfigurationElementSyn.cs" />
+    <Compile Include="Configuration\ConfigurationElementExtensions.cs" />
+    <Compile Include="EXTENTIONS\Configuration\ConfigurationManagerEx.cs" />
+    <Compile Include="EnvironmentExMapper.cs" />
+    <Compile Include="DefaultAppUnit.cs" />
+    <Compile Include="EXTENTIONS\ConvertEx.cs" />
+    <Compile Include="EXTENTIONS\Threading\ReaderWriterLockExtensions.cs" />
+    <Compile Include="EXTENTIONS\Xml\XmlNodeEx.cs" />
+    <Compile Include="Linq\EnumerableExtensionsForCore.cs" />
+    <Compile Include="Patterns\Generic\ExtentsRepository.cs" />
+    <Compile Include="Patterns\Generic\SimpleFactoryBase.cs" />
+    <Compile Include="Patterns\ReleaseManagement\Configuration\ReleaseManagementConfiguration.cs" />
+    <Compile Include="EXTENTIONS\TypeExtensions.cs" />
+    <Compile Include="Patterns\ReleaseManagement\DeploymentEnvironmentExtensions.cs" />
+    <Compile Include="zLocal.Designer.cs">
+      <DependentUpon>zLocal.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="EnvironmentEx.cs" />
+    <Compile Include="Patterns\Configuration\Configuration.cs" />
+    <Compile Include="Patterns\Configuration\ConfigurationSection.cs" />
+    <Compile Include="Patterns\Configuration\ConfigurationSet.cs" />
+    <Compile Include="Patterns\Disposeable.cs" />
+    <Compile Include="Patterns\Generic\SimpleSingletonFactoryBase.cs" />
+    <Compile Include="Patterns\ReleaseManagement\DeploymentEnvironment.cs" />
+    <Compile Include="Patterns\ReleaseManagement\DevelopmentStage.cs" />
+    <Compile Include="Primitives\CodecEnum.cs" />
+    <Compile Include="Primitives\Codecs\CsvCodec.cs" />
+    <Compile Include="Primitives\Codecs\DigestCodec.cs" />
+    <Compile Include="Primitives\Codecs\ICodec.cs" />
+    <Compile Include="Primitives\Codecs\QuotedPrintableCodec.cs" />
+    <Compile Include="Primitives\Codecs\RtfCodec.cs" />
+    <Compile Include="Primitives\Codecs\XmlCodec.cs" />
+    <Compile Include="Primitives\Codecs\zCryptCodec.cs" />
+    <Compile Include="WeakReference.cs" />
+    <Compile Include="+Mock\CoreMock.cs" />
+    <Compile Include="CodeVersionAttribute.cs" />
+    <Compile Include="CodeVersionKind.cs" />
+    <Compile Include="Range.cs" />
+    <Compile Include="SR.cs" />
+    <Compile Include="TypeCodeObject.cs" />
+    <Compile Include="CoreEx.cs" />
+    <Compile Include="AssemblyRef.cs" />
+    <Compile Include="IAppUnit.cs" />
+    <Compile Include="Local.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Local.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="+Thunking\SqlServerClrThunker.cs" />
+    <Compile Include="TriState.cs" />
+    <Compile Include="TryFunc.cs" />
+    <Compile Include="HashCodeCombiner.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="zLocal.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>zLocal.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Local.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Local.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Quality\System.Core.Quality\System.Core.Quality.csproj">
+      <Project>{A44E9D89-BFF2-41A4-AADC-3C2BDFDAEEB1}</Project>
+      <Name>System.Core.Quality</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
