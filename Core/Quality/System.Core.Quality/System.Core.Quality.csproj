@@ -47,9 +47,27 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\System.CoreEx_\System.Core.Extentions\Linq\Expressions\ExpressionEx.cs">
+      <Link>+FromCoreEx\Linq\Expressions\ExpressionEx.cs</Link>
+    </Compile>
+    <Compile Include="..\..\System.CoreEx_\System.Core.Reflection\Reflection\AssemblyExtensions.cs">
+      <Link>+FromCoreEx\Reflection\AssemblyExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\..\System.CoreEx_\System.Core.Reflection\Reflection\PrivateReflectionDynamicObject.cs">
+      <Link>+FromCoreEx\Reflection\PrivateReflectionDynamicObject.cs</Link>
+    </Compile>
+    <Compile Include="..\..\System.CoreEx_\System.Core.Reflection\Reflection\ReflectionExtensions.cs">
+      <Link>+FromCoreEx\Reflection\ReflectionExtensions.cs</Link>
+    </Compile>
     <Compile Include="Quality+Cqrs\Cqrs\ICommand.cs" />
     <Compile Include="Quality+EventSourcing\EventSourcing\AggregateRoot.cs" />
-    <Compile Include="Quality+EventSourcing\EventSourcing\IDomainEvent.cs" />
+    <Compile Include="Quality+EventSourcing\EventSourcing\IAggregateRootSnapshooter.cs" />
+    <Compile Include="Quality+EventSourcing\EventSourcing\AggregateRootSnapshot.cs" />
+    <Compile Include="Quality+EventSourcing\EventSourcing\AggregateRootRepository.cs" />
+    <Compile Include="Quality+EventSourcing\EventSourcing\IAggregateRootSnapshotStore.cs" />
+    <Compile Include="Quality+EventSourcing\EventSourcing\Event.cs" />
+    <Compile Include="Quality+EventSourcing\EventSourcing\IEventStore.cs" />
+    <Compile Include="Quality+EventSourcing\EventSourcing\IAggregateRootBacking.cs" />
     <Compile Include="Quality+ServiceBus\ServiceBusExtensions.cs" />
     <Compile Include="Quality+ServiceBus\IServiceBus.cs" />
     <Compile Include="Quality+ServiceBus\IServiceMessageHandler.cs" />
@@ -80,7 +98,6 @@
     <Compile Include="Quality+ServiceLocator\ServiceResolutionException.cs" />
     <Compile Include="Quality+ServiceLocator\Reference_\zResolveLifetime.cs" />
     <Compile Include="Quality+ServiceLocator\IServiceRegistration.cs" />
-    <Compile Include="Reflection\AssemblyExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Local.resx">
@@ -91,6 +108,7 @@
   <ItemGroup>
     <None Include="BclContrib.snk" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

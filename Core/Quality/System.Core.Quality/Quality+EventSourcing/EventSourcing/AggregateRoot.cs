@@ -31,24 +31,63 @@ namespace System.Quality.EventSourcing
     /// <summary>
     /// AggregateRoot
     /// </summary>
-    public abstract class AggregateRoot
+    public abstract class AggregateRoot : IAggregateRootBacking
     {
+        private readonly List<Event> _changes = new List<Event>();
+
+        public Guid AggregateId { get; internal set; }
+
+        protected void ApplyEvent(Event @event) { ApplyEvent(@event, true); }
+
+        #region Backing
+        void IAggregateRootBacking.LoadFromHistory(IEnumerable<Event> events)
+        {
+            foreach (var @event in events)
+                ApplyEvent(@event, false);
+        }
+
+        IEnumerable<Event> IAggregateRootBacking.GetUncommittedChanges()
+        {
+            return _changes;
+        }
+
+        void IAggregateRootBacking.MarkChangesAsCommitted()
+        {
+            _changes.Clear();
+        }
+        #endregion
+
+        #region Handlers
+#if CLR4
+        private dynamic _thisAsDynamic;
+
+        public AggregateRoot()
+        {
+            _thisAsDynamic = this.AsDynamic();
+        }
+
+        private void ApplyEvent(Event @event, bool trackAsChange)
+        {
+            _thisAsDynamic.Apply(@event);
+            if (trackAsChange)
+                _changes.Add(@event);
+        }
+#else
         private readonly IDictionary<Type, Action<Event>> _handlerRegistry = new Dictionary<Type, Action<Event>>();
-        private readonly ICollection<Event> _changes = new Collection<Event>();
 
-        public abstract class Event { }
-
-        //public delegate void AppliesEvent<TEvent>(TEvent @event)
-        //    where TEvent : Event;
+        public AggregateRoot()
+        {
+            AggregateId = Guid.NewGuid();
+        }
 
         protected void RegisterHandler<TEvent>(Action<TEvent> handler)
            where TEvent : Event
         {
-            var castHandler = DelegateAdjuster.CastArgument<Event, TEvent>(e => handler(e));
+            var castHandler = ExpressionEx.CastArgument<Event, TEvent>(e => handler(e));
             _handlerRegistry.Add(typeof(TEvent), castHandler);
         }
 
-        protected void ApplyEvent(Event @event, bool trackAsChange)
+        private void ApplyEvent(Event @event, bool trackAsChange)
         {
             Action<Event> handler;
             if (!_handlerRegistry.TryGetValue(@event.GetType(), out handler))
@@ -57,33 +96,7 @@ namespace System.Quality.EventSourcing
             if (trackAsChange)
                 _changes.Add(@event);
         }
-
-        public void LoadFromHistory(IEnumerable<Event> events)
-        {
-            foreach (var @event in events)
-                ApplyEvent(@event, false);
-        }
-
-        public IEnumerable<Event> GetChanges()
-        {
-            return _changes;
-        }
-    }
-
-    public class DelegateAdjuster
-    {
-        public static Action<TBase> CastArgument<TBase, TDerived>(Expression<Action<TDerived>> source)
-            where TDerived : TBase
-        {
-            if (typeof(TDerived) == typeof(TBase))
-                return (Action<TBase>)((Delegate)source.Compile());
-            var sourceParameter = Expression.Parameter(typeof(TBase), "source");
-            var result = Expression.Lambda<Action<TBase>>(
-                Expression.Invoke(
-                    source,
-                    Expression.Convert(sourceParameter, typeof(TDerived))),
-                sourceParameter);
-            return result.Compile();
-        }
+#endif
+        #endregion
     }
 }

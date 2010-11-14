@@ -75,6 +75,8 @@
     <Compile Include="Reflection\Internal\ValueTypePropertyAccessor.cs" />
     <Compile Include="Reflection\IValueResolver.cs" />
     <Compile Include="Reflection\MemberInfoExtensions.cs" />
+    <Compile Include="Reflection\PrivateReflectionDynamicObject.cs" />
+    <Compile Include="Reflection\ReflectionExtensions.cs" />
     <Compile Include="Reflection\zResolutionContext.cs" />
     <Compile Include="Reflection\zResolutionResult.cs" />
   </ItemGroup>
