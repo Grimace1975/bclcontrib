@@ -1,4 +1,4 @@
-#region License
+﻿#region License
 /*
 The MIT License
 
@@ -23,12 +23,18 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 #endregion
-namespace System.Quality.EventSourcing
+namespace System.Linq.Expressions
 {
     /// <summary>
-    /// IDomainEvent
+    /// ReflectionExtensions
     /// </summary>
-    public interface IDomainEvent
+    public static class ReflectionExtensions
     {
+        #if CLR4
+        public static dynamic AsDynamic(this object o)
+        {
+            return PrivateReflectionDynamicObject.WrapIfNeeded(o);
+        }
+        #endif
     }
 }

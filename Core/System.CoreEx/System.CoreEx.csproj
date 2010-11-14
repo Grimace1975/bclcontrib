@@ -389,6 +389,9 @@
     <Compile Include="..\System.CoreEx_\System.Core.Extentions\Linq\EnumerableExtensions.cs">
       <Link>System.Core.Extentions\Linq\EnumerableExtensions.cs</Link>
     </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\Linq\Expressions\ExpressionEx.cs">
+      <Link>System.Core.Extentions\Linq\Expressions\ExpressionEx.cs</Link>
+    </Compile>
     <Compile Include="..\System.CoreEx_\System.Core.Extentions\Linq\Expressions\LambdaExpressionExtensions.cs">
       <Link>System.Core.Extentions\Linq\Expressions\LambdaExpressionExtensions.cs</Link>
     </Compile>
@@ -901,6 +904,12 @@
     </Compile>
     <Compile Include="..\System.CoreEx_\System.Core.Reflection\Reflection\MethodInfoExtensions.cs">
       <Link>System.Core.Reflection\Reflection\MethodInfoExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Reflection\Reflection\PrivateReflectionDynamicObject.cs">
+      <Link>System.Core.Reflection\Reflection\PrivateReflectionDynamicObject.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Reflection\Reflection\ReflectionExtensions.cs">
+      <Link>System.Core.Reflection\Reflection\ReflectionExtensions.cs</Link>
     </Compile>
     <Compile Include="..\System.CoreEx_\System.Core.Reflection\Reflection\zResolutionContext.cs">
       <Link>System.Core.Reflection\Reflection\zResolutionContext.cs</Link>

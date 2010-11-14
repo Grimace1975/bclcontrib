@@ -1,4 +1,4 @@
-﻿#region License
+#region License
 /*
 The MIT License
 
@@ -24,31 +24,15 @@ THE SOFTWARE.
 */
 #endregion
 using System.Collections.Generic;
-namespace System.Reflection
+namespace System.Quality.EventSourcing
 {
     /// <summary>
-    /// AssemblyExtensions
+    /// IAggregateRootBacking
     /// </summary>
-    internal static class AssemblyExtensions
+    internal interface IAggregateRootBacking
     {
-        public static IEnumerable<Type> AsTypesEnumerator(this Assembly assembly, Predicate<Type> predicate)
-        {
-            if (assembly == null)
-                throw new ArgumentNullException("assembly");
-            foreach (var type in assembly.GetTypes())
-                if (predicate(type))
-                    yield return type;
-        }
-
-        public static IEnumerable<Type> AsTypesEnumerator(this Assembly assembly, Type assignableFromType) { return AsTypesEnumerator(assembly, assignableFromType, null); }
-        public static IEnumerable<Type> AsTypesEnumerator(this Assembly assembly, Type assignableFromType, Predicate<Type> predicate)
-        {
-            if (assembly == null)
-                throw new ArgumentNullException("assembly");
-            foreach (var type in assembly.GetTypes())
-                if ((!type.IsInterface) && (!type.IsAbstract) && (assignableFromType.IsAssignableFrom(type) && ((predicate == null) || (predicate(type)))))
-                    yield return type;
-        }
-
+        void LoadFromHistory(IEnumerable<Event> events);
+        IEnumerable<Event> GetUncommittedChanges();
+        void MarkChangesAsCommitted();
     }
 }
