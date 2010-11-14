@@ -49,8 +49,9 @@ namespace System
 
         private static bool TryScanForObjectParser<TResult>(out Type key, out IObjectParser<TResult> objectParser)
         {
+            key = null; objectParser = null; return false;
             //var interfaces = type.FindInterfaces(((m, filterCriteria) => m == s_objectParserBuilderType), null);
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         private static IObjectParser<TResult> ScanForObjectParser<TResult>(Type type)
