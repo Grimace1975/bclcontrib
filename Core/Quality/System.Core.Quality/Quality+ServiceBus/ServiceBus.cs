@@ -36,9 +36,9 @@ namespace System.Quality
 
         public static TMessage MakeMessage<TMessage>()
             where TMessage : IServiceMessage, new() { return ServiceBusManager.Current.MakeMessage<TMessage>(); }
-        public static void Send<TMessage>(Action<TMessage> messageBuilder)
-            where TMessage : IServiceMessage { ServiceBusManager.Current.Send(messageBuilder); }
-        public static void Send(params IServiceMessage[] messages) { ServiceBusManager.Current.Send(messages); }
+        public static void SendSelf<TMessage>(Action<TMessage> messageBuilder)
+            where TMessage : IServiceMessage { ServiceBusManager.Current.SendSelf(messageBuilder); }
+        public static void SendSelf(params IServiceMessage[] messages) { ServiceBusManager.Current.SendSelf(messages); }
         public static IServiceBusCallback SendTo<TMessage>(Action<TMessage> messageBuilder)
             where TMessage : IServiceMessage { return ServiceBusManager.Current.SendTo<TMessage>(null, messageBuilder); }
         public static IServiceBusCallback SendTo<TMessage>(string destination, Action<TMessage> messageBuilder)
