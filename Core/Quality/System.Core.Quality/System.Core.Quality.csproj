@@ -47,8 +47,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Quality+Cqrs\ICommand.cs" />
-    <Compile Include="Quality+EventSourcing\IDomainEvent.cs" />
+    <Compile Include="Quality+Cqrs\Cqrs\ICommand.cs" />
+    <Compile Include="Quality+EventSourcing\EventSourcing\AggregateRoot.cs" />
+    <Compile Include="Quality+EventSourcing\EventSourcing\IDomainEvent.cs" />
     <Compile Include="Quality+ServiceBus\ServiceBusExtensions.cs" />
     <Compile Include="Quality+ServiceBus\IServiceBus.cs" />
     <Compile Include="Quality+ServiceBus\IServiceMessageHandler.cs" />

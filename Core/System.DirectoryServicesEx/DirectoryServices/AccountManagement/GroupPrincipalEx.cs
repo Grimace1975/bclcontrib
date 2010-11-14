@@ -36,7 +36,7 @@ namespace System.DirectoryServices.AccountManagement
         public GroupPrincipalEx(PrincipalContext context, string samAccountName)
             : base(context, samAccountName) { }
 
-        public new GroupAdvancedFilters AdvancedSearchFilter
+        public GroupAdvancedFilters AdvancedSearchFilter
         {
             get
             {
