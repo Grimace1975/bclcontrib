@@ -55,6 +55,19 @@ namespace System.DirectoryServices
             return builder(_domain, _userId, _password, tag);
         }
 
+        public bool ValidateUser(string container, string userId, string password)
+        {
+            using (var entry = GetDirectoryEntry(container, userId, password))
+            {
+                try
+                {
+                    object nativeObject = entry.NativeObject;
+                }
+                catch { return false; }
+                return true;
+            }
+        }
+
         public static string ParseUserId(IPrincipal user)
         {
             if (user == null)
@@ -199,10 +212,11 @@ namespace System.DirectoryServices
             }
         }
 
-        public DirectoryEntry GetDirectoryEntry(string container)
+        public DirectoryEntry GetDirectoryEntry(string container) { return GetDirectoryEntry(container, _userId, _password); }
+        public DirectoryEntry GetDirectoryEntry(string container, string userId, string password)
         {
             var authenticationTypes = (_domain.EndsWith(":636") ? AuthenticationTypes.SecureSocketsLayer | AuthenticationTypes.Secure : AuthenticationTypes.Secure);
-            return new DirectoryEntry("LDAP://" + _domain + "/" + container, _userId, _password, authenticationTypes);
+            return new DirectoryEntry("LDAP://" + _domain + "/" + container, userId, password, authenticationTypes);
         }
 
         private string GetPrimaryGroup(DirectoryEntry aEntry, DirectoryEntry aDomainEntry)
