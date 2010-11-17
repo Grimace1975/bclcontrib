@@ -61,7 +61,7 @@
     </Compile>
     <Compile Include="Quality+Cqrs\Cqrs\ICommand.cs" />
     <Compile Include="Quality+EventSourcing\EventSourcing\AggregateRoot.cs" />
-    <Compile Include="Quality+EventSourcing\EventSourcing\IAggregateRootSnapshooter.cs" />
+    <Compile Include="Quality+EventSourcing\EventSourcing\IAggregateRootSnapshoter.cs" />
     <Compile Include="Quality+EventSourcing\EventSourcing\AggregateRootSnapshot.cs" />
     <Compile Include="Quality+EventSourcing\EventSourcing\AggregateRootRepository.cs" />
     <Compile Include="Quality+EventSourcing\EventSourcing\IAggregateRootSnapshotStore.cs" />

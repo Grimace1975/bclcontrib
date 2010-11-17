@@ -29,7 +29,7 @@ namespace System.Quality.EventSourcing
     /// <summary>
     /// IAggregateRootBacking
     /// </summary>
-    internal interface IAggregateRootBacking
+    public interface IAggregateRootBacking
     {
         void LoadFromHistory(IEnumerable<Event> events);
         IEnumerable<Event> GetUncommittedChanges();
