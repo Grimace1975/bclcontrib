@@ -26,12 +26,11 @@ THE SOFTWARE.
 namespace System.Quality.EventSourcing
 {
     /// <summary>
-    /// IAggregateRootSnapshooter
+    /// IAggregateRootSnapshoter
     /// </summary>
-    public interface IAggregateRootSnapshooter
+    public interface IAggregateRootSnapshoter
     {
         AggregateRootSnapshot GetSnapshot();
         void LoadSnapshot(AggregateRootSnapshot snapshot);
-        bool HasSnapshot { get; }
     }
 }

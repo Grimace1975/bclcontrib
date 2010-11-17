@@ -34,9 +34,9 @@ namespace System.Quality.EventSourcing
     public abstract class AggregateRoot : IAggregateRootBacking
     {
         private readonly List<Event> _changes = new List<Event>();
+        private readonly bool _strictEvents;
 
-        public Guid AggregateId { get; internal set; }
-
+        public abstract Guid AggregateId { get; }
         protected void ApplyEvent(Event @event) { ApplyEvent(@event, true); }
 
         #region Backing
@@ -58,26 +58,12 @@ namespace System.Quality.EventSourcing
         #endregion
 
         #region Handlers
-#if CLR4
-        private dynamic _thisAsDynamic;
-
-        public AggregateRoot()
-        {
-            _thisAsDynamic = this.AsDynamic();
-        }
-
-        private void ApplyEvent(Event @event, bool trackAsChange)
-        {
-            _thisAsDynamic.Apply(@event);
-            if (trackAsChange)
-                _changes.Add(@event);
-        }
-#else
         private readonly IDictionary<Type, Action<Event>> _handlerRegistry = new Dictionary<Type, Action<Event>>();
 
-        public AggregateRoot()
+        // Event Handlers
+        private void RegisterHandlersByConvention()
         {
-            AggregateId = Guid.NewGuid();
+            //this.GetType().GetMethods("HandleEvent");
         }
 
         protected void RegisterHandler<TEvent>(Action<TEvent> handler)
@@ -90,13 +76,13 @@ namespace System.Quality.EventSourcing
         private void ApplyEvent(Event @event, bool trackAsChange)
         {
             Action<Event> handler;
-            if (!_handlerRegistry.TryGetValue(@event.GetType(), out handler))
+            if (_handlerRegistry.TryGetValue(@event.GetType(), out handler))
+                handler(@event);
+            else if (_strictEvents)
                 throw new InvalidOperationException();
-            handler(@event);
             if (trackAsChange)
                 _changes.Add(@event);
         }
-#endif
         #endregion
     }
 }
