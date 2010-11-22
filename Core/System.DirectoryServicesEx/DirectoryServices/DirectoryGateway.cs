@@ -46,6 +46,10 @@ namespace System.DirectoryServices
             _userId = userId;
             _password = password;
             UserContainer = userContainer;
+            LdapUserNameAttribute = "uid";
+            LdapUserDNAttribute = "entrydn";
+            LdapUserFilter = "(&(objectClass=InetOrgPerson))";
+            LdapUserSearchScope = SearchScope.OneLevel;
         }
 
         public string UserContainer { get; private set; }
@@ -55,9 +59,19 @@ namespace System.DirectoryServices
             return builder(_domain, _userId, _password, tag);
         }
 
+        public string LdapUserNameAttribute { get; set; }
+        public string LdapUserDNAttribute { get; set; }
+        public string LdapUserFilter { get; set; }
+        public SearchScope LdapUserSearchScope { get; set; }
+
+        #region User Validation
         public bool ValidateUser(string container, string userId, string password)
         {
-            using (var entry = GetDirectoryEntry(container, userId, password))
+            string username = GetUserAttributeBySearchProperty(container, userId, LdapUserNameAttribute, LdapUserDNAttribute);
+            if (string.IsNullOrEmpty(username))
+                return false;
+            var authenticationTypes = Ldap.GetAuthenticationTypes(_domain.EndsWith(":636")) & ~AuthenticationTypes.Secure;
+            using (var entry = GetDirectoryEntry(container, username, password, authenticationTypes))
             {
                 try
                 {
@@ -67,6 +81,41 @@ namespace System.DirectoryServices
                 return true;
             }
         }
+
+        private string GetUserAttributeBySearchProperty(string searchContainer, string searchValue, string searchProperty, string returnAttribute)
+        {
+            using (var searchRoot = GetDirectoryEntry(searchContainer))
+            {
+                string filter;
+                if (!string.IsNullOrEmpty(searchValue))
+                    filter = string.Format("(&({0})({1}={2}))", LdapUserFilter, Ldap.EncodeFilter(searchProperty), Ldap.EncodeFilter(searchValue));
+                else
+                    filter = string.Format("(&({0})(!({1}=*)))", LdapUserFilter, Ldap.EncodeFilter(searchProperty));
+                ResultPropertyCollection propertyCollection;
+                if (FindOneObject(searchRoot, filter, LdapUserSearchScope, new string[] { returnAttribute }, out propertyCollection))
+                    if (propertyCollection != null)
+                        return propertyCollection.GetSingleStringValue(returnAttribute);
+            }
+            return null;
+        }
+
+        public static bool FindOneObject(DirectoryEntry searchRoot, string filter, SearchScope scope, string[] propertiesToLoad, out ResultPropertyCollection entryProperties)
+        {
+            using (var searcher = new DirectorySearcher(searchRoot, filter))
+            {
+                searcher.SearchScope = scope;
+                searcher.PropertiesToLoad.AddRange(propertiesToLoad);
+                var result = searcher.FindOne();
+                if (result != null)
+                {
+                    entryProperties = result.Properties;
+                    return true;
+                }
+            }
+            entryProperties = null;
+            return false;
+        }
+        #endregion
 
         public static string ParseUserId(IPrincipal user)
         {
@@ -212,11 +261,10 @@ namespace System.DirectoryServices
             }
         }
 
-        public DirectoryEntry GetDirectoryEntry(string container) { return GetDirectoryEntry(container, _userId, _password); }
-        public DirectoryEntry GetDirectoryEntry(string container, string userId, string password)
+        public DirectoryEntry GetDirectoryEntry(string container) { return GetDirectoryEntry(container, _userId, _password, Ldap.GetAuthenticationTypes(_domain.EndsWith(":636")) | (string.IsNullOrEmpty(_userId) ? AuthenticationTypes.Secure : (AuthenticationTypes)0)); }
+        public DirectoryEntry GetDirectoryEntry(string container, string userId, string password, AuthenticationTypes authenticationType)
         {
-            var authenticationTypes = (_domain.EndsWith(":636") ? AuthenticationTypes.SecureSocketsLayer | AuthenticationTypes.Secure : AuthenticationTypes.Secure);
-            return new DirectoryEntry("LDAP://" + _domain + "/" + container, userId, password, authenticationTypes);
+            return new DirectoryEntry("LDAP://" + _domain + "/" + container, userId, password, authenticationType);
         }
 
         private string GetPrimaryGroup(DirectoryEntry aEntry, DirectoryEntry aDomainEntry)
