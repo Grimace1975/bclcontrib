@@ -65,6 +65,7 @@
     <Compile Include="DirectoryServices\AccountManagement\UserProxyFullPrincipal.cs" />
     <Compile Include="DirectoryServices\AccountManagement\UserProxyPrincipal.cs" />
     <Compile Include="DirectoryServices\AccountManagement\PrincipalGateway.cs" />
+    <Compile Include="DirectoryServices\Ldap.cs" />
     <Compile Include="DirectoryServices\DirectoryEntryExtensions.cs" />
     <Compile Include="DirectoryServices\DirectoryGateway.cs" />
     <Compile Include="DirectoryServices\IDirectoryEntryMatcher.cs" />

@@ -34,20 +34,32 @@ namespace System.DirectoryServices
         //    Lockout = 0x0010,
         //}
 
-        public static void SetValue(this PropertyValueCollection propertyValueCollection, string value)
+        public static void SetValue(this PropertyValueCollection collection, string value)
         {
+            if (collection == null)
+                throw new ArgumentNullException("collection");
             if (string.IsNullOrEmpty(value))
             {
-                if (propertyValueCollection.Count > 0)
-                    propertyValueCollection.Clear();
+                if (collection.Count > 0)
+                    collection.Clear();
                 return;
             }
-            propertyValueCollection.Value = value;
+            collection.Value = value;
         }
 
-        public static void SetValue(this PropertyValueCollection propertyValueCollection, bool value)
+        public static void SetValue(this PropertyValueCollection collection, bool value)
         {
-            propertyValueCollection.Value = value;
+            if (collection == null)
+                throw new ArgumentNullException("collection");
+            collection.Value = value;
+        }
+
+        public static string GetSingleStringValue(this ResultPropertyCollection collection, string propertyName)
+        {
+            if (collection == null)
+                throw new ArgumentNullException("collection");
+            var values = collection[propertyName];
+            return ((values != null) && (values.Count > 0) ? (values[0] as string) : string.Empty);
         }
     }
 }
