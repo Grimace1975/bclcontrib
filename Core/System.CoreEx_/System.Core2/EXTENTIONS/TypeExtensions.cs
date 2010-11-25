@@ -48,7 +48,7 @@ namespace System
 
         private static Type FindIEnumerable(Type type)
         {
-            if ((type == null) || (type == CoreEx.StringType))
+            if ((type == null) || (type == CoreExInternal.StringType))
                 return null;
             if (type.IsArray)
                 return typeof(IEnumerable<>).MakeGenericType(type.GetElementType());
@@ -67,7 +67,7 @@ namespace System
                     if (enumerable != null)
                         return enumerable;
                 }
-            return ((type.BaseType != null) && (type.BaseType != CoreEx.ObjectType) ? FindIEnumerable(type.BaseType) : null);
+            return ((type.BaseType != null) && (type.BaseType != CoreExInternal.ObjectType) ? FindIEnumerable(type.BaseType) : null);
         }
 
         //use (value is Type)

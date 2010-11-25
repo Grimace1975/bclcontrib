@@ -42,6 +42,21 @@
     <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\System.Core.Extentions\DateTimeExtensions.cs">
+      <Link>+FromCore.Extentions\DateTimeExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\System.Core.Extentions\StringEx+ExtractString.cs">
+      <Link>+FromCore.Extentions\StringEx+ExtractString.cs</Link>
+    </Compile>
+    <Compile Include="..\System.Core2\CoreExInternal.cs">
+      <Link>+FromCoreEx\CoreExInternal.cs</Link>
+    </Compile>
+    <Compile Include="..\System.Core2\Range.cs">
+      <Link>+FromCoreEx\Range.cs</Link>
+    </Compile>
+    <Compile Include="..\System.Core2\TryFunc.cs">
+      <Link>+FromCoreEx\TryFunc.cs</Link>
+    </Compile>
     <Compile Include="FormatterEx.cs" />
     <Compile Include="FormatterEx+ObjectFormatter.cs" />
     <Compile Include="FormatterEx+ValueFormatter.cs" />
@@ -91,23 +106,12 @@
     <Compile Include="StringExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Quality\System.Core.Quality\System.Core.Quality.csproj">
-      <Project>{A44E9D89-BFF2-41A4-AADC-3C2BDFDAEEB1}</Project>
-      <Name>System.Core.Quality</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\System.Core.Extentions\System.Core.Extentions.csproj">
-      <Project>{31D819FA-9DBB-480E-AC21-DA27C966BC2B}</Project>
-      <Name>System.Core.Extentions</Name>
-    </ProjectReference>
     <ProjectReference Include="..\System.Core.Nattrib\System.Core.Nattrib.csproj">
       <Project>{55D806D0-B6AF-4E92-B4DC-525F3676A6E5}</Project>
       <Name>System.Core.Nattrib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\System.Core2\System.Core2.csproj">
-      <Project>{7F64972D-477E-4F38-BC95-BD835D501146}</Project>
-      <Name>System.Core2</Name>
-    </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

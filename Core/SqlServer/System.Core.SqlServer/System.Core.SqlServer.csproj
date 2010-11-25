@@ -225,6 +225,9 @@
     <Compile Include="..\..\System.CoreEx_\System.Core2\CoreEx.cs">
       <Link>System.CoreEx+\System.Core.Core2\CoreEx.cs</Link>
     </Compile>
+    <Compile Include="..\..\System.CoreEx_\System.Core2\CoreExInternal.cs">
+      <Link>System.CoreEx+\System.Core.Core2\CoreExInternal.cs</Link>
+    </Compile>
     <Compile Include="..\..\System.CoreEx_\System.Core2\DefaultAppUnit.cs">
       <Link>System.CoreEx+\System.Core.Core2\DefaultAppUnit.cs</Link>
     </Compile>

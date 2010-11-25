@@ -1046,6 +1046,9 @@
     <Compile Include="..\System.CoreEx_\System.Core2\CoreEx.cs">
       <Link>System.Core2\CoreEx.cs</Link>
     </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core2\CoreExInternal.cs">
+      <Link>System.Core2\CoreExInternal.cs</Link>
+    </Compile>
     <Compile Include="..\System.CoreEx_\System.Core2\DefaultAppUnit.cs">
       <Link>System.Core2\DefaultAppUnit.cs</Link>
     </Compile>

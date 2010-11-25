@@ -49,9 +49,10 @@ namespace System
         /// <param name="key">The key.</param>
         private DataType(string key)
         {
-            _isNull = false;
-            _key = (key ?? string.Empty);
-            _dataType = DataTypeBase.Get(_key);
+            throw new NotSupportedException();
+            //_isNull = false;
+            //_key = (key ?? string.Empty);
+            //_dataType = DataTypeBase.Get(_key);
         }
         /// <summary>
         /// Initializes a new instance of the <see cref="DataType"/> struct.
@@ -274,17 +275,18 @@ namespace System
         /// <param name="r">The <see cref="T:System.IO.BinaryReader"/> stream from which the object is deserialized.</param>
         void IBinarySerialize.Read(BinaryReader r)
         {
-            _isNull = r.ReadBoolean();
-            if (!_isNull)
-            {
-                _key = r.ReadString();
-                _dataType = DataTypeBase.Get(_key);
-            }
-            else
-            {
-                _key = string.Empty;
-                _dataType = null;
-            }
+            throw new NotSupportedException();
+            //_isNull = r.ReadBoolean();
+            //if (!_isNull)
+            //{
+            //    _key = r.ReadString();
+            //    _dataType = DataTypeBase.Get(_key);
+            //}
+            //else
+            //{
+            //    _key = string.Empty;
+            //    _dataType = null;
+            //}
         }
 
         /// <summary>

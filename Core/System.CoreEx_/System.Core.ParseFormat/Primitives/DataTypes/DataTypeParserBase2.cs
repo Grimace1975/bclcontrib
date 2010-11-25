@@ -28,37 +28,62 @@ namespace System.Primitives.DataTypes
     /// <summary>
     /// DataTypeParserBase
     /// </summary>
-    /// <typeparam name="TValue">The type of the value.</typeparam>
+    /// <typeparam name="TResult">The type of the value.</typeparam>
     /// <typeparam name="TParseAttrib">The type of the parse attrib.</typeparam>
-    public abstract class DataTypeParserBase<TValue, TParseAttrib> : DataTypeParserBase
+    public abstract class DataTypeParserBase<TResult, TParseAttrib> : DataTypeParserBase, ParserEx.IStringParser<TResult>
     {
-        private TryFunc<string, TParseAttrib, TValue> _tryParse;
+        private TryFunc<string, TParseAttrib, TResult> _tryParse;
 
-        public DataTypeParserBase(TryFunc<string, TParseAttrib, TValue> tryParse)
+        public DataTypeParserBase(TryFunc<string, TParseAttrib, TResult> tryParse)
             : this(tryParse, string.Empty, string.Empty) { }
-        public DataTypeParserBase(TryFunc<string, TParseAttrib, TValue> tryParse, object parseDefaultValue, string parseTextDefaultValue)
+        public DataTypeParserBase(TryFunc<string, TParseAttrib, TResult> tryParse, object parseDefaultValue, string parseTextDefaultValue)
             : base(parseDefaultValue, parseTextDefaultValue)
         {
             _tryParse = tryParse;
         }
         public override object Parse(string text, object defaultValue, Nattrib attrib)
         {
-            return ParseBinder<TValue, TParseAttrib>(_tryParse, text, defaultValue, attrib);
+            return ParseBinder<TResult, TParseAttrib>(_tryParse, text, defaultValue, attrib);
         }
         public override string ParseText(string text, string defaultValue, Nattrib attrib)
         {
-            return ParseTextBinder<TValue, TParseAttrib>(_tryParse, text, defaultValue, attrib);
+            return ParseTextBinder<TResult, TParseAttrib>(_tryParse, text, defaultValue, attrib);
         }
         public override bool TryParse(string text, Nattrib attrib, out object value)
         {
-            return TryParseBinder<TValue, TParseAttrib>(_tryParse, text, attrib, out value);
+            return TryParseBinder<TResult, TParseAttrib>(_tryParse, text, attrib, out value);
         }
-        public bool TryParse<T>(string text, out T value)
-            where T : TValue { return TryParse<T>(text, null, out value); }
-        public bool TryParse<T>(string text, Nattrib attrib, out T value)
-            where T : TValue
+        //public bool TryParse<T>(string text, out T value)
+        //    where T : TResult { return TryParse<T>(text, null, out value); }
+        //public bool TryParse<T>(string text, Nattrib attrib, out T value)
+        //    where T : TResult
+        //{
+        //    return TryParseBinder<T, TResult, TParseAttrib>(_tryParse, text, attrib, out value);
+        //}
+
+
+        #region IStringParser
+        public TResult Parse(string value, TResult defaultValue, Nattrib attrib)
         {
-            return TryParseBinder<T, TValue, TParseAttrib>(_tryParse, text, attrib, out value);
+            TResult validValue;
+            return (_tryParse(value, attrib.Get<TParseAttrib>(), out validValue) ? validValue : defaultValue);
         }
+
+        public object Parse2(string value, object defaultValue, Nattrib attrib)
+        {
+            TResult validValue;
+            return (_tryParse(value, attrib.Get<TParseAttrib>(), out validValue) ? validValue : defaultValue);
+        }
+
+        public bool TryParse(string value, Nattrib attrib, out TResult validValue)
+        {
+            return _tryParse(value, attrib.Get<TParseAttrib>(), out validValue);
+        }
+
+        public bool Validate(string value, Nattrib attrib)
+        {
+            throw new NotImplementedException();
+        }
+        #endregion
     }
 }

@@ -24,16 +24,14 @@ THE SOFTWARE.
 */
 #endregion
 //[assembly: Instinct.Pattern.Environment.Attribute.FactoryConfiguration("dataType", typeof(System.Primitives.DataTypeBase))]
-using System.Patterns.Generic;
 #if !SqlServer
-using System.Quality;
 #endif
 namespace System.Primitives.DataTypes
 {
     /// <summary>
     /// DataTypeBase
     /// </summary>
-    public abstract partial class DataTypeBase : SimpleFactoryBase<DataTypeBase>
+    public abstract partial class DataTypeBase //: SimpleFactoryBase<DataTypeBase>
     {
         internal static readonly Type DataTypeBaseType = typeof(DataTypeBase);
 

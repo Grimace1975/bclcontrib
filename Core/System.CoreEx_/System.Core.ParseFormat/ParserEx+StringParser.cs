@@ -40,10 +40,18 @@ namespace System
 
         public interface IStringParser<TResult>
         {
-            TResult Parser(string value, TResult defaultValue, Nattrib attrib);
-            object Parser2(string value, object defaultValue, Nattrib attrib);
-            bool TryParser(string value, Nattrib attrib, out TResult validValue);
-            bool Validator(string value, Nattrib attrib);
+            TResult Parse(string value, TResult defaultValue, Nattrib attrib);
+            object Parse2(string value, object defaultValue, Nattrib attrib);
+            bool TryParse(string value, Nattrib attrib, out TResult validValue);
+            bool Validate(string value, Nattrib attrib);
+        }
+
+        public static void RegisterStringParser<T>(object stringParser) { RegisterStringParser(typeof(T), stringParser); }
+        public static void RegisterStringParser(Type key, object stringParser)
+        {
+            if (s_stringParserProviders == null)
+                s_stringParserProviders = new Dictionary<Type, object>();
+            s_stringParserProviders.Add(key, stringParser);
         }
 
         private static bool TryScanForStringParser<TResult>(out Type key, out IStringParser<TResult> stringParser)
@@ -56,15 +64,13 @@ namespace System
         {
             if (s_stringParserProviders != null)
                 foreach (var stringParser2 in s_stringParserProviders)
-                    if (type.IsSubclassOf(stringParser2.Key))
+                    if ((type == stringParser2.Key) || (type.IsSubclassOf(stringParser2.Key)))
                         return ((IStringParser<TResult>)stringParser2.Value);
             Type key;
             IStringParser<TResult> stringParser;
-            if (ParserEx.TryScanForStringParser<TResult>(out key, out stringParser))
+            if (TryScanForStringParser<TResult>(out key, out stringParser))
             {
-                if (s_stringParserProviders == null)
-                    s_stringParserProviders = new Dictionary<Type, object>();
-                s_stringParserProviders.Add(key, stringParser);
+                RegisterStringParser(key, stringParser);
                 return stringParser;
             }
             return null;
@@ -74,7 +80,7 @@ namespace System
         internal static class StringParserDelegateFactory<T, TResult>
         {
             private static readonly Type s_type = typeof(T);
-            private static readonly MethodInfo s_tryParseMethodInfo = s_type.GetMethod("TryParse", BindingFlags.Public | BindingFlags.Static, null, new Type[] { CoreEx.StringType, s_type.MakeByRefType() }, null);
+            private static readonly MethodInfo s_tryParseMethodInfo = s_type.GetMethod("TryParse", BindingFlags.Public | BindingFlags.Static, null, new Type[] { CoreExInternal.StringType, s_type.MakeByRefType() }, null);
             public static readonly Func<string, TResult, Nattrib, TResult> Parse = CreateParser(s_type);
             public static readonly Func<string, object, Nattrib, object> Parse2 = CreateParser2(s_type);
             public static readonly TryFunc<string, Nattrib, TResult> TryParse = CreateTryParser(s_type);
@@ -84,83 +90,91 @@ namespace System
 
             private static Func<string, TResult, Nattrib, TResult> CreateParser(Type type)
             {
-                if (type == CoreEx.BoolType)
+                if (type == CoreExInternal.BoolType)
                     return (Func<string, TResult, Nattrib, TResult>)Delegate.CreateDelegate(typeof(Func<string, TResult, Nattrib, TResult>), typeof(StringParserDelegateFactory<T, TResult>).GetMethod("Parser_Bool", BindingFlags.NonPublic | BindingFlags.Static));
-                if (type == CoreEx.NBoolType)
+                if (type == CoreExInternal.NBoolType)
                     return (Func<string, TResult, Nattrib, TResult>)Delegate.CreateDelegate(typeof(Func<string, TResult, Nattrib, TResult>), typeof(StringParserDelegateFactory<T, TResult>).GetMethod("Parser_NBool", BindingFlags.NonPublic | BindingFlags.Static));
-                if (type == CoreEx.DateTimeType)
+                if (type == CoreExInternal.DateTimeType)
                     return (Func<string, TResult, Nattrib, TResult>)Delegate.CreateDelegate(typeof(Func<string, TResult, Nattrib, TResult>), typeof(StringParserDelegateFactory<T, TResult>).GetMethod("Parser_DateTime", BindingFlags.NonPublic | BindingFlags.Static));
-                if (type == CoreEx.NDateTimeType)
+                if (type == CoreExInternal.NDateTimeType)
                     return (Func<string, TResult, Nattrib, TResult>)Delegate.CreateDelegate(typeof(Func<string, TResult, Nattrib, TResult>), typeof(StringParserDelegateFactory<T, TResult>).GetMethod("Parser_NDateTime", BindingFlags.NonPublic | BindingFlags.Static));
-                if (type == CoreEx.DecimalType)
+                if (type == CoreExInternal.DecimalType)
                     return (Func<string, TResult, Nattrib, TResult>)Delegate.CreateDelegate(typeof(Func<string, TResult, Nattrib, TResult>), typeof(StringParserDelegateFactory<T, TResult>).GetMethod("Parser_Decimal", BindingFlags.NonPublic | BindingFlags.Static));
-                if (type == CoreEx.NDecimalType)
+                if (type == CoreExInternal.NDecimalType)
                     return (Func<string, TResult, Nattrib, TResult>)Delegate.CreateDelegate(typeof(Func<string, TResult, Nattrib, TResult>), typeof(StringParserDelegateFactory<T, TResult>).GetMethod("Parser_NDecimal", BindingFlags.NonPublic | BindingFlags.Static));
-                if (type == CoreEx.Int32Type)
+                if (type == CoreExInternal.Int32Type)
                     return (Func<string, TResult, Nattrib, TResult>)Delegate.CreateDelegate(typeof(Func<string, TResult, Nattrib, TResult>), typeof(StringParserDelegateFactory<T, TResult>).GetMethod("Parser_Int32", BindingFlags.NonPublic | BindingFlags.Static));
-                if (type == CoreEx.NInt32Type)
+                if (type == CoreExInternal.NInt32Type)
                     return (Func<string, TResult, Nattrib, TResult>)Delegate.CreateDelegate(typeof(Func<string, TResult, Nattrib, TResult>), typeof(StringParserDelegateFactory<T, TResult>).GetMethod("Parser_NInt32", BindingFlags.NonPublic | BindingFlags.Static));
-                if (type == CoreEx.StringType)
+                if (type == CoreExInternal.StringType)
                     return (Func<string, TResult, Nattrib, TResult>)Delegate.CreateDelegate(typeof(Func<string, TResult, Nattrib, TResult>), typeof(StringParserDelegateFactory<T, TResult>).GetMethod("Parser_String", BindingFlags.NonPublic | BindingFlags.Static));
                 var parser = ScanForStringParser<TResult>(type);
                 if (parser != null)
-                    return parser.Parser;
-                EnsureTryParseMethod();
-                return new Func<string, TResult, Nattrib, TResult>(Parser_Default);
+                    return parser.Parse;
+                //EnsureTryParseMethod();
+                if (s_tryParseMethodInfo != null)
+                    return new Func<string, TResult, Nattrib, TResult>(Parser_Default);
+                return null;
             }
             private static Func<string, object, Nattrib, object> CreateParser2(Type type)
             {
                 var parser = ScanForStringParser<TResult>(type);
                 if (parser != null)
-                    return parser.Parser2;
-                EnsureTryParseMethod();
-                return new Func<string, object, Nattrib, object>(Parser2_Default);
+                    return parser.Parse2;
+                //EnsureTryParseMethod();
+                if (s_tryParseMethodInfo != null)
+                    return new Func<string, object, Nattrib, object>(Parser2_Default);
+                return null;
             }
 
             private static TryFunc<string, Nattrib, TResult> CreateTryParser(Type type)
             {
-                if (type == CoreEx.BoolType)
+                if (type == CoreExInternal.BoolType)
                     return (TryFunc<string, Nattrib, TResult>)Delegate.CreateDelegate(typeof(TryFunc<string, Nattrib, TResult>), typeof(StringParserDelegateFactory<T, TResult>).GetMethod("TryParser_Bool", BindingFlags.NonPublic | BindingFlags.Static));
-                if (type == CoreEx.NBoolType)
+                if (type == CoreExInternal.NBoolType)
                     return (TryFunc<string, Nattrib, TResult>)Delegate.CreateDelegate(typeof(TryFunc<string, Nattrib, TResult>), typeof(StringParserDelegateFactory<T, TResult>).GetMethod("TryParser_NBool", BindingFlags.NonPublic | BindingFlags.Static));
-                if (type == CoreEx.DateTimeType)
+                if (type == CoreExInternal.DateTimeType)
                     return (TryFunc<string, Nattrib, TResult>)Delegate.CreateDelegate(typeof(TryFunc<string, Nattrib, TResult>), typeof(StringParserDelegateFactory<T, TResult>).GetMethod("TryParser_DateTime", BindingFlags.NonPublic | BindingFlags.Static));
-                if (type == CoreEx.NDateTimeType)
+                if (type == CoreExInternal.NDateTimeType)
                     return (TryFunc<string, Nattrib, TResult>)Delegate.CreateDelegate(typeof(TryFunc<string, Nattrib, TResult>), typeof(StringParserDelegateFactory<T, TResult>).GetMethod("TryParser_NDateTime", BindingFlags.NonPublic | BindingFlags.Static));
-                if (type == CoreEx.DecimalType)
+                if (type == CoreExInternal.DecimalType)
                     return (TryFunc<string, Nattrib, TResult>)Delegate.CreateDelegate(typeof(TryFunc<string, Nattrib, TResult>), typeof(StringParserDelegateFactory<T, TResult>).GetMethod("TryParser_Decimal", BindingFlags.NonPublic | BindingFlags.Static));
-                if (type == CoreEx.NDecimalType)
+                if (type == CoreExInternal.NDecimalType)
                     return (TryFunc<string, Nattrib, TResult>)Delegate.CreateDelegate(typeof(TryFunc<string, Nattrib, TResult>), typeof(StringParserDelegateFactory<T, TResult>).GetMethod("TryParser_NDecimal", BindingFlags.NonPublic | BindingFlags.Static));
-                if (type == CoreEx.Int32Type)
+                if (type == CoreExInternal.Int32Type)
                     return (TryFunc<string, Nattrib, TResult>)Delegate.CreateDelegate(typeof(TryFunc<string, Nattrib, TResult>), typeof(StringParserDelegateFactory<T, TResult>).GetMethod("TryParser_Int32", BindingFlags.NonPublic | BindingFlags.Static));
-                if (type == CoreEx.NInt32Type)
+                if (type == CoreExInternal.NInt32Type)
                     return (TryFunc<string, Nattrib, TResult>)Delegate.CreateDelegate(typeof(TryFunc<string, Nattrib, TResult>), typeof(StringParserDelegateFactory<T, TResult>).GetMethod("TryParser_NInt32", BindingFlags.NonPublic | BindingFlags.Static));
-                if (type == CoreEx.StringType)
+                if (type == CoreExInternal.StringType)
                     return (TryFunc<string, Nattrib, TResult>)Delegate.CreateDelegate(typeof(TryFunc<string, Nattrib, TResult>), typeof(StringParserDelegateFactory<T, TResult>).GetMethod("TryParser_String", BindingFlags.NonPublic | BindingFlags.Static));
                 var parser = ScanForStringParser<TResult>(type);
                 if (parser != null)
-                    return parser.TryParser;
-                EnsureTryParseMethod();
-                return new TryFunc<string, Nattrib, TResult>(TryParser_Default);
+                    return parser.TryParse;
+                //EnsureTryParseMethod();
+                if (s_tryParseMethodInfo != null)
+                    return new TryFunc<string, Nattrib, TResult>(TryParser_Default);
+                return null;
             }
 
             private static Func<string, Nattrib, bool> CreateValidator(Type type)
             {
-                if (type == CoreEx.BoolType)
+                if (type == CoreExInternal.BoolType)
                     return new Func<string, Nattrib, bool>(Validator_Bool);
-                if (type == CoreEx.DateTimeType)
+                if (type == CoreExInternal.DateTimeType)
                     return new Func<string, Nattrib, bool>(Validator_DateTime);
-                if (type == CoreEx.DecimalType)
+                if (type == CoreExInternal.DecimalType)
                     return new Func<string, Nattrib, bool>(Validator_Decimal);
-                if (type == CoreEx.Int32Type)
+                if (type == CoreExInternal.Int32Type)
                     return new Func<string, Nattrib, bool>(Validator_Int32);
-                if (type == CoreEx.StringType)
+                if (type == CoreExInternal.StringType)
                     return new Func<string, Nattrib, bool>(Validator_String);
                 var parser = ScanForStringParser<TResult>(type);
                 if (parser != null)
-                    return parser.Validator;
-                EnsureTryParseMethod();
-                return new Func<string, Nattrib, bool>(Validator_Default);
+                    return parser.Validate;
+                //EnsureTryParseMethod();
+                if (s_tryParseMethodInfo != null)
+                    return new Func<string, Nattrib, bool>(Validator_Default);
+                return null;
             }
 
             private static void EnsureTryParseMethod()
@@ -170,7 +184,7 @@ namespace System
             }
 
             #region Default
-            private static TResult Parser_Default(string text, TResult defaultValue, Nattrib attrib)
+            private static TResult Parser_Default(string text, TResult defaultValue, Nattrib attribs)
             {
                 if ((text != null) && (text.Length > 0))
                 {
@@ -180,7 +194,7 @@ namespace System
                 }
                 return defaultValue;
             }
-            private static object Parser2_Default(string text, object defaultValue, Nattrib attrib)
+            private static object Parser2_Default(string text, object defaultValue, Nattrib attribs)
             {
                 if ((text != null) && (text.Length > 0))
                 {
@@ -191,7 +205,7 @@ namespace System
                 return defaultValue;
             }
 
-            private static bool TryParser_Default(string text, Nattrib attrib, out TResult validValue)
+            private static bool TryParser_Default(string text, Nattrib attribs, out TResult validValue)
             {
                 if ((text != null) && (text.Length > 0))
                 {
@@ -204,7 +218,7 @@ namespace System
                 validValue = default(TResult); return false;
             }
 
-            private static bool Validator_Default(string text, Nattrib attrib)
+            private static bool Validator_Default(string text, Nattrib attribs)
             {
                 if ((text != null) && (text.Length > 0))
                 {
@@ -297,7 +311,7 @@ namespace System
                 }
                 validValue = default(bool); return false;
             }
-            private static bool TryParser_Bool(string text, Nattrib attrib, out bool? validValue)
+            private static bool TryParser_NBool(string text, Nattrib attrib, out bool? validValue)
             {
                 if ((text != null) && (text.Length > 0))
                 {
