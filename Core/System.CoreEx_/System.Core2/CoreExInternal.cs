@@ -26,45 +26,19 @@ THE SOFTWARE.
 using System.Xml;
 namespace System
 {
-    /// <summary>
-    /// Core static class
-    /// </summary>
-    public static partial class CoreEx
+    internal static partial class CoreExInternal
     {
-        public const int ScopeLength = 2;
-        public const string Scope = "::";
-        public const string EmptyHtml = "\u00A0";
-
-        [ThreadStatic]
-        private static MockBase s_mock;
-
-        public static MockBase Mock
-        {
-            get { return s_mock; }
-            set { s_mock = value; }
-        }
-
-#if !SqlServer
-        private static readonly object s_nextIdLock = new object();
-        private static int s_nextId;
-
-        /// <summary>
-        /// Gets the next id in the sequence.
-        /// </summary>
-        /// <returns></returns>
-        public static int GetNextId() { return (s_mock == null ? GetNextIdInternal() : s_mock.GetNextId()); }
-
-        private static int GetNextIdInternal()
-        {
-            int nextId;
-            lock (s_nextIdLock)
-            {
-                nextId = ++s_nextId;
-                if (nextId == (1 >> 30))
-                    nextId = s_nextId = 0;
-            }
-            return nextId;
-        }
-#endif
+        internal static readonly Type BoolType = typeof(bool);
+        internal static readonly Type NBoolType = typeof(bool?);
+        internal static readonly Type DateTimeType = typeof(DateTime);
+        internal static readonly Type NDateTimeType = typeof(DateTime?);
+        internal static readonly Type DecimalType = typeof(decimal);
+        internal static readonly Type NDecimalType = typeof(decimal?);
+        internal static readonly Type Int32Type = typeof(int);
+        internal static readonly Type NInt32Type = typeof(int?);
+        internal static readonly Type StringType = typeof(string);
+        internal static readonly Type ObjectType = typeof(object);
+        internal static readonly Type XmlReaderType = typeof(XmlReader);
+        internal static readonly Type XmlWriterType = typeof(XmlWriter);
     }
 }

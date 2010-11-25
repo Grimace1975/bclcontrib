@@ -28,26 +28,33 @@ namespace System.Primitives.DataTypes
     /// <summary>
     /// DataTypeFormatterBase
     /// </summary>
-    /// <typeparam name="TValue">The type of the value.</typeparam>
+    /// <typeparam name="TResult">The type of the value.</typeparam>
     /// <typeparam name="TFormatAttrib">The type of the format attrib.</typeparam>
     /// <typeparam name="TParseAttrib">The type of the parse attrib.</typeparam>
-    public abstract class DataTypeFormatterBase<TValue, TFormatAttrib, TParseAttrib> : DataTypeFormatterBase
+    public abstract class DataTypeFormatterBase<TResult, TFormatAttrib, TParseAttrib> : DataTypeFormatterBase, FormatterEx.IValueFormatter<TResult>
     {
-        private Func<TValue, TFormatAttrib, string> _format;
-        private TryFunc<string, TParseAttrib, TValue> _tryParse;
+        private Func<TResult, TFormatAttrib, string> _format;
+        private TryFunc<string, TParseAttrib, TResult> _tryParse;
 
-        public DataTypeFormatterBase(Func<TValue, TFormatAttrib, string> format, TryFunc<string, TParseAttrib, TValue> tryParse)
+        public DataTypeFormatterBase(Func<TResult, TFormatAttrib, string> format, TryFunc<string, TParseAttrib, TResult> tryParse)
         {
             _format = format;
             _tryParse = tryParse;
         }
         public override string Format(object value, string defaultValue, Nattrib attrib)
         {
-            return FormatBinder<TValue, TFormatAttrib>(_format, value, defaultValue, attrib);
+            return FormatBinder<TResult, TFormatAttrib>(_format, value, defaultValue, attrib);
         }
         public override string FormatText(string value, string defaultValue, Nattrib attrib)
         {
-            return FormatTextBinder<TValue, TFormatAttrib, TParseAttrib>(_format, _tryParse, value, defaultValue, attrib);
+            return FormatTextBinder<TResult, TFormatAttrib, TParseAttrib>(_format, _tryParse, value, defaultValue, attrib);
         }
+
+        #region IValueFormatter
+        public string Format(TResult value, Nattrib attrib)
+        {
+            return _format(value, attrib.Get<TFormatAttrib>());
+        }
+        #endregion
     }
 }

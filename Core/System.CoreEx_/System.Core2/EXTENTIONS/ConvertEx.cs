@@ -94,8 +94,8 @@ namespace System
             /// <returns></returns>
             private static Func<T[], string[]> Create(Type type)
             {
-                if (type == CoreEx.ObjectType)
-                    return (Func<T[], string[]>)Delegate.CreateDelegate(typeof(Func<T[], string[]>), typeof(ToStringsDelegateFactory<T>).GetMethod("ReferenceField_Object", BindingFlags.NonPublic | BindingFlags.Static, null, new Type[] { CoreEx.ObjectType }, null));
+                if (type == CoreExInternal.ObjectType)
+                    return (Func<T[], string[]>)Delegate.CreateDelegate(typeof(Func<T[], string[]>), typeof(ToStringsDelegateFactory<T>).GetMethod("ReferenceField_Object", BindingFlags.NonPublic | BindingFlags.Static, null, new Type[] { CoreExInternal.ObjectType }, null));
                 return new Func<T[], string[]>(GenericField_T);
             }
 

@@ -56,18 +56,32 @@ namespace System
         }
 
         #region Object
-        public static string Format<T>(object value) { return Format<T>(value, null); }
-        public static string Format<T>(object value, Nattrib attribs)
+        public static string Format<T>(object obj) { return Format<T, object>(obj, null); }
+        public static string Format<T>(object obj, Nattrib attrib) { return Format<T, object>(obj, attrib); }
+        public static string Format<T, TValue>(object obj) { return Format<T, TValue>(obj, null); }
+        public static string Format<T, TValue>(object obj, Nattrib attrib)
         {
-            return ObjectFormatterDelegateFactory<T>.Format(value);
+            return ObjectFormatterDelegateFactory<T, TValue>.Format(obj, attrib);
+        }
+        public static string Format<TValue>(IObjectFormatter<TValue> formatter, object obj) { return Format<TValue>(formatter, obj, null); }
+        public static string Format<TValue>(IObjectFormatter<TValue> formatter, object obj, Nattrib attrib)
+        {
+            return formatter.Format(obj, attrib);
         }
         #endregion
 
         #region Value
-        public static string Format<T>(T value) { return Format<T>(value, null); }
-        public static string Format<T>(T value, Nattrib attribs)
+        public static string Format<T>(T value) { return Format<T, T>(value, null); }
+        public static string Format<T>(T value, Nattrib attrib) { return Format<T, T>(value, attrib); }
+        public static string Format<T, TValue>(TValue value) { return Format<T, TValue>(value, null); }
+        public static string Format<T, TValue>(TValue value, Nattrib attrib)
         {
-            return ValueFormatterDelegateFactory<T>.Format(value);
+            return ValueFormatterDelegateFactory<T, TValue>.Format(value, attrib);
+        }
+        public static string Format<TValue>(IValueFormatter<TValue> formatter, TValue value) { return Format<TValue>(formatter, value, null); }
+        public static string Format<TValue>(IValueFormatter<TValue> formatter, TValue value, Nattrib attrib)
+        {
+            return formatter.Format(value, attrib);
         }
         #endregion
     }

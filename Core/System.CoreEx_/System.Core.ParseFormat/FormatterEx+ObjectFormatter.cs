@@ -40,22 +40,28 @@ namespace System
 
         public interface IObjectFormatter<T>
         {
-            string Format(object value);
+            string Format(object value, Nattrib attrib);
+        }
+
+        public static void RegisterObjectFormatter<T>(object objectFormatter) { RegisterObjectFormatter(typeof(T), objectFormatter); }
+        public static void RegisterObjectFormatter(Type key, object objectFormatter)
+        {
+            if (s_objectFormatterProviders == null)
+                s_objectFormatterProviders = new Dictionary<Type, object>();
+            s_objectFormatterProviders.Add(key, objectFormatter);
         }
 
         private static IObjectFormatter<T> ScanForObjectFormatter<T>(Type type)
         {
             if (s_objectFormatterProviders != null)
                 foreach (var objectFormatter2 in s_objectFormatterProviders)
-                    if (type.IsSubclassOf(objectFormatter2.Key))
+                    if ((type == objectFormatter2.Key) || (type.IsSubclassOf(objectFormatter2.Key)))
                         return ((IObjectFormatter<T>)objectFormatter2.Value);
             Type key;
             IObjectFormatter<T> objectFormatter;
             if (FormatterEx.TryScanForObjectFormatter<T>(out key, out objectFormatter))
             {
-                if (s_objectFormatterProviders == null)
-                    s_objectFormatterProviders = new Dictionary<Type, object>();
-                s_objectFormatterProviders.Add(key, objectFormatter);
+                RegisterObjectFormatter(key, objectFormatter);
                 return objectFormatter;
             }
             return null;
@@ -68,41 +74,41 @@ namespace System
         }
         #endregion
 
-        internal static class ObjectFormatterDelegateFactory<T>
+        internal static class ObjectFormatterDelegateFactory<T, TValue>
         {
             private static readonly Type s_type = typeof(T);
-            public static readonly Func<object, string> Format = CreateFormatter(s_type);
+            public static readonly Func<object, Nattrib, string> Format = CreateFormatter(s_type);
 
             static ObjectFormatterDelegateFactory() { }
 
-            private static Func<object, string> CreateFormatter(Type type)
+            private static Func<object, Nattrib, string> CreateFormatter(Type type)
             {
-                if (type == CoreEx.BoolType)
-                    return new Func<object, string>(Formatter_Bool);
-                if (type == CoreEx.NBoolType)
-                    return new Func<object, string>(Formatter_NBool);
-                if (type == CoreEx.DateTimeType)
-                    return new Func<object, string>(Formatter_DateTime);
-                if (type == CoreEx.NDateTimeType)
-                    return new Func<object, string>(Formatter_NDateTime);
-                if (type == CoreEx.DecimalType)
-                    return new Func<object, string>(Formatter_Decimal);
-                if (type == CoreEx.NDecimalType)
-                    return new Func<object, string>(Formatter_NDecimal);
-                if (type == CoreEx.Int32Type)
-                    return new Func<object, string>(Formatter_Int32);
-                if (type == CoreEx.NInt32Type)
-                    return new Func<object, string>(Formatter_NInt32);
-                if (type == CoreEx.StringType)
-                    return new Func<object, string>(Formatter_String);
+                if (type == CoreExInternal.BoolType)
+                    return new Func<object, Nattrib, string>(Formatter_Bool);
+                if (type == CoreExInternal.NBoolType)
+                    return new Func<object, Nattrib, string>(Formatter_NBool);
+                if (type == CoreExInternal.DateTimeType)
+                    return new Func<object, Nattrib, string>(Formatter_DateTime);
+                if (type == CoreExInternal.NDateTimeType)
+                    return new Func<object, Nattrib, string>(Formatter_NDateTime);
+                if (type == CoreExInternal.DecimalType)
+                    return new Func<object, Nattrib, string>(Formatter_Decimal);
+                if (type == CoreExInternal.NDecimalType)
+                    return new Func<object, Nattrib, string>(Formatter_NDecimal);
+                if (type == CoreExInternal.Int32Type)
+                    return new Func<object, Nattrib, string>(Formatter_Int32);
+                if (type == CoreExInternal.NInt32Type)
+                    return new Func<object, Nattrib, string>(Formatter_NInt32);
+                if (type == CoreExInternal.StringType)
+                    return new Func<object, Nattrib, string>(Formatter_String);
                 var formatter = ScanForObjectFormatter<T>(type);
                 if (formatter != null)
                     return formatter.Format;
-                return new Func<object, string>(Formatter_Default);
+                return new Func<object, Nattrib, string>(Formatter_Default);
             }
 
             #region Default
-            private static string Formatter_Default(object value)
+            private static string Formatter_Default(object value, Nattrib attrib)
             {
                 var valueAsT = ParserEx.Parse<T>(value);
                 return (valueAsT != null ? valueAsT.ToString() : string.Empty);
@@ -110,12 +116,12 @@ namespace System
             #endregion
 
             #region Bool
-            private static string Formatter_Bool(object value)
+            private static string Formatter_Bool(object value, Nattrib attrib)
             {
                 var valueAsBool = ParserEx.Parse<bool>(value);
                 return (valueAsBool ? BoolDataType.YesString : BoolDataType.NoString);
             }
-            private static string Formatter_NBool(object value)
+            private static string Formatter_NBool(object value, Nattrib attrib)
             {
                 var valueAsBool = ParserEx.Parse<bool?>(value);
                 return (valueAsBool.HasValue ? (valueAsBool.Value ? BoolDataType.YesString : BoolDataType.NoString) : string.Empty);
@@ -123,12 +129,12 @@ namespace System
             #endregion
 
             #region DateTime
-            private static string Formatter_DateTime(object value)
+            private static string Formatter_DateTime(object value, Nattrib attrib)
             {
                 var valueAsDateTime = ParserEx.Parse<DateTime>(value);
                 return valueAsDateTime.ToString("M/d/yyyy hh:mm tt", CultureInfo.InvariantCulture);
             }
-            private static string Formatter_NDateTime(object value)
+            private static string Formatter_NDateTime(object value, Nattrib attrib)
             {
                 var valueAsDateTime = ParserEx.Parse<DateTime?>(value);
                 return (valueAsDateTime.HasValue ? valueAsDateTime.Value.ToString("M/d/yyyy hh:mm tt", CultureInfo.InvariantCulture) : string.Empty);
@@ -136,12 +142,12 @@ namespace System
             #endregion
 
             #region Decimal
-            private static string Formatter_Decimal(object value)
+            private static string Formatter_Decimal(object value, Nattrib attrib)
             {
                 var valueAsDecimal = ParserEx.Parse<decimal>(value);
                 return valueAsDecimal.ToString("0.0000", CultureInfo.InvariantCulture);
             }
-            private static string Formatter_NDecimal(object value)
+            private static string Formatter_NDecimal(object value, Nattrib attrib)
             {
                 var valueAsDecimal = ParserEx.Parse<decimal?>(value);
                 return (valueAsDecimal.HasValue ? valueAsDecimal.Value.ToString("0.0000", CultureInfo.InvariantCulture) : string.Empty);
@@ -149,12 +155,12 @@ namespace System
             #endregion
 
             #region Int32
-            private static string Formatter_Int32(object value)
+            private static string Formatter_Int32(object value, Nattrib attrib)
             {
                 var valueAsInt32 = ParserEx.Parse<int>(value);
                 return valueAsInt32.ToString(CultureInfo.InvariantCulture);
             }
-            private static string Formatter_NInt32(object value)
+            private static string Formatter_NInt32(object value, Nattrib attrib)
             {
                 var valueAsInt32 = ParserEx.Parse<int?>(value);
                 return (valueAsInt32.HasValue ? valueAsInt32.Value.ToString(CultureInfo.InvariantCulture) : string.Empty);
@@ -162,7 +168,7 @@ namespace System
             #endregion
 
             #region String
-            private static string Formatter_String(object value)
+            private static string Formatter_String(object value, Nattrib attrib)
             {
                 return ParserEx.Parse<string>(value);
             }

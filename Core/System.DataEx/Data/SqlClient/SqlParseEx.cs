@@ -217,15 +217,15 @@ namespace System.Data.SqlClient
             private static Func<XmlReader, string, T> CreateXmlRead(Type type)
             {
                 if (type == SqlInt32Type)
-                    return (Func<XmlReader, string, T>)Delegate.CreateDelegate(typeof(Func<XmlReader, string, T>), typeof(SqlTypeT<T>).GetMethod("XmlRead_SqlInt32", BindingFlags.NonPublic | BindingFlags.Static, null, new Type[] { CoreEx.XmlReaderType, CoreEx.StringType }, null));
+                    return (Func<XmlReader, string, T>)Delegate.CreateDelegate(typeof(Func<XmlReader, string, T>), typeof(SqlTypeT<T>).GetMethod("XmlRead_SqlInt32", BindingFlags.NonPublic | BindingFlags.Static, null, new Type[] { CoreExInternal.XmlReaderType, CoreExInternal.StringType }, null));
                 else if (type == SqlDateTimeType)
-                    return (Func<XmlReader, string, T>)Delegate.CreateDelegate(typeof(Func<XmlReader, string, T>), typeof(SqlTypeT<T>).GetMethod("XmlRead_SqlDateTime", BindingFlags.NonPublic | BindingFlags.Static, null, new Type[] { CoreEx.XmlReaderType, CoreEx.StringType }, null));
+                    return (Func<XmlReader, string, T>)Delegate.CreateDelegate(typeof(Func<XmlReader, string, T>), typeof(SqlTypeT<T>).GetMethod("XmlRead_SqlDateTime", BindingFlags.NonPublic | BindingFlags.Static, null, new Type[] { CoreExInternal.XmlReaderType, CoreExInternal.StringType }, null));
                 else if (type == SqlStringType)
-                    return (Func<XmlReader, string, T>)Delegate.CreateDelegate(typeof(Func<XmlReader, string, T>), typeof(SqlTypeT<T>).GetMethod("XmlRead_SqlString", BindingFlags.NonPublic | BindingFlags.Static, null, new Type[] { CoreEx.XmlReaderType, CoreEx.StringType }, null));
+                    return (Func<XmlReader, string, T>)Delegate.CreateDelegate(typeof(Func<XmlReader, string, T>), typeof(SqlTypeT<T>).GetMethod("XmlRead_SqlString", BindingFlags.NonPublic | BindingFlags.Static, null, new Type[] { CoreExInternal.XmlReaderType, CoreExInternal.StringType }, null));
                 else if (type == SqlBooleanType)
-                    return (Func<XmlReader, string, T>)Delegate.CreateDelegate(typeof(Func<XmlReader, string, T>), typeof(SqlTypeT<T>).GetMethod("XmlRead_SqlBoolean", BindingFlags.NonPublic | BindingFlags.Static, null, new Type[] { CoreEx.XmlReaderType, CoreEx.StringType }, null));
+                    return (Func<XmlReader, string, T>)Delegate.CreateDelegate(typeof(Func<XmlReader, string, T>), typeof(SqlTypeT<T>).GetMethod("XmlRead_SqlBoolean", BindingFlags.NonPublic | BindingFlags.Static, null, new Type[] { CoreExInternal.XmlReaderType, CoreExInternal.StringType }, null));
                 else if (type == SqlXmlType)
-                    return (Func<XmlReader, string, T>)Delegate.CreateDelegate(typeof(Func<XmlReader, string, T>), typeof(SqlTypeT<T>).GetMethod("XmlRead_SqlXml", BindingFlags.NonPublic | BindingFlags.Static, null, new Type[] { CoreEx.XmlReaderType, CoreEx.StringType }, null));
+                    return (Func<XmlReader, string, T>)Delegate.CreateDelegate(typeof(Func<XmlReader, string, T>), typeof(SqlTypeT<T>).GetMethod("XmlRead_SqlXml", BindingFlags.NonPublic | BindingFlags.Static, null, new Type[] { CoreExInternal.XmlReaderType, CoreExInternal.StringType }, null));
                 throw new InvalidOperationException(string.Format("\nUndefined Type [{0}]", type.ToString()));
             }
 
@@ -314,15 +314,15 @@ namespace System.Data.SqlClient
             private static Action<XmlWriter, string, T> CreateXmlWrite(Type type)
             {
                 if (type == SqlInt32Type)
-                    return (Action<XmlWriter, string, T>)Delegate.CreateDelegate(typeof(Action<XmlWriter, string, T>), typeof(SqlTypeT<T>).GetMethod("XmlWrite_SqlInt32", BindingFlags.NonPublic | BindingFlags.Static, null, new Type[] { CoreEx.XmlWriterType, CoreEx.StringType, SqlInt32Type }, null));
+                    return (Action<XmlWriter, string, T>)Delegate.CreateDelegate(typeof(Action<XmlWriter, string, T>), typeof(SqlTypeT<T>).GetMethod("XmlWrite_SqlInt32", BindingFlags.NonPublic | BindingFlags.Static, null, new Type[] { CoreExInternal.XmlWriterType, CoreExInternal.StringType, SqlInt32Type }, null));
                 else if (type == SqlDateTimeType)
-                    return (Action<XmlWriter, string, T>)Delegate.CreateDelegate(typeof(Action<XmlWriter, string, T>), typeof(SqlTypeT<T>).GetMethod("XmlWrite_SqlDateTime", BindingFlags.NonPublic | BindingFlags.Static, null, new Type[] { CoreEx.XmlWriterType, CoreEx.StringType, SqlDateTimeType }, null));
+                    return (Action<XmlWriter, string, T>)Delegate.CreateDelegate(typeof(Action<XmlWriter, string, T>), typeof(SqlTypeT<T>).GetMethod("XmlWrite_SqlDateTime", BindingFlags.NonPublic | BindingFlags.Static, null, new Type[] { CoreExInternal.XmlWriterType, CoreExInternal.StringType, SqlDateTimeType }, null));
                 else if (type == SqlStringType)
-                    return (Action<XmlWriter, string, T>)Delegate.CreateDelegate(typeof(Action<XmlWriter, string, T>), typeof(SqlTypeT<T>).GetMethod("XmlWrite_SqlString", BindingFlags.NonPublic | BindingFlags.Static, null, new Type[] { CoreEx.XmlWriterType, CoreEx.StringType, SqlStringType }, null));
+                    return (Action<XmlWriter, string, T>)Delegate.CreateDelegate(typeof(Action<XmlWriter, string, T>), typeof(SqlTypeT<T>).GetMethod("XmlWrite_SqlString", BindingFlags.NonPublic | BindingFlags.Static, null, new Type[] { CoreExInternal.XmlWriterType, CoreExInternal.StringType, SqlStringType }, null));
                 else if (type == SqlBooleanType)
-                    return (Action<XmlWriter, string, T>)Delegate.CreateDelegate(typeof(Action<XmlWriter, string, T>), typeof(SqlTypeT<T>).GetMethod("XmlWrite_SqlBoolean", BindingFlags.NonPublic | BindingFlags.Static, null, new Type[] { CoreEx.XmlWriterType, CoreEx.StringType, SqlBooleanType }, null));
+                    return (Action<XmlWriter, string, T>)Delegate.CreateDelegate(typeof(Action<XmlWriter, string, T>), typeof(SqlTypeT<T>).GetMethod("XmlWrite_SqlBoolean", BindingFlags.NonPublic | BindingFlags.Static, null, new Type[] { CoreExInternal.XmlWriterType, CoreExInternal.StringType, SqlBooleanType }, null));
                 else if (type == SqlXmlType)
-                    return (Action<XmlWriter, string, T>)Delegate.CreateDelegate(typeof(Action<XmlWriter, string, T>), typeof(SqlTypeT<T>).GetMethod("XmlWrite_SqlXml", BindingFlags.NonPublic | BindingFlags.Static, null, new Type[] { CoreEx.XmlWriterType, CoreEx.StringType, SqlXmlType }, null));
+                    return (Action<XmlWriter, string, T>)Delegate.CreateDelegate(typeof(Action<XmlWriter, string, T>), typeof(SqlTypeT<T>).GetMethod("XmlWrite_SqlXml", BindingFlags.NonPublic | BindingFlags.Static, null, new Type[] { CoreExInternal.XmlWriterType, CoreExInternal.StringType, SqlXmlType }, null));
                 throw new InvalidOperationException();
             }
 

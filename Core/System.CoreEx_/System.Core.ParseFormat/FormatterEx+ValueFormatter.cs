@@ -41,22 +41,28 @@ namespace System
 
         public interface IValueFormatter<T>
         {
-            string Format(T value);
+            string Format(T value, Nattrib attrib);
+        }
+
+        public static void RegisterValueFormatter<T>(object valueFormatter) { RegisterValueFormatter(typeof(T), valueFormatter); }
+        public static void RegisterValueFormatter(Type key, object valueFormatter)
+        {
+            if (s_valueFormatterProviders == null)
+                s_valueFormatterProviders = new Dictionary<Type, object>();
+            s_valueFormatterProviders.Add(key, valueFormatter);
         }
 
         private static IValueFormatter<T> ScanForValueFormatter<T>(Type type)
         {
             if (s_valueFormatterProviders != null)
                 foreach (var valueFormatter2 in s_valueFormatterProviders)
-                    if (type.IsSubclassOf(valueFormatter2.Key))
+                    if ((type == valueFormatter2.Key) || (type.IsSubclassOf(valueFormatter2.Key)))
                         return ((IValueFormatter<T>)valueFormatter2.Value);
             Type key;
             IValueFormatter<T> valueFormatter;
             if (FormatterEx.TryScanForValueFormatter<T>(out key, out valueFormatter))
             {
-                if (s_valueFormatterProviders == null)
-                    s_valueFormatterProviders = new Dictionary<Type, object>();
-                s_valueFormatterProviders.Add(key, valueFormatter);
+                RegisterValueFormatter(key, valueFormatter);
                 return valueFormatter;
             }
             return null;
@@ -69,96 +75,92 @@ namespace System
         }
         #endregion
 
-        internal static class ValueFormatterDelegateFactory<T>
+        internal static class ValueFormatterDelegateFactory<T, TValue>
         {
             private static readonly Type s_type = typeof(T);
-            public static readonly Func<T, string> Format = CreateFormatter(s_type);
+            public static readonly Func<TValue, Nattrib, string> Format = CreateFormatter(s_type);
 
             static ValueFormatterDelegateFactory() { }
 
-            private static Func<T, string> CreateFormatter(Type type)
+            private static Func<TValue, Nattrib, string> CreateFormatter(Type type)
             {
-                if (type == CoreEx.BoolType)
-                    return (Func<T, string>)Delegate.CreateDelegate(typeof(Func<T, string>), typeof(ValueFormatterDelegateFactory<T>).GetMethod("Formatter_Bool", BindingFlags.NonPublic | BindingFlags.Static));
-                if (type == CoreEx.NBoolType)
-                    return (Func<T, string>)Delegate.CreateDelegate(typeof(Func<T, string>), typeof(ValueFormatterDelegateFactory<T>).GetMethod("Formatter_NBool", BindingFlags.NonPublic | BindingFlags.Static));
-                if (type == CoreEx.DateTimeType)
-                    return (Func<T, string>)Delegate.CreateDelegate(typeof(Func<T, string>), typeof(ValueFormatterDelegateFactory<T>).GetMethod("Formatter_DateTime", BindingFlags.NonPublic | BindingFlags.Static));
-                if (type == CoreEx.NDateTimeType)
-                    return (Func<T, string>)Delegate.CreateDelegate(typeof(Func<T, string>), typeof(ValueFormatterDelegateFactory<T>).GetMethod("Formatter_NDateTime", BindingFlags.NonPublic | BindingFlags.Static));
-                if (type == CoreEx.DecimalType)
-                    return (Func<T, string>)Delegate.CreateDelegate(typeof(Func<T, string>), typeof(ValueFormatterDelegateFactory<T>).GetMethod("Formatter_Decimal", BindingFlags.NonPublic | BindingFlags.Static));
-                if (type == CoreEx.NDecimalType)
-                    return (Func<T, string>)Delegate.CreateDelegate(typeof(Func<T, string>), typeof(ValueFormatterDelegateFactory<T>).GetMethod("Formatter_NDecimal", BindingFlags.NonPublic | BindingFlags.Static));
-                if (type == CoreEx.Int32Type)
-                    return (Func<T, string>)Delegate.CreateDelegate(typeof(Func<T, string>), typeof(ValueFormatterDelegateFactory<T>).GetMethod("Formatter_Int32", BindingFlags.NonPublic | BindingFlags.Static));
-                if (type == CoreEx.NInt32Type)
-                    return (Func<T, string>)Delegate.CreateDelegate(typeof(Func<T, string>), typeof(ValueFormatterDelegateFactory<T>).GetMethod("Formatter_NInt32", BindingFlags.NonPublic | BindingFlags.Static));
-                if (type == CoreEx.StringType)
-                    return (Func<T, string>)Delegate.CreateDelegate(typeof(Func<T, string>), typeof(ValueFormatterDelegateFactory<T>).GetMethod("Formatter_String", BindingFlags.NonPublic | BindingFlags.Static));
-                if (s_valueFormatterProviders != null)
-                    foreach (var valueFormatter in s_valueFormatterProviders)
-                        if (type.IsSubclassOf(valueFormatter.Key))
-                            return ((IValueFormatter<T>)valueFormatter.Value).Format;
-                //ScanForSubclassParser();
-                if (type == DataTypeBase.DataTypeBaseType)
-                    throw new NotSupportedException();
-                return new Func<T, string>(Formatter_Default);
+                if (type == CoreExInternal.BoolType)
+                    return (Func<TValue, Nattrib, string>)Delegate.CreateDelegate(typeof(Func<TValue, Nattrib, string>), typeof(ValueFormatterDelegateFactory<T, TValue>).GetMethod("Formatter_Bool", BindingFlags.NonPublic | BindingFlags.Static));
+                if (type == CoreExInternal.NBoolType)
+                    return (Func<TValue, Nattrib, string>)Delegate.CreateDelegate(typeof(Func<TValue, Nattrib, string>), typeof(ValueFormatterDelegateFactory<T, TValue>).GetMethod("Formatter_NBool", BindingFlags.NonPublic | BindingFlags.Static));
+                if (type == CoreExInternal.DateTimeType)
+                    return (Func<TValue, Nattrib, string>)Delegate.CreateDelegate(typeof(Func<TValue, Nattrib, string>), typeof(ValueFormatterDelegateFactory<T, TValue>).GetMethod("Formatter_DateTime", BindingFlags.NonPublic | BindingFlags.Static));
+                if (type == CoreExInternal.NDateTimeType)
+                    return (Func<TValue, Nattrib, string>)Delegate.CreateDelegate(typeof(Func<TValue, Nattrib, string>), typeof(ValueFormatterDelegateFactory<T, TValue>).GetMethod("Formatter_NDateTime", BindingFlags.NonPublic | BindingFlags.Static));
+                if (type == CoreExInternal.DecimalType)
+                    return (Func<TValue, Nattrib, string>)Delegate.CreateDelegate(typeof(Func<TValue, Nattrib, string>), typeof(ValueFormatterDelegateFactory<T, TValue>).GetMethod("Formatter_Decimal", BindingFlags.NonPublic | BindingFlags.Static));
+                if (type == CoreExInternal.NDecimalType)
+                    return (Func<TValue, Nattrib, string>)Delegate.CreateDelegate(typeof(Func<TValue, Nattrib, string>), typeof(ValueFormatterDelegateFactory<T, TValue>).GetMethod("Formatter_NDecimal", BindingFlags.NonPublic | BindingFlags.Static));
+                if (type == CoreExInternal.Int32Type)
+                    return (Func<TValue, Nattrib, string>)Delegate.CreateDelegate(typeof(Func<TValue, Nattrib, string>), typeof(ValueFormatterDelegateFactory<T, TValue>).GetMethod("Formatter_Int32", BindingFlags.NonPublic | BindingFlags.Static));
+                if (type == CoreExInternal.NInt32Type)
+                    return (Func<TValue, Nattrib, string>)Delegate.CreateDelegate(typeof(Func<TValue, Nattrib, string>), typeof(ValueFormatterDelegateFactory<T, TValue>).GetMethod("Formatter_NInt32", BindingFlags.NonPublic | BindingFlags.Static));
+                if (type == CoreExInternal.StringType)
+                    return (Func<TValue, Nattrib, string>)Delegate.CreateDelegate(typeof(Func<TValue, Nattrib, string>), typeof(ValueFormatterDelegateFactory<T, TValue>).GetMethod("Formatter_String", BindingFlags.NonPublic | BindingFlags.Static));
+                var formatter = ScanForValueFormatter<TValue>(type);
+                if (formatter != null)
+                    return formatter.Format;
+                return new Func<TValue, Nattrib, string>(Formatter_Default);
             }
 
             #region Default
-            private static string Formatter_Default(T value)
+            private static string Formatter_Default(TValue value, Nattrib attrib)
             {
                 return (value != null ? value.ToString() : string.Empty);
             }
             #endregion
 
             #region Bool
-            private static string Formatter_Bool(bool value)
+            private static string Formatter_Bool(bool value, Nattrib attrib)
             {
                 return (value ? BoolDataType.YesString : BoolDataType.NoString);
             }
-            private static string Formatter_NBool(bool? value)
+            private static string Formatter_NBool(bool? value, Nattrib attrib)
             {
                 return (value.HasValue ? (value.Value ? BoolDataType.YesString : BoolDataType.NoString) : string.Empty);
             }
             #endregion
 
             #region DateTime
-            private static string Formatter_DateTime(DateTime value)
+            private static string Formatter_DateTime(DateTime value, Nattrib attrib)
             {
                 return value.ToString("M/d/yyyy hh:mm tt", CultureInfo.InvariantCulture);
             }
-            private static string Formatter_NDateTime(DateTime? value)
+            private static string Formatter_NDateTime(DateTime? value, Nattrib attrib)
             {
                 return (value.HasValue ? value.Value.ToString("M/d/yyyy hh:mm tt", CultureInfo.InvariantCulture) : string.Empty);
             }
             #endregion
 
             #region Decimal
-            private static string Formatter_Decimal(decimal value)
+            private static string Formatter_Decimal(decimal value, Nattrib attrib)
             {
                 return value.ToString("0.0000", CultureInfo.InvariantCulture);
             }
-            private static string Formatter_NDecimal(decimal? value)
+            private static string Formatter_NDecimal(decimal? value, Nattrib attrib)
             {
                 return (value.HasValue ? value.Value.ToString("0.0000", CultureInfo.InvariantCulture) : string.Empty);
             }
             #endregion
 
             #region Int32
-            private static string Formatter_Int32(int value)
+            private static string Formatter_Int32(int value, Nattrib attrib)
             {
                 return value.ToString(CultureInfo.InvariantCulture);
             }
-            private static string Formatter_NInt32(int? value)
+            private static string Formatter_NInt32(int? value, Nattrib attrib)
             {
                 return (value.HasValue ? value.Value.ToString(CultureInfo.InvariantCulture) : string.Empty);
             }
             #endregion
 
             #region String
-            private static string Formatter_String(string value)
+            private static string Formatter_String(string value, Nattrib attrib)
             {
                 return value;
             }
