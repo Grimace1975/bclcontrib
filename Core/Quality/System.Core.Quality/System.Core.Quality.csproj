@@ -78,6 +78,7 @@
     <Compile Include="Quality+ServiceBus\IPublishingServiceBus.cs" />
     <Compile Include="Quality+ServiceBus\ServiceBus.cs" />
     <Compile Include="Quality+ServiceBus\ServiceBusException.cs" />
+    <Compile Include="Quality+ServiceLocator\IServiceRegistrationByNameConvention.cs" />
     <Compile Include="Quality+ServiceLocator\IWantToSkipServiceLocator.cs" />
     <Compile Include="Local.Designer.cs">
       <DependentUpon>Local.resx</DependentUpon>

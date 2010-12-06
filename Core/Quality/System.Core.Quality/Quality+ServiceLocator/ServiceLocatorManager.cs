@@ -25,6 +25,8 @@ THE SOFTWARE.
 #endregion
 using System.Linq;
 using System.Reflection;
+using System.Collections.Generic;
+using System.Diagnostics;
 namespace System.Quality
 {
     /// <summary>
@@ -39,7 +41,7 @@ namespace System.Quality
         private static IServiceLocator _locator;
 
         public static void SetLocatorProvider(Func<IServiceLocator> provider) { SetLocatorProvider(provider, (Action<IServiceRegistrar, IServiceLocator>)null); }
-        public static void SetLocatorProvider(Func<IServiceLocator> provider, params Assembly[] assemblies) { SetLocatorProvider(provider, (registrar, locator) => RegisterFromAssemblies(registrar, locator, assemblies)); }
+        public static void SetLocatorProvider(Func<IServiceLocator> provider, params Assembly[] assemblies) { SetLocatorProvider(provider, (registrar, locator) => RegisterFromAssemblies(registrar, assemblies)); }
         public static void SetLocatorProvider(Func<IServiceLocator> provider, Action<IServiceRegistrar, IServiceLocator> registration)
         {
             _provider = provider;
@@ -73,9 +75,10 @@ namespace System.Quality
             registrar.Register<IServiceLocator>(locator);
         }
 
-        public static void RegisterFromAssemblies(IServiceRegistrar registrar, IServiceLocator locator, Assembly[] assemblies) { RegisterFromAssemblies(registrar, locator, assemblies, null); }
-        public static void RegisterFromAssemblies(IServiceRegistrar registrar, IServiceLocator locator, Assembly[] assemblies, Predicate<Type> predicate)
+        public static void RegisterFromAssemblies(IServiceRegistrar registrar, Assembly[] assemblies) { RegisterFromAssemblies(registrar, assemblies, null); }
+        public static void RegisterFromAssemblies(IServiceRegistrar registrar, Assembly[] assemblies, Predicate<Type> predicate)
         {
+            var locator = registrar.GetLocator();
             var registrationType = typeof(IServiceRegistration);
             assemblies.SelectMany(a => a.GetTypes())
                 .Where(t => (!t.IsInterface) && (!t.IsAbstract) && (t.GetInterfaces().Contains(registrationType)))
@@ -84,19 +87,40 @@ namespace System.Quality
                 .ForEach(r => ((IServiceRegistration)locator.Resolve(r)).Register(registrar));
         }
 
-        public static void RegisterFromAssembliesByNameConvention(IServiceRegistrar registrar, IServiceLocator locator, Assembly[] assemblies) { RegisterFromAssembliesByNameConvention(registrar, locator, assemblies, null); }
-        public static void RegisterFromAssembliesByNameConvention(IServiceRegistrar registrar, IServiceLocator locator, Assembly[] assemblies, Predicate<Type> predicate)
+        public static void RegisterFromAssembliesByNameConvention(IServiceRegistrar registrar) { RegisterFromAssembliesByNameConvention(registrar, new[] { GetPreviousCallingMethodsAssembly() }, null); }
+        public static void RegisterFromAssembliesByNameConvention(IServiceRegistrar registrar, Assembly[] assemblies) { RegisterFromAssembliesByNameConvention(registrar, assemblies, null); }
+        public static void RegisterFromAssembliesByNameConvention(IServiceRegistrar registrar, Predicate<Type> predicate) { RegisterFromAssembliesByNameConvention(registrar, new[] { GetPreviousCallingMethodsAssembly() }, predicate); }
+        public static void RegisterFromAssembliesByNameConvention(IServiceRegistrar registrar, Assembly[] assemblies, Predicate<Type> predicate)
         {
+            var locator = registrar.GetLocator();
+            var registrationType = typeof(IServiceRegistrationByNameConvention);
+            var nameConventionTypes = assemblies.SelectMany(a => a.GetTypes())
+                .Where(t => (!t.IsInterface) && (!t.IsAbstract) && (t.GetInterfaces().Contains(registrationType)))
+                .ToList();
+            if (nameConventionTypes.Count > 0)
+                foreach (var nameConventionType in nameConventionTypes)
+                    ((IServiceRegistrationByNameConvention)locator.Resolve(nameConventionType)).RegisterByNameConvention(registrar);
+            // default registation
+            var remainingAssemblies = assemblies.Where(a => !nameConventionTypes.Any(y => y.Assembly == a));
+            DefaultNameConvention(remainingAssemblies, predicate, (interfaceType, type) => registrar.Register(interfaceType, type));
+        }
+
+        public static void DefaultNameConvention(IEnumerable<Assembly> assemblies, Predicate<Type> predicate, Action<Type, Type> action)
+        {
+            if (assemblies.Count() == 0)
+                return;
             var interfaceTypes = assemblies.SelectMany(a => a.AsTypesEnumerator(t => t.IsInterface))
-                .Where(type => type.Name.StartsWith("I"));
+                .Where(t => t.Name.StartsWith("I"))
+                .Where(t => (predicate == null) || (predicate(t)));
             foreach (var interfaceType in interfaceTypes)
             {
                 string concreteName = interfaceType.Name.Substring(1);
-                interfaceType.Assembly.AsTypesEnumerator(interfaceType)
+                var types = interfaceType.Assembly.AsTypesEnumerator(interfaceType)
                     .Where(t => t.Name == concreteName)
                     .Where(t => (predicate == null) || (predicate(t)))
-                    .ToList()
-                    .ForEach(t => registrar.Register(interfaceType, t));
+                    .ToList();
+                if (types.Count == 1)
+                    action(interfaceType, types.First());
             }
         }
 
@@ -105,6 +129,13 @@ namespace System.Quality
         public static bool GetWantsToSkipLocator(Type type)
         {
             return ((type == null) || (s_wantToSkipServiceLocatorType.IsAssignableFrom(type)));
+        }
+
+        private static Assembly GetPreviousCallingMethodsAssembly()
+        {
+            var frame = new StackTrace().GetFrame(2);
+            var method = frame.GetMethod();
+            return (method != null ? method.ReflectedType.Assembly : null);
         }
     }
 }

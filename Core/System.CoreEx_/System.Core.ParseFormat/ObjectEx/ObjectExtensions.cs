@@ -30,18 +30,18 @@ namespace System.ObjectEx
     /// </summary>
     public static partial class ObjectExtensions
     {
-        public static string Format<T>(this object obj) { return Format<T, object>(obj, null); }
-        public static string Format<T>(this object obj, Nattrib attrib) { return Format<T, object>(obj, attrib); }
-        public static string Format<T, TValue>(this object obj) { return Format<T, TValue>(obj, null); }
-        public static string Format<T, TValue>(this object obj, Nattrib attrib)
-        {
-            return FormatterEx.ObjectFormatterDelegateFactory<T, TValue>.Format(obj, attrib);
-        }
-        public static string Format<TValue>(this object obj, FormatterEx.IObjectFormatter<TValue> formatter) { return Format<TValue>(obj, formatter, null); }
-        public static string Format<TValue>(this object obj, FormatterEx.IObjectFormatter<TValue> formatter, Nattrib attrib)
-        {
-            return formatter.Format(obj, attrib);
-        }
+        //public static string Format<T>(this object obj) { return Format<T, object>(obj, null); }
+        //public static string Format<T>(this object obj, Nattrib attrib) { return Format<T, object>(obj, attrib); }
+        //public static string Format<T, TValue>(this object obj) { return Format<T, TValue>(obj, null); }
+        //public static string Format<T, TValue>(this object obj, Nattrib attrib)
+        //{
+        //    return FormatterEx.ObjectFormatterDelegateFactory<T, TValue>.Format(obj, attrib);
+        //}
+        //public static string Format<TValue>(this object obj, FormatterEx.IObjectFormatter<TValue> formatter) { return Format<TValue>(obj, formatter, null); }
+        //public static string Format<TValue>(this object obj, FormatterEx.IObjectFormatter<TValue> formatter, Nattrib attrib)
+        //{
+        //    return formatter.Format(obj, attrib);
+        //}
 
         public static T Parse<T>(this string obj) { return Parse<T, T>(obj, default(T), null); }
         public static T Parse<T>(this string obj, Nattrib attrib) { return Parse<T, T>(obj, default(T), attrib); }
