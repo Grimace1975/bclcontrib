@@ -18,6 +18,7 @@
 // Modified: Sky Morey <moreys@digitalev.com>
 //
 #endregion
+using System.Linq;
 using Microsoft.Practices.Unity;
 namespace System.Quality
 {

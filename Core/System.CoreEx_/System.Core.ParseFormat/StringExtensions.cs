@@ -30,18 +30,18 @@ namespace System
     /// </summary>
     public static partial class StringExtensions
     {
-        public static string Format<T>(this T value) { return Format<T, T>(value, null); }
-        public static string Format<T>(this T value, Nattrib attrib) { return Format<T, T>(value, attrib); }
-        public static string Format<T, TValue>(this TValue value) { return Format<T, TValue>(value, null); }
-        public static string Format<T, TValue>(this TValue value, Nattrib attrib)
-        {
-            return FormatterEx.ValueFormatterDelegateFactory<T, TValue>.Format(value, attrib);
-        }
-        public static string Format<TValue>(this TValue value, FormatterEx.IValueFormatter<TValue> formatter) { return Format<TValue>(value, formatter, null); }
-        public static string Format<TValue>(this TValue value, FormatterEx.IValueFormatter<TValue> formatter, Nattrib attrib)
-        {
-            return formatter.Format(value, attrib);
-        }
+        //public static string Format<T>(this T value) { return Format<T, T>(value, null); }
+        //public static string Format<T>(this T value, Nattrib attrib) { return Format<T, T>(value, attrib); }
+        //public static string Format<T, TValue>(this TValue value) { return Format<T, TValue>(value, null); }
+        //public static string Format<T, TValue>(this TValue value, Nattrib attrib)
+        //{
+        //    return FormatterEx.ValueFormatterDelegateFactory<T, TValue>.Format(value, attrib);
+        //}
+        //public static string Format<TValue>(this TValue value, FormatterEx.IValueFormatter<TValue> formatter) { return Format<TValue>(value, formatter, null); }
+        //public static string Format<TValue>(this TValue value, FormatterEx.IValueFormatter<TValue> formatter, Nattrib attrib)
+        //{
+        //    return formatter.Format(value, attrib);
+        //}
 
         public static T Parse<T>(this string text) { return Parse<T, T>(text, default(T), null); }
         public static T Parse<T>(this string text, Nattrib attrib) { return Parse<T, T>(text, default(T), attrib); }

@@ -34,7 +34,7 @@ namespace System.Quality.EventSourcing
     public abstract class AggregateRoot : IAggregateRootBacking
     {
         private readonly List<Event> _changes = new List<Event>();
-        private readonly bool _strictEvents;
+        //private readonly bool _strictEvents;
 
         public abstract Guid AggregateId { get; }
         protected void ApplyEvent(Event @event) { ApplyEvent(@event, true); }
@@ -78,8 +78,8 @@ namespace System.Quality.EventSourcing
             Action<Event> handler;
             if (_handlerRegistry.TryGetValue(@event.GetType(), out handler))
                 handler(@event);
-            else if (_strictEvents)
-                throw new InvalidOperationException();
+            //else if (_strictEvents)
+            //    throw new InvalidOperationException();
             if (trackAsChange)
                 _changes.Add(@event);
         }
