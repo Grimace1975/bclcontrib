@@ -38,12 +38,16 @@ namespace System
             IStringParser<TResult> Build<TResult>();
         }
 
-        public interface IStringParser<TResult>
+        public interface IStringParser
+        {
+            object Parse2(string value, object defaultValue, Nattrib attrib);
+            bool Validate(string value, Nattrib attrib);
+        }
+
+        public interface IStringParser<TResult> : IStringParser
         {
             TResult Parse(string value, TResult defaultValue, Nattrib attrib);
-            object Parse2(string value, object defaultValue, Nattrib attrib);
             bool TryParse(string value, Nattrib attrib, out TResult validValue);
-            bool Validate(string value, Nattrib attrib);
         }
 
         public static void RegisterStringParser<T>(object stringParser) { RegisterStringParser(typeof(T), stringParser); }
@@ -60,12 +64,20 @@ namespace System
             //throw new NotImplementedException();
         }
 
+        private static IStringParser ScanForStringParser(Type type)
+        {
+            if (s_stringParserProviders != null)
+                foreach (var stringParser2 in s_stringParserProviders)
+                    if ((type == stringParser2.Key) || (type.IsSubclassOf(stringParser2.Key)))
+                        return (stringParser2.Value as IStringParser);
+            return null;
+        }
         private static IStringParser<TResult> ScanForStringParser<TResult>(Type type)
         {
             if (s_stringParserProviders != null)
                 foreach (var stringParser2 in s_stringParserProviders)
                     if ((type == stringParser2.Key) || (type.IsSubclassOf(stringParser2.Key)))
-                        return ((IStringParser<TResult>)stringParser2.Value);
+                        return (stringParser2.Value as IStringParser<TResult>);
             Type key;
             IStringParser<TResult> stringParser;
             if (TryScanForStringParser<TResult>(out key, out stringParser))
@@ -118,7 +130,7 @@ namespace System
             }
             private static Func<string, object, Nattrib, object> CreateParser2(Type type)
             {
-                var parser = ScanForStringParser<TResult>(type);
+                var parser = ScanForStringParser(type);
                 if (parser != null)
                     return parser.Parse2;
                 //EnsureTryParseMethod();
@@ -168,7 +180,7 @@ namespace System
                     return new Func<string, Nattrib, bool>(Validator_Int32);
                 if (type == CoreExInternal.StringType)
                     return new Func<string, Nattrib, bool>(Validator_String);
-                var parser = ScanForStringParser<TResult>(type);
+                var parser = ScanForStringParser(type);
                 if (parser != null)
                     return parser.Validate;
                 //EnsureTryParseMethod();
