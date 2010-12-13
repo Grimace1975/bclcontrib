@@ -82,7 +82,8 @@ namespace System.Primitives.DataTypes
 
         public bool Validate(string value, Nattrib attrib)
         {
-            throw new NotImplementedException();
+            TResult validValue;
+            return _tryParse(value, attrib.Get<TParseAttrib>(), out validValue);
         }
         #endregion
     }
