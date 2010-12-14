@@ -172,7 +172,7 @@ namespace System.DirectoryServices
             foreach (var queryFilter in directoryEntryMatcher.GetQueryFilters())
                 foreach (var batch in identities.GroupAt(BatchSize))
                 {
-                    var filterPart = "(" + identityProperty + "=" + string.Join(")(" + identityProperty + "=", batch.ToArray()) + ")";
+                    var filterPart = "(" + Ldap.EncodeFilter(identityProperty) + "=" + string.Join(")(" + Ldap.EncodeFilter(identityProperty) + "=", batch.Select(x => Ldap.EncodeFilter(x, true)).ToArray()) + ")";
                     var directorySearcher = new DirectorySearcher(directoryEntry, string.Format(queryFilter, "(|" + filterPart + ")"), propertiesToLoad);
                     if (limiter != null)
                         limiter(directorySearcher);
@@ -272,11 +272,10 @@ namespace System.DirectoryServices
             var primaryGroupID = (int)aEntry.Properties["primaryGroupID"].Value;
             var objectSid = (byte[])aEntry.Properties["objectSid"].Value;
             var escapedGroupSid = new StringBuilder();
-            // copy over everything but the last four bytes(sub-authority)
-            // doing so gives us the RID of the domain
+            // copy over everything but the last four bytes(sub-authority) doing so gives us the RID of the domain
             for (uint i = 0; i < objectSid.Length - 4; i++)
                 escapedGroupSid.AppendFormat("\\{0:x2}", objectSid[i]);
-            //Add the primaryGroupID to the escape string to build the SID of the primaryGroup
+            // Add the primaryGroupID to the escape string to build the SID of the primaryGroup
             for (uint i = 0; i < 4; i++)
             {
                 escapedGroupSid.AppendFormat("\\{0:x2}", (primaryGroupID & 0xFF));
