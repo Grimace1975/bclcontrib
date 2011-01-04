@@ -133,6 +133,37 @@ namespace System.DirectoryServices
             //return userPath[userPath.Length - 1];
         }
 
+        // ALL
+        public static IEnumerable<T> GetAllDirectoryEntries<T>(IDirectoryEntryMatcher directoryEntryMatcher, DirectoryEntry directoryEntry, string[] propertiesToLoad, Func<SearchResult, T> selector) { return GetAllDirectoryEntries<T>(directoryEntryMatcher, directoryEntry, propertiesToLoad, selector, null, null, null); }
+        public static IEnumerable<T> GetAllDirectoryEntries<T>(IDirectoryEntryMatcher directoryEntryMatcher, DirectoryEntry directoryEntry, string[] propertiesToLoad, Func<SearchResult, T> selector, int? maximumItems) { return GetAllDirectoryEntries<T>(directoryEntryMatcher, directoryEntry, propertiesToLoad, selector, null, null, maximumItems); }
+        public static IEnumerable<T> GetAllDirectoryEntries<T>(IDirectoryEntryMatcher directoryEntryMatcher, DirectoryEntry directoryEntry, string[] propertiesToLoad, Func<SearchResult, T> selector, Action<IDirectoryEntryMatcher, DirectorySearcher> searchLimiter, Func<IEnumerable<T>, IEnumerable<T>> resultLimiter) { return GetAllDirectoryEntries<T>(directoryEntryMatcher, directoryEntry, propertiesToLoad, selector, searchLimiter, resultLimiter, null); }
+        public static IEnumerable<T> GetAllDirectoryEntries<T>(IDirectoryEntryMatcher directoryEntryMatcher, DirectoryEntry directoryEntry, string[] propertiesToLoad, Func<SearchResult, T> selector, Action<IDirectoryEntryMatcher, DirectorySearcher> searchLimiter, Func<IEnumerable<T>, IEnumerable<T>> resultLimiter, int? maximumItems)
+        {
+            if (directoryEntryMatcher == null)
+                throw new ArgumentNullException("directoryEntryMatcher");
+            if (directoryEntry == null)
+                throw new ArgumentNullException("directoryEntry");
+            var list = new List<T>();
+            foreach (var queryFilter in directoryEntryMatcher.GetQueryFilters())
+            {
+                var directorySearcher = new DirectorySearcher(directoryEntry);
+                if (searchLimiter != null)
+                    searchLimiter(directoryEntryMatcher, directorySearcher);
+                using (var searchResults = directorySearcher.FindAll())
+                {
+                    var searchResults2 = searchResults.Cast<SearchResult>()
+                        .Where(x => directoryEntryMatcher.IsSchemaClassName(x.GetDirectoryEntry()));
+                    var results = (!maximumItems.HasValue ? searchResults2.Select(selector) : searchResults2.Take(maximumItems.Value - list.Count).Select(selector));
+                    if (resultLimiter != null)
+                        results = resultLimiter(results);
+                    list.AddRange(results);
+                }
+                if ((maximumItems.HasValue) && (list.Count >= maximumItems.Value))
+                    break;
+            }
+            return list;
+        }
+
         // SINGLE
         //public static DirectoryEntry GetDirectoryEntryBySid(IDirectoryEntryMatcher directoryEntryMatcher, DirectoryEntry directoryEntry, string[] propertiesToLoad, string sid) { return GetDirectoryEntryByIdentity(directoryEntryMatcher, directoryEntry, "objectSid", propertiesToLoad, sid); }
         //public static DirectoryEntry GetDirectoryEntryByIdentity(IDirectoryEntryMatcher directoryEntryMatcher, DirectoryEntry directoryEntry, string identityProperty, string[] propertiesToLoad, string identity)

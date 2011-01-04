@@ -33,21 +33,15 @@ namespace System.Interop.Core.Net
     /// </summary>
     public class SecureFileTransferClient : FileTransferClientBase
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="FtpClient"/> class.
-        /// </summary>
-        /// <param name="remoteHost">The remote host.</param>
-        /// <param name="userId">The user id.</param>
-        /// <param name="password">The password.</param>
-        public SecureFileTransferClient(string puTtyPath, string remoteHost, string userId, string password)
+        public SecureFileTransferClient(SecureCopySettings settings, string remoteHost, string userId)
         {
-            SecureCopySettings = new SecureCopySettings
-            {
-                PuTtyPath = puTtyPath,
-                UserId = userId,
-                Password = password,
-            };
-            Credentials = new NetworkCredential(userId, password);
+            if (settings == null)
+                throw new ArgumentNullException("settings");
+            if (string.IsNullOrEmpty(remoteHost))
+                throw new ArgumentNullException("remoteHost");
+            SecureCopySettings = (SecureCopySettings)settings.Clone();
+            SecureCopySettings.Options = SecureCopySettingsOptions.ForceSftp;
+            Credentials = new NetworkCredential(userId, null);
             RemoteHost = remoteHost;
         }
 
@@ -93,7 +87,7 @@ namespace System.Interop.Core.Net
         /// <returns></returns>
         public override bool TryGet(string remoteFile, string localFile, out Exception ex)
         {
-            return SecureCopyInterop.TryGet(SecureCopySettings, RemoteHost, null, remoteFile, localFile, out ex);
+            return SecureCopyInterop.TryGet(SecureCopySettings, RemoteHost, SecureCopySettings.UserId, remoteFile, localFile, out ex);
         }
 
         /// <summary>
@@ -104,7 +98,8 @@ namespace System.Interop.Core.Net
         /// <returns></returns>
         public override bool TryPut(string localFile, string remoteFile, out Exception ex)
         {
-            return SecureCopyInterop.TryPut(SecureCopySettings, RemoteHost, null, new[] { localFile }, remoteFile, out ex);
+            SecureCopySettings.Options |= SecureCopySettingsOptions.ForceSftp;
+            return SecureCopyInterop.TryPut(SecureCopySettings, RemoteHost, SecureCopySettings.UserId, new[] { localFile }, remoteFile, out ex);
         }
     }
 }
