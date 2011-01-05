@@ -25,12 +25,13 @@ THE SOFTWARE.
 #endregion
 namespace System.Interop.Core.Security
 {
-    public class SecureCopySettings
+    public class SecureCopySettings : ICloneable
     {
         public SecureCopySettings()
         {
             ProcessTimeoutInMilliseconds = 6000;
         }
+
         public int ProcessTimeoutInMilliseconds { get; set; }
         public string PuTtyPath { get; set; }
         public string SessionName { get; set; }
@@ -40,5 +41,10 @@ namespace System.Interop.Core.Security
         public string PrivateKeyPath { get; set; }
         public string PrivateKeyPassphase { get; set; }
         public SecureCopySettingsOptions Options { get; set; }
+
+        public object Clone()
+        {
+            return MemberwiseClone();
+        }
     }
 }
