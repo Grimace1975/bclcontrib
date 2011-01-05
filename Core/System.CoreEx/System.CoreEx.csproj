@@ -401,6 +401,9 @@
     <Compile Include="..\System.CoreEx_\System.Core.Extentions\Linq\HierarchyNode.cs">
       <Link>System.Core.Extentions\Linq\HierarchyNode.cs</Link>
     </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\Linq\HierarchyNode2.cs">
+      <Link>System.Core.Extentions\Linq\HierarchyNode2.cs</Link>
+    </Compile>
     <Compile Include="..\System.CoreEx_\System.Core.Extentions\Linq\QueryableExtensions+Hierarchy.cs">
       <Link>System.Core.Extentions\Linq\QueryableExtensions+Hierarchy.cs</Link>
     </Compile>

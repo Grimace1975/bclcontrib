@@ -31,10 +31,10 @@ namespace System.Linq
     /// </summary>
     public static partial class EnumerableExtensions
     {
-        private static IEnumerable<HierarchyNode<TEntity>> CreateHierarchyRecurse<TEntity, TKey>(IEnumerable<TEntity> source, TEntity parentItem, Func<TEntity, TKey> keySelector, Func<TEntity, TKey> parentKeySelector, object rootKey, int depth, int maxDepth)
-            where TEntity : class
+        private static IEnumerable<TResult> CreateHierarchyRecurse<TSource, TResult, TKey>(IEnumerable<TSource> source, TSource parentItem, Func<TSource, TKey> keySelector, Func<TSource, TKey> parentKeySelector, Func<HierarchyNode<TSource, TResult>, TResult> selector, object rootKey, int depth, int maxDepth)
+            where TSource : class
         {
-            IEnumerable<TEntity> childs;
+            IEnumerable<TSource> childs;
             if (rootKey != null)
                 childs = source.Where(x => keySelector(x).Equals(rootKey));
             else
@@ -47,21 +47,28 @@ namespace System.Linq
                 depth++;
                 if ((depth <= maxDepth) || (maxDepth == 0))
                     foreach (var item in childs)
-                        yield return new HierarchyNode<TEntity>()
+                        yield return selector(new HierarchyNode<TSource, TResult>
                         {
                             Entity = item,
-                            ChildNodes = CreateHierarchyRecurse(source.AsEnumerable(), item, keySelector, parentKeySelector, null, depth, maxDepth),
+                            Children = CreateHierarchyRecurse(source, item, keySelector, parentKeySelector, selector, null, depth, maxDepth),
                             Depth = depth,
                             Parent = parentItem
-                        };
+                        });
             }
         }
 
-        public static IEnumerable<HierarchyNode<TEntity>> AsHierarchy<TEntity, TKey>(this IEnumerable<TEntity> source, Func<TEntity, TKey> keySelector, Func<TEntity, TKey> parentKeySelector)
-            where TEntity : class { return CreateHierarchyRecurse(source, default(TEntity), keySelector, parentKeySelector, null, 0, 0); }
-        public static IEnumerable<HierarchyNode<TEntity>> AsHierarchy<TEntity, TKey>(this IEnumerable<TEntity> source, Func<TEntity, TKey> keySelector, Func<TEntity, TKey> parentKeySelector, object rootKey)
-            where TEntity : class { return CreateHierarchyRecurse(source, default(TEntity), keySelector, parentKeySelector, rootKey, 0, 0); }
-        public static IEnumerable<HierarchyNode<TEntity>> AsHierarchy<TEntity, TKey>(this IEnumerable<TEntity> source, Func<TEntity, TKey> keySelector, Func<TEntity, TKey> parentKeySelector, object rootKey, int maxDepth)
-            where TEntity : class { return CreateHierarchyRecurse(source, default(TEntity), keySelector, parentKeySelector, rootKey, 0, maxDepth); }
+        //public static IEnumerable<HierarchyNode<TSource>> AsHierarchy<TSource, TKey>(this IEnumerable<TSource> source, Func<TSource, TKey> keySelector, Func<TSource, TKey> parentKeySelector)
+        //    where TSource : class { return CreateHierarchyRecurse<TSource, HierarchyNode<TSource>, TKey>(source, default(TSource), keySelector, parentKeySelector, x => x, null, 0, 0); }
+        //public static IEnumerable<HierarchyNode<TSource>> AsHierarchy<TSource, TKey>(this IEnumerable<TSource> source, Func<TSource, TKey> keySelector, Func<TSource, TKey> parentKeySelector, object rootKey)
+        //    where TSource : class { return CreateHierarchyRecurse<TSource, HierarchyNode<TSource>, TKey>(source, default(TSource), keySelector, parentKeySelector, x => x, rootKey, 0, 0); }
+        //public static IEnumerable<HierarchyNode<TSource>> AsHierarchy<TSource, TKey>(this IEnumerable<TSource> source, Func<TSource, TKey> keySelector, Func<TSource, TKey> parentKeySelector, object rootKey, int maxDepth)
+        //    where TSource : class { return CreateHierarchyRecurse<TSource, HierarchyNode<TSource>, TKey>(source, default(TSource), keySelector, parentKeySelector, x => x, rootKey, 0, maxDepth); }
+
+        public static IEnumerable<TResult> SelectHierarchy<TSource, TResult, TKey>(this IEnumerable<TSource> source, Func<TSource, TKey> keySelector, Func<TSource, TKey> parentKeySelector, Func<HierarchyNode<TSource, TResult>, TResult> selector)
+            where TSource : class { return CreateHierarchyRecurse(source, default(TSource), keySelector, parentKeySelector, selector, null, 0, 0); }
+        public static IEnumerable<TResult> SelectHierarchy<TSource, TResult, TKey>(this IEnumerable<TSource> source, Func<TSource, TKey> keySelector, Func<TSource, TKey> parentKeySelector, Func<HierarchyNode<TSource, TResult>, TResult> selector, object rootKey)
+            where TSource : class { return CreateHierarchyRecurse(source, default(TSource), keySelector, parentKeySelector, selector, rootKey, 0, 0); }
+        public static IEnumerable<TResult> SelectHierarchy<TSource, TResult, TKey>(this IEnumerable<TSource> source, Func<TSource, TKey> keySelector, Func<TSource, TKey> parentKeySelector, Func<HierarchyNode<TSource, TResult>, TResult> selector, object rootKey, int maxDepth)
+            where TSource : class { return CreateHierarchyRecurse(source, default(TSource), keySelector, parentKeySelector, selector, rootKey, 0, maxDepth); }
     }
 }

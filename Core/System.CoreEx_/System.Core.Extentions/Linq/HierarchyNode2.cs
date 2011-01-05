@@ -26,12 +26,6 @@ THE SOFTWARE.
 using System.Collections.Generic;
 namespace System.Linq
 {
-    public class HierarchyNode<T, TResult>
-        where T : class
-    {
-        public T Entity { get; internal set; }
-        public IEnumerable<TResult> Children { get; internal set; }
-        public int Depth { get; internal set; }
-        public T Parent { get; internal set; }
-    }
+    public class HierarchyNode<T> : HierarchyNode<T, T>
+        where T : class { }
 }
