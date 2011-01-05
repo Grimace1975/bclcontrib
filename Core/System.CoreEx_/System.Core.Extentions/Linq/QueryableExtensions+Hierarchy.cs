@@ -32,49 +32,57 @@ namespace System.Linq
     /// </summary>
     public static partial class QueryableExtensions
     {
-        private static IEnumerable<HierarchyNode<TEntity>> CreateHierarchyRecurse<TEntity>(IQueryable<TEntity> source, TEntity parentItem, string propertyNameKey, string propertyNameParentKey, object rootKey, int depth, int maxDepth)
-            where TEntity : class
+        private static IEnumerable<TResult> CreateHierarchyRecurse<TSource, TResult>(IQueryable<TSource> source, TSource parentItem, string propertyNameKey, string propertyNameParentKey, Func<HierarchyNode<TSource, TResult>, TResult> selector, object rootKey, int depth, int maxDepth)
+            where TSource : class
         {
-            ParameterExpression parameter = Expression.Parameter(typeof(TEntity), "e");
-            Expression<Func<TEntity, bool>> predicate;
+            ParameterExpression parameter = Expression.Parameter(typeof(TSource), "e");
+            Expression<Func<TSource, bool>> predicate;
             if (rootKey != null)
             {
                 Expression left = Expression.Convert(Expression.Property(parameter, propertyNameKey), rootKey.GetType());
                 Expression right = Expression.Constant(rootKey);
-                predicate = Expression.Lambda<Func<TEntity, bool>>(Expression.Equal(left, right), parameter);
+                predicate = Expression.Lambda<Func<TSource, bool>>(Expression.Equal(left, right), parameter);
             }
             else
             {
                 if (parentItem == null)
-                    predicate = Expression.Lambda<Func<TEntity, bool>>(Expression.Equal(Expression.Property(parameter, propertyNameParentKey), Expression.Constant(null)), parameter);
+                    predicate = Expression.Lambda<Func<TSource, bool>>(Expression.Equal(Expression.Property(parameter, propertyNameParentKey), Expression.Constant(null)), parameter);
                 else
                 {
                     Expression left = Expression.Convert(Expression.Property(parameter, propertyNameParentKey), parentItem.GetType().GetProperty(propertyNameKey).PropertyType);
                     Expression right = Expression.Constant(parentItem.GetType().GetProperty(propertyNameKey).GetValue(parentItem, null));
-                    predicate = Expression.Lambda<Func<TEntity, bool>>(Expression.Equal(left, right), parameter);
+                    predicate = Expression.Lambda<Func<TSource, bool>>(Expression.Equal(left, right), parameter);
                 }
             }
-            IEnumerable<TEntity> childs = source.Where(predicate).ToList();
+            IEnumerable<TSource> childs = source.Where(predicate).ToList();
             if (childs.Count() > 0)
             {
                 depth++;
                 if ((depth <= maxDepth) || (maxDepth == 0))
                     foreach (var item in childs)
-                        yield return new HierarchyNode<TEntity>()
+                        yield return selector(new HierarchyNode<TSource, TResult>
                         {
                             Entity = item,
-                            ChildNodes = CreateHierarchyRecurse(source, item, propertyNameKey, propertyNameParentKey, null, depth, maxDepth),
+                            Children = CreateHierarchyRecurse(source, item, propertyNameKey, propertyNameParentKey, selector, null, depth, maxDepth),
                             Depth = depth,
                             Parent = parentItem
-                        };
+                        });
             }
         }
 
-        public static IEnumerable<HierarchyNode<TEntity>> AsHierarchy<TEntity>(this IQueryable<TEntity> source, string propertyNameKey, string propertyNameParentKey)
-            where TEntity : class { return CreateHierarchyRecurse(source, null, propertyNameKey, propertyNameParentKey, null, 0, 0); }
-        public static IEnumerable<HierarchyNode<TEntity>> AsHierarchy<TEntity>(this IQueryable<TEntity> source, string propertyNameKey, string propertyNameParentKey, object rootKey)
-            where TEntity : class { return CreateHierarchyRecurse(source, null, propertyNameKey, propertyNameParentKey, rootKey, 0, 0); }
-        public static IEnumerable<HierarchyNode<TEntity>> AsHierarchy<TEntity>(this IQueryable<TEntity> source, string propertyNameKey, string propertyNameParentKey, object rootKey, int maxDepth)
-            where TEntity : class { return CreateHierarchyRecurse(source, null, propertyNameKey, propertyNameParentKey, rootKey, 0, maxDepth); }
+        //public static IEnumerable<HierarchyNode<TSource>> AsHierarchy<TSource>(this IQueryable<TSource> source, string propertyNameKey, string propertyNameParentKey)
+        //    where TSource : class { return CreateHierarchyRecurse<TSource, HierarchyNode<TSource>>(source, null, propertyNameKey, propertyNameParentKey, x => x, null, 0, 0); }
+        //public static IEnumerable<HierarchyNode<TSource>> AsHierarchy<TSource>(this IQueryable<TSource> source, string propertyNameKey, string propertyNameParentKey, object rootKey)
+        //    where TSource : class { return CreateHierarchyRecurse<TSource, HierarchyNode<TSource>>(source, null, propertyNameKey, propertyNameParentKey, x => x, rootKey, 0, 0); }
+        //public static IEnumerable<HierarchyNode<TSource>> AsHierarchy<TSource>(this IQueryable<TSource> source, string propertyNameKey, string propertyNameParentKey, object rootKey, int maxDepth)
+        //    where TSource : class { return CreateHierarchyRecurse<TSource, HierarchyNode<TSource>>(source, null, propertyNameKey, propertyNameParentKey, x => x, rootKey, 0, maxDepth); }
+
+        public static IEnumerable<TResult> SelectHierarchy<TSource, TResult>(this IQueryable<TSource> source, string propertyNameKey, string propertyNameParentKey, Func<HierarchyNode<TSource, TResult>, TResult> selector)
+            where TSource : class { return CreateHierarchyRecurse(source, null, propertyNameKey, propertyNameParentKey, selector, null, 0, 0); }
+        public static IEnumerable<TResult> SelectHierarchy<TSource, TResult>(this IQueryable<TSource> source, string propertyNameKey, string propertyNameParentKey, Func<HierarchyNode<TSource, TResult>, TResult> selector, object rootKey)
+            where TSource : class { return CreateHierarchyRecurse(source, null, propertyNameKey, propertyNameParentKey, selector, rootKey, 0, 0); }
+        public static IEnumerable<TResult> SelectHierarchy<TSource, TResult>(this IQueryable<TSource> source, string propertyNameKey, string propertyNameParentKey, Func<HierarchyNode<TSource, TResult>, TResult> selector, object rootKey, int maxDepth)
+            where TSource : class { return CreateHierarchyRecurse(source, null, propertyNameKey, propertyNameParentKey, selector, rootKey, 0, maxDepth); }
+
     }
 }
