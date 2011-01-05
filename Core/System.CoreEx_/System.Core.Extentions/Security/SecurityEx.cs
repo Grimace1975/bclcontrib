@@ -75,7 +75,8 @@ namespace System.Security
             using (var encryptor = algorithm.CreateEncryptor())
                 return SymmetricTransform(data, encryptor);
         }
-        public static string SymmetricEncrypt(SymmetricAlgorithm algorithm, string data, int saltSize) { return Convert.ToBase64String(SymmetricEncrypt(algorithm, Encoding.UTF8.GetBytes(data), saltSize)); }
+        public static string SymmetricEncrypt(SymmetricAlgorithm algorithm, string data, int saltSize) { return Convert.ToBase64String(SymmetricEncrypt(algorithm, Encoding.UTF8.GetBytes(data), MakeRandomBytes(saltSize))); }
+        public static string SymmetricEncrypt(SymmetricAlgorithm algorithm, string data, byte[] salt) { return Convert.ToBase64String(SymmetricEncrypt(algorithm, Encoding.UTF8.GetBytes(data), salt)); }
         public static byte[] SymmetricEncrypt(SymmetricAlgorithm algorithm, byte[] data, int saltSize) { return SymmetricEncrypt(algorithm, data, MakeRandomBytes(saltSize)); }
         public static byte[] SymmetricEncrypt(SymmetricAlgorithm algorithm, byte[] data, byte[] salt)
         {
