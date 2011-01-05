@@ -75,17 +75,18 @@ namespace System.Security
             using (var encryptor = algorithm.CreateEncryptor())
                 return SymmetricTransform(data, encryptor);
         }
-        public static string SymmetricEncrypt(SymmetricAlgorithm algorithm, string data, int ivSize) { return Convert.ToBase64String(SymmetricEncrypt(algorithm, Encoding.UTF8.GetBytes(data), ivSize)); }
-        public static byte[] SymmetricEncrypt(SymmetricAlgorithm algorithm, byte[] data, int ivSize)
+        public static string SymmetricEncrypt(SymmetricAlgorithm algorithm, string data, int saltSize) { return Convert.ToBase64String(SymmetricEncrypt(algorithm, Encoding.UTF8.GetBytes(data), saltSize)); }
+        public static byte[] SymmetricEncrypt(SymmetricAlgorithm algorithm, byte[] data, int saltSize) { return SymmetricEncrypt(algorithm, data, MakeRandomBytes(saltSize)); }
+        public static byte[] SymmetricEncrypt(SymmetricAlgorithm algorithm, byte[] data, byte[] salt)
         {
             if (algorithm == null)
                 throw new ArgumentNullException("algorithm");
-            if (ivSize < 0)
-                throw new ArgumentOutOfRangeException("ivSize");
+            if (salt == null)
+                throw new ArgumentOutOfRangeException("salt");
             if (data == null)
                 throw new ArgumentNullException("data");
             using (var encryptor = algorithm.CreateEncryptor())
-                return SymmetricEncryptTransform(data, ivSize, encryptor);
+                return SymmetricEncryptTransform(data, salt, encryptor);
         }
         public static string SymmetricEncrypt(string data, byte[] key, byte[] iv) { using (var algorithm = SymmetricAlgorithm.Create()) return Convert.ToBase64String(SymmetricEncrypt(algorithm, Encoding.UTF8.GetBytes(data), key, iv)); }
         public static string SymmetricEncrypt(SymmetricAlgorithm algorithm, string data, byte[] key, byte[] iv) { return Convert.ToBase64String(SymmetricEncrypt(algorithm, Encoding.UTF8.GetBytes(data), key, iv)); }
@@ -103,15 +104,16 @@ namespace System.Security
             using (var encryptor = algorithm.CreateEncryptor(key, iv))
                 return SymmetricTransform(data, encryptor);
         }
-        public static string SymmetricEncrypt(string data, int ivSize, byte[] key, byte[] iv) { using (var algorithm = SymmetricAlgorithm.Create()) return Convert.ToBase64String(SymmetricEncrypt(algorithm, Encoding.UTF8.GetBytes(data), ivSize, key, iv)); }
-        public static string SymmetricEncrypt(SymmetricAlgorithm algorithm, string data, int ivSize, byte[] key, byte[] iv) { return Convert.ToBase64String(SymmetricEncrypt(algorithm, Encoding.UTF8.GetBytes(data), ivSize, key, iv)); }
-        public static byte[] SymmetricEncrypt(byte[] data, int ivSize, byte[] key, byte[] iv) { using (var algorithm = SymmetricAlgorithm.Create()) return SymmetricEncrypt(algorithm, data, ivSize, key, iv); }
-        public static byte[] SymmetricEncrypt(SymmetricAlgorithm algorithm, byte[] data, int ivSize, byte[] key, byte[] iv)
+        public static string SymmetricEncrypt(string data, int saltSize, byte[] key, byte[] iv) { using (var algorithm = SymmetricAlgorithm.Create()) return Convert.ToBase64String(SymmetricEncrypt(algorithm, Encoding.UTF8.GetBytes(data), saltSize, key, iv)); }
+        public static string SymmetricEncrypt(SymmetricAlgorithm algorithm, string data, int saltSize, byte[] key, byte[] iv) { return Convert.ToBase64String(SymmetricEncrypt(algorithm, Encoding.UTF8.GetBytes(data), saltSize, key, iv)); }
+        public static byte[] SymmetricEncrypt(byte[] data, int saltSize, byte[] key, byte[] iv) { using (var algorithm = SymmetricAlgorithm.Create()) return SymmetricEncrypt(algorithm, data, saltSize, key, iv); }
+        public static byte[] SymmetricEncrypt(SymmetricAlgorithm algorithm, byte[] data, int saltSize, byte[] key, byte[] iv) { return SymmetricEncrypt(algorithm, data, MakeRandomBytes(saltSize), key, iv); }
+        public static byte[] SymmetricEncrypt(SymmetricAlgorithm algorithm, byte[] data, byte[] salt, byte[] key, byte[] iv)
         {
             if (algorithm == null)
                 throw new ArgumentNullException("algorithm");
-            if (ivSize < 0)
-                throw new ArgumentOutOfRangeException("ivSize");
+            if (salt == null)
+                throw new ArgumentOutOfRangeException("salt");
             if (data == null)
                 throw new ArgumentNullException("data");
             if (key == null)
@@ -119,15 +121,15 @@ namespace System.Security
             if (iv == null)
                 throw new ArgumentNullException("iv");
             using (var encryptor = algorithm.CreateEncryptor(key, iv))
-                return SymmetricEncryptTransform(data, ivSize, encryptor);
+                return SymmetricEncryptTransform(data, salt, encryptor);
         }
 
-        public static byte[] SymmetricEncryptTransform(byte[] data, int ivSize, ICryptoTransform transformer)
+        public static byte[] SymmetricEncryptTransform(byte[] data, byte[] salt, ICryptoTransform transformer)
         {
             if (data == null)
                 throw new ArgumentNullException("data");
-            if (ivSize < 0)
-                throw new ArgumentOutOfRangeException("ivSize");
+            if (salt == null)
+                throw new ArgumentOutOfRangeException("salt");
             if (transformer == null)
                 throw new ArgumentNullException("transformer");
             using (var ms = new MemoryStream())
@@ -135,11 +137,11 @@ namespace System.Security
                 using (var s = new CryptoStream(ms, transformer, CryptoStreamMode.Write))
                 {
                     byte[] data2;
-                    if (ivSize > 0)
+                    if (salt.Length > 0)
                     {
-                        data2 = new byte[ivSize + data.Length];
-                        Buffer.BlockCopy(MakeRandomBytes(ivSize), 0, data2, 0, ivSize);
-                        Buffer.BlockCopy(data, 0, data2, ivSize, data.Length);
+                        data2 = new byte[salt.Length + data.Length];
+                        Buffer.BlockCopy(salt, 0, data2, 0, salt.Length);
+                        Buffer.BlockCopy(data, 0, data2, salt.Length, data.Length);
                     }
                     else
                         data2 = data;
@@ -163,17 +165,17 @@ namespace System.Security
             using (var decryptor = algorithm.CreateDecryptor())
                 return SymmetricTransform(data, decryptor);
         }
-        public static string SymmetricDecrypt(SymmetricAlgorithm algorithm, string data, int ivSize) { return Encoding.UTF8.GetString(SymmetricDecrypt(algorithm, Convert.FromBase64String(data), ivSize)); }
-        public static byte[] SymmetricDecrypt(SymmetricAlgorithm algorithm, byte[] data, int ivSize)
+        public static string SymmetricDecrypt(SymmetricAlgorithm algorithm, string data, int saltSize) { return Encoding.UTF8.GetString(SymmetricDecrypt(algorithm, Convert.FromBase64String(data), saltSize)); }
+        public static byte[] SymmetricDecrypt(SymmetricAlgorithm algorithm, byte[] data, int saltSize)
         {
             if (algorithm == null)
                 throw new ArgumentNullException("algorithm");
             if (data == null)
                 throw new ArgumentNullException("data");
-            if (ivSize < 0)
-                throw new ArgumentOutOfRangeException("ivSize");
+            if (saltSize < 0)
+                throw new ArgumentOutOfRangeException("saltSize");
             using (var decryptor = algorithm.CreateDecryptor())
-                return SymmetricDecryptTransform(data, ivSize, decryptor);
+                return SymmetricDecryptTransform(data, saltSize, decryptor);
         }
         public static string SymmetricDecrypt(string data, byte[] key, byte[] iv) { using (var algorithm = SymmetricAlgorithm.Create()) return Encoding.UTF8.GetString(SymmetricDecrypt(algorithm, Convert.FromBase64String(data), key, iv)); }
         public static string SymmetricDecrypt(SymmetricAlgorithm algorithm, string data, byte[] key, byte[] iv) { return Encoding.UTF8.GetString(SymmetricDecrypt(algorithm, Convert.FromBase64String(data), key, iv)); }
@@ -191,31 +193,31 @@ namespace System.Security
             using (var decryptor = algorithm.CreateDecryptor(key, iv))
                 return SymmetricTransform(data, decryptor);
         }
-        public static string SymmetricDecrypt(string data, int ivSize, byte[] key, byte[] iv) { using (var algorithm = SymmetricAlgorithm.Create()) return Encoding.UTF8.GetString(SymmetricDecrypt(algorithm, Convert.FromBase64String(data), ivSize, key, iv)); }
-        public static string SymmetricDecrypt(SymmetricAlgorithm algorithm, string data, int ivSize, byte[] key, byte[] iv) { return Encoding.UTF8.GetString(SymmetricDecrypt(algorithm, Convert.FromBase64String(data), ivSize, key, iv)); }
-        public static byte[] SymmetricDecrypt(byte[] data, int ivSize, byte[] key, byte[] iv) { using (var algorithm = SymmetricAlgorithm.Create()) return SymmetricDecrypt(algorithm, data, ivSize, key, iv); }
-        public static byte[] SymmetricDecrypt(SymmetricAlgorithm algorithm, byte[] data, int ivSize, byte[] key, byte[] iv)
+        public static string SymmetricDecrypt(string data, int saltSize, byte[] key, byte[] iv) { using (var algorithm = SymmetricAlgorithm.Create()) return Encoding.UTF8.GetString(SymmetricDecrypt(algorithm, Convert.FromBase64String(data), saltSize, key, iv)); }
+        public static string SymmetricDecrypt(SymmetricAlgorithm algorithm, string data, int saltSize, byte[] key, byte[] iv) { return Encoding.UTF8.GetString(SymmetricDecrypt(algorithm, Convert.FromBase64String(data), saltSize, key, iv)); }
+        public static byte[] SymmetricDecrypt(byte[] data, int saltSize, byte[] key, byte[] iv) { using (var algorithm = SymmetricAlgorithm.Create()) return SymmetricDecrypt(algorithm, data, saltSize, key, iv); }
+        public static byte[] SymmetricDecrypt(SymmetricAlgorithm algorithm, byte[] data, int saltSize, byte[] key, byte[] iv)
         {
             if (algorithm == null)
                 throw new ArgumentNullException("algorithm");
             if (data == null)
                 throw new ArgumentNullException("data");
-            if (ivSize < 0)
-                throw new ArgumentOutOfRangeException("ivSize");
+            if (saltSize < 0)
+                throw new ArgumentOutOfRangeException("saltSize");
             if (key == null)
                 throw new ArgumentNullException("key");
             if (iv == null)
                 throw new ArgumentNullException("iv");
             using (var decryptor = algorithm.CreateDecryptor(key, iv))
-                return SymmetricDecryptTransform(data, ivSize, decryptor);
+                return SymmetricDecryptTransform(data, saltSize, decryptor);
         }
 
-        public static byte[] SymmetricDecryptTransform(byte[] data, int ivSize, ICryptoTransform transformer)
+        public static byte[] SymmetricDecryptTransform(byte[] data, int saltSize, ICryptoTransform transformer)
         {
             if (data == null)
                 throw new ArgumentNullException("data");
-            if (ivSize < 0)
-                throw new ArgumentOutOfRangeException("ivSize");
+            if (saltSize < 0)
+                throw new ArgumentOutOfRangeException("saltSize");
             if (transformer == null)
                 throw new ArgumentNullException("transformer");
             byte[] transformedData;
@@ -225,10 +227,10 @@ namespace System.Security
                     s.Write(data, 0, data.Length);
                 transformedData = ms.ToArray();
             }
-            if (ivSize > 0)
+            if (saltSize > 0)
             {
-                var data2 = new byte[transformedData.Length - ivSize];
-                Buffer.BlockCopy(transformedData, ivSize, data2, 0, data2.Length);
+                var data2 = new byte[transformedData.Length - saltSize];
+                Buffer.BlockCopy(transformedData, saltSize, data2, 0, data2.Length);
                 transformedData = data2;
             }
             return transformedData;
