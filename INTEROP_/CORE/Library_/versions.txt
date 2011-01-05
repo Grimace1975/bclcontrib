@@ -1,0 +1,3 @@
+gnupg: 1.4.10b
+putty: beta 0.60 [http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html]
+winscp: 4.28

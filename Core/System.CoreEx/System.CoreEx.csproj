@@ -1,0 +1,1199 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{21FC5068-FABA-4CC9-A9F5-95D299655422}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>System</RootNamespace>
+    <AssemblyName>System.CoreEx</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>BclContrib.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Caching\Patterns\Caching\CacheCommand.cs">
+      <Link>Patterns\System.Core.Patterns.Caching\Patterns\Caching\CacheCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Caching\Patterns\Caching\CacheDependency.cs">
+      <Link>Patterns\System.Core.Patterns.Caching\Patterns\Caching\CacheDependency.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Caching\Patterns\Caching\CacheEx.cs">
+      <Link>Patterns\System.Core.Patterns.Caching\Patterns\Caching\CacheEx.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Caching\Patterns\Caching\CacheFileTouch.cs">
+      <Link>Patterns\System.Core.Patterns.Caching\Patterns\Caching\CacheFileTouch.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Caching\Patterns\Caching\CacheItemAddedCallback.cs">
+      <Link>Patterns\System.Core.Patterns.Caching\Patterns\Caching\CacheItemAddedCallback.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Caching\Patterns\Caching\CacheItemPriority.cs">
+      <Link>Patterns\System.Core.Patterns.Caching\Patterns\Caching\CacheItemPriority.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Caching\Patterns\Caching\CacheItemRemovedCallback.cs">
+      <Link>Patterns\System.Core.Patterns.Caching\Patterns\Caching\CacheItemRemovedCallback.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Caching\Patterns\Caching\CacheProviderBase.cs">
+      <Link>Patterns\System.Core.Patterns.Caching\Patterns\Caching\CacheProviderBase.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Caching\Patterns\Caching\DataCache.cs">
+      <Link>Patterns\System.Core.Patterns.Caching\Patterns\Caching\DataCache.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Caching\Patterns\Caching\DataCacheBuilder.cs">
+      <Link>Patterns\System.Core.Patterns.Caching\Patterns\Caching\DataCacheBuilder.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Caching\Patterns\Caching\DataCacheRegistrar.cs">
+      <Link>Patterns\System.Core.Patterns.Caching\Patterns\Caching\DataCacheRegistrar.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Caching\Patterns\Caching\DataCacheRegistration.cs">
+      <Link>Patterns\System.Core.Patterns.Caching\Patterns\Caching\DataCacheRegistration.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Caching\Patterns\Caching\DataCacheRegistrationLink.cs">
+      <Link>Patterns\System.Core.Patterns.Caching\Patterns\Caching\DataCacheRegistrationLink.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Caching\Patterns\Caching\ICache.cs">
+      <Link>Patterns\System.Core.Patterns.Caching\Patterns\Caching\ICache.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Caching\Patterns\Caching\StaticCacheProvider.cs">
+      <Link>Patterns\System.Core.Patterns.Caching\Patterns\Caching\StaticCacheProvider.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Caching\Patterns\Caching\zCoreEnvironmentCacheProvider.cs">
+      <Link>Patterns\System.Core.Patterns.Caching\Patterns\Caching\zCoreEnvironmentCacheProvider.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Contracts\Patterns\ContractHandler.cs">
+      <Link>Patterns\System.Core.Patterns.Contracts\Patterns\ContractHandler.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Contracts\Patterns\IContract.cs">
+      <Link>Patterns\System.Core.Patterns.Contracts\Patterns\IContract.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Contracts\Patterns\IContract2.cs">
+      <Link>Patterns\System.Core.Patterns.Contracts\Patterns\IContract2.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Form\Patterns\Form.1\FormBinderVectorMask.cs">
+      <Link>Patterns\System.Core.Patterns.Form\Patterns\Form.1\FormBinderVectorMask.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Form\Patterns\Form.1\FormClientCommand.cs">
+      <Link>Patterns\System.Core.Patterns.Form\Patterns\Form.1\FormClientCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Form\Patterns\Form.1\FormCommand.cs">
+      <Link>Patterns\System.Core.Patterns.Form\Patterns\Form.1\FormCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Form\Patterns\Form.1\FormFieldBinderMode.cs">
+      <Link>Patterns\System.Core.Patterns.Form\Patterns\Form.1\FormFieldBinderMode.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Form\Patterns\Form.1\FormFieldFetchMode.cs">
+      <Link>Patterns\System.Core.Patterns.Form\Patterns\Form.1\FormFieldFetchMode.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Form\Patterns\Form.1\FormFieldViewMode.cs">
+      <Link>Patterns\System.Core.Patterns.Form\Patterns\Form.1\FormFieldViewMode.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Form\Patterns\Form.1\IFormContext.cs">
+      <Link>Patterns\System.Core.Patterns.Form\Patterns\Form.1\IFormContext.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Form\Patterns\Form.1\IFormControl.cs">
+      <Link>Patterns\System.Core.Patterns.Form\Patterns\Form.1\IFormControl.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Form\Patterns\Form\Reference_\zSmartForm.cs">
+      <Link>Patterns\System.Core.Patterns.Form\Patterns\Form\Reference_\zSmartForm.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Form\Patterns\Form\Reference_\zSmartFormMetax.cs">
+      <Link>Patterns\System.Core.Patterns.Form\Patterns\Form\Reference_\zSmartFormMetax.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Form\Patterns\Form\SmartForm.cs">
+      <Link>Patterns\System.Core.Patterns.Form\Patterns\Form\SmartForm.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Form\Patterns\Form\SmartFormContracts\EmailSmartFormBodyBuilder.cs">
+      <Link>Patterns\System.Core.Patterns.Form\Patterns\Form\SmartFormContracts\EmailSmartFormBodyBuilder.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Form\Patterns\Form\SmartFormContracts\EmailSmartFormBodyBuilder2.cs">
+      <Link>Patterns\System.Core.Patterns.Form\Patterns\Form\SmartFormContracts\EmailSmartFormBodyBuilder2.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Form\Patterns\Form\SmartFormContracts\EmailSmartFormContract.cs">
+      <Link>Patterns\System.Core.Patterns.Form\Patterns\Form\SmartFormContracts\EmailSmartFormContract.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Form\Patterns\Form\SmartFormContracts\SmsSmartFormContract.cs">
+      <Link>Patterns\System.Core.Patterns.Form\Patterns\Form\SmartFormContracts\SmsSmartFormContract.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Form\Patterns\Form\SmartFormElements\ElementBase.cs">
+      <Link>Patterns\System.Core.Patterns.Form\Patterns\Form\SmartFormElements\ElementBase.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Form\Patterns\Form\SmartFormElements\ElementCollection.cs">
+      <Link>Patterns\System.Core.Patterns.Form\Patterns\Form\SmartFormElements\ElementCollection.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Form\Patterns\Form\SmartFormElements\ErrorElement.cs">
+      <Link>Patterns\System.Core.Patterns.Form\Patterns\Form\SmartFormElements\ErrorElement.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Form\Patterns\Form\SmartFormElements\LabelElement.cs">
+      <Link>Patterns\System.Core.Patterns.Form\Patterns\Form\SmartFormElements\LabelElement.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Form\Patterns\Form\SmartFormElements\TextBox2Element.cs">
+      <Link>Patterns\System.Core.Patterns.Form\Patterns\Form\SmartFormElements\TextBox2Element.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Form\Patterns\Form\SmartFormElements\TextBoxElement.cs">
+      <Link>Patterns\System.Core.Patterns.Form\Patterns\Form\SmartFormElements\TextBoxElement.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Form\Patterns\Form\SmartFormElements\UnitElement.cs">
+      <Link>Patterns\System.Core.Patterns.Form\Patterns\Form\SmartFormElements\UnitElement.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Form\Patterns\Form\SmartFormMeta.cs">
+      <Link>Patterns\System.Core.Patterns.Form\Patterns\Form\SmartFormMeta.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Form\Patterns\Form\SmartFormMetaXmlReader.cs">
+      <Link>Patterns\System.Core.Patterns.Form\Patterns\Form\SmartFormMetaXmlReader.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Form\Patterns\Form\SmartFormMetaXmlWriter.cs">
+      <Link>Patterns\System.Core.Patterns.Form\Patterns\Form\SmartFormMetaXmlWriter.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Reporting\Patterns\Reporting.1\MultiColumnLayout.cs">
+      <Link>Patterns\System.Core.Patterns.Reporting\Patterns\Reporting.1\MultiColumnLayout.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Reporting\Patterns\Reporting\FlatFileContext.cs">
+      <Link>Patterns\System.Core.Patterns.Reporting\Patterns\Reporting\FlatFileContext.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Reporting\Patterns\Reporting\FlatFileCsvEmitter.cs">
+      <Link>Patterns\System.Core.Patterns.Reporting\Patterns\Reporting\FlatFileCsvEmitter.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Reporting\Patterns\Reporting\FlatFileCsvEmitterExtensions.cs">
+      <Link>Patterns\System.Core.Patterns.Reporting\Patterns\Reporting\FlatFileCsvEmitterExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Reporting\Patterns\Reporting\FlatFileField.cs">
+      <Link>Patterns\System.Core.Patterns.Reporting\Patterns\Reporting\FlatFileField.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Reporting\Patterns\Reporting\FlatFileFieldCollection.cs">
+      <Link>Patterns\System.Core.Patterns.Reporting\Patterns\Reporting\FlatFileFieldCollection.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Reporting\Patterns\Reporting\FlatFileFieldFormatter.cs">
+      <Link>Patterns\System.Core.Patterns.Reporting\Patterns\Reporting\FlatFileFieldFormatter.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Reporting\Patterns\Reporting\FlatFileFilterMode.cs">
+      <Link>Patterns\System.Core.Patterns.Reporting\Patterns\Reporting\FlatFileFilterMode.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Reporting\Patterns\Reporting\MappingExpression.cs">
+      <Link>Patterns\System.Core.Patterns.Reporting\Patterns\Reporting\MappingExpression.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Reporting\Patterns\Reporting\PropertyMap.cs">
+      <Link>Patterns\System.Core.Patterns.Reporting\Patterns\Reporting\PropertyMap.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Reporting\Patterns\Reporting\Reference_\Test.cs">
+      <Link>Patterns\System.Core.Patterns.Reporting\Patterns\Reference_\Test.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Reporting\Patterns\Reporting\TypeMap.cs">
+      <Link>Patterns\System.Core.Patterns.Reporting\Patterns\Reporting\TypeMap.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Versioning\Patterns\Versioning\VersionManager.cs">
+      <Link>Patterns\System.Core.Patterns.Versioning\Patterns\Versioning\VersionManager.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Versioning\Patterns\Versioning\VersionTypeUriPart.cs">
+      <Link>Patterns\System.Core.Patterns.Versioning\Patterns\Versioning\VersionTypeUriPart.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns\Patterns\Schema+Culture\Configuration\CultureSchemaConfiguration.cs">
+      <Link>Patterns\System.Core.Patterns\Patterns\Schema+Culture\Configuration\CultureSchemaConfiguration.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns\Patterns\Schema+Culture\CultureSchema.cs">
+      <Link>Patterns\System.Core.Patterns\Patterns\Schema+Culture\CultureSchema.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns\Patterns\Schema+Culture\CultureUriPart.cs">
+      <Link>Patterns\System.Core.Patterns\Patterns\Schema+Culture\CultureUriPart.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns\Patterns\Schema+Html\AbsoluteUrlHtmlDecoder.cs">
+      <Link>Patterns\System.Core.Patterns\Patterns\Schema+Html\AbsoluteUrlHtmlDecoder.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns\Patterns\Schema+Html\AbsoluteUrlHtmlFormatter.cs">
+      <Link>Patterns\System.Core.Patterns\Patterns\Schema+Html\AbsoluteUrlHtmlFormatter.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns\Patterns\Schema+Html\Configuration\HtmlSchemaConfiguration.cs">
+      <Link>Patterns\System.Core.Patterns\Patterns\Schema+Html\Configuration\HtmlSchemaConfiguration.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns\Patterns\Schema+Html\HtmlSchema.cs">
+      <Link>Patterns\System.Core.Patterns\Patterns\Schema+Html\HtmlSchema.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns\Patterns\Schema+Html\MailToHtmlDecoder.cs">
+      <Link>Patterns\System.Core.Patterns\Patterns\Schema+Html\MailToHtmlDecoder.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns\Patterns\Schema+Html\MailToHtmlFormatter.cs">
+      <Link>Patterns\System.Core.Patterns\Patterns\Schema+Html\MailToHtmlFormatter.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns\Patterns\Schema+Uri\AnonymousUriPart.cs">
+      <Link>Patterns\System.Core.Patterns\Patterns\Schema+Uri\AnonymousUriPart.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns\Patterns\Schema+Uri\Configuration\UriPartConfiguration.cs">
+      <Link>Patterns\System.Core.Patterns\Patterns\Schema+Uri\Configuration\UriPartConfiguration.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns\Patterns\Schema+Uri\Configuration\UriPartConfigurationSet.cs">
+      <Link>Patterns\System.Core.Patterns\Patterns\Schema+Uri\Configuration\UriPartConfigurationSet.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns\Patterns\Schema+Uri\Configuration\UriSchemaConfiguration.cs">
+      <Link>Patterns\System.Core.Patterns\Patterns\Schema+Uri\Configuration\UriSchemaConfiguration.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns\Patterns\Schema+Uri\Configuration\UriVirtualConfiguration.cs">
+      <Link>Patterns\System.Core.Patterns\Patterns\Schema+Uri\Configuration\UriVirtualConfiguration.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns\Patterns\Schema+Uri\Configuration\UriVirtualConfigurationSet.cs">
+      <Link>Patterns\System.Core.Patterns\Patterns\Schema+Uri\Configuration\UriVirtualConfigurationSet.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns\Patterns\Schema+Uri\Reference_\zHttpUrl.cs">
+      <Link>Patterns\System.Core.Patterns\Patterns\Schema+Uri\Reference_\zHttpUrl.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns\Patterns\Schema+Uri\Reference_\zUriContentType.cs">
+      <Link>Patterns\System.Core.Patterns\Patterns\Schema+Uri\Reference_\zUriContentType.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns\Patterns\Schema+Uri\SecureUriPart.cs">
+      <Link>Patterns\System.Core.Patterns\Patterns\Schema+Uri\SecureUriPart.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns\Patterns\Schema+Uri\UriContext.cs">
+      <Link>Patterns\System.Core.Patterns\Patterns\Schema+Uri\UriContext.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns\Patterns\Schema+Uri\UriSchema.cs">
+      <Link>Patterns\System.Core.Patterns\Patterns\Schema+Uri\UriSchema.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns\Patterns\Schema+Uri\UriVirtualSchema.cs">
+      <Link>Patterns\System.Core.Patterns\Patterns\Schema+Uri\UriVirtualSchema.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Collections+Channel\Collections\Generic\Channel.cs">
+      <Link>System.Core.Collections+Channel\Collections\Generic\Channel.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Collections+Channel\Collections\Generic\Channel2.cs">
+      <Link>System.Core.Collections+Channel\Collections\Generic\Channel2.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Collections+Channel\Collections\Generic\ChannelIndexer.cs">
+      <Link>System.Core.Collections+Channel\Collections\Generic\ChannelIndexer.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Collections+Channel\Collections\Generic\DisposeableChannel.cs">
+      <Link>System.Core.Collections+Channel\Collections\Generic\DisposeableChannel.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\ActivatorEx.cs">
+      <Link>System.Core.Extentions\ActivatorEx.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\Collections\EnumerableEx.cs">
+      <Link>System.Core.Extentions\Collections\EnumerableEx.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\Collections\Generic\DictionaryExtensions.cs">
+      <Link>System.Core.Extentions\Collections\Generic\DictionaryExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\Collections\Generic\IPagedMetadata.cs">
+      <Link>System.Core.Extentions\Collections\Generic\IPagedMetadata.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\Collections\Generic\PagedList.cs">
+      <Link>System.Core.Extentions\Collections\Generic\PagedList.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\DateTimeEx.cs">
+      <Link>System.Core.Extentions\DateTimeEx.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\DateTimeExtensions.cs">
+      <Link>System.Core.Extentions\DateTimeExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\Diagnostics\Logger.cs">
+      <Link>System.Core.Extentions\Diagnostics\Logger.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\EnumEx.cs">
+      <Link>System.Core.Extentions\EnumEx.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\EnumNameAttribute.cs">
+      <Link>System.Core.Extentions\EnumNameAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\Globalization\CultureInfoEx.cs">
+      <Link>System.Core.Extentions\Globalization\CultureInfoEx.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\Globalization\CultureInfoExtensions.cs">
+      <Link>System.Core.Extentions\Globalization\CultureInfoExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\IO\DirectoryEx.cs">
+      <Link>System.Core.Extentions\IO\DirectoryEx.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\IO\FileActor.cs">
+      <Link>System.Core.Extentions\IO\FileActor.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\IO\FileActorArguments.cs">
+      <Link>System.Core.Extentions\IO\FileActorArguments.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\IO\FileArchiver.cs">
+      <Link>System.Core.Extentions\IO\FileArchiver.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\IO\FileEx.cs">
+      <Link>System.Core.Extentions\IO\FileEx.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\IO\IOExtensions.cs">
+      <Link>System.Core.Extentions\IO\IOExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\IO\Native_.cs">
+      <Link>System.Core.Extentions\IO\Native_.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\IO\PathEx.cs">
+      <Link>System.Core.Extentions\IO\PathEx.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\Linq+Paging\DefaultModelMetadataProvider.cs">
+      <Link>System.Core.Extentions\Linq+Paging\DefaultModelMetadataProvider.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\Linq+Paging\EmptyLinqPagedMetadataProvider.cs">
+      <Link>System.Core.Extentions\Linq+Paging\EmptyLinqPagedMetadataProvider.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\Linq+Paging\EnumerableExtensions.cs">
+      <Link>System.Core.Extentions\Linq+Paging\EnumerableExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\Linq+Paging\LinqPagedCriteria.cs">
+      <Link>System.Core.Extentions\Linq+Paging\LinqPagedCriteria.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\Linq+Paging\LinqPagedMetadata.cs">
+      <Link>System.Core.Extentions\Linq+Paging\LinqPagedMetadata.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\Linq+Paging\LinqPagedMetadataProvider.cs">
+      <Link>System.Core.Extentions\Linq+Paging\LinqPagedMetadataProvider.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\Linq+Paging\LinqPagedMetadataProviders.cs">
+      <Link>System.Core.Extentions\Linq+Paging\LinqPagedMetadataProviders.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\Linq+Paging\QueryableExtensions.cs">
+      <Link>System.Core.Extentions\Linq+Paging\QueryableExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\Linq\Buffer.cs">
+      <Link>System.Core.Extentions\Linq\Buffer.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\Linq\DynamicQueryable.cs">
+      <Link>System.Core.Extentions\Linq\DynamicQueryable.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\Linq\EnumerableExtensions+Indexing.cs">
+      <Link>System.Core.Extentions\Linq\EnumerableExtensions+Indexing.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\Linq\EnumerableExtensions+Tightest.cs">
+      <Link>System.Core.Extentions\Linq\EnumerableExtensions+Tightest.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\Linq\EnumerableExtensions.cs">
+      <Link>System.Core.Extentions\Linq\EnumerableExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\Linq\Expressions\ExpressionEx.cs">
+      <Link>System.Core.Extentions\Linq\Expressions\ExpressionEx.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\Linq\Expressions\LambdaExpressionExtensions.cs">
+      <Link>System.Core.Extentions\Linq\Expressions\LambdaExpressionExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\Linq\QueryableExtensions.cs">
+      <Link>System.Core.Extentions\Linq\QueryableExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\MathEx.cs">
+      <Link>System.Core.Extentions\MathEx.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\Net\FileTransferClientBase.cs">
+      <Link>System.Core.Extentions\Net\FileTransferClientBase.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\Net\SmsCarrierId.cs">
+      <Link>System.Core.Extentions\Net\SmsCarrierId.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\Net\SmsClientBase.cs">
+      <Link>System.Core.Extentions\Net\SmsClientBase.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\Net\SmsMessage.cs">
+      <Link>System.Core.Extentions\Net\SmsMessage.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\ObjectExtensions.cs">
+      <Link>System.Core.Extentions\ObjectExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\Patterns\Schema+Culture\CultureSchemaBase.cs">
+      <Link>System.Core.Extentions\Patterns\Schema+Culture\CultureSchemaBase.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\Patterns\Schema+Uri\IUriPartScanner.cs">
+      <Link>System.Core.Extentions\Patterns\Schema+Uri\IUriPartScanner.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\Patterns\Schema+Uri\UriContextBase.cs">
+      <Link>System.Core.Extentions\Patterns\Schema+Uri\UriContextBase.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\Patterns\Schema+Uri\UriPart.cs">
+      <Link>System.Core.Extentions\Patterns\Schema+Uri\UriPart.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\Patterns\Schema+Uri\UriPartBase.cs">
+      <Link>System.Core.Extentions\Patterns\Schema+Uri\UriPartBase.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\Patterns\Schema+Uri\UriSchemaBase.cs">
+      <Link>System.Core.Extentions\Patterns\Schema+Uri\UriSchemaBase.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\Patterns\Schema+Uri\UriVirtual.cs">
+      <Link>System.Core.Extentions\Patterns\Schema+Uri\UriVirtual.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\Patterns\Schema+Uri\UriVirtualSchemaBase.cs">
+      <Link>System.Core.Extentions\Patterns\Schema+Uri\UriVirtualSchemaBase.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\Patterns\Versioning\VersionManagerBase.cs">
+      <Link>System.Core.Extentions\Patterns\Versioning\VersionManagerBase.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\Patterns\Versioning\VersionType.cs">
+      <Link>System.Core.Extentions\Patterns\Versioning\VersionType.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\Security\SecurityEx.cs">
+      <Link>System.Core.Extentions\Security\SecurityEx.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\StringEx+ExtractString.cs">
+      <Link>System.Core.Extentions\StringEx+ExtractString.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\StringEx.cs">
+      <Link>System.Core.Extentions\StringEx.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\StringExtensions.cs">
+      <Link>System.Core.Extentions\StringExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\Threading\Async\AsyncResultWrapper.cs">
+      <Link>System.Core.Extentions\Threading\Async\AsyncResultWrapper.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\Threading\Async\AsyncVoid.cs">
+      <Link>System.Core.Extentions\Threading\Async\AsyncVoid.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\Threading\Async\BeginInvokeDelegate.cs">
+      <Link>System.Core.Extentions\Threading\Async\BeginInvokeDelegate.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\Threading\Async\EndInvokeDelegate.cs">
+      <Link>System.Core.Extentions\Threading\Async\EndInvokeDelegate.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\Threading\Async\EndInvokeDelegate2.cs">
+      <Link>System.Core.Extentions\Threading\Async\EndInvokeDelegate2.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\Threading\Async\SimpleAsyncResult.cs">
+      <Link>System.Core.Extentions\Threading\Async\SimpleAsyncResult.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\Threading\FrugalThreadPool.cs">
+      <Link>System.Core.Extentions\Threading\FrugalThreadPool.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\Threading\SingleEntryGate.cs">
+      <Link>System.Core.Extentions\Threading\SingleEntryGate.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\UriExtensions.cs">
+      <Link>System.Core.Extentions\UriExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\Xml\XmlExtensions.cs">
+      <Link>System.Core.Extentions\Xml\XmlExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Nattrib\+Nattrib\AttribBase.cs">
+      <Link>System.Core.Nattrib\+Nattrib\AttribBase.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Nattrib\+Nattrib\Nattrib.cs">
+      <Link>System.Core.Nattrib\+Nattrib\Nattrib.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Nattrib\+Nattrib\NattribExtensions.cs">
+      <Link>System.Core.Nattrib\+Nattrib\NattribExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Nattrib\+Nattrib\NewAttrib.cs">
+      <Link>System.Core.Nattrib\+Nattrib\NewAttrib.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Objects\Collections\Frugal\ArrayItemList.cs">
+      <Link>System.Core.Objects\Collections\Frugal\ArrayItemList.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Objects\Collections\Frugal\ArrayObjectMap.cs">
+      <Link>System.Core.Objects\Collections\Frugal\ArrayObjectMap.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Objects\Collections\Frugal\DTypeMap.cs">
+      <Link>System.Core.Objects\Collections\Frugal\DTypeMap.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Objects\Collections\Frugal\FrugalListBase.cs">
+      <Link>System.Core.Objects\Collections\Frugal\FrugalListBase.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Objects\Collections\Frugal\FrugalListStoreState.cs">
+      <Link>System.Core.Objects\Collections\Frugal\FrugalListStoreState.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Objects\Collections\Frugal\FrugalMap.cs">
+      <Link>System.Core.Objects\Collections\Frugal\FrugalMap.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Objects\Collections\Frugal\FrugalMapBase.cs">
+      <Link>System.Core.Objects\Collections\Frugal\FrugalMapBase.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Objects\Collections\Frugal\FrugalMapIterationCallback.cs">
+      <Link>System.Core.Objects\Collections\Frugal\FrugalMapIterationCallback.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Objects\Collections\Frugal\FrugalMapStoreState.cs">
+      <Link>System.Core.Objects\Collections\Frugal\FrugalMapStoreState.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Objects\Collections\Frugal\FrugalObjectList.cs">
+      <Link>System.Core.Objects\Collections\Frugal\FrugalObjectList.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Objects\Collections\Frugal\FrugalStructList.cs">
+      <Link>System.Core.Objects\Collections\Frugal\FrugalStructList.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Objects\Collections\Frugal\HashObjectMap.cs">
+      <Link>System.Core.Objects\Collections\Frugal\HashObjectMap.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Objects\Collections\Frugal\InsertionSortMap.cs">
+      <Link>System.Core.Objects\Collections\Frugal\InsertionSortMap.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Objects\Collections\Frugal\ItemStructList.cs">
+      <Link>System.Core.Objects\Collections\Frugal\ItemStructList.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Objects\Collections\Frugal\LargeSortedObjectMap.cs">
+      <Link>System.Core.Objects\Collections\Frugal\LargeSortedObjectMap.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Objects\Collections\Frugal\SingleItemList.cs">
+      <Link>System.Core.Objects\Collections\Frugal\SingleItemList.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Objects\Collections\Frugal\SingleObjectMap.cs">
+      <Link>System.Core.Objects\Collections\Frugal\SingleObjectMap.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Objects\Collections\Frugal\SixItemList.cs">
+      <Link>System.Core.Objects\Collections\Frugal\SixItemList.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Objects\Collections\Frugal\SixObjectMap.cs">
+      <Link>System.Core.Objects\Collections\Frugal\SixObjectMap.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Objects\Collections\Frugal\SortedObjectMap.cs">
+      <Link>System.Core.Objects\Collections\Frugal\SortedObjectMap.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Objects\Collections\Frugal\ThreeItemList.cs">
+      <Link>System.Core.Objects\Collections\Frugal\ThreeItemList.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Objects\Collections\Frugal\ThreeObjectMap.cs">
+      <Link>System.Core.Objects\Collections\Frugal\ThreeObjectMap.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Objects\Collections\Object\BaseObject.cs">
+      <Link>System.Core.Objects\Collections\Object\BaseObject.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Objects\Collections\Object\BaseObjectType.cs">
+      <Link>System.Core.Objects\Collections\Object\BaseObjectType.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Objects\Collections\Object\BaseProperty.cs">
+      <Link>System.Core.Objects\Collections\Object\BaseProperty.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Objects\Collections\Object\Extended_\BaseObject.cs">
+      <Link>System.Core.Objects\Collections\Object\Extended_\BaseObject.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Objects\Collections\Object\Extended_\BaseObjectType.cs">
+      <Link>System.Core.Objects\Collections\Object\Extended_\BaseObjectType.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Objects\Collections\Object\Extended_\BaseProperty.cs">
+      <Link>System.Core.Objects\Collections\Object\Extended_\BaseProperty.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Objects\Collections\Object\Extended_\BaseValueSourceInternal.cs">
+      <Link>System.Core.Objects\Collections\Object\Extended_\BaseValueSourceInternal.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Objects\Collections\Object\Extended_\DeferredReference.cs">
+      <Link>System.Core.Objects\Collections\Object\Extended_\DeferredReference.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Objects\Collections\Object\Extended_\DependencyPropertyChangedEventArgs.cs">
+      <Link>System.Core.Objects\Collections\Object\Extended_\DependencyPropertyChangedEventArgs.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Objects\Collections\Object\Extended_\EffectiveValueEntry.cs">
+      <Link>System.Core.Objects\Collections\Object\Extended_\EffectiveValueEntry.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Objects\Collections\Object\Extended_\EntryIndex.cs">
+      <Link>System.Core.Objects\Collections\Object\Extended_\EntryIndex.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Objects\Collections\Object\Extended_\FullValueSource.cs">
+      <Link>System.Core.Objects\Collections\Object\Extended_\FullValueSource.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Objects\Collections\Object\Extended_\Internal\DefaultValueFactory.cs">
+      <Link>System.Core.Objects\Collections\Object\Extended_\Internal\DefaultValueFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Objects\Collections\Object\Extended_\ModifiedValue.cs">
+      <Link>System.Core.Objects\Collections\Object\Extended_\ModifiedValue.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Objects\Collections\Object\Extended_\OperationType.cs">
+      <Link>System.Core.Objects\Collections\Object\Extended_\OperationType.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Objects\Collections\Object\Extended_\PropertyMetadata.cs">
+      <Link>System.Core.Objects\Collections\Object\Extended_\PropertyMetadata.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Objects\Collections\Object\Extended_\RequestFlags.cs">
+      <Link>System.Core.Objects\Collections\Object\Extended_\RequestFlags.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Objects\Collections\Object\Extended_\UncommonField.cs">
+      <Link>System.Core.Objects\Collections\Object\Extended_\UncommonField.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Objects\Collections\Object\NamedObject.cs">
+      <Link>System.Core.Objects\Collections\Object\NamedObject.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Objects\Collections\Object\PropertyMetadata.cs">
+      <Link>System.Core.Objects\Collections\Object\PropertyMetadata.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Objects\Collections\Object\Simple\DeferredReference.cs">
+      <Link>System.Core.Objects\Collections\Object\Simple\DeferredReference.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Objects\Collections\Object\Simple\EffectiveValueEntry.cs">
+      <Link>System.Core.Objects\Collections\Object\Simple\EffectiveValueEntry.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Objects\Collections\Object\Simple\EntryIndex.cs">
+      <Link>System.Core.Objects\Collections\Object\Simple\EntryIndex.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Objects\Collections\Object\Simple\ModifiedValue.cs">
+      <Link>System.Core.Objects\Collections\Object\Simple\ModifiedValue.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Objects\Collections\Object\Simple\PropertyChangedCallback.cs">
+      <Link>System.Core.Objects\Collections\Object\Simple\PropertyChangedCallback.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Objects\Collections\Object\Simple\ValueSource.cs">
+      <Link>System.Core.Objects\Collections\Object\Simple\ValueSource.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Objects\Collections\Object\UncommonField.cs">
+      <Link>System.Core.Objects\Collections\Object\UncommonField.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.ParseFormat\FormatterEx+ObjectFormatter.cs">
+      <Link>System.Core.ParseFormat\FormatterEx+ObjectFormatter.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.ParseFormat\FormatterEx+ValueFormatter.cs">
+      <Link>System.Core.ParseFormat\FormatterEx+ValueFormatter.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.ParseFormat\FormatterEx.cs">
+      <Link>System.Core.ParseFormat\FormatterEx.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.ParseFormat\ObjectEx\ObjectExtensions.cs">
+      <Link>System.Core.ParseFormat\ObjectEx\ObjectExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.ParseFormat\ParserEx+ObjectParser.cs">
+      <Link>System.Core.ParseFormat\ParserEx+ObjectParser.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.ParseFormat\ParserEx+StringParser.cs">
+      <Link>System.Core.ParseFormat\ParserEx+StringParser.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.ParseFormat\ParserEx.cs">
+      <Link>System.Core.ParseFormat\ParserEx.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.ParseFormat\Primitives\DataTypeEnum.cs">
+      <Link>System.Core.ParseFormat\Primitives\DataTypeEnum.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.ParseFormat\Primitives\DataTypes.1\BoolDataType.cs">
+      <Link>System.Core.ParseFormat\Primitives\DataTypes.1\BoolDataType.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.ParseFormat\Primitives\DataTypes.1\CreditCardIdDataType.cs">
+      <Link>System.Core.ParseFormat\Primitives\DataTypes.1\CreditCardIdDataType.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.ParseFormat\Primitives\DataTypes.1\DateDataType.cs">
+      <Link>System.Core.ParseFormat\Primitives\DataTypes.1\DateDataType.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.ParseFormat\Primitives\DataTypes.1\DateTimeDataType.cs">
+      <Link>System.Core.ParseFormat\Primitives\DataTypes.1\DateTimeDataType.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.ParseFormat\Primitives\DataTypes.1\DecimalDataType.cs">
+      <Link>System.Core.ParseFormat\Primitives\DataTypes.1\DecimalDataType.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.ParseFormat\Primitives\DataTypes.1\DecimalRangeDataType.cs">
+      <Link>System.Core.ParseFormat\Primitives\DataTypes.1\DecimalRangeDataType.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.ParseFormat\Primitives\DataTypes.1\EmailDataType.cs">
+      <Link>System.Core.ParseFormat\Primitives\DataTypes.1\EmailDataType.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.ParseFormat\Primitives\DataTypes.1\EmailListDataType.cs">
+      <Link>System.Core.ParseFormat\Primitives\DataTypes.1\EmailListDataType.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.ParseFormat\Primitives\DataTypes.1\HostnameDataType.cs">
+      <Link>System.Core.ParseFormat\Primitives\DataTypes.1\HostnameDataType.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.ParseFormat\Primitives\DataTypes.1\HostnameListDataType.cs">
+      <Link>System.Core.ParseFormat\Primitives\DataTypes.1\HostnameListDataType.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.ParseFormat\Primitives\DataTypes.1\IntegerDataType.cs">
+      <Link>System.Core.ParseFormat\Primitives\DataTypes.1\IntegerDataType.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.ParseFormat\Primitives\DataTypes.1\IntegerRangeDataType.cs">
+      <Link>System.Core.ParseFormat\Primitives\DataTypes.1\IntegerRangeDataType.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.ParseFormat\Primitives\DataTypes.1\MemoDataType.cs">
+      <Link>System.Core.ParseFormat\Primitives\DataTypes.1\MemoDataType.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.ParseFormat\Primitives\DataTypes.1\MoneyDataType.cs">
+      <Link>System.Core.ParseFormat\Primitives\DataTypes.1\MoneyDataType.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.ParseFormat\Primitives\DataTypes.1\MonthAndDayDataType.cs">
+      <Link>System.Core.ParseFormat\Primitives\DataTypes.1\MonthAndDayDataType.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.ParseFormat\Primitives\DataTypes.1\NotBoolDataType.cs">
+      <Link>System.Core.ParseFormat\Primitives\DataTypes.1\NotBoolDataType.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.ParseFormat\Primitives\DataTypes.1\PercentDataType.cs">
+      <Link>System.Core.ParseFormat\Primitives\DataTypes.1\PercentDataType.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.ParseFormat\Primitives\DataTypes.1\PhoneDataType.cs">
+      <Link>System.Core.ParseFormat\Primitives\DataTypes.1\PhoneDataType.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.ParseFormat\Primitives\DataTypes.1\RealDataType.cs">
+      <Link>System.Core.ParseFormat\Primitives\DataTypes.1\RealDataType.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.ParseFormat\Primitives\DataTypes.1\RegexDataType.cs">
+      <Link>System.Core.ParseFormat\Primitives\DataTypes.1\RegexDataType.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.ParseFormat\Primitives\DataTypes.1\SequenceDataType.cs">
+      <Link>System.Core.ParseFormat\Primitives\DataTypes.1\SequenceDataType.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.ParseFormat\Primitives\DataTypes.1\TextDataType.cs">
+      <Link>System.Core.ParseFormat\Primitives\DataTypes.1\TextDataType.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.ParseFormat\Primitives\DataTypes.1\TimeDataType.cs">
+      <Link>System.Core.ParseFormat\Primitives\DataTypes.1\TimeDataType.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.ParseFormat\Primitives\DataTypes.1\UriDataType.cs">
+      <Link>System.Core.ParseFormat\Primitives\DataTypes.1\UriDataType.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.ParseFormat\Primitives\DataTypes.1\UriIdDataType.cs">
+      <Link>System.Core.ParseFormat\Primitives\DataTypes.1\UriIdDataType.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.ParseFormat\Primitives\DataTypes.1\XmlDataType.cs">
+      <Link>System.Core.ParseFormat\Primitives\DataTypes.1\XmlDataType.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.ParseFormat\Primitives\DataTypes.1\ZipDataType.cs">
+      <Link>System.Core.ParseFormat\Primitives\DataTypes.1\ZipDataType.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.ParseFormat\Primitives\DataTypes\DataTypeBase+FormatterEx.cs">
+      <Link>System.Core.ParseFormat\Primitives\DataTypes\DataTypeBase+FormatterEx.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.ParseFormat\Primitives\DataTypes\DataTypeBase+ParserEx.cs">
+      <Link>System.Core.ParseFormat\Primitives\DataTypes\DataTypeBase+ParserEx.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.ParseFormat\Primitives\DataTypes\DataTypeBase.cs">
+      <Link>System.Core.ParseFormat\Primitives\DataTypes\DataTypeBase.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.ParseFormat\Primitives\DataTypes\DataTypeFormatterBase.cs">
+      <Link>System.Core.ParseFormat\Primitives\DataTypes\DataTypeFormatterBase.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.ParseFormat\Primitives\DataTypes\DataTypeFormatterBase2.cs">
+      <Link>System.Core.ParseFormat\Primitives\DataTypes\DataTypeFormatterBase2.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.ParseFormat\Primitives\DataTypes\DataTypeFormFieldMeta.cs">
+      <Link>System.Core.ParseFormat\Primitives\DataTypes\DataTypeFormFieldMeta.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.ParseFormat\Primitives\DataTypes\DataTypeParserBase.cs">
+      <Link>System.Core.ParseFormat\Primitives\DataTypes\DataTypeParserBase.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.ParseFormat\Primitives\DataTypes\DataTypeParserBase2.cs">
+      <Link>System.Core.ParseFormat\Primitives\DataTypes\DataTypeParserBase2.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.ParseFormat\Primitives\DataTypes\IDataTypeFormatter.cs">
+      <Link>System.Core.ParseFormat\Primitives\DataTypes\IDataTypeFormatter.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.ParseFormat\Primitives\DataTypes\IDataTypeParser.cs">
+      <Link>System.Core.ParseFormat\Primitives\DataTypes\IDataTypeParser.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.ParseFormat\StringExtensions.cs">
+      <Link>System.Core.ParseFormat\StringExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Reactive\+Reactive\Collections\AbstractObserver.cs">
+      <Link>System.Core.Reactive\+Reactive\Collections\AbstractObserver.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Reactive\+Reactive\Collections\AnonymousEnumerable.cs">
+      <Link>System.Core.Reactive\+Reactive\Collections\AnonymousEnumerable.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Reactive\+Reactive\Collections\AnonymousObserver.cs">
+      <Link>System.Core.Reactive\+Reactive\Collections\AnonymousObserver.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Reactive\+Reactive\ExceptionExtensions.cs">
+      <Link>System.Core.Reactive\+Reactive\ExceptionExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Reactive\+Reactive\IObservable.cs">
+      <Link>System.Core.Reactive\+Reactive\IObservable.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Reactive\+Reactive\IObserver.cs">
+      <Link>System.Core.Reactive\+Reactive\IObserver.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Reactive\+Reactive\ObservableExtensions.cs">
+      <Link>System.Core.Reactive\+Reactive\ObservableExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Reflection\+DynamicProxy\Reflection\DynamicProxyBuilder.cs">
+      <Link>System.Core.Reflection\+DynamicProxy\Reflection\DynamicProxyBuilder.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Reflection\+DynamicProxy\Reflection\DynamicProxyImplementor.cs">
+      <Link>System.Core.Reflection\+DynamicProxy\Reflection\DynamicProxyImplementor.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Reflection\+DynamicProxy\Reflection\DynamicProxyMethodEmitter.cs">
+      <Link>System.Core.Reflection\+DynamicProxy\Reflection\DynamicProxyMethodEmitter.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Reflection\+DynamicProxy\Reflection\DynamicProxyTypeEmitter.cs">
+      <Link>System.Core.Reflection\+DynamicProxy\Reflection\DynamicProxyTypeEmitter.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Reflection\+DynamicProxy\Reflection\IDynamicProxy.cs">
+      <Link>System.Core.Reflection\+DynamicProxy\Reflection\IDynamicProxy.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Reflection\+DynamicProxy\Reflection\MethodInterceptor.cs">
+      <Link>System.Core.Reflection\+DynamicProxy\Reflection\MethodInterceptor.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Reflection\+DynamicProxy\Reflection\MethodInterceptorHandler.cs">
+      <Link>System.Core.Reflection\+DynamicProxy\Reflection\MethodInterceptorHandler.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Reflection\+DynamicProxy\Reflection\MethodInvocationInfo.cs">
+      <Link>System.Core.Reflection\+DynamicProxy\Reflection\MethodInvocationInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Reflection\Reflection\AssemblyExtensions.cs">
+      <Link>System.Core.Reflection\Reflection\AssemblyExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Reflection\Reflection\IMemberAccessor.cs">
+      <Link>System.Core.Reflection\Reflection\IMemberAccessor.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Reflection\Reflection\IMemberGetter.cs">
+      <Link>System.Core.Reflection\Reflection\IMemberGetter.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Reflection\Reflection\IMemberResolver.cs">
+      <Link>System.Core.Reflection\Reflection\IMemberResolver.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Reflection\Reflection\Internal\DelegateFactory.cs">
+      <Link>System.Core.Reflection\Reflection\Internal\DelegateFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Reflection\Reflection\Internal\FieldAccessor.cs">
+      <Link>System.Core.Reflection\Reflection\Internal\FieldAccessor.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Reflection\Reflection\Internal\FieldGetter.cs">
+      <Link>System.Core.Reflection\Reflection\Internal\FieldGetter.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Reflection\Reflection\Internal\LateBoundCtor.cs">
+      <Link>System.Core.Reflection\Reflection\Internal\LateBoundCtor.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Reflection\Reflection\Internal\LateBoundFieldGet.cs">
+      <Link>System.Core.Reflection\Reflection\Internal\LateBoundFieldGet.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Reflection\Reflection\Internal\LateBoundFieldSet.cs">
+      <Link>System.Core.Reflection\Reflection\Internal\LateBoundFieldSet.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Reflection\Reflection\Internal\LateBoundMethod.cs">
+      <Link>System.Core.Reflection\Reflection\Internal\LateBoundMethod.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Reflection\Reflection\Internal\LateBoundPropertyGet.cs">
+      <Link>System.Core.Reflection\Reflection\Internal\LateBoundPropertyGet.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Reflection\Reflection\Internal\LateBoundPropertySet.cs">
+      <Link>System.Core.Reflection\Reflection\Internal\LateBoundPropertySet.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Reflection\Reflection\Internal\LateBoundValueTypeFieldSet.cs">
+      <Link>System.Core.Reflection\Reflection\Internal\LateBoundValueTypeFieldSet.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Reflection\Reflection\Internal\LateBoundValueTypePropertySet.cs">
+      <Link>System.Core.Reflection\Reflection\Internal\LateBoundValueTypePropertySet.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Reflection\Reflection\Internal\MemberGetter.cs">
+      <Link>System.Core.Reflection\Reflection\Internal\MemberGetter.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Reflection\Reflection\Internal\MethodGetter.cs">
+      <Link>System.Core.Reflection\Reflection\Internal\MethodGetter.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Reflection\Reflection\Internal\PropertyAccessor.cs">
+      <Link>System.Core.Reflection\Reflection\Internal\PropertyAccessor.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Reflection\Reflection\Internal\PropertyGetter.cs">
+      <Link>System.Core.Reflection\Reflection\Internal\PropertyGetter.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Reflection\Reflection\Internal\TypePair.cs">
+      <Link>System.Core.Reflection\Reflection\Internal\TypePair.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Reflection\Reflection\Internal\ValueTypeFieldAccessor.cs">
+      <Link>System.Core.Reflection\Reflection\Internal\ValueTypeFieldAccessor.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Reflection\Reflection\Internal\ValueTypePropertyAccessor.cs">
+      <Link>System.Core.Reflection\Reflection\Internal\ValueTypePropertyAccessor.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Reflection\Reflection\IValueResolver.cs">
+      <Link>System.Core.Reflection\Reflection\IValueResolver.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Reflection\Reflection\MemberInfoExtensions.cs">
+      <Link>System.Core.Reflection\Reflection\MemberInfoExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Reflection\Reflection\MethodInfoExtensions.cs">
+      <Link>System.Core.Reflection\Reflection\MethodInfoExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Reflection\Reflection\PrivateReflectionDynamicObject.cs">
+      <Link>System.Core.Reflection\Reflection\PrivateReflectionDynamicObject.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Reflection\Reflection\ReflectionExtensions.cs">
+      <Link>System.Core.Reflection\Reflection\ReflectionExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Reflection\Reflection\zResolutionContext.cs">
+      <Link>System.Core.Reflection\Reflection\zResolutionContext.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Reflection\Reflection\zResolutionResult.cs">
+      <Link>System.Core.Reflection\Reflection\zResolutionResult.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Text\Patterns\Schema+Html\HtmlDecoderBase.cs">
+      <Link>System.Core.Text\Patterns\Schema+Html\HtmlDecoderBase.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Text\Patterns\Schema+Html\HtmlFormatterBase.cs">
+      <Link>System.Core.Text\Patterns\Schema+Html\HtmlFormatterBase.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Text\Patterns\Schema+Html\HtmlSchemaBase.cs">
+      <Link>System.Core.Text\Patterns\Schema+Html\HtmlSchemaBase.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Text\Primitives\TextPacks\ITextPack.cs">
+      <Link>System.Core.Text\Primitives\TextPacks\ITextPack.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Text\Primitives\TextPacks\SimpleTextPacker.cs">
+      <Link>System.Core.Text\Primitives\TextPacks\SimpleTextPacker.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Text\Primitives\TextPacks\TextPackBase.cs">
+      <Link>System.Core.Text\Primitives\TextPacks\TextPackBase.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Text\Primitives\TextPacks\XmlTextPacker.cs">
+      <Link>System.Core.Text\Primitives\TextPacks\XmlTextPacker.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Text\Primitives\TextProcessEnum.cs">
+      <Link>System.Core.Text\Primitives\TextProcessEnum.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Text\Primitives\TextProcesses\ITextProcess.cs">
+      <Link>System.Core.Text\Primitives\TextProcesses\ITextProcess.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Text\Primitives\TextProcesses\TagEnum.cs">
+      <Link>System.Core.Text\Primitives\TextProcesses\TagEnum.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Text\Primitives\TextProcesses\TagTextProcess.cs">
+      <Link>System.Core.Text\Primitives\TextProcesses\TagTextProcess.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Text\Primitives\TextProcesses\TextProcessBase.cs">
+      <Link>System.Core.Text\Primitives\TextProcesses\TextProcessBase.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Text\Text\Html\BinaryMhtmlPart.cs">
+      <Link>System.Core.Text\Text\Html\BinaryMhtmlPart.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Text\Text\Html\HtmlStringReader.cs">
+      <Link>System.Core.Text\Text\Html\HtmlStringReader.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Text\Text\Html\MhtmlBuilder.cs">
+      <Link>System.Core.Text\Text\Html\MhtmlBuilder.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Text\Text\Html\MhtmlPartBase.cs">
+      <Link>System.Core.Text\Text\Html\MhtmlPartBase.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Text\Text\Html\TextMhtmlPart.cs">
+      <Link>System.Core.Text\Text\Html\TextMhtmlPart.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Text\Text\StringSearcher.cs">
+      <Link>System.Core.Text\Text\StringSearcher.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Text\Text\TextSpan.cs">
+      <Link>System.Core.Text\Text\TextSpan.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Text\Text\TextSpanListExtentions.cs">
+      <Link>System.Core.Text\Text\TextSpanListExtentions.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core2\+Mock\CoreMock.cs">
+      <Link>System.Core2\+Mock\CoreMock.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core2\+Mock\EnvironmentMock.cs">
+      <Link>System.Core2\+Mock\EnvironmentMock.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core2\+Thunking\SqlServerClrThunker.cs">
+      <Link>System.Core2\+Thunking\SqlServerClrThunker.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core2\AssemblyRef.cs">
+      <Link>System.Core2\AssemblyRef.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core2\CodeVersionAttribute.cs">
+      <Link>System.Core2\CodeVersionAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core2\CodeVersionKind.cs">
+      <Link>System.Core2\CodeVersionKind.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core2\Collections.1\CollectionIndexer.cs">
+      <Link>System.Core2\Collections.1\CollectionIndexer.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core2\Collections.1\IIndexerValue.cs">
+      <Link>System.Core2\Collections.1\IIndexerValue.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core2\Collections.1\Indexer.cs">
+      <Link>System.Core2\Collections.1\Indexer.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core2\Collections.1\Indexer2.cs">
+      <Link>System.Core2\Collections.1\Indexer2.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core2\Collections.1\Indexer\DictionaryCollectionIndexer.cs">
+      <Link>System.Core2\Collections.1\Indexer\DictionaryCollectionIndexer.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core2\Collections.1\Indexer\DictionaryCollectionIndexerWithCreate.cs">
+      <Link>System.Core2\Collections.1\Indexer\DictionaryCollectionIndexerWithCreate.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core2\Collections.1\Indexer\DictionaryICollectionIndexer.cs">
+      <Link>System.Core2\Collections.1\Indexer\DictionaryICollectionIndexer.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core2\Collections.1\Indexer\DictionaryICollectionIndexerWithCreate.cs">
+      <Link>System.Core2\Collections.1\Indexer\DictionaryICollectionIndexerWithCreate.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core2\Collections.1\Indexer\DisposeableDictionaryCollectionIndexer.cs">
+      <Link>System.Core2\Collections.1\Indexer\DisposeableDictionaryCollectionIndexer.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core2\Collections.1\Indexer\DisposeableDictionaryCollectionIndexerWithCreate.cs">
+      <Link>System.Core2\Collections.1\Indexer\DisposeableDictionaryCollectionIndexerWithCreate.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core2\Collections.1\TypeCodeIndexer.cs">
+      <Link>System.Core2\Collections.1\TypeCodeIndexer.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core2\Collections\ICollectionKey.cs">
+      <Link>System.Core2\Collections\ICollectionKey.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core2\Collections\IValue.cs">
+      <Link>System.Core2\Collections\IValue.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core2\Collections\SortDirection.cs">
+      <Link>System.Core2\Collections\SortDirection.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core2\Configuration\ConfigurationElementExtensions.cs">
+      <Link>System.Core2\Configuration\ConfigurationElementExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core2\Configuration\ConfigurationElementSyn.cs">
+      <Link>System.Core2\Configuration\ConfigurationElementSyn.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core2\CoreEx.cs">
+      <Link>System.Core2\CoreEx.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core2\CoreExInternal.cs">
+      <Link>System.Core2\CoreExInternal.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core2\DefaultAppUnit.cs">
+      <Link>System.Core2\DefaultAppUnit.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core2\EnvironmentEx.cs">
+      <Link>System.Core2\EnvironmentEx.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core2\EnvironmentExMapper.cs">
+      <Link>System.Core2\EnvironmentExMapper.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core2\EXTENTIONS\Configuration\ConfigurationManagerEx.cs">
+      <Link>System.Core2\EXTENTIONS\Configuration\ConfigurationManagerEx.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core2\EXTENTIONS\ConvertEx.cs">
+      <Link>System.Core2\EXTENTIONS\ConvertEx.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core2\EXTENTIONS\Threading\ReaderWriterLockExtensions.cs">
+      <Link>System.Core2\EXTENTIONS\Threading\ReaderWriterLockExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core2\EXTENTIONS\TypeExtensions.cs">
+      <Link>System.Core2\EXTENTIONS\TypeExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core2\EXTENTIONS\Xml\XmlNodeEx.cs">
+      <Link>System.Core2\EXTENTIONS\Xml\XmlNodeEx.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core2\HashCodeCombiner.cs">
+      <Link>System.Core2\HashCodeCombiner.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core2\IAppUnit.cs">
+      <Link>System.Core2\IAppUnit.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core2\Linq\EnumerableExtensionsForCore.cs">
+      <Link>System.Core2\Linq\EnumerableExtensionsForCore.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core2\Patterns\Configuration\Configuration.cs">
+      <Link>System.Core2\Patterns\Configuration\Configuration.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core2\Patterns\Configuration\ConfigurationSection.cs">
+      <Link>System.Core2\Patterns\Configuration\ConfigurationSection.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core2\Patterns\Configuration\ConfigurationSet.cs">
+      <Link>System.Core2\Patterns\Configuration\ConfigurationSet.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core2\Patterns\Disposeable.cs">
+      <Link>System.Core2\Patterns\Disposeable.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core2\Patterns\Generic\ExtentsRepository.cs">
+      <Link>System.Core2\Patterns\Generic\ExtentsRepository.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core2\Patterns\Generic\SimpleFactoryBase.cs">
+      <Link>System.Core2\Patterns\Generic\SimpleFactoryBase.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core2\Patterns\ReleaseManagement\Configuration\ReleaseManagementConfiguration.cs">
+      <Link>System.Core2\Patterns\ReleaseManagement\Configuration\ReleaseManagementConfiguration.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core2\Patterns\ReleaseManagement\DeploymentEnvironment.cs">
+      <Link>System.Core2\Patterns\ReleaseManagement\DeploymentEnvironment.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core2\Patterns\ReleaseManagement\DeploymentEnvironmentExtensions.cs">
+      <Link>System.Core2\Patterns\ReleaseManagement\DeploymentEnvironmentExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core2\Patterns\ReleaseManagement\DevelopmentStage.cs">
+      <Link>System.Core2\Patterns\ReleaseManagement\DevelopmentStage.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core2\Primitives\CodecEnum.cs">
+      <Link>System.Core2\Primitives\CodecEnum.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core2\Primitives\Codecs\CsvCodec.cs">
+      <Link>System.Core2\Primitives\Codecs\CsvCodec.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core2\Primitives\Codecs\DigestCodec.cs">
+      <Link>System.Core2\Primitives\Codecs\DigestCodec.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core2\Primitives\Codecs\ICodec.cs">
+      <Link>System.Core2\Primitives\Codecs\ICodec.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core2\Primitives\Codecs\QuotedPrintableCodec.cs">
+      <Link>System.Core2\Primitives\Codecs\QuotedPrintableCodec.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core2\Primitives\Codecs\RtfCodec.cs">
+      <Link>System.Core2\Primitives\Codecs\RtfCodec.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core2\Primitives\Codecs\XmlCodec.cs">
+      <Link>System.Core2\Primitives\Codecs\XmlCodec.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core2\Primitives\Codecs\zCryptCodec.cs">
+      <Link>System.Core2\Primitives\Codecs\zCryptCodec.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core2\Range.cs">
+      <Link>System.Core2\Range.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core2\SR.cs">
+      <Link>System.Core2\SR.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core2\TriState.cs">
+      <Link>System.Core2\TriState.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core2\TryFunc.cs">
+      <Link>System.Core2\TryFunc.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core2\TypeCodeObject.cs">
+      <Link>System.Core2\TypeCodeObject.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core2\WeakReference.cs">
+      <Link>System.Core2\WeakReference.cs</Link>
+    </Compile>
+    <Compile Include="Local.Designer.cs">
+      <DependentUpon>Local.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.XML" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Local.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Local.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Quality\System.Core.Quality\System.Core.Quality.csproj">
+      <Project>{A44E9D89-BFF2-41A4-AADC-3C2BDFDAEEB1}</Project>
+      <Name>System.Core.Quality</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Patterns\System.Core.Patterns.Scheduling\Patterns\" />
+    <Folder Include="System.Core.Text\System.Core.Routing\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="BclContrib.snk" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
