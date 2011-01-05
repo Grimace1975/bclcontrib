@@ -49,6 +49,5 @@ namespace System.Reflection
                 if ((!type.IsInterface) && (!type.IsAbstract) && (assignableFromType.IsAssignableFrom(type) && ((predicate == null) || (predicate(type)))))
                     yield return type;
         }
-
     }
 }

@@ -65,6 +65,10 @@
     <None Include="Linq\+zEnumerableExtensions\WrappedSelectIterator.cs" />
     <None Include="Linq\+zEnumerableExtensions\WhereEnumerableIterator.cs" />
     <None Include="Linq\+zEnumerableExtensions\WhereSelectArrayIterator.cs" />
+    <Compile Include="Linq\HierarchyNode2.cs" />
+    <Compile Include="Linq\QueryableExtensions+Hierarchy.cs" />
+    <Compile Include="Linq\HierarchyNode.cs" />
+    <Compile Include="Linq\EnumerableExtensions+Hierarchy.cs" />
     <Compile Include="Linq\Buffer.cs" />
     <Compile Include="Linq+Paging\DefaultModelMetadataProvider.cs" />
     <Compile Include="Linq+Paging\EmptyLinqPagedMetadataProvider.cs" />

@@ -380,6 +380,9 @@
     <Compile Include="..\System.CoreEx_\System.Core.Extentions\Linq\DynamicQueryable.cs">
       <Link>System.Core.Extentions\Linq\DynamicQueryable.cs</Link>
     </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\Linq\EnumerableExtensions+Hierarchy.cs">
+      <Link>System.Core.Extentions\Linq\EnumerableExtensions+Hierarchy.cs</Link>
+    </Compile>
     <Compile Include="..\System.CoreEx_\System.Core.Extentions\Linq\EnumerableExtensions+Indexing.cs">
       <Link>System.Core.Extentions\Linq\EnumerableExtensions+Indexing.cs</Link>
     </Compile>
@@ -394,6 +397,15 @@
     </Compile>
     <Compile Include="..\System.CoreEx_\System.Core.Extentions\Linq\Expressions\LambdaExpressionExtensions.cs">
       <Link>System.Core.Extentions\Linq\Expressions\LambdaExpressionExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\Linq\HierarchyNode.cs">
+      <Link>System.Core.Extentions\Linq\HierarchyNode.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\Linq\HierarchyNode2.cs">
+      <Link>System.Core.Extentions\Linq\HierarchyNode2.cs</Link>
+    </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\Linq\QueryableExtensions+Hierarchy.cs">
+      <Link>System.Core.Extentions\Linq\QueryableExtensions+Hierarchy.cs</Link>
     </Compile>
     <Compile Include="..\System.CoreEx_\System.Core.Extentions\Linq\QueryableExtensions.cs">
       <Link>System.Core.Extentions\Linq\QueryableExtensions.cs</Link>
