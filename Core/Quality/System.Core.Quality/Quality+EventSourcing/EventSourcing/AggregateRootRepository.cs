@@ -34,7 +34,7 @@ namespace System.Quality.EventSourcing
     public interface IAggregateRootRepository<T>
         where T : AggregateRoot, new()
     {
-        void Save(T aggregate, int expectedSequence);
+        void Save(T aggregate);
         T GetById(Guid aggregateId);
     }
 
@@ -45,17 +45,17 @@ namespace System.Quality.EventSourcing
         where T : AggregateRoot, new()
     {
         private readonly IEventStore _eventStore;
-        private readonly IAggregateRootSnapshotRepository _snapshotStore;
+        private readonly IAggregateRootSnapshotStore _snapshotStore;
 
-        public AggregateRootRepository(IEventStore eventStore, IAggregateRootSnapshotRepository snapshotStore)
+        public AggregateRootRepository(IEventStore eventStore, IAggregateRootSnapshotStore snapshotStore)
         {
             _eventStore = eventStore;
             _snapshotStore = snapshotStore;
         }
 
-        public void Save(T aggregate, int expectedSequence)
+        public void Save(T aggregate)
         {
-            _eventStore.SaveEvents(aggregate.AggregateId, ((IAggregateRootBacking)aggregate).GetUncommittedChanges(), expectedSequence);
+            _eventStore.SaveEvents(aggregate.AggregateId, ((IAccessAggregateRootState)aggregate).GetUncommittedChanges());
         }
 
         public T GetById(Guid aggregateId)
@@ -67,7 +67,7 @@ namespace System.Quality.EventSourcing
             if ((snapshoter != null) && ((snapshot = _snapshotStore.GetSnapshot(aggregateId)) != null))
                 snapshoter.LoadSnapshot(snapshot);
             var events = _eventStore.GetEventsForAggregate(aggregateId, (snapshot != null ? snapshot.LastSequence : 0));
-            ((IAggregateRootBacking)aggregate).LoadFromHistory(events);
+            ((IAccessAggregateRootState)aggregate).LoadFromHistory(events);
             return aggregate;
         }
     }

@@ -23,14 +23,16 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 #endregion
+using System.Collections.Generic;
 namespace System.Quality.EventSourcing
 {
     /// <summary>
-    /// Event
+    /// IAccessAggregateRootState
     /// </summary>
-    public abstract class Event
+    public interface IAccessAggregateRootState
     {
-        public Guid AggregateId { get; set; }
-        public int Sequence { get; set; }
+        void LoadFromHistory(IEnumerable<Event> events);
+        IEnumerable<Event> GetUncommittedChanges();
+        void MarkChangesAsCommitted();
     }
 }

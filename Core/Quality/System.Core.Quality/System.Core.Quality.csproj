@@ -65,10 +65,10 @@
     <Compile Include="Quality+EventSourcing\EventSourcing\ICanAggregateRootSnapshot.cs" />
     <Compile Include="Quality+EventSourcing\EventSourcing\AggregateRootSnapshot.cs" />
     <Compile Include="Quality+EventSourcing\EventSourcing\AggregateRootRepository.cs" />
-    <Compile Include="Quality+EventSourcing\EventSourcing\IAggregateRootSnapshotRepository.cs" />
+    <Compile Include="Quality+EventSourcing\EventSourcing\IAggregateRootSnapshotStore.cs" />
     <Compile Include="Quality+EventSourcing\EventSourcing\Event.cs" />
     <Compile Include="Quality+EventSourcing\EventSourcing\IEventStore.cs" />
-    <Compile Include="Quality+EventSourcing\EventSourcing\IAggregateRootBacking.cs" />
+    <Compile Include="Quality+EventSourcing\EventSourcing\IAccessAggregateRootState.cs" />
     <Compile Include="Quality+ServiceBus\ServiceBusExtensions.cs" />
     <Compile Include="Quality+ServiceBus\IServiceBus.cs" />
     <Compile Include="Quality+ServiceBus\IServiceMessageHandler.cs" />
