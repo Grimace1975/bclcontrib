@@ -1,4 +1,4 @@
-﻿#region License
+#region License
 /*
 The MIT License
 
@@ -23,30 +23,13 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 #endregion
-namespace System.Interop.Core.Security
+using System.Collections.Generic;
+namespace System.Quality.EventSourcing
 {
-    public class SecureCopySettings : ICloneable
+    /// <summary>
+    /// IAggregateRootDispatcher
+    /// </summary>
+    public interface IAggregateRootDispatcher
     {
-        public SecureCopySettings()
-        {
-            ProcessTimeoutInMilliseconds = 6000;
-            ProcessPutTimeoutInMilliseconds = 360000;
-        }
-
-        public int ProcessTimeoutInMilliseconds { get; set; }
-        public int ProcessPutTimeoutInMilliseconds { get; set; }
-        public string PuTtyPath { get; set; }
-        public string SessionName { get; set; }
-        public int? Port { get; set; }
-        public string UserId { get; set; }
-        public string Password { get; set; }
-        public string PrivateKeyPath { get; set; }
-        public string PrivateKeyPassphase { get; set; }
-        public SecureCopySettingsOptions Options { get; set; }
-
-        public object Clone()
-        {
-            return MemberwiseClone();
-        }
     }
 }

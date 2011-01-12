@@ -45,9 +45,9 @@ namespace System.Quality.EventSourcing
         where T : AggregateRoot, new()
     {
         private readonly IEventStore _eventStore;
-        private readonly IAggregateRootSnapshotStore _snapshotStore;
+        private readonly IAggregateRootSnapshotRepository _snapshotStore;
 
-        public AggregateRootRepository(IEventStore eventStore, IAggregateRootSnapshotStore snapshotStore)
+        public AggregateRootRepository(IEventStore eventStore, IAggregateRootSnapshotRepository snapshotStore)
         {
             _eventStore = eventStore;
             _snapshotStore = snapshotStore;
@@ -63,7 +63,7 @@ namespace System.Quality.EventSourcing
             var aggregate = new T(); // { AggregateId = aggregateId };
             // find snapshot
             AggregateRootSnapshot snapshot = null;
-            var snapshoter = (aggregate as IAggregateRootSnapshoter);
+            var snapshoter = (aggregate as ICanAggregateRootSnapshot);
             if ((snapshoter != null) && ((snapshot = _snapshotStore.GetSnapshot(aggregateId)) != null))
                 snapshoter.LoadSnapshot(snapshot);
             var events = _eventStore.GetEventsForAggregate(aggregateId, (snapshot != null ? snapshot.LastSequence : 0));
