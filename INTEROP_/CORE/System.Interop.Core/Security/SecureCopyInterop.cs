@@ -37,8 +37,8 @@ namespace System.Interop.Core.Security
 {
     public class SecureCopyInterop
     {
-        private const string GetArgumentsXABC = "{0} {1}:{2} {3}"; // pscp [options] [user@]host:source target
-        private const string PutArgumentsXABC = "{0} {1} {2}:{3}"; // pscp [options] source [source...] [user@]host:target
+        private const string GetArgumentsXABC = "{0} -q {1}:{2} {3}"; // pscp [options] [user@]host:source target
+        private const string PutArgumentsXABC = "{0} -q {1} {2}:{3}"; // pscp [options] source [source...] [user@]host:target
         private const string ListArgumentsXAB = "{0} -ls {1}:{2}"; // pscp [options] -ls [user@]host:filespec
 
         #region Process launcher
@@ -160,7 +160,7 @@ namespace System.Interop.Core.Security
             try
             {
                 var launcher = new ProcessLauncher();
-                launcher.Launch(settings.ProcessTimeoutInMilliseconds, executablePath, arguments, (w) =>
+                launcher.Launch(settings.ProcessPutTimeoutInMilliseconds, executablePath, arguments, (w) =>
                 {
                     // Send passphrase, if any
                     if (!string.IsNullOrEmpty(settings.PrivateKeyPassphase))
