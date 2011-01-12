@@ -8,7 +8,7 @@
     <ProjectGuid>{02959882-7BAC-4763-B26E-58ED362A9A3F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>System.Core.Quality_Mongo</RootNamespace>
+    <RootNamespace>System</RootNamespace>
     <AssemblyName>System.Core.Quality_Mongo</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -31,15 +31,28 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MongoDB">
+      <HintPath>..\Library_\mongo\MongoDB.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.GridFS">
+      <HintPath>..\Library_\mongo\MongoDB.GridFS.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
+    <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Linq\EnumerableExtensions.cs" />
+    <Compile Include="MongoBuilder.cs" />
+    <Compile Include="Quality+EventSourcing\EventSourcing\ITypeCatalog.cs" />
+    <Compile Include="Quality+EventSourcing\EventSourcing\MongoEventStore.cs" />
+    <Compile Include="Quality+EventSourcing\EventSourcing\MongoAggregateRootSnapshotStore.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\System.Core.Quality\System.Core.Quality.csproj">
+      <Project>{A44E9D89-BFF2-41A4-AADC-3C2BDFDAEEB1}</Project>
+      <Name>System.Core.Quality</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

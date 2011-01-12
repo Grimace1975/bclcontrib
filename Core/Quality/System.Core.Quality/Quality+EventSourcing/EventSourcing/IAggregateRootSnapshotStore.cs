@@ -23,16 +23,15 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 #endregion
-using System.Collections.Generic;
 namespace System.Quality.EventSourcing
 {
     /// <summary>
-    /// IAggregateRootBacking
+    /// IAggregateRootSnapshotStore
     /// </summary>
-    public interface IAggregateRootBacking
+    public interface IAggregateRootSnapshotStore
     {
-        void LoadFromHistory(IEnumerable<Event> events);
-        IEnumerable<Event> GetUncommittedChanges();
-        void MarkChangesAsCommitted();
+        AggregateRootSnapshot GetSnapshot(Guid aggregateId);
+        void SaveSnapshot<TSnapshot>(TSnapshot snapshot)
+            where TSnapshot : AggregateRootSnapshot;
     }
 }

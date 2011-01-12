@@ -76,13 +76,14 @@ namespace System.Linq
                 yield return (TSource)item;
         }
 
-        // Name = ForEachYield | Yield
-        public static void Yield<TSource>(this IEnumerable<TSource> source, Action<TSource> action)
+        // Name = ForEach
+        public static IEnumerable<TSource> Yield<TSource>(this IEnumerable<TSource> source, Action<TSource> action)
         {
             if (source == null)
                 throw new ArgumentNullException("source");
             foreach (TSource item in source)
                 action(item);
+            return source;
         }
 
         public static IEnumerable<TSource> ForYield<TSource>(this IEnumerable<TSource> source, Func<TSource, TSource> initialize, Predicate<TSource> predicate, Func<TSource, TSource> next)

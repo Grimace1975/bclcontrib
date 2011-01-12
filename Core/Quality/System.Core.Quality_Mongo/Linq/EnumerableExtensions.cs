@@ -1,4 +1,4 @@
-#region License
+﻿#region License
 /*
 The MIT License
 
@@ -23,15 +23,21 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 #endregion
-namespace System.Quality.EventSourcing
+using System.Collections.Generic;
+namespace System.Linq
 {
     /// <summary>
-    /// IAggregateRootSnapshotRepository
+    /// EnumerableExtensions
     /// </summary>
-    public interface IAggregateRootSnapshotRepository
+    internal static partial class EnumerableExtensions
     {
-        AggregateRootSnapshot GetSnapshot(Guid aggregateId);
-        void SaveSnapshot<TSnapshot>(TSnapshot snapshot)
-            where TSnapshot : AggregateRootSnapshot;
+        public static IEnumerable<TSource> Yield<TSource>(this IEnumerable<TSource> source, Action<TSource> action)
+        {
+            if (source == null)
+                throw new ArgumentNullException("source");
+            foreach (TSource item in source)
+                action(item);
+            return source;
+        }
     }
 }

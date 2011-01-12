@@ -31,7 +31,7 @@ namespace System.Quality.EventSourcing
     /// <summary>
     /// AggregateRoot
     /// </summary>
-    public abstract class AggregateRoot : IAggregateRootBacking
+    public abstract class AggregateRoot : IAccessAggregateRootState
     {
         private readonly List<Event> _changes = new List<Event>();
         //private readonly bool _strictEvents;
@@ -39,22 +39,24 @@ namespace System.Quality.EventSourcing
         public abstract Guid AggregateId { get; }
         protected void ApplyEvent(Event @event) { ApplyEvent(@event, true); }
 
-        #region Backing
-        void IAggregateRootBacking.LoadFromHistory(IEnumerable<Event> events)
+        #region Access State
+
+        void IAccessAggregateRootState.LoadFromHistory(IEnumerable<Event> events)
         {
-            foreach (var @event in events)
-                ApplyEvent(@event, false);
+            foreach (var e in events)
+                ApplyEvent(e, false);
         }
 
-        IEnumerable<Event> IAggregateRootBacking.GetUncommittedChanges()
+        IEnumerable<Event> IAccessAggregateRootState.GetUncommittedChanges()
         {
             return _changes;
         }
 
-        void IAggregateRootBacking.MarkChangesAsCommitted()
+        void IAccessAggregateRootState.MarkChangesAsCommitted()
         {
             _changes.Clear();
         }
+
         #endregion
 
         #region Handlers
