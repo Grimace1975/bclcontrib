@@ -23,7 +23,7 @@ namespace System.Quality.EventSourcing
             configurationBuilder.Mapping(mapping =>
             {
                 mapping.DefaultProfile(profile => profile.SubClassesAre(type => type.IsSubclassOf(typeof(AggregateRootSnapshot))));
-                snapshotTypeCatalog.GetDerivedTypes(typeof(AggregateRootSnapshot))
+                snapshotTypeCatalog.GetDerivedTypes(typeof(AggregateRootSnapshot), true)
                     .Yield(type => MongoBuilder.MapType(type, mapping));
             });
             return configurationBuilder.BuildConfiguration();

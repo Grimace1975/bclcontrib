@@ -23,15 +23,15 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 #endregion
-namespace System.Quality.EventSourcing
+namespace System.Quality
 {
     /// <summary>
-    /// Event
+    /// TypeCatalogExtensions
     /// </summary>
-    public abstract class Event
+    public static class TypeCatalogExtensions
     {
-        public Guid AggregateId { get; set; }
-        public DateTime EventDate { get; set; }
-        public int Sequence { get; set; }
+        public static Type[] GetDerivedTypes<T>(this ITypeCatalog typeCatalog, bool concretable) { return typeCatalog.GetDerivedTypes(typeof(T), concretable); }
+        public static Type[] GetInterfaceImplementations<T>(this ITypeCatalog typeCatalog, bool concretable) { return typeCatalog.GetInterfaceImplementations(typeof(T), concretable); }
+        public static Type[] GetGenericInterfaceImplementations<T>(this ITypeCatalog typeCatalog, bool concretable) { return typeCatalog.GetGenericInterfaceImplementations(typeof(T), concretable); }
     }
 }

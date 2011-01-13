@@ -31,44 +31,54 @@ namespace System.Quality.EventSourcing
     /// <summary>
     /// IAggregateRootRepository
     /// </summary>
-    public interface IAggregateRootRepository<T>
-        where T : AggregateRoot, new()
+    public interface IAggregateRootRepository
     {
-        void Save(T aggregate);
-        T GetById(Guid aggregateId);
+        TAggregateRoot GetById<TAggregateRoot>(Guid aggregateId)
+            where TAggregateRoot : AggregateRoot, new();
+        void Save(AggregateRoot aggregate);
     }
 
     /// <summary>
     /// AggregateRootRepository
     /// </summary>
-    public class AggregateRootRepository<T> : IAggregateRootRepository<T>
-        where T : AggregateRoot, new()
+    public class AggregateRootRepository : IAggregateRootRepository
     {
         private readonly IEventStore _eventStore;
         private readonly IAggregateRootSnapshotStore _snapshotStore;
+        private readonly Action<IEnumerable<Event>> _dispatcher;
 
         public AggregateRootRepository(IEventStore eventStore, IAggregateRootSnapshotStore snapshotStore)
+            : this(eventStore, snapshotStore, null) { }
+        public AggregateRootRepository(IEventStore eventStore, IAggregateRootSnapshotStore snapshotStore, Action<IEnumerable<Event>> dispatcher)
         {
             _eventStore = eventStore;
             _snapshotStore = snapshotStore;
+            _dispatcher = dispatcher;
         }
 
-        public void Save(T aggregate)
+        public TAggregateRoot GetById<TAggregateRoot>(Guid aggregateId)
+             where TAggregateRoot : AggregateRoot, new()
         {
-            _eventStore.SaveEvents(aggregate.AggregateId, ((IAccessAggregateRootState)aggregate).GetUncommittedChanges());
-        }
-
-        public T GetById(Guid aggregateId)
-        {
-            var aggregate = new T(); // { AggregateId = aggregateId };
+            var aggregate = new TAggregateRoot();
             // find snapshot
             AggregateRootSnapshot snapshot = null;
             var snapshoter = (aggregate as ICanAggregateRootSnapshot);
             if ((snapshoter != null) && ((snapshot = _snapshotStore.GetSnapshot(aggregateId)) != null))
                 snapshoter.LoadSnapshot(snapshot);
-            var events = _eventStore.GetEventsForAggregate(aggregateId, (snapshot != null ? snapshot.LastSequence : 0));
+            //
+            var events = _eventStore.GetEventsForAggregate(aggregateId, (snapshot != null ? snapshot.LastEventSequence : 0));
             ((IAccessAggregateRootState)aggregate).LoadFromHistory(events);
             return aggregate;
+        }
+
+        public void Save(AggregateRoot aggregate)
+        {
+            var accessAggregateState = (IAccessAggregateRootState)aggregate;
+            var events = accessAggregateState.GetUncommittedChanges();
+            _eventStore.SaveEvents(aggregate.AggregateId, events);
+            if (_dispatcher != null)
+                _dispatcher(events);
+            accessAggregateState.MarkChangesAsCommitted();
         }
     }
 }

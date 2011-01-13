@@ -43,7 +43,6 @@
   <ItemGroup>
     <Compile Include="Linq\EnumerableExtensions.cs" />
     <Compile Include="MongoBuilder.cs" />
-    <Compile Include="Quality+EventSourcing\EventSourcing\ITypeCatalog.cs" />
     <Compile Include="Quality+EventSourcing\EventSourcing\MongoEventStore.cs" />
     <Compile Include="Quality+EventSourcing\EventSourcing\MongoAggregateRootSnapshotStore.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -23,15 +23,32 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 #endregion
+using System.Linq;
+using System.Collections.Generic;
 namespace System.Quality.EventSourcing
 {
     /// <summary>
-    /// Event
+    /// MemoryEventStore
     /// </summary>
-    public abstract class Event
+    public class MemoryEventStore : IEventStore
     {
-        public Guid AggregateId { get; set; }
-        public DateTime EventDate { get; set; }
-        public int Sequence { get; set; }
+        private readonly List<Event> _events = new List<Event>();
+
+        public IEnumerable<Event> GetEventsForAggregate(Guid aggregateId, int startSequence)
+        {
+            return _events
+                .Where(x => (x.AggregateId == aggregateId) && (x.Sequence > startSequence))
+                .ToList();
+        }
+
+        public IEnumerable<Event> GetEventsByEventTypes(IEnumerable<Type> eventTypes)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SaveEvents(Guid aggregateId, IEnumerable<Event> events)
+        {
+            _events.AddRange(events);
+        }
     }
 }

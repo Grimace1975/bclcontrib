@@ -24,7 +24,7 @@ namespace System.Quality.EventSourcing
             configurationBuilder.Mapping(mapping =>
             {
                 mapping.DefaultProfile(profile => profile.SubClassesAre(type => type.IsSubclassOf(typeof(Event))));
-                eventTypeCatalog.GetDerivedTypes(typeof(Event))
+                eventTypeCatalog.GetDerivedTypes(typeof(Event), true)
                     .Yield(type => MongoBuilder.MapType(type, mapping));
             });
             return configurationBuilder.BuildConfiguration();
