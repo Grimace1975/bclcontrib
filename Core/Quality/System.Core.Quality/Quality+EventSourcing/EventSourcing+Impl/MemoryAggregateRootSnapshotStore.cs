@@ -23,15 +23,29 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 #endregion
+using System.Linq;
+using System.Collections.Generic;
 namespace System.Quality.EventSourcing
 {
     /// <summary>
-    /// Event
+    /// MemoryAggregateRootSnapshotStore
     /// </summary>
-    public abstract class Event
+    public class MemoryAggregateRootSnapshotStore : IAggregateRootSnapshotStore
     {
-        public Guid AggregateId { get; set; }
-        public DateTime EventDate { get; set; }
-        public int Sequence { get; set; }
+        private readonly List<AggregateRootSnapshot> _snapshots = new List<AggregateRootSnapshot>();
+
+        public AggregateRootSnapshot GetSnapshot(Guid aggregateId)
+        {
+            return _snapshots
+                .Where(x => x.AggregateId == aggregateId)
+                .OrderBy(x => x.LastEventSequence)
+                .SingleOrDefault();
+        }
+
+        public void SaveSnapshot<TSnapshot>(TSnapshot snapshot)
+            where TSnapshot : AggregateRootSnapshot
+        {
+            _snapshots.Add(snapshot);
+        }
     }
 }

@@ -23,13 +23,15 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 #endregion
-using System.Collections.Generic;
-namespace System.Quality.EventSourcing
+namespace System.Quality
 {
     /// <summary>
-    /// IAggregateRootDispatcher
+    /// ITypeCatalog
     /// </summary>
-    public interface IAggregateRootDispatcher
+    public interface ITypeCatalog
     {
+        Type[] GetDerivedTypes(Type type, bool concretable);
+        Type[] GetInterfaceImplementations(Type type, bool concretable);
+        Type[] GetGenericInterfaceImplementations(Type type, bool concretable);
     }
 }

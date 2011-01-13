@@ -23,15 +23,14 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 #endregion
+using System.Collections.Generic;
 namespace System.Quality.EventSourcing
 {
     /// <summary>
-    /// Event
+    /// IAggregateRootEventDispatcher
     /// </summary>
-    public abstract class Event
+    public interface IAggregateRootEventDispatcher
     {
-        public Guid AggregateId { get; set; }
-        public DateTime EventDate { get; set; }
-        public int Sequence { get; set; }
+        void ApplyEvent(AggregateRoot aggregate, Event e);
     }
 }

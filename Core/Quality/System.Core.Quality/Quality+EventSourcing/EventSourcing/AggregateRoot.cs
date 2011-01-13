@@ -23,6 +23,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 #endregion
+using System.Linq;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Collections.ObjectModel;
@@ -34,17 +35,56 @@ namespace System.Quality.EventSourcing
     public abstract class AggregateRoot : IAccessAggregateRootState
     {
         private readonly List<Event> _changes = new List<Event>();
-        //private readonly bool _strictEvents;
+        private readonly IAggregateRootEventDispatcher _dispatcher;
 
-        public abstract Guid AggregateId { get; }
-        protected void ApplyEvent(Event @event) { ApplyEvent(@event, true); }
+        public AggregateRoot()
+            : this(new RegistryAggregateRootEventDispatcher()) { }
+        public AggregateRoot(Type aggregateType)
+            : this(new RegistryAggregateRootEventDispatcher(aggregateType)) { }
+        public AggregateRoot(IAggregateRootEventDispatcher dispatcher)
+        {
+            if (dispatcher == null)
+                throw new ArgumentNullException("dispatcher");
+            _dispatcher = dispatcher;
+        }
+
+        public Guid AggregateId { get; protected set; }
+        public DateTime LastEventDate { get; private set; }
+        public int LastEventSequence { get; private set; }
+
+        protected IAggregateRootEventDispatcher Dispatcher
+        {
+            get { return _dispatcher; }
+        }
+
+        protected void ApplyEvent(Event e)
+        {
+            if (e == null)
+                throw new ArgumentNullException("e");
+            e.AggregateId = AggregateId;
+            e.EventDate = DateTime.Now;
+            e.Sequence = ++LastEventSequence;
+            _dispatcher.ApplyEvent(this, e);
+            // trackAsChange
+            _changes.Add(e);
+        }
 
         #region Access State
 
         void IAccessAggregateRootState.LoadFromHistory(IEnumerable<Event> events)
         {
-            foreach (var e in events)
-                ApplyEvent(e, false);
+            if (events == null)
+                throw new ArgumentNullException("events");
+            var lastEventDate = DateTime.MinValue;
+            int lastEventSequence = 0;
+            foreach (var e in events.OrderBy(x => x.Sequence))
+            {
+                _dispatcher.ApplyEvent(this, e);
+                lastEventDate = e.EventDate;
+                lastEventSequence = e.Sequence;
+            }
+            LastEventDate = lastEventDate;
+            LastEventSequence = lastEventSequence;
         }
 
         IEnumerable<Event> IAccessAggregateRootState.GetUncommittedChanges()
@@ -57,34 +97,6 @@ namespace System.Quality.EventSourcing
             _changes.Clear();
         }
 
-        #endregion
-
-        #region Handlers
-        private readonly IDictionary<Type, Action<Event>> _handlerRegistry = new Dictionary<Type, Action<Event>>();
-
-        // Event Handlers
-        private void RegisterHandlersByConvention()
-        {
-            //this.GetType().GetMethods("HandleEvent");
-        }
-
-        protected void RegisterHandler<TEvent>(Action<TEvent> handler)
-           where TEvent : Event
-        {
-            var castHandler = ExpressionEx.CastArgument<Event, TEvent>(e => handler(e));
-            _handlerRegistry.Add(typeof(TEvent), castHandler);
-        }
-
-        private void ApplyEvent(Event @event, bool trackAsChange)
-        {
-            Action<Event> handler;
-            if (_handlerRegistry.TryGetValue(@event.GetType(), out handler))
-                handler(@event);
-            //else if (_strictEvents)
-            //    throw new InvalidOperationException();
-            if (trackAsChange)
-                _changes.Add(@event);
-        }
         #endregion
     }
 }
