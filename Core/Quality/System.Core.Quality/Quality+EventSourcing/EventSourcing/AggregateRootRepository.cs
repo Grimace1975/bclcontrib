@@ -51,6 +51,8 @@ namespace System.Quality.EventSourcing
             : this(eventStore, snapshotStore, null) { }
         public AggregateRootRepository(IEventStore eventStore, IAggregateRootSnapshotStore snapshotStore, Action<IEnumerable<Event>> dispatcher)
         {
+            if (eventStore == null)
+                throw new ArgumentNullException("eventStore");
             _eventStore = eventStore;
             _snapshotStore = snapshotStore;
             _dispatcher = dispatcher;
@@ -62,9 +64,12 @@ namespace System.Quality.EventSourcing
             var aggregate = new TAggregateRoot();
             // find snapshot
             AggregateRootSnapshot snapshot = null;
-            var snapshoter = (aggregate as ICanAggregateRootSnapshot);
-            if ((snapshoter != null) && ((snapshot = _snapshotStore.GetSnapshot(aggregateId)) != null))
-                snapshoter.LoadSnapshot(snapshot);
+            if (_snapshotStore != null)
+            {
+                var snapshoter = (aggregate as ICanAggregateRootSnapshot);
+                if ((snapshoter != null) && ((snapshot = _snapshotStore.GetSnapshot(aggregateId)) != null))
+                    snapshoter.LoadSnapshot(snapshot);
+            }
             //
             var events = _eventStore.GetEventsForAggregate(aggregateId, (snapshot != null ? snapshot.LastEventSequence : 0));
             ((IAccessAggregateRootState)aggregate).LoadFromHistory(events);
