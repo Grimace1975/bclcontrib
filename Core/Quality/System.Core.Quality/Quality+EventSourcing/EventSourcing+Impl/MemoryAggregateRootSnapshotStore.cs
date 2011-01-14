@@ -34,10 +34,10 @@ namespace System.Quality.EventSourcing
     {
         private readonly List<AggregateRootSnapshot> _snapshots = new List<AggregateRootSnapshot>();
 
-        public AggregateRootSnapshot GetSnapshot(Guid aggregateId)
+        public AggregateRootSnapshot GetSnapshot(object aggregateId)
         {
             return _snapshots
-                .Where(x => x.AggregateId == aggregateId)
+                .Where(x => x.AggregateId.Equals(aggregateId))
                 .OrderBy(x => x.LastEventSequence)
                 .SingleOrDefault();
         }

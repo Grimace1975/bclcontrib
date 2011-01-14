@@ -48,7 +48,7 @@ namespace System.Quality.EventSourcing
             _dispatcher = dispatcher;
         }
 
-        public Guid AggregateId { get; protected set; }
+        public object AggregateId { get; protected set; }
         public DateTime LastEventDate { get; private set; }
         public int LastEventSequence { get; private set; }
 

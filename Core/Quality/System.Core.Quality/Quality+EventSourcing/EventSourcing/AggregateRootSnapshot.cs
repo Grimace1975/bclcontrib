@@ -30,6 +30,7 @@ namespace System.Quality.EventSourcing
     /// </summary>
     public abstract class AggregateRootSnapshot
     {
+        public AggregateRootSnapshot() { }
         public AggregateRootSnapshot(AggregateRoot aggregate)
         {
             AggregateId = aggregate.AggregateId;
@@ -37,7 +38,7 @@ namespace System.Quality.EventSourcing
             LastEventSequence = aggregate.LastEventSequence;
         }
 
-        public Guid AggregateId { get; set; }
+        public object AggregateId { get; set; }
         public DateTime LastEventDate { get; set; }
         public int LastEventSequence { get; set; }
     }

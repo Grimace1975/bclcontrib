@@ -28,9 +28,10 @@ namespace System.Quality.EventSourcing
     /// <summary>
     /// Event
     /// </summary>
+    [Serializable]
     public abstract class Event
     {
-        public Guid AggregateId { get; set; }
+        public object AggregateId { get; set; }
         public DateTime EventDate { get; set; }
         public int Sequence { get; set; }
     }

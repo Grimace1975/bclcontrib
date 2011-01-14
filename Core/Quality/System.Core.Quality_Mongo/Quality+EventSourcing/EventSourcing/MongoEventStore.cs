@@ -1,6 +1,6 @@
 ﻿using System.Linq;
+using System.Collections;
 using System.Collections.Generic;
-using System.Reflection;
 using MongoDB;
 using MongoDB.Configuration;
 namespace System.Quality.EventSourcing
@@ -8,13 +8,15 @@ namespace System.Quality.EventSourcing
     public class MongoEventStore : IEventStore
     {
         private readonly IMongoDatabase _database;
+        private readonly Func<object, object, bool> _aggregateKeyEqualityComparer;
 
-        public MongoEventStore(string connectionString, ITypeCatalog eventTypeCatalog)
+        public MongoEventStore(string connectionString, ITypeCatalog eventTypeCatalog, Func<object, object, bool> aggregateKeyEqualityComparer)
         {
             var connectionStringBuilder = new MongoConnectionStringBuilder(connectionString);
             var mongo = new Mongo(BuildMongoConfiguration(connectionString, eventTypeCatalog));
             mongo.Connect();
             _database = mongo.GetDatabase(connectionStringBuilder.Database);
+            _aggregateKeyEqualityComparer = aggregateKeyEqualityComparer;
         }
 
         private static MongoConfiguration BuildMongoConfiguration(string connectionString, ITypeCatalog eventTypeCatalog)
@@ -30,11 +32,12 @@ namespace System.Quality.EventSourcing
             return configurationBuilder.BuildConfiguration();
         }
 
-        public IEnumerable<Event> GetEventsForAggregate(Guid aggregateId, int startSequence)
+        public IEnumerable<Event> GetEventsForAggregate(object aggregateId, int startSequence)
         {
             return _database.GetCollection<Event>("events")
                 .Linq()
-                .Where(e => (e.AggregateId == aggregateId) && (e.Sequence > startSequence))
+                .Where(e => _aggregateKeyEqualityComparer(e.AggregateId, aggregateId))
+                .Where(e => e.Sequence > startSequence)
                 .ToList();
         }
 
@@ -45,7 +48,7 @@ namespace System.Quality.EventSourcing
             return cursor.Documents;
         }
 
-        public void SaveEvents(Guid aggregateId, IEnumerable<Event> events)
+        public void SaveEvents(object aggregateId, IEnumerable<Event> events)
         {
             var mogoEvents = _database.GetCollection<Event>("events");
             mogoEvents.Insert(events);

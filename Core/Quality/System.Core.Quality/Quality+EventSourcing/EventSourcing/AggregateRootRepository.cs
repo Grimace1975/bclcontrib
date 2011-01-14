@@ -33,7 +33,7 @@ namespace System.Quality.EventSourcing
     /// </summary>
     public interface IAggregateRootRepository
     {
-        TAggregateRoot GetById<TAggregateRoot>(Guid aggregateId)
+        TAggregateRoot GetById<TAggregateRoot>(object aggregateId)
             where TAggregateRoot : AggregateRoot, new();
         void Save(AggregateRoot aggregate);
     }
@@ -56,7 +56,7 @@ namespace System.Quality.EventSourcing
             _dispatcher = dispatcher;
         }
 
-        public TAggregateRoot GetById<TAggregateRoot>(Guid aggregateId)
+        public TAggregateRoot GetById<TAggregateRoot>(object aggregateId)
              where TAggregateRoot : AggregateRoot, new()
         {
             var aggregate = new TAggregateRoot();
