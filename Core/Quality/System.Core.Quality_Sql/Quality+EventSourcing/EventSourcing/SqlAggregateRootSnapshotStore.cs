@@ -8,6 +8,7 @@ namespace System.Quality.EventSourcing
     public class SqlAggregateRootSnapshotStore : IAggregateRootSnapshotStore
     {
         private readonly string _connectionString;
+        private readonly string _tableName;
 
         protected class SnapshotOrdinal
         {
@@ -18,22 +19,23 @@ namespace System.Quality.EventSourcing
                 Blob = r.GetOrdinal("Blob");
             }
         }
-
         public SqlAggregateRootSnapshotStore(string connectionString)
+            : this(connectionString, "AggregateSnapshot") { }
+        public SqlAggregateRootSnapshotStore(string connectionString, string tableName)
         {
             _connectionString = connectionString;
+            _tableName = tableName;
         }
 
         public AggregateRootSnapshot GetSnapshot(object aggregateId)
         {
             using (var connection = new SqlConnection(_connectionString))
             {
-                var b = new StringBuilder();
-                b.Append(@"
-Select Type, Blob
-From dbo.AggregateSnapshot
-	Where (AggregateId = @aggregateId);");
-                var command = new SqlCommand(b.ToString(), connection) { CommandType = CommandType.Text };
+                var sql = string.Format(@"
+Select Top 1 Type, Blob
+From dbo.[{0}]
+	Where (AggregateId = @aggregateId);", _tableName);
+                var command = new SqlCommand(sql, connection) { CommandType = CommandType.Text };
                 command.Parameters.AddRange(new[] {
                     new SqlParameter { ParameterName = "@aggregateId", SqlDbType = SqlDbType.NVarChar, Value = aggregateId } });
                 connection.Open();
@@ -52,11 +54,10 @@ From dbo.AggregateSnapshot
             var snapshotJson = SqlBuilder.ToJson(snapshotType, snapshot);
             using (var connection = new SqlConnection(_connectionString))
             {
-                var b = new StringBuilder();
-                b.Append(@"
+                var sql = string.Format(@"
 With _Target As (
 	Select *
-	From dbo.AggregateSnapshot
+	From dbo.[{0}]
 		Where (AggregateId = @aggregateId)
 )
 Merge _Target
@@ -67,8 +68,8 @@ When Matched Then
 	Update Set Type = @type, Blob = @blob
 When Not Matched By Target Then
 	Insert (AggregateId, Type, Blob)
-	Values (@aggregateId, @type, @blob);");
-                var command = new SqlCommand(b.ToString(), connection) { CommandType = CommandType.Text, };
+	Values (@aggregateId, @type, @blob);", _tableName);
+                var command = new SqlCommand(sql, connection) { CommandType = CommandType.Text, };
                 command.Parameters.AddRange(new[] {
                     new SqlParameter { ParameterName = "@aggregateId", SqlDbType = SqlDbType.NVarChar, Value = snapshot.AggregateId },
                     new SqlParameter { ParameterName = "@type", SqlDbType = SqlDbType.NVarChar, Value = snapshotType.Name },

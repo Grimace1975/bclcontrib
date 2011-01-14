@@ -9,6 +9,7 @@ namespace System.Quality.EventSourcing
     public class SqlEventStore : IEventStore
     {
         private readonly string _connectionString;
+        private readonly string _tableName;
 
         protected class EventOrdinal
         {
@@ -21,21 +22,24 @@ namespace System.Quality.EventSourcing
         }
 
         public SqlEventStore(string connectionString)
+            : this(connectionString, "AggregateEvent") { }
+        public SqlEventStore(string connectionString, string tableName)
         {
             _connectionString = connectionString;
+            _tableName = tableName;
         }
 
         public IEnumerable<Event> GetEventsForAggregate(object aggregateId, int startSequence)
         {
             using (var connection = new SqlConnection(_connectionString))
             {
-                var b = new StringBuilder();
-                b.Append(@"
+                var sql = string.Format(@"
 Select Type, Blob
-From dbo.AggregateEvent
+From dbo.[{0}]
 	Where (AggregateId = @aggregateId)
-	And (EventSequence > @startSequence);");
-                var command = new SqlCommand(b.ToString(), connection) { CommandType = CommandType.Text };
+	And (EventSequence > @startSequence)
+Order By EventSequence;", _tableName);
+                var command = new SqlCommand(sql, connection) { CommandType = CommandType.Text };
                 command.Parameters.AddRange(new[] {
                     new SqlParameter { ParameterName = "@aggregateId", SqlDbType = SqlDbType.NVarChar, Value = aggregateId },
                     new SqlParameter { ParameterName = "@startSequence", SqlDbType = SqlDbType.Int, Value = startSequence } });
@@ -56,14 +60,13 @@ From dbo.AggregateEvent
             var eventTypesXml = new XElement("r", eventTypes.Select(x => new XElement("e", new XAttribute("type", x.Name))));
             using (var connection = new SqlConnection(_connectionString))
             {
-                var b = new StringBuilder();
-                b.Append(@"
+                var sql = string.Format(@"
 Select Type, Blob
-From dbo.AggregateEvent
+From dbo.[{0}]
 	Inner Join @eventTypesXml.nodes(N'/r/e') _xml(item)
 	On (AggregateEvent.Type = _xml.item.value(N'@type', N'nvarchar(100)'))
-	Order By AggregateEvent.AggregateId, AggregateEvent.EventSequence;");
-                var command = new SqlCommand(b.ToString(), connection) { CommandType = CommandType.Text };
+Order By AggregateId, EventSequence;", _tableName);
+                var command = new SqlCommand(sql, connection) { CommandType = CommandType.Text };
                 command.Parameters.AddRange(new[] {
                     new SqlParameter { ParameterName = "@eventTypesXml", SqlDbType = SqlDbType.Xml, Value = (eventTypesXml != null ? eventTypesXml.ToString() : string.Empty) } });
                 connection.Open();
@@ -84,10 +87,10 @@ From dbo.AggregateEvent
             using (var connection = new SqlConnection(_connectionString))
             {
                 var b = new StringBuilder();
-                b.Append(@"
-Insert dbo.AggregateEvent (AggregateId, EventSequence, EventDate, Type, Blob)
+                b.Append(string.Format(@"
+Insert dbo.[{0}] (AggregateId, EventSequence, EventDate, Type, Blob)
 Select @aggregateId, _xml.item.value(N'@sequence', N'int'), _xml.item.value(N'@eventDate', N'datetime'), _xml.item.value(N'@type', N'nvarchar(100)'), _xml.item.value(N'.', N'nvarchar(max)')
-From @eventsXml.nodes(N'/r/e') _xml(item);");
+From @eventsXml.nodes(N'/r/e') _xml(item);", _tableName));
                 var command = new SqlCommand(b.ToString(), connection) { CommandType = CommandType.Text, };
                 command.Parameters.AddRange(new[] {
                     new SqlParameter { ParameterName = "@aggregateId", SqlDbType = SqlDbType.NVarChar, Value = aggregateId },
