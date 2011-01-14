@@ -7,13 +7,15 @@ namespace System.Quality.EventSourcing
     public class MongoAggregateRootSnapshotStore : IAggregateRootSnapshotStore
     {
         private readonly IMongoDatabase _database;
+        private readonly Func<object, object, bool> _aggregateKeyEqualityComparer;
 
-        public MongoAggregateRootSnapshotStore(string connectionString, ITypeCatalog snapshotTypeCatalog)
+        public MongoAggregateRootSnapshotStore(string connectionString, ITypeCatalog snapshotTypeCatalog, Func<object, object, bool> aggregateKeyEqualityComparer)
         {
             var connectionStringBuilder = new MongoConnectionStringBuilder(connectionString);
             var mongo = new Mongo(BuildMongoConfiguration(connectionString, snapshotTypeCatalog));
             mongo.Connect();
             _database = mongo.GetDatabase(connectionStringBuilder.Database);
+            _aggregateKeyEqualityComparer = aggregateKeyEqualityComparer;
         }
 
         private static MongoConfiguration BuildMongoConfiguration(string connectionString, ITypeCatalog snapshotTypeCatalog)
@@ -29,11 +31,11 @@ namespace System.Quality.EventSourcing
             return configurationBuilder.BuildConfiguration();
         }
 
-        public AggregateRootSnapshot GetSnapshot(Guid aggregateId)
+        public AggregateRootSnapshot GetSnapshot(object aggregateId)
         {
             return _database.GetCollection<AggregateRootSnapshot>("snapshots")
                 .Linq()
-                .Where(x => x.AggregateId == aggregateId)
+                .Where(x => x.AggregateId.Equals(aggregateId))
                 .SingleOrDefault();
         }
 
@@ -41,7 +43,7 @@ namespace System.Quality.EventSourcing
             where TSnapshot : AggregateRootSnapshot
         {
             var monoSnapshots = _database.GetCollection<TSnapshot>("snapshots");
-            monoSnapshots.Save(snapshot);
+            monoSnapshots.Update(snapshot, UpdateFlags.Upsert);
         }
     }
 }

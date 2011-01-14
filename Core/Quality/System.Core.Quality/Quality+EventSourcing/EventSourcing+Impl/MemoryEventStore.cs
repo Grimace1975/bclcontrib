@@ -34,10 +34,10 @@ namespace System.Quality.EventSourcing
     {
         private readonly List<Event> _events = new List<Event>();
 
-        public IEnumerable<Event> GetEventsForAggregate(Guid aggregateId, int startSequence)
+        public IEnumerable<Event> GetEventsForAggregate(object aggregateId, int startSequence)
         {
             return _events
-                .Where(x => (x.AggregateId == aggregateId) && (x.Sequence > startSequence))
+                .Where(x => (x.AggregateId.Equals(aggregateId)) && (x.Sequence > startSequence))
                 .ToList();
         }
 
@@ -46,7 +46,7 @@ namespace System.Quality.EventSourcing
             throw new NotImplementedException();
         }
 
-        public void SaveEvents(Guid aggregateId, IEnumerable<Event> events)
+        public void SaveEvents(object aggregateId, IEnumerable<Event> events)
         {
             _events.AddRange(events);
         }

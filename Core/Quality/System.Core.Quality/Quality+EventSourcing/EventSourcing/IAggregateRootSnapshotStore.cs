@@ -30,7 +30,7 @@ namespace System.Quality.EventSourcing
     /// </summary>
     public interface IAggregateRootSnapshotStore
     {
-        AggregateRootSnapshot GetSnapshot(Guid aggregateId);
+        AggregateRootSnapshot GetSnapshot(object aggregateId);
         void SaveSnapshot<TSnapshot>(TSnapshot snapshot)
             where TSnapshot : AggregateRootSnapshot;
     }

@@ -114,7 +114,7 @@ namespace System.IO
             int errorCode = (Marshal.GetHRForException(exception) & ((1 << 16) - 1));
             return (errorCode == 32) || (errorCode == 33);
         }
-        */ 
+        */
 
         #region Serialize
         /// <summary>
@@ -139,9 +139,8 @@ namespace System.IO
             {
                 case "text/xml":
                     var xmlValue = (System.Xml.Serialization.IXmlSerializable)value;
-                    var r = XmlReader.Create(textReader);
-                    xmlValue.ReadXml(r);
-                    r.Close();
+                    using (var r = XmlReader.Create(textReader))
+                        xmlValue.ReadXml(r);
                     return;
                 default:
                     throw new InvalidOperationException();
@@ -170,9 +169,8 @@ namespace System.IO
             {
                 case "text/xml":
                     var xmlValue = (System.Xml.Serialization.IXmlSerializable)value;
-                    var w = XmlWriter.Create(textWriter);
-                    xmlValue.WriteXml(w);
-                    w.Close();
+                    using (var w = XmlWriter.Create(textWriter))
+                        xmlValue.WriteXml(w);
                     return;
                 default:
                     throw new InvalidOperationException();

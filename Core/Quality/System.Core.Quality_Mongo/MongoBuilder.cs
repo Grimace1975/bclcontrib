@@ -2,7 +2,7 @@
 using MongoDB.Configuration.Builders;
 namespace System
 {
-    public static class MongoBuilder
+    internal static class MongoBuilder
     {
         private static readonly MethodInfo _mapMethod = typeof(MappingStoreBuilder).GetMethod("Map", Type.EmptyTypes);
 

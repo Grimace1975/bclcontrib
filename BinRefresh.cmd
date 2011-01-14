@@ -8,6 +8,8 @@ xcopy Core\Quality\System.Core.Quality_NServiceBus\bin\Release\System.Core.Quali
 xcopy Core\Quality\System.Core.Quality_StructureMap\bin\Release\System.Core.Quality_StructureMap.* bin\Quality\ /Q /R /H /Y
 xcopy Core\Quality\System.Core.Quality_Unity\bin\Release\System.Core.Quality_Unity.* bin\Quality\ /Q /R /H /Y
 xcopy Core\Quality\System.Core.Quality_Windsor\bin\Release\System.Core.Quality_Windsor.* bin\Quality\ /Q /R /H /Y
+xcopy Core\Quality\System.Core.Quality_Mongo\bin\Release\System.Core.Quality_Mongo.* bin\Quality\ /Q /R /H /Y
+xcopy Core\Quality\System.Core.Quality_Sql\bin\Release\System.Core.Quality_Sql.* bin\Quality\ /Q /R /H /Y
 xcopy Core\Quality\Library_\* bin\Quality\Library_\ /S /Q /R /H /Y
 xcopy Core\SqlServer\System.Core.SqlServer\bin\Release\System.Core.SqlServer.* bin\SqlServer\ /Q /R /H /Y
 xcopy Core\SqlServer\System.Core.SqlServer_Proxy\bin\Release\System.Core.SqlServer_Proxy.* bin\SqlServer\ /Q /R /H /Y
@@ -32,6 +34,8 @@ xcopy Core\Quality\System.Core.Quality_NServiceBus\bin\Debug\System.Core.Quality
 xcopy Core\Quality\System.Core.Quality_StructureMap\bin\Debug\System.Core.Quality_StructureMap.* bin\Debug\Quality\ /Q /R /H /Y
 xcopy Core\Quality\System.Core.Quality_Unity\bin\Debug\System.Core.Quality_Unity.* bin\Debug\Quality\ /Q /R /H /Y
 xcopy Core\Quality\System.Core.Quality_Windsor\bin\Debug\System.Core.Quality_Windsor.* bin\Debug\Quality\ /Q /R /H /Y
+xcopy Core\Quality\System.Core.Quality_Mongo\bin\Debug\System.Core.Quality_Mongo.* bin\Debug\Quality\ /Q /R /H /Y
+xcopy Core\Quality\System.Core.Quality_Sql\bin\Debug\System.Core.Quality_Sql.* bin\Debug\Quality\ /Q /R /H /Y
 xcopy Core\Quality\Library_\* bin\Debug\Quality\Library_\ /S /Q /R /H /Y
 xcopy Core\SqlServer\System.Core.SqlServer\bin\Debug\System.Core.SqlServer.* bin\Debug\SqlServer\ /Q /R /H /Y
 xcopy Core\SqlServer\System.Core.SqlServer_Proxy\bin\Debug\System.Core.SqlServer_Proxy.* bin\Debug\SqlServer\ /Q /R /H /Y
