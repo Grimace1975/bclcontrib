@@ -34,7 +34,7 @@ namespace System.Quality.EventSourcing
     public interface IAggregateRootRepository
     {
         TAggregateRoot GetById<TAggregateRoot>(object aggregateId)
-            where TAggregateRoot : AggregateRoot, new();
+            where TAggregateRoot : AggregateRoot;
         void Save(AggregateRoot aggregate);
     }
 
@@ -46,28 +46,39 @@ namespace System.Quality.EventSourcing
         private readonly IEventStore _eventStore;
         private readonly IAggregateRootSnapshotStore _snapshotStore;
         private readonly Action<IEnumerable<Event>> _dispatcher;
+        private readonly Func<Type, AggregateRoot> _factory;
+
+        private static class DefaultFactory
+        {
+            public static Func<Type, AggregateRoot> Factory = (t => (AggregateRoot)Activator.CreateInstance(t));
+        }
 
         public AggregateRootRepository(IEventStore eventStore, IAggregateRootSnapshotStore snapshotStore)
-            : this(eventStore, snapshotStore, null) { }
+            : this(eventStore, snapshotStore, null, null) { }
         public AggregateRootRepository(IEventStore eventStore, IAggregateRootSnapshotStore snapshotStore, Action<IEnumerable<Event>> dispatcher)
+            : this(eventStore, snapshotStore, dispatcher, null) { }
+        public AggregateRootRepository(IEventStore eventStore, IAggregateRootSnapshotStore snapshotStore, Action<IEnumerable<Event>> dispatcher, Func<Type, AggregateRoot> factory)
         {
             if (eventStore == null)
                 throw new ArgumentNullException("eventStore");
             _eventStore = eventStore;
             _snapshotStore = snapshotStore;
             _dispatcher = dispatcher;
+            _factory = (factory ?? DefaultFactory.Factory);
         }
 
         public TAggregateRoot GetById<TAggregateRoot>(object aggregateId)
-             where TAggregateRoot : AggregateRoot, new()
+             where TAggregateRoot : AggregateRoot
         {
-            var aggregate = new TAggregateRoot();
+            var aggregate = (_factory(typeof(TAggregateRoot)) as TAggregateRoot);
+            if (aggregate == null)
+                throw new InvalidOperationException("Factory");
             // find snapshot
             AggregateRootSnapshot snapshot = null;
             if (_snapshotStore != null)
             {
                 var snapshoter = (aggregate as ICanAggregateRootSnapshot);
-                if ((snapshoter != null) && ((snapshot = _snapshotStore.GetSnapshot(aggregateId)) != null))
+                if ((snapshoter != null) && ((snapshot = _snapshotStore.GetSnapshot<TAggregateRoot>(aggregateId)) != null))
                     snapshoter.LoadSnapshot(snapshot);
             }
             //

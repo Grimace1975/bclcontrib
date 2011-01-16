@@ -27,7 +27,8 @@ namespace System.Quality.EventSourcing
             _tableName = tableName;
         }
 
-        public AggregateRootSnapshot GetSnapshot(object aggregateId)
+        public AggregateRootSnapshot GetSnapshot<TAggregateRoot>(object aggregateId)
+            where TAggregateRoot : AggregateRoot
         {
             using (var connection = new SqlConnection(_connectionString))
             {

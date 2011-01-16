@@ -34,7 +34,8 @@ namespace System.Quality.EventSourcing
     {
         private readonly List<AggregateRootSnapshot> _snapshots = new List<AggregateRootSnapshot>();
 
-        public AggregateRootSnapshot GetSnapshot(object aggregateId)
+        public AggregateRootSnapshot GetSnapshot<TAggregateRoot>(object aggregateId)
+            where TAggregateRoot : AggregateRoot
         {
             return _snapshots
                 .Where(x => x.AggregateId.Equals(aggregateId))

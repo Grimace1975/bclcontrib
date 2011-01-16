@@ -27,6 +27,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Collections.ObjectModel;
+using System.Threading;
 namespace System.Quality.EventSourcing
 {
     /// <summary>
@@ -36,6 +37,7 @@ namespace System.Quality.EventSourcing
     {
         private readonly List<Event> _changes = new List<Event>();
         private readonly IAggregateRootEventDispatcher _dispatcher;
+        private bool _useStorageSequencing;
 
         public AggregateRoot()
             : this(new RegistryAggregateRootEventDispatcher()) { }
@@ -49,8 +51,7 @@ namespace System.Quality.EventSourcing
         }
 
         public object AggregateId { get; protected set; }
-        public DateTime LastEventDate { get; private set; }
-        public int LastEventSequence { get; private set; }
+        protected internal int LastEventSequence { get; private set; }
 
         protected IAggregateRootEventDispatcher Dispatcher
         {
@@ -63,10 +64,10 @@ namespace System.Quality.EventSourcing
                 throw new ArgumentNullException("e");
             e.AggregateId = AggregateId;
             e.EventDate = DateTime.Now;
-            e.Sequence = ++LastEventSequence;
+            if (!_useStorageSequencing)
+                e.Sequence = ++LastEventSequence;
             _dispatcher.ApplyEvent(this, e);
-            // trackAsChange
-            _changes.Add(e);
+            _changes.Add(e); // trackAsChange
         }
 
         #region Access State
@@ -75,16 +76,13 @@ namespace System.Quality.EventSourcing
         {
             if (events == null)
                 throw new ArgumentNullException("events");
-            var lastEventDate = DateTime.MinValue;
-            int lastEventSequence = 0;
+            int? lastEventSequence = 0;
             foreach (var e in events.OrderBy(x => x.Sequence))
             {
                 _dispatcher.ApplyEvent(this, e);
-                lastEventDate = e.EventDate;
                 lastEventSequence = e.Sequence;
             }
-            LastEventDate = lastEventDate;
-            LastEventSequence = lastEventSequence;
+            LastEventSequence = (int)lastEventSequence;
         }
 
         IEnumerable<Event> IAccessAggregateRootState.GetUncommittedChanges()
