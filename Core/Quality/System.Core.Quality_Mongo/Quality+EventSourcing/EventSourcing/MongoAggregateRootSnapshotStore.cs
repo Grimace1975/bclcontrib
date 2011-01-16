@@ -31,7 +31,8 @@ namespace System.Quality.EventSourcing
             return configurationBuilder.BuildConfiguration();
         }
 
-        public AggregateRootSnapshot GetSnapshot(object aggregateId)
+        public AggregateRootSnapshot GetSnapshot<TAggregateRoot>(object aggregateId)
+            where TAggregateRoot : AggregateRoot
         {
             return _database.GetCollection<AggregateRootSnapshot>("snapshots")
                 .Linq()

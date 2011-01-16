@@ -31,12 +31,12 @@ namespace System.Quality.EventSourcing
     public abstract class AggregateRootSnapshot
     {
         public AggregateRootSnapshot() { }
-        public AggregateRootSnapshot(AggregateRoot aggregate)
-        {
-            AggregateId = aggregate.AggregateId;
-            LastEventDate = aggregate.LastEventDate;
-            LastEventSequence = aggregate.LastEventSequence;
-        }
+        //public AggregateRootSnapshot(AggregateRoot aggregate)
+        //{
+        //    AggregateId = aggregate.AggregateId;
+        //    LastEventDate = aggregate.LastEventDate;
+        //    LastEventSequence = aggregate.LastEventSequence;
+        //}
 
         public object AggregateId { get; set; }
         public DateTime LastEventDate { get; set; }
