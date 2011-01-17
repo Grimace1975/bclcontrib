@@ -44,16 +44,19 @@
     <Reference Include="Script.Web" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="SystemEx\Html+Net\CloseEventArgs.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="SystemEx\Html+Net\MessageEventArgs.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="SystemEx\Html+Net\WebSocket.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="SystemEx\JSArrayEx.cs" />
     <Compile Include="SystemEx\IO\MemoryStream.cs" />
     <Compile Include="SystemEx\JSConvertEx.cs" />
-    <Compile Include="SystemEx\JSArrayString.cs" />
-    <Compile Include="SystemEx\JSArrayNumber.cs" />
-    <Compile Include="SystemEx\JSArrayMixed.cs" />
-    <Compile Include="SystemEx\JSArrayInteger.cs" />
-    <Compile Include="SystemEx\JSArrayBoolean.cs" />
-    <Compile Include="SystemEx\JSArray.cs" />
-    <Compile Include="SystemEx\Html\WindowEx.cs" />
+    <Compile Include="System\Html\WindowEx.cs" />
     <Compile Include="SystemEx\IO\FileInfoSearchPredicate.cs" />
     <Compile Include="SystemEx\IO\SE.cs" />
     <Compile Include="SystemEx\IO\FileAccess.cs" />
@@ -65,21 +68,46 @@
     <Compile Include="SystemEx\IO\File.cs" />
     <Compile Include="SystemEx\IO\Stream.cs" />
     <Compile Include="SystemEx\StringBuilderEx.cs" />
-    <Compile Include="SystemEx\TypedArrays\ArrayBufferView.cs" />
-    <Compile Include="SystemEx\TypedArrays\ArrayBuffer.cs" />
-    <Compile Include="SystemEx\TypedArrays\DataView.cs" />
-    <Compile Include="SystemEx\TypedArrays\Float64Array.cs" />
-    <Compile Include="SystemEx\TypedArrays\Uint32Array.cs" />
-    <Compile Include="SystemEx\TypedArrays\Int16Array.cs" />
-    <Compile Include="SystemEx\TypedArrays\Uint16Array.cs" />
-    <Compile Include="SystemEx\TypedArrays\Uint8Array.cs" />
-    <Compile Include="SystemEx\TypedArrays\Float32Array.cs" />
-    <Compile Include="SystemEx\TypedArrays\Int32Array.cs" />
-    <Compile Include="SystemEx\TypedArrays\Int8Array.cs" />
+    <Compile Include="System\JSArray.cs" />
+    <Compile Include="System\JSArrayBoolean.cs" />
+    <Compile Include="System\JSArrayInteger.cs" />
+    <Compile Include="System\JSArrayMixed.cs" />
+    <Compile Include="System\JSArrayNumber.cs" />
+    <Compile Include="System\JSArrayString.cs" />
+    <Compile Include="System\TypedArrays\ArrayBufferView.cs" />
+    <Compile Include="System\TypedArrays\ArrayBuffer.cs" />
+    <Compile Include="System\TypedArrays\DataView.cs" />
+    <Compile Include="System\TypedArrays\Float32Array.cs" />
+    <Compile Include="System\TypedArrays\Float64Array.cs" />
+    <Compile Include="System\TypedArrays\Int16Array.cs" />
+    <Compile Include="System\TypedArrays\Int32Array.cs" />
+    <Compile Include="System\TypedArrays\Int8Array.cs" />
+    <Compile Include="System\TypedArrays\Uint16Array.cs" />
+    <Compile Include="System\TypedArrays\Uint32Array.cs" />
+    <Compile Include="System\TypedArrays\Uint8Array.cs" />
     <Content Include="Properties\Script.WebEx.ruleset" />
     <Content Include="Properties\Script.WebEx.script" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SystemEx\Html\LocalStorage.cs" />
+    <None Include="SystemEx\Html+Canvas\CanvasElement.java" />
+    <None Include="SystemEx\Html+Canvas\CanvasGradient.java" />
+    <None Include="SystemEx\Html+Canvas\CanvasPattern.java" />
+    <None Include="SystemEx\Html+Canvas\CanvasPixelArray.java" />
+    <None Include="SystemEx\Html+Canvas\CanvasRenderingContext2D.java" />
+    <None Include="SystemEx\Html+Canvas\ImageData.java" />
+    <None Include="SystemEx\Html+Canvas\TextMetrics.java" />
+    <None Include="SystemEx\Html+Canvas\VideoElement.java" />
+    <None Include="SystemEx\Html+WebGL\WebGLActiveInfo.java" />
+    <None Include="SystemEx\Html+WebGL\WebGLBuffer.java" />
+    <None Include="SystemEx\Html+WebGL\WebGLContextAttributes.java" />
+    <None Include="SystemEx\Html+WebGL\WebGLFramebuffer.java" />
+    <None Include="SystemEx\Html+WebGL\WebGLObject.java" />
+    <None Include="SystemEx\Html+WebGL\WebGLProgram.java" />
+    <None Include="SystemEx\Html+WebGL\WebGLRenderbuffer.java" />
+    <None Include="SystemEx\Html+WebGL\WebGLRenderingContext.java" />
+    <None Include="SystemEx\Html+WebGL\WebGLShader.java" />
+    <None Include="SystemEx\Html+WebGL\WebGLTexture.java" />
+    <None Include="SystemEx\Html+WebGL\WebGLUniformLocation.java" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(ProgramFiles)\ScriptSharp\v1.0\ScriptSharp.targets" />

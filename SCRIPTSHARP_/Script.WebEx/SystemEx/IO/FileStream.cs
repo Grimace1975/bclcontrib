@@ -1,5 +1,6 @@
 using System;
 using SystemEx.Html;
+using System.Html;
 namespace SystemEx.IO
 {
     public class FileStream : Stream

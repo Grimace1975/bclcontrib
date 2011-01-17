@@ -2,14 +2,15 @@ using System;
 using SystemEx.Html;
 using System.Runtime.CompilerServices;
 using System.Collections;
+using System.Html;
 namespace SystemEx.IO
 {
     public class FileInfo
     {
         public const char SeparatorChar = '/';
-        public const string Separator = "//";
-        public const char PathSeparatorChar = ':';
-        public const string PathSeparator = ":";
+        public const string Separator = "/";
+        //public const char PathSeparatorChar = ':';
+        //public const string PathSeparator = ":";
         public static FileInfo Root = new FileInfo("");
 
         private FileInfo _parent;
@@ -143,7 +144,7 @@ namespace SystemEx.IO
             }
         }
 
-        private bool CreateNewFile()
+        public bool CreateNewFile()
         {
             if (Exists() || !_parent.Exists())
                 return false;
@@ -188,8 +189,8 @@ namespace SystemEx.IO
         #region List
 
         [AlternateSignature]
-        private extern FileInfo[] ListFiles();
-        private IEnumerable ListFiles(FileInfoSearchPredicate predicate)
+        public extern FileInfo[] ListFiles();
+        public IEnumerable ListFiles(FileInfoSearchPredicate predicate)
         {
             ArrayList files = new ArrayList();
             try

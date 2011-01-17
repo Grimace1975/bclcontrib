@@ -1,11 +1,13 @@
 using System;
 using System.Runtime.CompilerServices;
+using System.TypedArrays;
 namespace SystemEx.TypedArrays
 {
     /// <summary>
     ///  The typed array view types represent a view of an ArrayBuffer that allows for indexing and manipulation. The length of each of these is fixed.
     ///  Taken from the Khronos TypedArrays Draft Spec as of Aug 30, 2010.
     /// </summary>
+    [IgnoreNamespace, Imported]
     public class Int8Array : ArrayBufferView
     {
         public const int BYTES_PER_ELEMENT = 1;

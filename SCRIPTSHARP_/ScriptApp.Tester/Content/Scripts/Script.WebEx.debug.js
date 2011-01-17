@@ -4,6 +4,204 @@
 (function() {
 function executeScript() {
 
+Type.registerNamespace('SystemEx.Html');
+
+////////////////////////////////////////////////////////////////////////////////
+// SystemEx.Html.CloseEventArgs
+
+SystemEx.Html.CloseEventArgs = function SystemEx_Html_CloseEventArgs() {
+}
+SystemEx.Html.CloseEventArgs.prototype = {
+    
+    get_wasClean: function SystemEx_Html_CloseEventArgs$get_wasClean() {
+        /// <value type="Boolean"></value>
+        return this.wasClean;
+    },
+    
+    initCloseEvent: function SystemEx_Html_CloseEventArgs$initCloseEvent(typeArg, canBubbleArg, cancelableArg, wasCleanArg) {
+        /// <param name="typeArg" type="String">
+        /// </param>
+        /// <param name="canBubbleArg" type="Boolean">
+        /// </param>
+        /// <param name="cancelableArg" type="Boolean">
+        /// </param>
+        /// <param name="wasCleanArg" type="Boolean">
+        /// </param>
+        this.initCloseEvent(typeArg, canBubbleArg, cancelableArg, wasCleanArg);
+    }
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+// SystemEx.Html.MessageEventArgs
+
+SystemEx.Html.MessageEventArgs = function SystemEx_Html_MessageEventArgs() {
+}
+SystemEx.Html.MessageEventArgs.prototype = {
+    
+    get_data: function SystemEx_Html_MessageEventArgs$get_data() {
+        /// <value type="String"></value>
+        return this.data;
+    }
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+// SystemEx.Html.WebSocket
+
+SystemEx.Html.WebSocket = function SystemEx_Html_WebSocket() {
+    /// <field name="CONNECTING" type="Number" integer="true" static="true">
+    /// </field>
+    /// <field name="OPEN" type="Number" integer="true" static="true">
+    /// </field>
+    /// <field name="CLOSING" type="Number" integer="true" static="true">
+    /// </field>
+    /// <field name="CLOSED" type="Number" integer="true" static="true">
+    /// </field>
+}
+SystemEx.Html.WebSocket.create = function SystemEx_Html_WebSocket$create(url, protocol) {
+    /// <param name="url" type="String">
+    /// </param>
+    /// <param name="protocol" type="Object">
+    /// </param>
+    /// <returns type="SystemEx.Html.WebSocket"></returns>
+    return ((protocol == null) ? new WebSocket(url) : new WebSocket(url, protocol));
+}
+SystemEx.Html.WebSocket.prototype = {
+    
+    get_url: function SystemEx_Html_WebSocket$get_url() {
+        /// <value type="String"></value>
+        return this.url;
+    },
+    
+    get_readyState: function SystemEx_Html_WebSocket$get_readyState() {
+        /// <value type="Number" integer="true"></value>
+        return this.readyState;
+    },
+    
+    get_bufferedAmount: function SystemEx_Html_WebSocket$get_bufferedAmount() {
+        /// <value type="Number" integer="true"></value>
+        return this.bufferedAmount;
+    },
+    
+    get_onOpen: function SystemEx_Html_WebSocket$get_onOpen() {
+        /// <value type="EventHandler"></value>
+        return this.onopen;
+    },
+    set_onOpen: function SystemEx_Html_WebSocket$set_onOpen(value) {
+        /// <value type="EventHandler"></value>
+        this.onopen = value;
+        return value;
+    },
+    
+    get_onMessage: function SystemEx_Html_WebSocket$get_onMessage() {
+        /// <value type="SystemEx.Html.MessageEventHandler"></value>
+        return this.onmessage;
+    },
+    set_onMessage: function SystemEx_Html_WebSocket$set_onMessage(value) {
+        /// <value type="SystemEx.Html.MessageEventHandler"></value>
+        this.onmessage = value;
+        return value;
+    },
+    
+    get_onError: function SystemEx_Html_WebSocket$get_onError() {
+        /// <value type="EventHandler"></value>
+        return this.onerror;
+    },
+    set_onError: function SystemEx_Html_WebSocket$set_onError(value) {
+        /// <value type="EventHandler"></value>
+        this.onerror = value;
+        return value;
+    },
+    
+    get_onClose: function SystemEx_Html_WebSocket$get_onClose() {
+        /// <value type="SystemEx.Html.CloseEventHandler"></value>
+        return this.onclose;
+    },
+    set_onClose: function SystemEx_Html_WebSocket$set_onClose(value) {
+        /// <value type="SystemEx.Html.CloseEventHandler"></value>
+        this.onclose = value;
+        return value;
+    },
+    
+    get_protocol: function SystemEx_Html_WebSocket$get_protocol() {
+        /// <value type="String"></value>
+        return this.protocol;
+    },
+    
+    send: function SystemEx_Html_WebSocket$send(data) {
+        /// <param name="data" type="String">
+        /// </param>
+        /// <returns type="Boolean"></returns>
+        return this.send(data);
+    },
+    
+    close: function SystemEx_Html_WebSocket$close() {
+        this.close();
+    }
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+// SystemEx.Html.LocalStorage
+
+SystemEx.Html.LocalStorage = function SystemEx_Html_LocalStorage() {
+}
+SystemEx.Html.LocalStorage.getItem = function SystemEx_Html_LocalStorage$getItem(key) {
+    /// <param name="key" type="String">
+    /// </param>
+    /// <returns type="String"></returns>
+    try {
+        return window.localStorage.getItem(key);
+    }
+    catch (e) {
+        throw new Error('IOException:' + e);
+    }
+}
+SystemEx.Html.LocalStorage.key = function SystemEx_Html_LocalStorage$key(index) {
+    /// <param name="index" type="Number" integer="true">
+    /// </param>
+    /// <returns type="String"></returns>
+    try {
+        return window.localStorage.key(index);
+    }
+    catch (e) {
+        throw new Error('IOException:' + e);
+    }
+}
+SystemEx.Html.LocalStorage.get_length = function SystemEx_Html_LocalStorage$get_length() {
+    /// <value type="Number" integer="true"></value>
+    try {
+        return window.localStorage.length;
+    }
+    catch (e) {
+        throw new Error('IOException:' + e);
+    }
+}
+SystemEx.Html.LocalStorage.removeItem = function SystemEx_Html_LocalStorage$removeItem(key) {
+    /// <param name="key" type="String">
+    /// </param>
+    try {
+        window.localStorage.removeItem(key);
+    }
+    catch (e) {
+        throw new Error('IOException:' + e);
+    }
+}
+SystemEx.Html.LocalStorage.setItem = function SystemEx_Html_LocalStorage$setItem(key, value) {
+    /// <param name="key" type="String">
+    /// </param>
+    /// <param name="value" type="String">
+    /// </param>
+    try {
+        window.localStorage.setItem(key, value);
+    }
+    catch (e) {
+        throw new Error('IOException:' + e);
+    }
+}
+
+
 Type.registerNamespace('SystemEx');
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -19,18 +217,49 @@ SystemEx.JSArrayEx.clear = function SystemEx_JSArrayEx$clear(array, index, lengt
     /// <param name="length" type="Number" integer="true">
     /// </param>
 }
-SystemEx.JSArrayEx.copy = function SystemEx_JSArrayEx$copy(sourceArray, sourceIndex, destinationArray, destinationIndex, index) {
-    /// <param name="sourceArray" type="Array">
+SystemEx.JSArrayEx.copy = function SystemEx_JSArrayEx$copy(source, sourceIndex, destination, destinationIndex, length) {
+    /// <param name="source" type="Object">
     /// </param>
     /// <param name="sourceIndex" type="Number" integer="true">
     /// </param>
-    /// <param name="destinationArray" type="Array">
+    /// <param name="destination" type="Object">
     /// </param>
     /// <param name="destinationIndex" type="Number" integer="true">
     /// </param>
-    /// <param name="index" type="Number" integer="true">
+    /// <param name="length" type="Number" integer="true">
     /// </param>
-    System.Arr;
+    if ((source == null) || (destination == null)) {
+        throw new Error('NullPointerException:');
+    }
+    var sourceLength = source.length;
+    var destinationLength = destination.length;
+    if ((sourceIndex < 0) || (destinationIndex < 0) || (length < 0) || (sourceIndex + length > sourceLength) || (destinationIndex + length > destinationLength)) {
+        throw new Error('IndexOutOfBoundsException:');
+    }
+    SystemEx.JSArrayEx._internalNativeCopy(source, sourceIndex, destination, destinationIndex, length);
+}
+SystemEx.JSArrayEx._internalNativeCopy = function SystemEx_JSArrayEx$_internalNativeCopy(source, sourceIndex, destination, destinationIndex, length) {
+    /// <param name="source" type="Array" elementType="Object">
+    /// </param>
+    /// <param name="sourceIndex" type="Number" integer="true">
+    /// </param>
+    /// <param name="destination" type="Array" elementType="Object">
+    /// </param>
+    /// <param name="destinationIndex" type="Number" integer="true">
+    /// </param>
+    /// <param name="length" type="Number" integer="true">
+    /// </param>
+    if ((source === destination) && (sourceIndex < destinationIndex)) {
+        sourceIndex += length;
+        for (var index = destinationIndex + length; index-- > destinationIndex; ) {
+            destination[index] = source[--sourceIndex];
+        }
+    }
+    else {
+        for (var index = destinationIndex + length; destinationIndex < index; ) {
+            destination[destinationIndex++] = source[sourceIndex++];
+        }
+    }
 }
 
 
@@ -38,31 +267,31 @@ SystemEx.JSArrayEx.copy = function SystemEx_JSArrayEx$copy(sourceArray, sourceIn
 // SystemEx.JSConvertEx
 
 SystemEx.JSConvertEx = function SystemEx_JSConvertEx() {
-    /// <field name="_wba" type="SystemEx.TypedArrays.Int8Array" static="true">
+    /// <field name="_wba" type="Int8Array" static="true">
     /// </field>
-    /// <field name="_wia" type="SystemEx.TypedArrays.Int32Array" static="true">
+    /// <field name="_wia" type="Int32Array" static="true">
     /// </field>
-    /// <field name="_wfa" type="SystemEx.TypedArrays.Float32Array" static="true">
+    /// <field name="_wfa" type="Float32Array" static="true">
     /// </field>
 }
 SystemEx.JSConvertEx.singleToIntBits = function SystemEx_JSConvertEx$singleToIntBits(v) {
     /// <param name="v" type="Number">
     /// </param>
     /// <returns type="Number" integer="true"></returns>
-    SystemEx.JSConvertEx._wfa.set3(0, v);
-    return SystemEx.JSConvertEx._wia.get(0);
+    SystemEx.JSConvertEx._wfa[0] = v;
+    return SystemEx.JSConvertEx._wia[0];
 }
 SystemEx.JSConvertEx.intBitsToSingle = function SystemEx_JSConvertEx$intBitsToSingle(v) {
     /// <param name="v" type="Number" integer="true">
     /// </param>
     /// <returns type="Number"></returns>
-    SystemEx.JSConvertEx._wia.set3(0, v);
-    return SystemEx.JSConvertEx._wfa.get(0);
+    SystemEx.JSConvertEx._wia[0] = v;
+    return SystemEx.JSConvertEx._wfa[0];
 }
 SystemEx.JSConvertEx.bytesToJSArray = function SystemEx_JSConvertEx$bytesToJSArray(data) {
     /// <param name="data" type="Array" elementType="Number" elementInteger="true">
     /// </param>
-    /// <returns type="SystemEx.JSArrayInteger"></returns>
+    /// <returns type="JSArrayInteger"></returns>
     var jsan = [];
     var length = data.length;
     for (var index = length - 1; index >= 0; index--) {
@@ -73,7 +302,7 @@ SystemEx.JSConvertEx.bytesToJSArray = function SystemEx_JSConvertEx$bytesToJSArr
 SystemEx.JSConvertEx.uBytesToJSArray = function SystemEx_JSConvertEx$uBytesToJSArray(data) {
     /// <param name="data" type="Array" elementType="Number" elementInteger="true">
     /// </param>
-    /// <returns type="SystemEx.JSArrayInteger"></returns>
+    /// <returns type="JSArrayInteger"></returns>
     var jsan = [];
     var length = data.length;
     for (var index = length - 1; index >= 0; index--) {
@@ -84,7 +313,7 @@ SystemEx.JSConvertEx.uBytesToJSArray = function SystemEx_JSConvertEx$uBytesToJSA
 SystemEx.JSConvertEx.singlesToJSArray = function SystemEx_JSConvertEx$singlesToJSArray(data) {
     /// <param name="data" type="Array" elementType="Number">
     /// </param>
-    /// <returns type="SystemEx.JSArrayNumber"></returns>
+    /// <returns type="JSArrayNumber"></returns>
     var jsan = [];
     var length = data.length;
     for (var index = length - 1; index >= 0; index--) {
@@ -95,7 +324,7 @@ SystemEx.JSConvertEx.singlesToJSArray = function SystemEx_JSConvertEx$singlesToJ
 SystemEx.JSConvertEx.doublesToJSArray = function SystemEx_JSConvertEx$doublesToJSArray(data) {
     /// <param name="data" type="Array" elementType="Number">
     /// </param>
-    /// <returns type="SystemEx.JSArrayNumber"></returns>
+    /// <returns type="JSArrayNumber"></returns>
     var jsan = [];
     var length = data.length;
     for (var index = length - 1; index >= 0; index--) {
@@ -106,7 +335,7 @@ SystemEx.JSConvertEx.doublesToJSArray = function SystemEx_JSConvertEx$doublesToJ
 SystemEx.JSConvertEx.ints16ToJSArray = function SystemEx_JSConvertEx$ints16ToJSArray(data) {
     /// <param name="data" type="Array" elementType="Number" elementInteger="true">
     /// </param>
-    /// <returns type="SystemEx.JSArrayInteger"></returns>
+    /// <returns type="JSArrayInteger"></returns>
     var jsan = [];
     var length = data.length;
     for (var index = length - 1; index >= 0; index--) {
@@ -117,7 +346,7 @@ SystemEx.JSConvertEx.ints16ToJSArray = function SystemEx_JSConvertEx$ints16ToJSA
 SystemEx.JSConvertEx.uInt16ToJSArray = function SystemEx_JSConvertEx$uInt16ToJSArray(data) {
     /// <param name="data" type="Array" elementType="Number" elementInteger="true">
     /// </param>
-    /// <returns type="SystemEx.JSArrayInteger"></returns>
+    /// <returns type="JSArrayInteger"></returns>
     var jsan = [];
     var length = data.length;
     for (var index = length - 1; index >= 0; index--) {
@@ -128,391 +357,13 @@ SystemEx.JSConvertEx.uInt16ToJSArray = function SystemEx_JSConvertEx$uInt16ToJSA
 SystemEx.JSConvertEx.ints32ToJSArray = function SystemEx_JSConvertEx$ints32ToJSArray(data) {
     /// <param name="data" type="Array" elementType="Number" elementInteger="true">
     /// </param>
-    /// <returns type="SystemEx.JSArrayInteger"></returns>
+    /// <returns type="JSArrayInteger"></returns>
     var jsan = [];
     var length = data.length;
     for (var index = length - 1; index >= 0; index--) {
         jsan.set(index, data[index]);
     }
     return jsan;
-}
-
-
-////////////////////////////////////////////////////////////////////////////////
-// SystemEx.JSArrayString
-
-SystemEx.JSArrayString = function SystemEx_JSArrayString() {
-}
-SystemEx.JSArrayString.prototype = {
-    
-    get: function SystemEx_JSArrayString$get(index) {
-        /// <param name="index" type="Number" integer="true">
-        /// </param>
-        /// <returns type="String"></returns>
-        return this[index];
-    },
-    
-    joinA: function SystemEx_JSArrayString$joinA() {
-        /// <returns type="String"></returns>
-        return this.join(',');
-    },
-    
-    join: function SystemEx_JSArrayString$join(separator) {
-        /// <param name="separator" type="String">
-        /// </param>
-        /// <returns type="String"></returns>
-        return this.join(separator);
-    },
-    
-    get_length: function SystemEx_JSArrayString$get_length() {
-        /// <value type="Number" integer="true"></value>
-        return this.length;
-    },
-    set_length: function SystemEx_JSArrayString$set_length(value) {
-        /// <value type="Number" integer="true"></value>
-        this.length = value;
-        return value;
-    },
-    
-    push: function SystemEx_JSArrayString$push(value) {
-        /// <param name="value" type="String">
-        /// </param>
-        this[this.length] = value;
-    },
-    
-    set: function SystemEx_JSArrayString$set(index, value) {
-        /// <param name="index" type="Number" integer="true">
-        /// </param>
-        /// <param name="value" type="String">
-        /// </param>
-        this[index] = value;
-    },
-    
-    shift: function SystemEx_JSArrayString$shift() {
-        /// <returns type="String"></returns>
-        return this.shift();
-    },
-    
-    unshift: function SystemEx_JSArrayString$unshift(value) {
-        /// <param name="value" type="String">
-        /// </param>
-        this.unshift(value);;
-    }
-}
-
-
-////////////////////////////////////////////////////////////////////////////////
-// SystemEx.JSArrayNumber
-
-SystemEx.JSArrayNumber = function SystemEx_JSArrayNumber() {
-}
-SystemEx.JSArrayNumber.prototype = {
-    
-    get: function SystemEx_JSArrayNumber$get(index) {
-        /// <param name="index" type="Number" integer="true">
-        /// </param>
-        /// <returns type="Number"></returns>
-        return this[index];
-    },
-    
-    joinA: function SystemEx_JSArrayNumber$joinA() {
-        /// <returns type="String"></returns>
-        return this.join(',');
-    },
-    
-    join: function SystemEx_JSArrayNumber$join(separator) {
-        /// <param name="separator" type="String">
-        /// </param>
-        /// <returns type="String"></returns>
-        return this.join(separator);
-    },
-    
-    get_length: function SystemEx_JSArrayNumber$get_length() {
-        /// <value type="Number" integer="true"></value>
-        return this.length;
-    },
-    set_length: function SystemEx_JSArrayNumber$set_length(value) {
-        /// <value type="Number" integer="true"></value>
-        this.length = value;
-        return value;
-    },
-    
-    push: function SystemEx_JSArrayNumber$push(value) {
-        /// <param name="value" type="Number">
-        /// </param>
-        this[this.length] = value;
-    },
-    
-    set: function SystemEx_JSArrayNumber$set(index, value) {
-        /// <param name="index" type="Number" integer="true">
-        /// </param>
-        /// <param name="value" type="Number">
-        /// </param>
-        this[index] = value;
-    },
-    
-    shift: function SystemEx_JSArrayNumber$shift() {
-        /// <returns type="Number"></returns>
-        return this.shift();
-    },
-    
-    unshift: function SystemEx_JSArrayNumber$unshift(value) {
-        /// <param name="value" type="Number">
-        /// </param>
-        this.unshift(value);;
-    }
-}
-
-
-////////////////////////////////////////////////////////////////////////////////
-// SystemEx.JSArrayMixed
-
-SystemEx.JSArrayMixed = function SystemEx_JSArrayMixed() {
-}
-SystemEx.JSArrayMixed.prototype = {
-    
-    get: function SystemEx_JSArrayMixed$get(index) {
-        /// <param name="index" type="Number" integer="true">
-        /// </param>
-        /// <returns type="Number"></returns>
-        return this[index];
-    },
-    
-    joinA: function SystemEx_JSArrayMixed$joinA() {
-        /// <returns type="String"></returns>
-        return this.join(',');
-    },
-    
-    join: function SystemEx_JSArrayMixed$join(separator) {
-        /// <param name="separator" type="String">
-        /// </param>
-        /// <returns type="String"></returns>
-        return this.join(separator);
-    },
-    
-    get_length: function SystemEx_JSArrayMixed$get_length() {
-        /// <value type="Number" integer="true"></value>
-        return this.length;
-    },
-    set_length: function SystemEx_JSArrayMixed$set_length(value) {
-        /// <value type="Number" integer="true"></value>
-        this.length = value;
-        return value;
-    },
-    
-    push: function SystemEx_JSArrayMixed$push(value) {
-        /// <param name="value" type="Number">
-        /// </param>
-        this[this.length] = value;
-    },
-    
-    set: function SystemEx_JSArrayMixed$set(index, value) {
-        /// <param name="index" type="Number" integer="true">
-        /// </param>
-        /// <param name="value" type="Number">
-        /// </param>
-        this[index] = value;
-    },
-    
-    shift: function SystemEx_JSArrayMixed$shift() {
-        /// <returns type="Number"></returns>
-        return this.shift();
-    },
-    
-    unshift: function SystemEx_JSArrayMixed$unshift(value) {
-        /// <param name="value" type="Number">
-        /// </param>
-        this.unshift(value);;
-    }
-}
-
-
-////////////////////////////////////////////////////////////////////////////////
-// SystemEx.JSArrayInteger
-
-SystemEx.JSArrayInteger = function SystemEx_JSArrayInteger() {
-}
-SystemEx.JSArrayInteger.prototype = {
-    
-    get: function SystemEx_JSArrayInteger$get(index) {
-        /// <param name="index" type="Number" integer="true">
-        /// </param>
-        /// <returns type="Number" integer="true"></returns>
-        return this[index];
-    },
-    
-    joinA: function SystemEx_JSArrayInteger$joinA() {
-        /// <returns type="String"></returns>
-        return this.join(',');
-    },
-    
-    join: function SystemEx_JSArrayInteger$join(separator) {
-        /// <param name="separator" type="String">
-        /// </param>
-        /// <returns type="String"></returns>
-        return this.join(separator);
-    },
-    
-    get_length: function SystemEx_JSArrayInteger$get_length() {
-        /// <value type="Number" integer="true"></value>
-        return this.length;
-    },
-    set_length: function SystemEx_JSArrayInteger$set_length(value) {
-        /// <value type="Number" integer="true"></value>
-        this.length = value;
-        return value;
-    },
-    
-    push: function SystemEx_JSArrayInteger$push(value) {
-        /// <param name="value" type="Number" integer="true">
-        /// </param>
-        this[this.length] = value;
-    },
-    
-    set: function SystemEx_JSArrayInteger$set(index, value) {
-        /// <param name="index" type="Number" integer="true">
-        /// </param>
-        /// <param name="value" type="Number" integer="true">
-        /// </param>
-        this[index] = value;
-    },
-    
-    shift: function SystemEx_JSArrayInteger$shift() {
-        /// <returns type="Number" integer="true"></returns>
-        return this.shift();
-    },
-    
-    unshift: function SystemEx_JSArrayInteger$unshift(value) {
-        /// <param name="value" type="Number" integer="true">
-        /// </param>
-        this.unshift(value);;
-    }
-}
-
-
-////////////////////////////////////////////////////////////////////////////////
-// SystemEx.JSArrayBoolean
-
-SystemEx.JSArrayBoolean = function SystemEx_JSArrayBoolean() {
-}
-SystemEx.JSArrayBoolean.prototype = {
-    
-    get: function SystemEx_JSArrayBoolean$get(index) {
-        /// <param name="index" type="Number" integer="true">
-        /// </param>
-        /// <returns type="Boolean"></returns>
-        return this[index];
-    },
-    
-    joinA: function SystemEx_JSArrayBoolean$joinA() {
-        /// <returns type="String"></returns>
-        return this.join(',');
-    },
-    
-    join: function SystemEx_JSArrayBoolean$join(separator) {
-        /// <param name="separator" type="String">
-        /// </param>
-        /// <returns type="String"></returns>
-        return this.join(separator);
-    },
-    
-    get_length: function SystemEx_JSArrayBoolean$get_length() {
-        /// <value type="Number" integer="true"></value>
-        return this.length;
-    },
-    set_length: function SystemEx_JSArrayBoolean$set_length(value) {
-        /// <value type="Number" integer="true"></value>
-        this.length = value;
-        return value;
-    },
-    
-    push: function SystemEx_JSArrayBoolean$push(value) {
-        /// <param name="value" type="Boolean">
-        /// </param>
-        this[this.length] = value;
-    },
-    
-    set: function SystemEx_JSArrayBoolean$set(index, value) {
-        /// <param name="index" type="Number" integer="true">
-        /// </param>
-        /// <param name="value" type="Boolean">
-        /// </param>
-        this[index] = value;
-    },
-    
-    shift: function SystemEx_JSArrayBoolean$shift() {
-        /// <returns type="Boolean"></returns>
-        return this.shift();
-    },
-    
-    unshift: function SystemEx_JSArrayBoolean$unshift(value) {
-        /// <param name="value" type="Boolean">
-        /// </param>
-        this.unshift(value);;
-    }
-}
-
-
-////////////////////////////////////////////////////////////////////////////////
-// SystemEx.JSArray
-
-SystemEx.JSArray = function SystemEx_JSArray() {
-}
-SystemEx.JSArray.prototype = {
-    
-    get: function SystemEx_JSArray$get(index) {
-        /// <param name="index" type="Number" integer="true">
-        /// </param>
-        /// <returns type="Object"></returns>
-        return this[index];
-    },
-    
-    joinA: function SystemEx_JSArray$joinA() {
-        /// <returns type="String"></returns>
-        return this.join(',');
-    },
-    
-    join: function SystemEx_JSArray$join(separator) {
-        /// <param name="separator" type="String">
-        /// </param>
-        /// <returns type="String"></returns>
-        return this.join(separator);
-    },
-    
-    get_length: function SystemEx_JSArray$get_length() {
-        /// <value type="Number" integer="true"></value>
-        return this.length;
-    },
-    set_length: function SystemEx_JSArray$set_length(value) {
-        /// <value type="Number" integer="true"></value>
-        this.length = value;
-        return value;
-    },
-    
-    push: function SystemEx_JSArray$push(value) {
-        /// <param name="value" type="Object">
-        /// </param>
-        this[this.length] = value;
-    },
-    
-    set: function SystemEx_JSArray$set(index, value) {
-        /// <param name="index" type="Number" integer="true">
-        /// </param>
-        /// <param name="value" type="Object">
-        /// </param>
-        this[index] = value;
-    },
-    
-    shift: function SystemEx_JSArray$shift() {
-        /// <returns type="Object"></returns>
-        return this.shift();
-    },
-    
-    unshift: function SystemEx_JSArray$unshift(value) {
-        /// <param name="value" type="Object">
-        /// </param>
-        this.unshift(value);;
-    }
 }
 
 
@@ -525,7 +376,7 @@ SystemEx.StringBuilderEx.getLength = function SystemEx_StringBuilderEx$getLength
     /// <param name="b" type="ss.StringBuilder">
     /// </param>
     /// <returns type="Number" integer="true"></returns>
-    return ;
+    return b.length;
 }
 
 
@@ -905,10 +756,6 @@ SystemEx.IO.FileInfo = function SystemEx_IO_FileInfo(fileName, parent) {
     /// </field>
     /// <field name="separator" type="String" static="true">
     /// </field>
-    /// <field name="pathSeparatorChar" type="String" static="true">
-    /// </field>
-    /// <field name="pathSeparator" type="String" static="true">
-    /// </field>
     /// <field name="root" type="SystemEx.IO.FileInfo" static="true">
     /// </field>
     /// <field name="_parent" type="SystemEx.IO.FileInfo">
@@ -1057,12 +904,12 @@ SystemEx.IO.FileInfo.prototype = {
         }
     },
     
-    _createNewFile: function SystemEx_IO_FileInfo$_createNewFile() {
+    createNewFile: function SystemEx_IO_FileInfo$createNewFile() {
         /// <returns type="Boolean"></returns>
         if (this._exists() || !this._parent._exists()) {
             return false;
         }
-        SystemEx.Html.LocalStorage.setItem(this._getCanonicalPath(), SystemEx.Html.WindowEx.btoa(''));
+        SystemEx.Html.LocalStorage.setItem(this._getCanonicalPath(), window.btoa(''));
         return true;
     },
     
@@ -1111,7 +958,7 @@ SystemEx.IO.FileInfo.prototype = {
         return this._makeDirectory();
     },
     
-    _listFiles: function SystemEx_IO_FileInfo$_listFiles(predicate) {
+    listFiles: function SystemEx_IO_FileInfo$listFiles(predicate) {
         /// <param name="predicate" type="SystemEx.IO.FileInfoSearchPredicate">
         /// </param>
         /// <returns type="ss.IEnumerable"></returns>
@@ -1174,7 +1021,7 @@ SystemEx.IO.FileStream = function SystemEx_IO_FileStream(fileInfo, fileMode, fil
     this._isWriteable$1 = (fileAccess === SystemEx.IO.FileAccess.readWrite);
     if (fileInfo._exists()) {
         try {
-            this._data$1 = SystemEx.Html.WindowEx.atob(SystemEx.Html.LocalStorage.getItem(this._name$1));
+            this._data$1 = window.atob(SystemEx.Html.LocalStorage.getItem(this._name$1));
             this._length$1 = this._data$1.length;
         }
         catch (e) {
@@ -1273,7 +1120,7 @@ SystemEx.IO.FileStream.prototype = {
             return;
         }
         this._consolidate$1();
-        SystemEx.Html.LocalStorage.setItem(this._name$1, SystemEx.Html.WindowEx.btoa(this._data$1));
+        SystemEx.Html.LocalStorage.setItem(this._name$1, window.btoa(this._data$1));
         this._isDirty$1 = false;
     },
     
@@ -1406,1326 +1253,12 @@ SystemEx.IO.Stream.prototype = {
 }
 
 
-Type.registerNamespace('SystemEx.Html');
-
-////////////////////////////////////////////////////////////////////////////////
-// SystemEx.Html.WindowEx
-
-SystemEx.Html.WindowEx = function SystemEx_Html_WindowEx() {
-}
-SystemEx.Html.WindowEx.btoa = function SystemEx_Html_WindowEx$btoa(s) {
-    /// <param name="s" type="String">
-    /// </param>
-    /// <returns type="String"></returns>
-    return window.btoa(s);
-}
-SystemEx.Html.WindowEx.atob = function SystemEx_Html_WindowEx$atob(s) {
-    /// <param name="s" type="String">
-    /// </param>
-    /// <returns type="String"></returns>
-    return window.atob(s);
-}
-
-
-////////////////////////////////////////////////////////////////////////////////
-// SystemEx.Html.LocalStorage
-
-SystemEx.Html.LocalStorage = function SystemEx_Html_LocalStorage() {
-}
-SystemEx.Html.LocalStorage.getItem = function SystemEx_Html_LocalStorage$getItem(key) {
-    /// <param name="key" type="String">
-    /// </param>
-    /// <returns type="String"></returns>
-    try {
-        return window.localStorage.getItem(key);
-    }
-    catch (e) {
-        throw new Error('IOException:' + e);
-    }
-}
-SystemEx.Html.LocalStorage.key = function SystemEx_Html_LocalStorage$key(index) {
-    /// <param name="index" type="Number" integer="true">
-    /// </param>
-    /// <returns type="String"></returns>
-    try {
-        return window.localStorage.key(index);
-    }
-    catch (e) {
-        throw new Error('IOException:' + e);
-    }
-}
-SystemEx.Html.LocalStorage.get_length = function SystemEx_Html_LocalStorage$get_length() {
-    /// <value type="Number" integer="true"></value>
-    try {
-        return window.localStorage.length;
-    }
-    catch (e) {
-        throw new Error('IOException:' + e);
-    }
-}
-SystemEx.Html.LocalStorage.removeItem = function SystemEx_Html_LocalStorage$removeItem(key) {
-    /// <param name="key" type="String">
-    /// </param>
-    try {
-        window.localStorage.removeItem(key);
-    }
-    catch (e) {
-        throw new Error('IOException:' + e);
-    }
-}
-SystemEx.Html.LocalStorage.setItem = function SystemEx_Html_LocalStorage$setItem(key, value) {
-    /// <param name="key" type="String">
-    /// </param>
-    /// <param name="value" type="String">
-    /// </param>
-    try {
-        window.localStorage.setItem(key, value);
-    }
-    catch (e) {
-        throw new Error('IOException:' + e);
-    }
-}
-
-
-Type.registerNamespace('SystemEx.TypedArrays');
-
-////////////////////////////////////////////////////////////////////////////////
-// SystemEx.TypedArrays.ArrayBufferView
-
-SystemEx.TypedArrays.ArrayBufferView = function SystemEx_TypedArrays_ArrayBufferView() {
-    /// <summary>
-    /// The ArrayBufferView type holds information shared among all of the types of views of ArrayBuffers.
-    /// Taken from the Khronos TypedArrays Draft Spec as of Aug 30, 2010.
-    /// </summary>
-}
-SystemEx.TypedArrays.ArrayBufferView.prototype = {
-    
-    get_buffer: function SystemEx_TypedArrays_ArrayBufferView$get_buffer() {
-        /// <summary>
-        /// The ArrayBuffer that this ArrayBufferView references.
-        /// </summary>
-        /// <value type="SystemEx.TypedArrays.ArrayBuffer"></value>
-        return this.buffer;
-    },
-    
-    get_byteLength: function SystemEx_TypedArrays_ArrayBufferView$get_byteLength() {
-        /// <summary>
-        /// The offset of this ArrayBufferView from the start of its ArrayBuffer, in bytes, as fixed at construction time.
-        /// </summary>
-        /// <value type="Number" integer="true"></value>
-        return this.byteLength;
-    },
-    
-    get_byteOffset: function SystemEx_TypedArrays_ArrayBufferView$get_byteOffset() {
-        /// <summary>
-        /// The length of the ArrayBufferView in bytes, as fixed at construction time.
-        /// </summary>
-        /// <value type="Number" integer="true"></value>
-        return this.byteOffset;
-    }
-}
-
-
-////////////////////////////////////////////////////////////////////////////////
-// SystemEx.TypedArrays.ArrayBuffer
-
-SystemEx.TypedArrays.ArrayBuffer = function SystemEx_TypedArrays_ArrayBuffer() {
-    /// <summary>
-    /// The ArrayBuffer type describes a buffer used to store data for the TypedArray interface and its subclasses.
-    /// Taken from the Khronos TypedArrays Draft Spec as of Aug 30, 2010.
-    /// </summary>
-}
-SystemEx.TypedArrays.ArrayBuffer.create = function SystemEx_TypedArrays_ArrayBuffer$create(length) {
-    /// <summary>
-    /// Creates a new ArrayBuffer of the given length in bytes. The contents of the ArrayBuffer are initialized to 0.
-    /// </summary>
-    /// <param name="length" type="Number" integer="true">
-    /// </param>
-    /// <returns type="SystemEx.TypedArrays.ArrayBuffer"></returns>
-    return new ArrayBuffer(length);
-}
-SystemEx.TypedArrays.ArrayBuffer.prototype = {
-    
-    get_length: function SystemEx_TypedArrays_ArrayBuffer$get_length() {
-        /// <summary>
-        /// The length of the ArrayBuffer in bytes, as fixed at construction time.
-        /// </summary>
-        /// <value type="Number" integer="true"></value>
-        return this.length;
-    }
-}
-
-
-////////////////////////////////////////////////////////////////////////////////
-// SystemEx.TypedArrays.DataView
-
-SystemEx.TypedArrays.DataView = function SystemEx_TypedArrays_DataView() {
-    SystemEx.TypedArrays.DataView.initializeBase(this);
-}
-SystemEx.TypedArrays.DataView.prototype = {
-    
-    getByte: function SystemEx_TypedArrays_DataView$getByte(byteOffset) {
-        /// <param name="byteOffset" type="Number" integer="true">
-        /// </param>
-        /// <returns type="Number" integer="true"></returns>
-        return this.getUInt8(byteOffset);
-    },
-    
-    getSByte: function SystemEx_TypedArrays_DataView$getSByte(byteOffset) {
-        /// <param name="byteOffset" type="Number" integer="true">
-        /// </param>
-        /// <returns type="Number" integer="true"></returns>
-        return this.getInt8(byteOffset);
-    },
-    
-    getInt16: function SystemEx_TypedArrays_DataView$getInt16(byteOffset, littleEndian) {
-        /// <param name="byteOffset" type="Number" integer="true">
-        /// </param>
-        /// <param name="littleEndian" type="Boolean">
-        /// </param>
-        /// <returns type="Number" integer="true"></returns>
-        return this.getInt16(byteOffset, littleEndian);
-    },
-    
-    getUInt16: function SystemEx_TypedArrays_DataView$getUInt16(byteOffset, littleEndian) {
-        /// <param name="byteOffset" type="Number" integer="true">
-        /// </param>
-        /// <param name="littleEndian" type="Boolean">
-        /// </param>
-        /// <returns type="Number" integer="true"></returns>
-        return this.getUInt16(byteOffset, littleEndian);
-    },
-    
-    getInt32: function SystemEx_TypedArrays_DataView$getInt32(byteOffset, littleEndian) {
-        /// <param name="byteOffset" type="Number" integer="true">
-        /// </param>
-        /// <param name="littleEndian" type="Boolean">
-        /// </param>
-        /// <returns type="Number" integer="true"></returns>
-        return this.getInt32(byteOffset, littleEndian);
-    },
-    
-    getUInt32: function SystemEx_TypedArrays_DataView$getUInt32(byteOffset, littleEndian) {
-        /// <param name="byteOffset" type="Number" integer="true">
-        /// </param>
-        /// <param name="littleEndian" type="Boolean">
-        /// </param>
-        /// <returns type="Number" integer="true"></returns>
-        return this.getUInt32(byteOffset, littleEndian);
-    },
-    
-    getSingle: function SystemEx_TypedArrays_DataView$getSingle(byteOffset, littleEndian) {
-        /// <param name="byteOffset" type="Number" integer="true">
-        /// </param>
-        /// <param name="littleEndian" type="Boolean">
-        /// </param>
-        /// <returns type="Number"></returns>
-        return this.getFloat(byteOffset, littleEndian);
-    },
-    
-    getDouble: function SystemEx_TypedArrays_DataView$getDouble(byteOffset, littleEndian) {
-        /// <param name="byteOffset" type="Number" integer="true">
-        /// </param>
-        /// <param name="littleEndian" type="Boolean">
-        /// </param>
-        /// <returns type="Number"></returns>
-        return this.getDouble(byteOffset, littleEndian);
-    },
-    
-    setByte: function SystemEx_TypedArrays_DataView$setByte(byteOffset, value, littleEndian) {
-        /// <param name="byteOffset" type="Number" integer="true">
-        /// </param>
-        /// <param name="value" type="Number" integer="true">
-        /// </param>
-        /// <param name="littleEndian" type="Boolean">
-        /// </param>
-        this.setUint8(byteOffset, value, littleEndian);
-    },
-    
-    setSByte: function SystemEx_TypedArrays_DataView$setSByte(byteOffset, value, littleEndian) {
-        /// <param name="byteOffset" type="Number" integer="true">
-        /// </param>
-        /// <param name="value" type="Number" integer="true">
-        /// </param>
-        /// <param name="littleEndian" type="Boolean">
-        /// </param>
-        this.setInt8(byteOffset, value, littleEndian);
-    },
-    
-    setInt16: function SystemEx_TypedArrays_DataView$setInt16(byteOffset, value, littleEndian) {
-        /// <param name="byteOffset" type="Number" integer="true">
-        /// </param>
-        /// <param name="value" type="Number" integer="true">
-        /// </param>
-        /// <param name="littleEndian" type="Boolean">
-        /// </param>
-        this.setInt16(byteOffset, value, littleEndian);
-    },
-    
-    setUint16: function SystemEx_TypedArrays_DataView$setUint16(byteOffset, value, littleEndian) {
-        /// <param name="byteOffset" type="Number" integer="true">
-        /// </param>
-        /// <param name="value" type="Number" integer="true">
-        /// </param>
-        /// <param name="littleEndian" type="Boolean">
-        /// </param>
-        this.setUint16(byteOffset, value, littleEndian);
-    },
-    
-    setInt32: function SystemEx_TypedArrays_DataView$setInt32(byteOffset, value, littleEndian) {
-        /// <param name="byteOffset" type="Number" integer="true">
-        /// </param>
-        /// <param name="value" type="Number" integer="true">
-        /// </param>
-        /// <param name="littleEndian" type="Boolean">
-        /// </param>
-        this.setInt32(byteOffset, value, littleEndian);
-    },
-    
-    setUint32: function SystemEx_TypedArrays_DataView$setUint32(byteOffset, value, littleEndian) {
-        /// <param name="byteOffset" type="Number" integer="true">
-        /// </param>
-        /// <param name="value" type="Number" integer="true">
-        /// </param>
-        /// <param name="littleEndian" type="Boolean">
-        /// </param>
-        this.setUint32(byteOffset, value, littleEndian);
-    },
-    
-    setSingle: function SystemEx_TypedArrays_DataView$setSingle(byteOffset, value, littleEndian) {
-        /// <param name="byteOffset" type="Number" integer="true">
-        /// </param>
-        /// <param name="value" type="Number">
-        /// </param>
-        /// <param name="littleEndian" type="Boolean">
-        /// </param>
-        this.setFloat(byteOffset, value, littleEndian);
-    },
-    
-    setDouble: function SystemEx_TypedArrays_DataView$setDouble(byteOffset, value, littleEndian) {
-        /// <param name="byteOffset" type="Number" integer="true">
-        /// </param>
-        /// <param name="value" type="Number">
-        /// </param>
-        /// <param name="littleEndian" type="Boolean">
-        /// </param>
-        this.setDouble(byteOffset, value, littleEndian);
-    }
-}
-
-
-////////////////////////////////////////////////////////////////////////////////
-// SystemEx.TypedArrays.Float64Array
-
-SystemEx.TypedArrays.Float64Array = function SystemEx_TypedArrays_Float64Array() {
-    /// <field name="byteS_PER_ELEMENT" type="Number" integer="true" static="true">
-    /// </field>
-    SystemEx.TypedArrays.Float64Array.initializeBase(this);
-}
-SystemEx.TypedArrays.Float64Array.create = function SystemEx_TypedArrays_Float64Array$create(buffer) {
-    /// <param name="buffer" type="SystemEx.TypedArrays.ArrayBuffer">
-    /// </param>
-    /// <returns type="SystemEx.TypedArrays.Float64Array"></returns>
-    return new Float64Array(buffer);
-}
-SystemEx.TypedArrays.Float64Array.create2 = function SystemEx_TypedArrays_Float64Array$create2(buffer, byteOffset) {
-    /// <param name="buffer" type="SystemEx.TypedArrays.ArrayBuffer">
-    /// </param>
-    /// <param name="byteOffset" type="Number" integer="true">
-    /// </param>
-    /// <returns type="SystemEx.TypedArrays.Float64Array"></returns>
-    return new Float64Array(buffer, byteOffset);
-}
-SystemEx.TypedArrays.Float64Array.create3 = function SystemEx_TypedArrays_Float64Array$create3(buffer, byteOffset, length) {
-    /// <param name="buffer" type="SystemEx.TypedArrays.ArrayBuffer">
-    /// </param>
-    /// <param name="byteOffset" type="Number" integer="true">
-    /// </param>
-    /// <param name="length" type="Number" integer="true">
-    /// </param>
-    /// <returns type="SystemEx.TypedArrays.Float64Array"></returns>
-    return new Float64Array(buffer, byteOffset, length);
-}
-SystemEx.TypedArrays.Float64Array.createA = function SystemEx_TypedArrays_Float64Array$createA(data) {
-    /// <param name="data" type="Array" elementType="Number">
-    /// </param>
-    /// <returns type="SystemEx.TypedArrays.Float64Array"></returns>
-    return SystemEx.TypedArrays.Float64Array.create6(SystemEx.JSConvertEx.doublesToJSArray(data));
-}
-SystemEx.TypedArrays.Float64Array.create4 = function SystemEx_TypedArrays_Float64Array$create4(array) {
-    /// <param name="array" type="SystemEx.TypedArrays.Int32Array">
-    /// </param>
-    /// <returns type="SystemEx.TypedArrays.Float64Array"></returns>
-    return new Float64Array(array);
-}
-SystemEx.TypedArrays.Float64Array.create5 = function SystemEx_TypedArrays_Float64Array$create5(size) {
-    /// <param name="size" type="Number" integer="true">
-    /// </param>
-    /// <returns type="SystemEx.TypedArrays.Float64Array"></returns>
-    return new Float64Array(size);
-}
-SystemEx.TypedArrays.Float64Array.create6 = function SystemEx_TypedArrays_Float64Array$create6(data) {
-    /// <param name="data" type="SystemEx.JSArrayNumber">
-    /// </param>
-    /// <returns type="SystemEx.TypedArrays.Float64Array"></returns>
-    return new Float64Array(data);
-}
-SystemEx.TypedArrays.Float64Array.prototype = {
-    
-    get: function SystemEx_TypedArrays_Float64Array$get(index) {
-        /// <param name="index" type="Number" integer="true">
-        /// </param>
-        /// <returns type="Number" integer="true"></returns>
-        return this[index];
-    },
-    
-    get_length: function SystemEx_TypedArrays_Float64Array$get_length() {
-        /// <value type="Number" integer="true"></value>
-        return this.length;
-    },
-    
-    setA: function SystemEx_TypedArrays_Float64Array$setA(array, offset) {
-        /// <param name="array" type="Array" elementType="Number">
-        /// </param>
-        /// <param name="offset" type="Number" integer="true">
-        /// </param>
-        this.set5(SystemEx.JSConvertEx.doublesToJSArray(array), offset);
-    },
-    
-    set: function SystemEx_TypedArrays_Float64Array$set(array) {
-        /// <param name="array" type="SystemEx.TypedArrays.Float64Array">
-        /// </param>
-        this.set(array);
-    },
-    
-    set2: function SystemEx_TypedArrays_Float64Array$set2(array, offset) {
-        /// <param name="array" type="SystemEx.TypedArrays.Float64Array">
-        /// </param>
-        /// <param name="offset" type="Number" integer="true">
-        /// </param>
-        this.set(array, offset);
-    },
-    
-    set3: function SystemEx_TypedArrays_Float64Array$set3(index, value) {
-        /// <param name="index" type="Number" integer="true">
-        /// </param>
-        /// <param name="value" type="Number">
-        /// </param>
-        this[index] = value;
-    },
-    
-    set4: function SystemEx_TypedArrays_Float64Array$set4(array) {
-        /// <param name="array" type="SystemEx.JSArrayNumber">
-        /// </param>
-        this.set(array);
-    },
-    
-    set5: function SystemEx_TypedArrays_Float64Array$set5(array, offset) {
-        /// <param name="array" type="SystemEx.JSArrayNumber">
-        /// </param>
-        /// <param name="offset" type="Number" integer="true">
-        /// </param>
-        this.set(array, offset);
-    },
-    
-    slice: function SystemEx_TypedArrays_Float64Array$slice(offset, length) {
-        /// <param name="offset" type="Number" integer="true">
-        /// </param>
-        /// <param name="length" type="Number" integer="true">
-        /// </param>
-        /// <returns type="SystemEx.TypedArrays.Float64Array"></returns>
-        return this.slice(offset, length);
-    }
-}
-
-
-////////////////////////////////////////////////////////////////////////////////
-// SystemEx.TypedArrays.Uint32Array
-
-SystemEx.TypedArrays.Uint32Array = function SystemEx_TypedArrays_Uint32Array() {
-    /// <field name="byteS_PER_ELEMENT" type="Number" integer="true" static="true">
-    /// </field>
-    SystemEx.TypedArrays.Uint32Array.initializeBase(this);
-}
-SystemEx.TypedArrays.Uint32Array.create = function SystemEx_TypedArrays_Uint32Array$create(buffer) {
-    /// <param name="buffer" type="SystemEx.TypedArrays.ArrayBuffer">
-    /// </param>
-    /// <returns type="SystemEx.TypedArrays.Uint32Array"></returns>
-    return new Uint32Array(buffer);
-}
-SystemEx.TypedArrays.Uint32Array.create2 = function SystemEx_TypedArrays_Uint32Array$create2(buffer, byteOffset) {
-    /// <param name="buffer" type="SystemEx.TypedArrays.ArrayBuffer">
-    /// </param>
-    /// <param name="byteOffset" type="Number" integer="true">
-    /// </param>
-    /// <returns type="SystemEx.TypedArrays.Uint32Array"></returns>
-    return new Uint32Array(buffer, byteOffset);
-}
-SystemEx.TypedArrays.Uint32Array.create3 = function SystemEx_TypedArrays_Uint32Array$create3(buffer, byteOffset, length) {
-    /// <param name="buffer" type="SystemEx.TypedArrays.ArrayBuffer">
-    /// </param>
-    /// <param name="byteOffset" type="Number" integer="true">
-    /// </param>
-    /// <param name="length" type="Number" integer="true">
-    /// </param>
-    /// <returns type="SystemEx.TypedArrays.Uint32Array"></returns>
-    return new Uint32Array(buffer, byteOffset, length);
-}
-SystemEx.TypedArrays.Uint32Array.createA = function SystemEx_TypedArrays_Uint32Array$createA(data) {
-    /// <param name="data" type="Array" elementType="Number" elementInteger="true">
-    /// </param>
-    /// <returns type="SystemEx.TypedArrays.Uint32Array"></returns>
-    return SystemEx.TypedArrays.Uint32Array.create6(SystemEx.JSConvertEx.ints32ToJSArray(data));
-}
-SystemEx.TypedArrays.Uint32Array.create4 = function SystemEx_TypedArrays_Uint32Array$create4(array) {
-    /// <param name="array" type="SystemEx.TypedArrays.Int32Array">
-    /// </param>
-    /// <returns type="SystemEx.TypedArrays.Uint32Array"></returns>
-    return new Uint32Array(array);
-}
-SystemEx.TypedArrays.Uint32Array.create5 = function SystemEx_TypedArrays_Uint32Array$create5(size) {
-    /// <param name="size" type="Number" integer="true">
-    /// </param>
-    /// <returns type="SystemEx.TypedArrays.Uint32Array"></returns>
-    return new Uint32Array(size);
-}
-SystemEx.TypedArrays.Uint32Array.create6 = function SystemEx_TypedArrays_Uint32Array$create6(data) {
-    /// <param name="data" type="SystemEx.JSArrayInteger">
-    /// </param>
-    /// <returns type="SystemEx.TypedArrays.Uint32Array"></returns>
-    return new Uint32Array(data);
-}
-SystemEx.TypedArrays.Uint32Array.prototype = {
-    
-    get: function SystemEx_TypedArrays_Uint32Array$get(index) {
-        /// <param name="index" type="Number" integer="true">
-        /// </param>
-        /// <returns type="Number" integer="true"></returns>
-        return this[index];
-    },
-    
-    get_length: function SystemEx_TypedArrays_Uint32Array$get_length() {
-        /// <value type="Number" integer="true"></value>
-        return this.length;
-    },
-    
-    setA: function SystemEx_TypedArrays_Uint32Array$setA(array, offset) {
-        /// <param name="array" type="Array" elementType="Number" elementInteger="true">
-        /// </param>
-        /// <param name="offset" type="Number" integer="true">
-        /// </param>
-        this.set5(SystemEx.JSConvertEx.ints32ToJSArray(array), offset);
-    },
-    
-    set: function SystemEx_TypedArrays_Uint32Array$set(array) {
-        /// <param name="array" type="SystemEx.TypedArrays.Uint32Array">
-        /// </param>
-        this.set(array);
-    },
-    
-    set2: function SystemEx_TypedArrays_Uint32Array$set2(array, offset) {
-        /// <param name="array" type="SystemEx.TypedArrays.Uint32Array">
-        /// </param>
-        /// <param name="offset" type="Number" integer="true">
-        /// </param>
-        this.set(array, offset);
-    },
-    
-    set3: function SystemEx_TypedArrays_Uint32Array$set3(index, value) {
-        /// <param name="index" type="Number" integer="true">
-        /// </param>
-        /// <param name="value" type="Number" integer="true">
-        /// </param>
-        this[index] = value;
-    },
-    
-    set4: function SystemEx_TypedArrays_Uint32Array$set4(array) {
-        /// <param name="array" type="SystemEx.JSArrayInteger">
-        /// </param>
-        this.set(array);
-    },
-    
-    set5: function SystemEx_TypedArrays_Uint32Array$set5(array, offset) {
-        /// <param name="array" type="SystemEx.JSArrayInteger">
-        /// </param>
-        /// <param name="offset" type="Number" integer="true">
-        /// </param>
-        this.set(array, offset);
-    },
-    
-    slice: function SystemEx_TypedArrays_Uint32Array$slice(offset, length) {
-        /// <param name="offset" type="Number" integer="true">
-        /// </param>
-        /// <param name="length" type="Number" integer="true">
-        /// </param>
-        /// <returns type="SystemEx.TypedArrays.Uint32Array"></returns>
-        return this.slice(offset, length);
-    }
-}
-
-
-////////////////////////////////////////////////////////////////////////////////
-// SystemEx.TypedArrays.Int16Array
-
-SystemEx.TypedArrays.Int16Array = function SystemEx_TypedArrays_Int16Array() {
-    /// <field name="byteS_PER_ELEMENT" type="Number" integer="true" static="true">
-    /// </field>
-    SystemEx.TypedArrays.Int16Array.initializeBase(this);
-}
-SystemEx.TypedArrays.Int16Array.create = function SystemEx_TypedArrays_Int16Array$create(buffer) {
-    /// <param name="buffer" type="SystemEx.TypedArrays.ArrayBuffer">
-    /// </param>
-    /// <returns type="SystemEx.TypedArrays.Int16Array"></returns>
-    return new Int16Array(buffer);
-}
-SystemEx.TypedArrays.Int16Array.create2 = function SystemEx_TypedArrays_Int16Array$create2(buffer, byteOffset) {
-    /// <param name="buffer" type="SystemEx.TypedArrays.ArrayBuffer">
-    /// </param>
-    /// <param name="byteOffset" type="Number" integer="true">
-    /// </param>
-    /// <returns type="SystemEx.TypedArrays.Int16Array"></returns>
-    return new Int16Array(buffer, byteOffset);
-}
-SystemEx.TypedArrays.Int16Array.create3 = function SystemEx_TypedArrays_Int16Array$create3(buffer, byteOffset, length) {
-    /// <param name="buffer" type="SystemEx.TypedArrays.ArrayBuffer">
-    /// </param>
-    /// <param name="byteOffset" type="Number" integer="true">
-    /// </param>
-    /// <param name="length" type="Number" integer="true">
-    /// </param>
-    /// <returns type="SystemEx.TypedArrays.Int16Array"></returns>
-    return new Int16Array(buffer, byteOffset, length);
-}
-SystemEx.TypedArrays.Int16Array.createA = function SystemEx_TypedArrays_Int16Array$createA(data) {
-    /// <param name="data" type="Array" elementType="Number" elementInteger="true">
-    /// </param>
-    /// <returns type="SystemEx.TypedArrays.Int16Array"></returns>
-    return SystemEx.TypedArrays.Int16Array.create6(SystemEx.JSConvertEx.ints32ToJSArray(data));
-}
-SystemEx.TypedArrays.Int16Array.create4 = function SystemEx_TypedArrays_Int16Array$create4(array) {
-    /// <param name="array" type="SystemEx.TypedArrays.Int16Array">
-    /// </param>
-    /// <returns type="SystemEx.TypedArrays.Int16Array"></returns>
-    return new Int16Array(array);
-}
-SystemEx.TypedArrays.Int16Array.create5 = function SystemEx_TypedArrays_Int16Array$create5(size) {
-    /// <param name="size" type="Number" integer="true">
-    /// </param>
-    /// <returns type="SystemEx.TypedArrays.Int16Array"></returns>
-    return new Int16Array(size);
-}
-SystemEx.TypedArrays.Int16Array.create6 = function SystemEx_TypedArrays_Int16Array$create6(data) {
-    /// <param name="data" type="SystemEx.JSArrayInteger">
-    /// </param>
-    /// <returns type="SystemEx.TypedArrays.Int16Array"></returns>
-    return new Int16Array(data);
-}
-SystemEx.TypedArrays.Int16Array.prototype = {
-    
-    get: function SystemEx_TypedArrays_Int16Array$get(index) {
-        /// <param name="index" type="Number" integer="true">
-        /// </param>
-        /// <returns type="Number" integer="true"></returns>
-        return this[index];
-    },
-    
-    get_length: function SystemEx_TypedArrays_Int16Array$get_length() {
-        /// <value type="Number" integer="true"></value>
-        return this.length;
-    },
-    
-    setA: function SystemEx_TypedArrays_Int16Array$setA(array, offset) {
-        /// <param name="array" type="Array" elementType="Number" elementInteger="true">
-        /// </param>
-        /// <param name="offset" type="Number" integer="true">
-        /// </param>
-        this.set5(SystemEx.JSConvertEx.ints32ToJSArray(array), offset);
-    },
-    
-    set: function SystemEx_TypedArrays_Int16Array$set(array) {
-        /// <param name="array" type="SystemEx.TypedArrays.Int16Array">
-        /// </param>
-        this.set(array);
-    },
-    
-    set2: function SystemEx_TypedArrays_Int16Array$set2(array, offset) {
-        /// <param name="array" type="SystemEx.TypedArrays.Int16Array">
-        /// </param>
-        /// <param name="offset" type="Number" integer="true">
-        /// </param>
-        this.set(array, offset);
-    },
-    
-    set3: function SystemEx_TypedArrays_Int16Array$set3(index, value) {
-        /// <param name="index" type="Number" integer="true">
-        /// </param>
-        /// <param name="value" type="Number" integer="true">
-        /// </param>
-        this[index] = value;
-    },
-    
-    set4: function SystemEx_TypedArrays_Int16Array$set4(array) {
-        /// <param name="array" type="SystemEx.JSArrayInteger">
-        /// </param>
-        this.set(array);
-    },
-    
-    set5: function SystemEx_TypedArrays_Int16Array$set5(array, offset) {
-        /// <param name="array" type="SystemEx.JSArrayInteger">
-        /// </param>
-        /// <param name="offset" type="Number" integer="true">
-        /// </param>
-        this.set(array, offset);
-    },
-    
-    slice: function SystemEx_TypedArrays_Int16Array$slice(offset, length) {
-        /// <param name="offset" type="Number" integer="true">
-        /// </param>
-        /// <param name="length" type="Number" integer="true">
-        /// </param>
-        /// <returns type="SystemEx.TypedArrays.Int16Array"></returns>
-        return this.slice(offset, length);
-    }
-}
-
-
-////////////////////////////////////////////////////////////////////////////////
-// SystemEx.TypedArrays.Uint16Array
-
-SystemEx.TypedArrays.Uint16Array = function SystemEx_TypedArrays_Uint16Array() {
-    /// <field name="byteS_PER_ELEMENT" type="Number" integer="true" static="true">
-    /// </field>
-    SystemEx.TypedArrays.Uint16Array.initializeBase(this);
-}
-SystemEx.TypedArrays.Uint16Array.create = function SystemEx_TypedArrays_Uint16Array$create(buffer) {
-    /// <param name="buffer" type="SystemEx.TypedArrays.ArrayBuffer">
-    /// </param>
-    /// <returns type="SystemEx.TypedArrays.Uint16Array"></returns>
-    return new Uint16Array(buffer);
-}
-SystemEx.TypedArrays.Uint16Array.create2 = function SystemEx_TypedArrays_Uint16Array$create2(buffer, byteOffset) {
-    /// <param name="buffer" type="SystemEx.TypedArrays.ArrayBuffer">
-    /// </param>
-    /// <param name="byteOffset" type="Number" integer="true">
-    /// </param>
-    /// <returns type="SystemEx.TypedArrays.Uint16Array"></returns>
-    return new Uint16Array(buffer, byteOffset);
-}
-SystemEx.TypedArrays.Uint16Array.create3 = function SystemEx_TypedArrays_Uint16Array$create3(buffer, byteOffset, length) {
-    /// <param name="buffer" type="SystemEx.TypedArrays.ArrayBuffer">
-    /// </param>
-    /// <param name="byteOffset" type="Number" integer="true">
-    /// </param>
-    /// <param name="length" type="Number" integer="true">
-    /// </param>
-    /// <returns type="SystemEx.TypedArrays.Uint16Array"></returns>
-    return new Uint16Array(buffer, byteOffset, length);
-}
-SystemEx.TypedArrays.Uint16Array.createA = function SystemEx_TypedArrays_Uint16Array$createA(data) {
-    /// <param name="data" type="Array" elementType="Number" elementInteger="true">
-    /// </param>
-    /// <returns type="SystemEx.TypedArrays.Uint16Array"></returns>
-    return SystemEx.TypedArrays.Uint16Array.create6(SystemEx.JSConvertEx.ints32ToJSArray(data));
-}
-SystemEx.TypedArrays.Uint16Array.create4 = function SystemEx_TypedArrays_Uint16Array$create4(array) {
-    /// <param name="array" type="SystemEx.TypedArrays.Int32Array">
-    /// </param>
-    /// <returns type="SystemEx.TypedArrays.Uint16Array"></returns>
-    return new Uint16Array(array);
-}
-SystemEx.TypedArrays.Uint16Array.create5 = function SystemEx_TypedArrays_Uint16Array$create5(size) {
-    /// <param name="size" type="Number" integer="true">
-    /// </param>
-    /// <returns type="SystemEx.TypedArrays.Uint16Array"></returns>
-    return new Uint16Array(size);
-}
-SystemEx.TypedArrays.Uint16Array.create6 = function SystemEx_TypedArrays_Uint16Array$create6(data) {
-    /// <param name="data" type="SystemEx.JSArrayInteger">
-    /// </param>
-    /// <returns type="SystemEx.TypedArrays.Uint16Array"></returns>
-    return new Uint16Array(data);
-}
-SystemEx.TypedArrays.Uint16Array.prototype = {
-    
-    get: function SystemEx_TypedArrays_Uint16Array$get(index) {
-        /// <param name="index" type="Number" integer="true">
-        /// </param>
-        /// <returns type="Number" integer="true"></returns>
-        return this[index];
-    },
-    
-    get_length: function SystemEx_TypedArrays_Uint16Array$get_length() {
-        /// <value type="Number" integer="true"></value>
-        return this.length;
-    },
-    
-    setA: function SystemEx_TypedArrays_Uint16Array$setA(array, offset) {
-        /// <param name="array" type="Array" elementType="Number" elementInteger="true">
-        /// </param>
-        /// <param name="offset" type="Number" integer="true">
-        /// </param>
-        this.set5(SystemEx.JSConvertEx.ints32ToJSArray(array), offset);
-    },
-    
-    set: function SystemEx_TypedArrays_Uint16Array$set(array) {
-        /// <param name="array" type="SystemEx.TypedArrays.Uint16Array">
-        /// </param>
-        this.set(array);
-    },
-    
-    set2: function SystemEx_TypedArrays_Uint16Array$set2(array, offset) {
-        /// <param name="array" type="SystemEx.TypedArrays.Uint16Array">
-        /// </param>
-        /// <param name="offset" type="Number" integer="true">
-        /// </param>
-        this.set(array, offset);
-    },
-    
-    set3: function SystemEx_TypedArrays_Uint16Array$set3(index, value) {
-        /// <param name="index" type="Number" integer="true">
-        /// </param>
-        /// <param name="value" type="Number" integer="true">
-        /// </param>
-        this[index] = value;
-    },
-    
-    set4: function SystemEx_TypedArrays_Uint16Array$set4(array) {
-        /// <param name="array" type="SystemEx.JSArrayInteger">
-        /// </param>
-        this.set(array);
-    },
-    
-    set5: function SystemEx_TypedArrays_Uint16Array$set5(array, offset) {
-        /// <param name="array" type="SystemEx.JSArrayInteger">
-        /// </param>
-        /// <param name="offset" type="Number" integer="true">
-        /// </param>
-        this.set(array, offset);
-    },
-    
-    slice: function SystemEx_TypedArrays_Uint16Array$slice(offset, length) {
-        /// <param name="offset" type="Number" integer="true">
-        /// </param>
-        /// <param name="length" type="Number" integer="true">
-        /// </param>
-        /// <returns type="SystemEx.TypedArrays.Uint16Array"></returns>
-        return this.slice(offset, length);
-    }
-}
-
-
-////////////////////////////////////////////////////////////////////////////////
-// SystemEx.TypedArrays.Uint8Array
-
-SystemEx.TypedArrays.Uint8Array = function SystemEx_TypedArrays_Uint8Array() {
-    /// <field name="byteS_PER_ELEMENT" type="Number" integer="true" static="true">
-    /// </field>
-    SystemEx.TypedArrays.Uint8Array.initializeBase(this);
-}
-SystemEx.TypedArrays.Uint8Array.create = function SystemEx_TypedArrays_Uint8Array$create(buffer) {
-    /// <param name="buffer" type="SystemEx.TypedArrays.ArrayBuffer">
-    /// </param>
-    /// <returns type="SystemEx.TypedArrays.Uint8Array"></returns>
-    return new Uint8Array(buffer);
-}
-SystemEx.TypedArrays.Uint8Array.create2 = function SystemEx_TypedArrays_Uint8Array$create2(buffer, byteOffset) {
-    /// <param name="buffer" type="SystemEx.TypedArrays.ArrayBuffer">
-    /// </param>
-    /// <param name="byteOffset" type="Number" integer="true">
-    /// </param>
-    /// <returns type="SystemEx.TypedArrays.Uint8Array"></returns>
-    return new Uint8Array(buffer, byteOffset);
-}
-SystemEx.TypedArrays.Uint8Array.create3 = function SystemEx_TypedArrays_Uint8Array$create3(buffer, byteOffset, length) {
-    /// <param name="buffer" type="SystemEx.TypedArrays.ArrayBuffer">
-    /// </param>
-    /// <param name="byteOffset" type="Number" integer="true">
-    /// </param>
-    /// <param name="length" type="Number" integer="true">
-    /// </param>
-    /// <returns type="SystemEx.TypedArrays.Uint8Array"></returns>
-    return new Uint8Array(buffer, byteOffset, length);
-}
-SystemEx.TypedArrays.Uint8Array.createA = function SystemEx_TypedArrays_Uint8Array$createA(data) {
-    /// <param name="data" type="Array" elementType="Number" elementInteger="true">
-    /// </param>
-    /// <returns type="SystemEx.TypedArrays.Uint8Array"></returns>
-    return SystemEx.TypedArrays.Uint8Array.create6(SystemEx.JSConvertEx.ints32ToJSArray(data));
-}
-SystemEx.TypedArrays.Uint8Array.create4 = function SystemEx_TypedArrays_Uint8Array$create4(array) {
-    /// <param name="array" type="SystemEx.TypedArrays.Int32Array">
-    /// </param>
-    /// <returns type="SystemEx.TypedArrays.Uint8Array"></returns>
-    return new Uint8Array(array);
-}
-SystemEx.TypedArrays.Uint8Array.create5 = function SystemEx_TypedArrays_Uint8Array$create5(size) {
-    /// <param name="size" type="Number" integer="true">
-    /// </param>
-    /// <returns type="SystemEx.TypedArrays.Uint8Array"></returns>
-    return new Uint8Array(size);
-}
-SystemEx.TypedArrays.Uint8Array.create6 = function SystemEx_TypedArrays_Uint8Array$create6(data) {
-    /// <param name="data" type="SystemEx.JSArrayInteger">
-    /// </param>
-    /// <returns type="SystemEx.TypedArrays.Uint8Array"></returns>
-    return new Uint8Array(data);
-}
-SystemEx.TypedArrays.Uint8Array.prototype = {
-    
-    get: function SystemEx_TypedArrays_Uint8Array$get(index) {
-        /// <param name="index" type="Number" integer="true">
-        /// </param>
-        /// <returns type="Number" integer="true"></returns>
-        return this[index];
-    },
-    
-    get_length: function SystemEx_TypedArrays_Uint8Array$get_length() {
-        /// <value type="Number" integer="true"></value>
-        return this.length;
-    },
-    
-    setA: function SystemEx_TypedArrays_Uint8Array$setA(array, offset) {
-        /// <param name="array" type="Array" elementType="Number" elementInteger="true">
-        /// </param>
-        /// <param name="offset" type="Number" integer="true">
-        /// </param>
-        this.set5(SystemEx.JSConvertEx.ints32ToJSArray(array), offset);
-    },
-    
-    set: function SystemEx_TypedArrays_Uint8Array$set(array) {
-        /// <param name="array" type="SystemEx.TypedArrays.Uint8Array">
-        /// </param>
-        this.set(array);
-    },
-    
-    set2: function SystemEx_TypedArrays_Uint8Array$set2(array, offset) {
-        /// <param name="array" type="SystemEx.TypedArrays.Uint8Array">
-        /// </param>
-        /// <param name="offset" type="Number" integer="true">
-        /// </param>
-        this.set(array, offset);
-    },
-    
-    set3: function SystemEx_TypedArrays_Uint8Array$set3(index, value) {
-        /// <param name="index" type="Number" integer="true">
-        /// </param>
-        /// <param name="value" type="Number" integer="true">
-        /// </param>
-        this[index] = value;
-    },
-    
-    set4: function SystemEx_TypedArrays_Uint8Array$set4(array) {
-        /// <param name="array" type="SystemEx.JSArrayInteger">
-        /// </param>
-        this.set(array);
-    },
-    
-    set5: function SystemEx_TypedArrays_Uint8Array$set5(array, offset) {
-        /// <param name="array" type="SystemEx.JSArrayInteger">
-        /// </param>
-        /// <param name="offset" type="Number" integer="true">
-        /// </param>
-        this.set(array, offset);
-    },
-    
-    slice: function SystemEx_TypedArrays_Uint8Array$slice(offset, length) {
-        /// <param name="offset" type="Number" integer="true">
-        /// </param>
-        /// <param name="length" type="Number" integer="true">
-        /// </param>
-        /// <returns type="SystemEx.TypedArrays.Uint8Array"></returns>
-        return this.slice(offset, length);
-    }
-}
-
-
-////////////////////////////////////////////////////////////////////////////////
-// SystemEx.TypedArrays.Float32Array
-
-SystemEx.TypedArrays.Float32Array = function SystemEx_TypedArrays_Float32Array() {
-    /// <field name="byteS_PER_ELEMENT" type="Number" integer="true" static="true">
-    /// </field>
-    SystemEx.TypedArrays.Float32Array.initializeBase(this);
-}
-SystemEx.TypedArrays.Float32Array.create = function SystemEx_TypedArrays_Float32Array$create(buffer) {
-    /// <param name="buffer" type="SystemEx.TypedArrays.ArrayBuffer">
-    /// </param>
-    /// <returns type="SystemEx.TypedArrays.Float32Array"></returns>
-    return new Float32Array(buffer);
-}
-SystemEx.TypedArrays.Float32Array.create2 = function SystemEx_TypedArrays_Float32Array$create2(buffer, byteOffset) {
-    /// <param name="buffer" type="SystemEx.TypedArrays.ArrayBuffer">
-    /// </param>
-    /// <param name="byteOffset" type="Number" integer="true">
-    /// </param>
-    /// <returns type="SystemEx.TypedArrays.Float32Array"></returns>
-    return new Float32Array(buffer, byteOffset);
-}
-SystemEx.TypedArrays.Float32Array.create3 = function SystemEx_TypedArrays_Float32Array$create3(buffer, byteOffset, length) {
-    /// <param name="buffer" type="SystemEx.TypedArrays.ArrayBuffer">
-    /// </param>
-    /// <param name="byteOffset" type="Number" integer="true">
-    /// </param>
-    /// <param name="length" type="Number" integer="true">
-    /// </param>
-    /// <returns type="SystemEx.TypedArrays.Float32Array"></returns>
-    return new Float32Array(buffer, byteOffset, length);
-}
-SystemEx.TypedArrays.Float32Array.createA = function SystemEx_TypedArrays_Float32Array$createA(data) {
-    /// <param name="data" type="Array" elementType="Number">
-    /// </param>
-    /// <returns type="SystemEx.TypedArrays.Float32Array"></returns>
-    return SystemEx.TypedArrays.Float32Array.create6(SystemEx.JSConvertEx.singlesToJSArray(data));
-}
-SystemEx.TypedArrays.Float32Array.create4 = function SystemEx_TypedArrays_Float32Array$create4(array) {
-    /// <param name="array" type="SystemEx.TypedArrays.Int32Array">
-    /// </param>
-    /// <returns type="SystemEx.TypedArrays.Float32Array"></returns>
-    return new Float32Array(array);
-}
-SystemEx.TypedArrays.Float32Array.create5 = function SystemEx_TypedArrays_Float32Array$create5(size) {
-    /// <param name="size" type="Number" integer="true">
-    /// </param>
-    /// <returns type="SystemEx.TypedArrays.Float32Array"></returns>
-    return new Float32Array(size);
-}
-SystemEx.TypedArrays.Float32Array.create6 = function SystemEx_TypedArrays_Float32Array$create6(data) {
-    /// <param name="data" type="SystemEx.JSArrayNumber">
-    /// </param>
-    /// <returns type="SystemEx.TypedArrays.Float32Array"></returns>
-    return new Float32Array(data);
-}
-SystemEx.TypedArrays.Float32Array.prototype = {
-    
-    get: function SystemEx_TypedArrays_Float32Array$get(index) {
-        /// <param name="index" type="Number" integer="true">
-        /// </param>
-        /// <returns type="Number" integer="true"></returns>
-        return this[index];
-    },
-    
-    get_length: function SystemEx_TypedArrays_Float32Array$get_length() {
-        /// <value type="Number" integer="true"></value>
-        return this.length;
-    },
-    
-    setA: function SystemEx_TypedArrays_Float32Array$setA(array, offset) {
-        /// <param name="array" type="Array" elementType="Number">
-        /// </param>
-        /// <param name="offset" type="Number" integer="true">
-        /// </param>
-        this.set5(SystemEx.JSConvertEx.singlesToJSArray(array), offset);
-    },
-    
-    set: function SystemEx_TypedArrays_Float32Array$set(array) {
-        /// <param name="array" type="SystemEx.TypedArrays.Float32Array">
-        /// </param>
-        this.set(array);
-    },
-    
-    set2: function SystemEx_TypedArrays_Float32Array$set2(array, offset) {
-        /// <param name="array" type="SystemEx.TypedArrays.Float32Array">
-        /// </param>
-        /// <param name="offset" type="Number" integer="true">
-        /// </param>
-        this.set(array, offset);
-    },
-    
-    set3: function SystemEx_TypedArrays_Float32Array$set3(index, value) {
-        /// <param name="index" type="Number" integer="true">
-        /// </param>
-        /// <param name="value" type="Number">
-        /// </param>
-        this[index] = value;
-    },
-    
-    set4: function SystemEx_TypedArrays_Float32Array$set4(array) {
-        /// <param name="array" type="SystemEx.JSArrayNumber">
-        /// </param>
-        this.set(array);
-    },
-    
-    set5: function SystemEx_TypedArrays_Float32Array$set5(array, offset) {
-        /// <param name="array" type="SystemEx.JSArrayNumber">
-        /// </param>
-        /// <param name="offset" type="Number" integer="true">
-        /// </param>
-        this.set(array, offset);
-    },
-    
-    slice: function SystemEx_TypedArrays_Float32Array$slice(offset, length) {
-        /// <param name="offset" type="Number" integer="true">
-        /// </param>
-        /// <param name="length" type="Number" integer="true">
-        /// </param>
-        /// <returns type="SystemEx.TypedArrays.Float32Array"></returns>
-        return this.slice(offset, length);
-    }
-}
-
-
-////////////////////////////////////////////////////////////////////////////////
-// SystemEx.TypedArrays.Int32Array
-
-SystemEx.TypedArrays.Int32Array = function SystemEx_TypedArrays_Int32Array() {
-    /// <field name="byteS_PER_ELEMENT" type="Number" integer="true" static="true">
-    /// </field>
-    SystemEx.TypedArrays.Int32Array.initializeBase(this);
-}
-SystemEx.TypedArrays.Int32Array.create = function SystemEx_TypedArrays_Int32Array$create(buffer) {
-    /// <param name="buffer" type="SystemEx.TypedArrays.ArrayBuffer">
-    /// </param>
-    /// <returns type="SystemEx.TypedArrays.Int32Array"></returns>
-    return new Int32Array(buffer);
-}
-SystemEx.TypedArrays.Int32Array.create2 = function SystemEx_TypedArrays_Int32Array$create2(buffer, byteOffset) {
-    /// <param name="buffer" type="SystemEx.TypedArrays.ArrayBuffer">
-    /// </param>
-    /// <param name="byteOffset" type="Number" integer="true">
-    /// </param>
-    /// <returns type="SystemEx.TypedArrays.Int32Array"></returns>
-    return new Int32Array(buffer, byteOffset);
-}
-SystemEx.TypedArrays.Int32Array.create3 = function SystemEx_TypedArrays_Int32Array$create3(buffer, byteOffset, length) {
-    /// <param name="buffer" type="SystemEx.TypedArrays.ArrayBuffer">
-    /// </param>
-    /// <param name="byteOffset" type="Number" integer="true">
-    /// </param>
-    /// <param name="length" type="Number" integer="true">
-    /// </param>
-    /// <returns type="SystemEx.TypedArrays.Int32Array"></returns>
-    return new Int32Array(buffer, byteOffset, length);
-}
-SystemEx.TypedArrays.Int32Array.createA = function SystemEx_TypedArrays_Int32Array$createA(data) {
-    /// <param name="data" type="Array" elementType="Number" elementInteger="true">
-    /// </param>
-    /// <returns type="SystemEx.TypedArrays.Int32Array"></returns>
-    return SystemEx.TypedArrays.Int32Array.create6(SystemEx.JSConvertEx.ints32ToJSArray(data));
-}
-SystemEx.TypedArrays.Int32Array.create4 = function SystemEx_TypedArrays_Int32Array$create4(array) {
-    /// <param name="array" type="SystemEx.TypedArrays.Int32Array">
-    /// </param>
-    /// <returns type="SystemEx.TypedArrays.Int32Array"></returns>
-    return new Int32Array(array);
-}
-SystemEx.TypedArrays.Int32Array.create5 = function SystemEx_TypedArrays_Int32Array$create5(size) {
-    /// <param name="size" type="Number" integer="true">
-    /// </param>
-    /// <returns type="SystemEx.TypedArrays.Int32Array"></returns>
-    return new Int32Array(size);
-}
-SystemEx.TypedArrays.Int32Array.create6 = function SystemEx_TypedArrays_Int32Array$create6(data) {
-    /// <param name="data" type="SystemEx.JSArrayInteger">
-    /// </param>
-    /// <returns type="SystemEx.TypedArrays.Int32Array"></returns>
-    return new Int32Array(data);
-}
-SystemEx.TypedArrays.Int32Array.prototype = {
-    
-    get: function SystemEx_TypedArrays_Int32Array$get(index) {
-        /// <param name="index" type="Number" integer="true">
-        /// </param>
-        /// <returns type="Number" integer="true"></returns>
-        return this[index];
-    },
-    
-    get_length: function SystemEx_TypedArrays_Int32Array$get_length() {
-        /// <value type="Number" integer="true"></value>
-        return this.length;
-    },
-    
-    setA: function SystemEx_TypedArrays_Int32Array$setA(array, offset) {
-        /// <param name="array" type="Array" elementType="Number" elementInteger="true">
-        /// </param>
-        /// <param name="offset" type="Number" integer="true">
-        /// </param>
-        this.set5(SystemEx.JSConvertEx.ints32ToJSArray(array), offset);
-    },
-    
-    set: function SystemEx_TypedArrays_Int32Array$set(array) {
-        /// <param name="array" type="SystemEx.TypedArrays.Int32Array">
-        /// </param>
-        this.set(array);
-    },
-    
-    set2: function SystemEx_TypedArrays_Int32Array$set2(array, offset) {
-        /// <param name="array" type="SystemEx.TypedArrays.Int32Array">
-        /// </param>
-        /// <param name="offset" type="Number" integer="true">
-        /// </param>
-        this.set(array, offset);
-    },
-    
-    set3: function SystemEx_TypedArrays_Int32Array$set3(index, value) {
-        /// <param name="index" type="Number" integer="true">
-        /// </param>
-        /// <param name="value" type="Number" integer="true">
-        /// </param>
-        this[index] = value;
-    },
-    
-    set4: function SystemEx_TypedArrays_Int32Array$set4(array) {
-        /// <param name="array" type="SystemEx.JSArrayInteger">
-        /// </param>
-        this.set(array);
-    },
-    
-    set5: function SystemEx_TypedArrays_Int32Array$set5(array, offset) {
-        /// <param name="array" type="SystemEx.JSArrayInteger">
-        /// </param>
-        /// <param name="offset" type="Number" integer="true">
-        /// </param>
-        this.set(array, offset);
-    },
-    
-    slice: function SystemEx_TypedArrays_Int32Array$slice(offset, length) {
-        /// <param name="offset" type="Number" integer="true">
-        /// </param>
-        /// <param name="length" type="Number" integer="true">
-        /// </param>
-        /// <returns type="SystemEx.TypedArrays.Int32Array"></returns>
-        return this.slice(offset, length);
-    }
-}
-
-
-////////////////////////////////////////////////////////////////////////////////
-// SystemEx.TypedArrays.Int8Array
-
-SystemEx.TypedArrays.Int8Array = function SystemEx_TypedArrays_Int8Array() {
-    /// <summary>
-    /// The typed array view types represent a view of an ArrayBuffer that allows for indexing and manipulation. The length of each of these is fixed.
-    /// Taken from the Khronos TypedArrays Draft Spec as of Aug 30, 2010.
-    /// </summary>
-    /// <field name="byteS_PER_ELEMENT" type="Number" integer="true" static="true">
-    /// </field>
-    SystemEx.TypedArrays.Int8Array.initializeBase(this);
-}
-SystemEx.TypedArrays.Int8Array.create = function SystemEx_TypedArrays_Int8Array$create(buffer) {
-    /// <param name="buffer" type="SystemEx.TypedArrays.ArrayBuffer">
-    /// </param>
-    /// <returns type="SystemEx.TypedArrays.Int8Array"></returns>
-    return new Int8Array(buffer);
-}
-SystemEx.TypedArrays.Int8Array.create2 = function SystemEx_TypedArrays_Int8Array$create2(buffer, byteOffset) {
-    /// <param name="buffer" type="SystemEx.TypedArrays.ArrayBuffer">
-    /// </param>
-    /// <param name="byteOffset" type="Number" integer="true">
-    /// </param>
-    /// <returns type="SystemEx.TypedArrays.Int8Array"></returns>
-    return new Int8Array(buffer, byteOffset);
-}
-SystemEx.TypedArrays.Int8Array.create3 = function SystemEx_TypedArrays_Int8Array$create3(buffer, byteOffset, length) {
-    /// <param name="buffer" type="SystemEx.TypedArrays.ArrayBuffer">
-    /// </param>
-    /// <param name="byteOffset" type="Number" integer="true">
-    /// </param>
-    /// <param name="length" type="Number" integer="true">
-    /// </param>
-    /// <returns type="SystemEx.TypedArrays.Int8Array"></returns>
-    return new Int8Array(buffer, byteOffset, length);
-}
-SystemEx.TypedArrays.Int8Array.createA = function SystemEx_TypedArrays_Int8Array$createA(data) {
-    /// <param name="data" type="Array" elementType="Number" elementInteger="true">
-    /// </param>
-    /// <returns type="SystemEx.TypedArrays.Int8Array"></returns>
-    return SystemEx.TypedArrays.Int8Array.create6(SystemEx.JSConvertEx.ints32ToJSArray(data));
-}
-SystemEx.TypedArrays.Int8Array.create4 = function SystemEx_TypedArrays_Int8Array$create4(array) {
-    /// <param name="array" type="SystemEx.TypedArrays.Int8Array">
-    /// </param>
-    /// <returns type="SystemEx.TypedArrays.Int8Array"></returns>
-    return new Int8Array(array);
-}
-SystemEx.TypedArrays.Int8Array.create5 = function SystemEx_TypedArrays_Int8Array$create5(size) {
-    /// <param name="size" type="Number" integer="true">
-    /// </param>
-    /// <returns type="SystemEx.TypedArrays.Int8Array"></returns>
-    return new Int8Array(size);
-}
-SystemEx.TypedArrays.Int8Array.create6 = function SystemEx_TypedArrays_Int8Array$create6(data) {
-    /// <param name="data" type="SystemEx.JSArrayInteger">
-    /// </param>
-    /// <returns type="SystemEx.TypedArrays.Int8Array"></returns>
-    return new Int8Array(data);
-}
-SystemEx.TypedArrays.Int8Array.prototype = {
-    
-    get: function SystemEx_TypedArrays_Int8Array$get(index) {
-        /// <param name="index" type="Number" integer="true">
-        /// </param>
-        /// <returns type="Number" integer="true"></returns>
-        return this[index];
-    },
-    
-    get_length: function SystemEx_TypedArrays_Int8Array$get_length() {
-        /// <value type="Number" integer="true"></value>
-        return this.length;
-    },
-    
-    setA: function SystemEx_TypedArrays_Int8Array$setA(array, offset) {
-        /// <param name="array" type="Array" elementType="Number" elementInteger="true">
-        /// </param>
-        /// <param name="offset" type="Number" integer="true">
-        /// </param>
-        this.set5(SystemEx.JSConvertEx.ints32ToJSArray(array), offset);
-    },
-    
-    set: function SystemEx_TypedArrays_Int8Array$set(array) {
-        /// <param name="array" type="SystemEx.TypedArrays.Int8Array">
-        /// </param>
-        this.set(array);
-    },
-    
-    set2: function SystemEx_TypedArrays_Int8Array$set2(array, offset) {
-        /// <param name="array" type="SystemEx.TypedArrays.Int8Array">
-        /// </param>
-        /// <param name="offset" type="Number" integer="true">
-        /// </param>
-        this.set(array, offset);
-    },
-    
-    set3: function SystemEx_TypedArrays_Int8Array$set3(index, value) {
-        /// <param name="index" type="Number" integer="true">
-        /// </param>
-        /// <param name="value" type="Number" integer="true">
-        /// </param>
-        this[index] = value;
-    },
-    
-    set4: function SystemEx_TypedArrays_Int8Array$set4(array) {
-        /// <param name="array" type="SystemEx.JSArrayInteger">
-        /// </param>
-        this.set(array);
-    },
-    
-    set5: function SystemEx_TypedArrays_Int8Array$set5(array, offset) {
-        /// <param name="array" type="SystemEx.JSArrayInteger">
-        /// </param>
-        /// <param name="offset" type="Number" integer="true">
-        /// </param>
-        this.set(array, offset);
-    },
-    
-    slice: function SystemEx_TypedArrays_Int8Array$slice(offset, length) {
-        /// <param name="offset" type="Number" integer="true">
-        /// </param>
-        /// <param name="length" type="Number" integer="true">
-        /// </param>
-        /// <returns type="SystemEx.TypedArrays.Int8Array"></returns>
-        return this.slice(offset, length);
-    }
-}
-
-
+SystemEx.Html.CloseEventArgs.registerClass('SystemEx.Html.CloseEventArgs');
+SystemEx.Html.MessageEventArgs.registerClass('SystemEx.Html.MessageEventArgs');
+SystemEx.Html.WebSocket.registerClass('SystemEx.Html.WebSocket');
+SystemEx.Html.LocalStorage.registerClass('SystemEx.Html.LocalStorage');
 SystemEx.JSArrayEx.registerClass('SystemEx.JSArrayEx');
 SystemEx.JSConvertEx.registerClass('SystemEx.JSConvertEx');
-SystemEx.JSArrayString.registerClass('SystemEx.JSArrayString');
-SystemEx.JSArrayNumber.registerClass('SystemEx.JSArrayNumber');
-SystemEx.JSArrayMixed.registerClass('SystemEx.JSArrayMixed');
-SystemEx.JSArrayInteger.registerClass('SystemEx.JSArrayInteger');
-SystemEx.JSArrayBoolean.registerClass('SystemEx.JSArrayBoolean');
-SystemEx.JSArray.registerClass('SystemEx.JSArray');
 SystemEx.StringBuilderEx.registerClass('SystemEx.StringBuilderEx');
 SystemEx.IO.Stream.registerClass('SystemEx.IO.Stream');
 SystemEx.IO.MemoryStream.registerClass('SystemEx.IO.MemoryStream', SystemEx.IO.Stream);
@@ -2735,35 +1268,23 @@ SystemEx.IO.FileStream.registerClass('SystemEx.IO.FileStream', SystemEx.IO.Strea
 SystemEx.IO.Path.registerClass('SystemEx.IO.Path');
 SystemEx.IO.Directory.registerClass('SystemEx.IO.Directory');
 SystemEx.IO.File.registerClass('SystemEx.IO.File');
-SystemEx.Html.WindowEx.registerClass('SystemEx.Html.WindowEx');
-SystemEx.Html.LocalStorage.registerClass('SystemEx.Html.LocalStorage');
-SystemEx.TypedArrays.ArrayBufferView.registerClass('SystemEx.TypedArrays.ArrayBufferView');
-SystemEx.TypedArrays.ArrayBuffer.registerClass('SystemEx.TypedArrays.ArrayBuffer');
-SystemEx.TypedArrays.DataView.registerClass('SystemEx.TypedArrays.DataView', SystemEx.TypedArrays.ArrayBufferView);
-SystemEx.TypedArrays.Float64Array.registerClass('SystemEx.TypedArrays.Float64Array', SystemEx.TypedArrays.ArrayBufferView);
-SystemEx.TypedArrays.Uint32Array.registerClass('SystemEx.TypedArrays.Uint32Array', SystemEx.TypedArrays.ArrayBufferView);
-SystemEx.TypedArrays.Int16Array.registerClass('SystemEx.TypedArrays.Int16Array', SystemEx.TypedArrays.ArrayBufferView);
-SystemEx.TypedArrays.Uint16Array.registerClass('SystemEx.TypedArrays.Uint16Array', SystemEx.TypedArrays.ArrayBufferView);
-SystemEx.TypedArrays.Uint8Array.registerClass('SystemEx.TypedArrays.Uint8Array', SystemEx.TypedArrays.ArrayBufferView);
-SystemEx.TypedArrays.Float32Array.registerClass('SystemEx.TypedArrays.Float32Array', SystemEx.TypedArrays.ArrayBufferView);
-SystemEx.TypedArrays.Int32Array.registerClass('SystemEx.TypedArrays.Int32Array', SystemEx.TypedArrays.ArrayBufferView);
-SystemEx.TypedArrays.Int8Array.registerClass('SystemEx.TypedArrays.Int8Array', SystemEx.TypedArrays.ArrayBufferView);
-SystemEx.JSConvertEx._wba = SystemEx.TypedArrays.Int8Array.create5(4);
-SystemEx.JSConvertEx._wia = SystemEx.TypedArrays.Int32Array.create3(SystemEx.JSConvertEx._wba.get_buffer(), 0, 1);
-SystemEx.JSConvertEx._wfa = SystemEx.TypedArrays.Float32Array.create3(SystemEx.JSConvertEx._wba.get_buffer(), 0, 1);
+SystemEx.Html.WebSocket.CONNECTING = 0;
+SystemEx.Html.WebSocket.OPEN = 1;
+SystemEx.Html.WebSocket.CLOSING = 2;
+SystemEx.Html.WebSocket.CLOSED = 3;
+SystemEx.JSConvertEx._wba = new Int8Array(4);
+SystemEx.JSConvertEx._wia = new Int32Array(SystemEx.JSConvertEx._wba.buffer, 0, 1);
+SystemEx.JSConvertEx._wfa = new Float32Array(SystemEx.JSConvertEx._wba.buffer, 0, 1);
+(function () {
+    ss.StringBuilder.prototype.baseAppend = ss.StringBuilder.prototype.append;
+    ss.StringBuilder.prototype.baseClear = ss.StringBuilder.prototype.clear;
+    ss.StringBuilder.prototype.append = function(s) { if (!ss.isNullOrUndefined(s)) this.length += s.length; return this.baseAppend(s); }
+    ss.StringBuilder.prototype.clear = function(s) { this.length = 0; return this.baseClear(); }
+    ss.StringBuilder.prototype.length = 0;
+})();
 SystemEx.IO.FileInfo.separatorChar = '/';
-SystemEx.IO.FileInfo.separator = '//';
-SystemEx.IO.FileInfo.pathSeparatorChar = ':';
-SystemEx.IO.FileInfo.pathSeparator = ':';
+SystemEx.IO.FileInfo.separator = '/';
 SystemEx.IO.FileInfo.root = new SystemEx.IO.FileInfo('');
-SystemEx.TypedArrays.Float64Array.byteS_PER_ELEMENT = 4;
-SystemEx.TypedArrays.Uint32Array.byteS_PER_ELEMENT = 4;
-SystemEx.TypedArrays.Int16Array.byteS_PER_ELEMENT = 2;
-SystemEx.TypedArrays.Uint16Array.byteS_PER_ELEMENT = 2;
-SystemEx.TypedArrays.Uint8Array.byteS_PER_ELEMENT = 1;
-SystemEx.TypedArrays.Float32Array.byteS_PER_ELEMENT = 4;
-SystemEx.TypedArrays.Int32Array.byteS_PER_ELEMENT = 4;
-SystemEx.TypedArrays.Int8Array.byteS_PER_ELEMENT = 1;
 
 }
 ss.loader.registerScript('Script.WebEx', [], executeScript);
