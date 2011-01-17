@@ -1,10 +1,12 @@
 using System;
-namespace SystemEx.TypedArrays
+using System.Runtime.CompilerServices;
+namespace System.TypedArrays
 {
     /// <summary>
     /// The ArrayBufferView type holds information shared among all of the types of views of ArrayBuffers.
     /// Taken from the Khronos TypedArrays Draft Spec as of Aug 30, 2010.
     /// </summary>
+    [IgnoreNamespace, Imported]
     public class ArrayBufferView
     {
         protected ArrayBufferView() { }
@@ -13,27 +15,30 @@ namespace SystemEx.TypedArrays
         /// The ArrayBuffer that this ArrayBufferView references.
         /// </summary>
         /// <returns></returns>
+        [IntrinsicProperty]
         public ArrayBuffer Buffer
         {
-            get { return (ArrayBuffer)Script.Literal("this.buffer"); }
+            get { return null; }
         }
 
         /// <summary>
         /// The offset of this ArrayBufferView from the start of its ArrayBuffer, in bytes, as fixed at construction time.
         /// </summary>
         /// <returns></returns>
+        [IntrinsicProperty]
         public int ByteLength
         {
-            get { return (int)Script.Literal("this.byteLength"); }
+            get { return 0; }
         }
 
         /// <summary>
         /// The length of the ArrayBufferView in bytes, as fixed at construction time.
         /// </summary>
         /// <returns></returns>
+        [IntrinsicProperty]
         public int ByteOffset
         {
-            get { return (int)Script.Literal("this.byteOffset"); }
+            get { return 0; }
         }
     }
 }

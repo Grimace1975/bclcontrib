@@ -1,5 +1,6 @@
 using System;
 using System.Runtime.CompilerServices;
+using System.TypedArrays;
 namespace SystemEx.TypedArrays
 {
     // [TypedArrays] https://cvs.khronos.org/svn/repos/registry/trunk/public/webgl/doc/spec/TypedArray-spec.html

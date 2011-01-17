@@ -1,24 +1,15 @@
 using System;
-using SystemEx.TypedArrays;
+using System.TypedArrays;
 namespace SystemEx
 {
     public class JSConvertEx
     {
-        private static Int8Array _wba = Int8Array.Create5(4);
-        private static Int32Array _wia = Int32Array.Create3(_wba.Buffer, 0, 1);
-        private static Float32Array _wfa = Float32Array.Create3(_wba.Buffer, 0, 1);
+        private static Int8Array _wba = new Int8Array(4);
+        private static Int32Array _wia = new Int32Array(_wba.Buffer, 0, 1);
+        private static Float32Array _wfa = new Float32Array(_wba.Buffer, 0, 1);
 
-        public static int SingleToIntBits(float v)
-        {
-            _wfa.Set3(0, v);
-            return _wia.Get(0);
-        }
-
-        public static float IntBitsToSingle(int v)
-        {
-            _wia.Set3(0, v);
-            return _wfa.Get(0);
-        }
+        public static int SingleToIntBits(float v) { _wfa[0] = v; return _wia[0]; }
+        public static float IntBitsToSingle(int v) { _wia[0] = v; return _wfa[0]; }
 
         public static JSArrayInteger BytesToJSArray(byte[] data)
         {

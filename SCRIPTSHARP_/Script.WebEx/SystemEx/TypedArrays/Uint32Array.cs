@@ -1,5 +1,6 @@
 using System;
 using System.Runtime.CompilerServices;
+using System.TypedArrays;
 namespace SystemEx.TypedArrays
 {
     public class Uint32Array : ArrayBufferView
