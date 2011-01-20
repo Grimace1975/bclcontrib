@@ -31,14 +31,14 @@ using System.Reflection;
 namespace System.Quality.EventSourcing
 {
     /// <summary>
-    /// RegistryAggregateRootEventDispatcher
+    /// RegistryEventDispatcher
     /// </summary>
-    public class RegistryAggregateRootEventDispatcher : IAggregateRootEventDispatcher
+    public class RegistryEventDispatcher : IAggregateRootEventDispatcher
     {
         private readonly IDictionary<Type, Action<Event>> _handlerRegistry = new Dictionary<Type, Action<Event>>();
 
-        public RegistryAggregateRootEventDispatcher() { }
-        public RegistryAggregateRootEventDispatcher(Type aggregateType)
+        public RegistryEventDispatcher() { }
+        public RegistryEventDispatcher(Type aggregateType)
         {
             RegisterByConvention(aggregateType);
         }

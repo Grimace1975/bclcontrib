@@ -10,6 +10,7 @@ namespace System.Quality.EventSourcing
     {
         private readonly string _connectionString;
         private readonly string _tableName;
+        private readonly ISerializer _serializer;
 
         protected class EventOrdinal
         {
@@ -22,11 +23,20 @@ namespace System.Quality.EventSourcing
         }
 
         public SqlEventStore(string connectionString)
-            : this(connectionString, "AggregateEvent") { }
+            : this(connectionString, "AggregateEvent", new JsonSerializer()) { }
         public SqlEventStore(string connectionString, string tableName)
+            : this(connectionString, tableName, new JsonSerializer()) { }
+        public SqlEventStore(string connectionString, string tableName, ISerializer serializer)
         {
+            if (string.IsNullOrEmpty(connectionString))
+                throw new ArgumentNullException("connectionString");
+            if (string.IsNullOrEmpty(tableName))
+                throw new ArgumentNullException("tableName");
+            if (serializer == null)
+                throw new ArgumentNullException("serializer");
             _connectionString = connectionString;
             _tableName = tableName;
+            _serializer = serializer;
         }
 
         public IEnumerable<Event> GetEventsForAggregate(object aggregateId, int startSequence)
@@ -57,7 +67,10 @@ Order By EventSequence;", _tableName);
 
         public IEnumerable<Event> GetEventsByEventTypes(IEnumerable<Type> eventTypes)
         {
-            var eventTypesXml = new XElement("r", eventTypes.Select(x => new XElement("e", new XAttribute("type", x.Name))));
+            var eventTypesXml = new XElement("r", eventTypes
+                .Select(x => new XElement("e",
+                    new XAttribute("type", x.Name)
+                )));
             using (var connection = new SqlConnection(_connectionString))
             {
                 var sql = string.Format(@"
@@ -83,7 +96,13 @@ Order By AggregateId, EventSequence;", _tableName);
 
         public void SaveEvents(object aggregateId, IEnumerable<Event> events)
         {
-            var eventsXml = new XElement("r", events.Select(x => new XElement("e", new XAttribute("sequence", x.Sequence), new XAttribute("eventDate", x.EventDate), new XAttribute("type", x.GetType().Name), SqlBuilder.ToJson(x.GetType(), x))));
+            var eventsXml = new XElement("r", events
+                .Select(x => new XElement("e",
+                    new XAttribute("sequence", x.Sequence),
+                    new XAttribute("eventDate", x.EventDate),
+                    new XAttribute("type", x.GetType().Name),
+                    _serializer.WriteObject(x.GetType(), x)
+                )));
             using (var connection = new SqlConnection(_connectionString))
             {
                 var b = new StringBuilder();
@@ -104,7 +123,7 @@ From @eventsXml.nodes(N'/r/e') _xml(item);", _tableName));
         {
             var type = Type.GetType(r.Field<string>(ordinal.Type));
             string blob = r.Field<string>(ordinal.Blob);
-            return SqlBuilder.FromJson<Event>(type, blob);
+            return _serializer.ReadObject<Event>(type, blob);
         }
     }
 }

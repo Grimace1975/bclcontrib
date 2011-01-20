@@ -57,7 +57,9 @@
     <Compile Include="Quality+EventSourcing\EventSourcing+Impl\MemoryAggregateRootSnapshotStore.cs" />
     <Compile Include="Quality+EventSourcing\EventSourcing+Impl\MemoryEventStore.cs" />
     <Compile Include="Quality+EventSourcing\EventSourcing\AggregateRoot.cs" />
-    <Compile Include="Quality+EventSourcing\EventSourcing\RegistryAggregateRootEventDispatcher.cs" />
+    <Compile Include="Quality+EventSourcing\EventSourcing+Impl\ReplayAggregateRoot.cs" />
+    <Compile Include="Quality+EventSourcing\EventSourcing\Event2.cs" />
+    <Compile Include="Quality+EventSourcing\EventSourcing+Impl\RegistryEventDispatcher.cs" />
     <Compile Include="Quality+EventSourcing\EventSourcing\IAggregateRootEventDispatcher.cs" />
     <Compile Include="Quality+EventSourcing\EventSourcing\ICanAggregateRootSnapshot.cs" />
     <Compile Include="Quality+EventSourcing\EventSourcing\AggregateRootSnapshot.cs" />
@@ -98,6 +100,8 @@
     <Compile Include="Quality+ServiceLocator\Reference_\zResolveLifetime.cs" />
     <Compile Include="Quality+ServiceLocator\IServiceRegistration.cs" />
     <Compile Include="Quality\AssemblyTypeCatalog.cs" />
+    <Compile Include="Quality\ISerializerExtensions.cs" />
+    <Compile Include="Quality\ISerializer.cs" />
     <Compile Include="Quality\TypeCatalogExtensions.cs" />
     <Compile Include="Quality\ITypeCatalog.cs" />
   </ItemGroup>

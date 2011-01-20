@@ -9,6 +9,7 @@ namespace System.Quality.EventSourcing
     {
         private readonly string _connectionString;
         private readonly string _tableName;
+        private readonly ISerializer _serializer;
 
         protected class SnapshotOrdinal
         {
@@ -20,11 +21,20 @@ namespace System.Quality.EventSourcing
             }
         }
         public SqlAggregateRootSnapshotStore(string connectionString)
-            : this(connectionString, "AggregateSnapshot") { }
+            : this(connectionString, "AggregateSnapshot", new JsonSerializer()) { }
         public SqlAggregateRootSnapshotStore(string connectionString, string tableName)
+            : this(connectionString, tableName, new JsonSerializer()) { }
+        public SqlAggregateRootSnapshotStore(string connectionString, string tableName, ISerializer serializer)
         {
+            if (string.IsNullOrEmpty(connectionString))
+                throw new ArgumentNullException("connectionString");
+            if (string.IsNullOrEmpty(tableName))
+                throw new ArgumentNullException("tableName");
+            if (serializer == null)
+                throw new ArgumentNullException("serializer");
             _connectionString = connectionString;
             _tableName = tableName;
+            _serializer = serializer;
         }
 
         public AggregateRootSnapshot GetSnapshot<TAggregateRoot>(object aggregateId)
@@ -52,7 +62,7 @@ From dbo.[{0}]
             where TSnapshot : AggregateRootSnapshot
         {
             var snapshotType = snapshot.GetType();
-            var snapshotJson = SqlBuilder.ToJson(snapshotType, snapshot);
+            var snapshotJson = _serializer.WriteObject(snapshotType, snapshot);
             using (var connection = new SqlConnection(_connectionString))
             {
                 var sql = string.Format(@"
@@ -84,7 +94,7 @@ When Not Matched By Target Then
         {
             var type = Type.GetType(r.Field<string>(ordinal.Type));
             string blob = r.Field<string>(ordinal.Blob);
-            return SqlBuilder.FromJson<AggregateRootSnapshot>(type, blob);
+            return _serializer.ReadObject<AggregateRootSnapshot>(type, blob);
         }
     }
 }

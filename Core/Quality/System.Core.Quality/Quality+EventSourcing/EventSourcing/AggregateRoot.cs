@@ -35,27 +35,34 @@ namespace System.Quality.EventSourcing
     /// </summary>
     public abstract class AggregateRoot : IAccessAggregateRootState
     {
+        public static readonly IAggregateRootEventDispatcher EmptyEventDispatcher = new EmptyAggregateRootEventDispatcher();
         private readonly List<Event> _changes = new List<Event>();
-        private readonly IAggregateRootEventDispatcher _dispatcher;
-        private bool _useStorageSequencing;
+        private readonly IAggregateRootEventDispatcher _eventDispatcher;
+        private bool _useStorageBasedSequencing;
 
-        public AggregateRoot()
-            : this(new RegistryAggregateRootEventDispatcher()) { }
-        public AggregateRoot(Type aggregateType)
-            : this(new RegistryAggregateRootEventDispatcher(aggregateType)) { }
-        public AggregateRoot(IAggregateRootEventDispatcher dispatcher)
+        private class EmptyAggregateRootEventDispatcher : IAggregateRootEventDispatcher
         {
-            if (dispatcher == null)
-                throw new ArgumentNullException("dispatcher");
-            _dispatcher = dispatcher;
+            public void ApplyEvent(AggregateRoot aggregate, Event e) { }
+        }
+
+        //public AggregateRoot()
+        //    : this(new RegistryEventDispatcher()) { }
+        //public AggregateRoot(Type aggregateType)
+        //    : this(new RegistryEventDispatcher(aggregateType)) { }
+        public AggregateRoot(IAggregateRootEventDispatcher eventDispatcher)
+        {
+            if (eventDispatcher == null)
+                throw new ArgumentNullException("eventDispatcher");
+            _eventDispatcher = eventDispatcher;
+            _useStorageBasedSequencing = false;
         }
 
         public object AggregateId { get; protected set; }
         protected internal int LastEventSequence { get; private set; }
 
-        protected IAggregateRootEventDispatcher Dispatcher
+        protected IAggregateRootEventDispatcher EventDispatcher
         {
-            get { return _dispatcher; }
+            get { return _eventDispatcher; }
         }
 
         protected void ApplyEvent(Event e)
@@ -64,9 +71,9 @@ namespace System.Quality.EventSourcing
                 throw new ArgumentNullException("e");
             e.AggregateId = AggregateId;
             e.EventDate = DateTime.Now;
-            if (!_useStorageSequencing)
+            if (!_useStorageBasedSequencing)
                 e.Sequence = ++LastEventSequence;
-            _dispatcher.ApplyEvent(this, e);
+            _eventDispatcher.ApplyEvent(this, e);
             _changes.Add(e); // trackAsChange
         }
 
@@ -79,7 +86,7 @@ namespace System.Quality.EventSourcing
             int? lastEventSequence = 0;
             foreach (var e in events.OrderBy(x => x.Sequence))
             {
-                _dispatcher.ApplyEvent(this, e);
+                _eventDispatcher.ApplyEvent(this, e);
                 lastEventSequence = e.Sequence;
             }
             LastEventSequence = (int)lastEventSequence;
