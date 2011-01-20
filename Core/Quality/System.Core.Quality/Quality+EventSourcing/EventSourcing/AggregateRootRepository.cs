@@ -45,25 +45,25 @@ namespace System.Quality.EventSourcing
     {
         private readonly IEventStore _eventStore;
         private readonly IAggregateRootSnapshotStore _snapshotStore;
-        private readonly Action<IEnumerable<Event>> _dispatcher;
+        private readonly Action<IEnumerable<Event>> _eventDispatcher;
         private readonly Func<Type, AggregateRoot> _factory;
 
-        private static class DefaultFactory
+        public static class DefaultFactory
         {
             public static Func<Type, AggregateRoot> Factory = (t => (AggregateRoot)Activator.CreateInstance(t));
         }
 
         public AggregateRootRepository(IEventStore eventStore, IAggregateRootSnapshotStore snapshotStore)
-            : this(eventStore, snapshotStore, null, null) { }
-        public AggregateRootRepository(IEventStore eventStore, IAggregateRootSnapshotStore snapshotStore, Action<IEnumerable<Event>> dispatcher)
-            : this(eventStore, snapshotStore, dispatcher, null) { }
-        public AggregateRootRepository(IEventStore eventStore, IAggregateRootSnapshotStore snapshotStore, Action<IEnumerable<Event>> dispatcher, Func<Type, AggregateRoot> factory)
+            : this(eventStore, snapshotStore, null, DefaultFactory.Factory) { }
+        public AggregateRootRepository(IEventStore eventStore, IAggregateRootSnapshotStore snapshotStore, Action<IEnumerable<Event>> eventDispatcher)
+            : this(eventStore, snapshotStore, eventDispatcher, DefaultFactory.Factory) { }
+        public AggregateRootRepository(IEventStore eventStore, IAggregateRootSnapshotStore snapshotStore, Action<IEnumerable<Event>> eventDispatcher, Func<Type, AggregateRoot> factory)
         {
             if (eventStore == null)
                 throw new ArgumentNullException("eventStore");
             _eventStore = eventStore;
             _snapshotStore = snapshotStore;
-            _dispatcher = dispatcher;
+            _eventDispatcher = eventDispatcher;
             _factory = (factory ?? DefaultFactory.Factory);
         }
 
@@ -81,7 +81,7 @@ namespace System.Quality.EventSourcing
                 if ((snapshoter != null) && ((snapshot = _snapshotStore.GetSnapshot<TAggregateRoot>(aggregateId)) != null))
                     snapshoter.LoadSnapshot(snapshot);
             }
-            //
+            // load events
             var events = _eventStore.GetEventsForAggregate(aggregateId, (snapshot != null ? snapshot.LastEventSequence : 0));
             ((IAccessAggregateRootState)aggregate).LoadFromHistory(events);
             return aggregate;
@@ -92,8 +92,8 @@ namespace System.Quality.EventSourcing
             var accessAggregateState = (IAccessAggregateRootState)aggregate;
             var events = accessAggregateState.GetUncommittedChanges();
             _eventStore.SaveEvents(aggregate.AggregateId, events);
-            if (_dispatcher != null)
-                _dispatcher(events);
+            if (_eventDispatcher != null)
+                _eventDispatcher(events);
             accessAggregateState.MarkChangesAsCommitted();
         }
     }
