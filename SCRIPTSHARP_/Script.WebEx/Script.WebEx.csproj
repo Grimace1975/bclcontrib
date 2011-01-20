@@ -56,6 +56,7 @@
     <Compile Include="SystemEx\JSArrayEx.cs" />
     <Compile Include="SystemEx\IO\MemoryStream.cs" />
     <Compile Include="SystemEx\JSConvertEx.cs" />
+    <Compile Include="System\Html\VideoElement.cs" />
     <Compile Include="System\Html\WindowEx.cs" />
     <Compile Include="SystemEx\IO\FileInfoSearchPredicate.cs" />
     <Compile Include="SystemEx\IO\SE.cs" />
@@ -96,18 +97,17 @@
     <None Include="SystemEx\Html+Canvas\CanvasRenderingContext2D.java" />
     <None Include="SystemEx\Html+Canvas\ImageData.java" />
     <None Include="SystemEx\Html+Canvas\TextMetrics.java" />
-    <None Include="SystemEx\Html+Canvas\VideoElement.java" />
-    <None Include="SystemEx\Html+WebGL\WebGLActiveInfo.java" />
-    <None Include="SystemEx\Html+WebGL\WebGLBuffer.java" />
-    <None Include="SystemEx\Html+WebGL\WebGLContextAttributes.java" />
-    <None Include="SystemEx\Html+WebGL\WebGLFramebuffer.java" />
-    <None Include="SystemEx\Html+WebGL\WebGLObject.java" />
-    <None Include="SystemEx\Html+WebGL\WebGLProgram.java" />
-    <None Include="SystemEx\Html+WebGL\WebGLRenderbuffer.java" />
-    <None Include="SystemEx\Html+WebGL\WebGLRenderingContext.java" />
-    <None Include="SystemEx\Html+WebGL\WebGLShader.java" />
-    <None Include="SystemEx\Html+WebGL\WebGLTexture.java" />
-    <None Include="SystemEx\Html+WebGL\WebGLUniformLocation.java" />
+    <Compile Include="System\WebGL\WebGLActiveInfo.cs" />
+    <Compile Include="System\WebGL\WebGLBuffer.cs" />
+    <Compile Include="System\WebGL\WebGLContextAttributes.cs" />
+    <Compile Include="System\WebGL\WebGLFramebuffer.cs" />
+    <Compile Include="System\WebGL\WebGLObject.cs" />
+    <Compile Include="System\WebGL\WebGLProgram.cs" />
+    <Compile Include="System\WebGL\WebGLRenderbuffer.cs" />
+    <Compile Include="System\WebGL\WebGLRenderingContext.cs" />
+    <Compile Include="System\WebGL\WebGLShader.cs" />
+    <Compile Include="System\WebGL\WebGLTexture.cs" />
+    <Compile Include="System\WebGL\WebGLUniformLocation.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(ProgramFiles)\ScriptSharp\v1.0\ScriptSharp.targets" />

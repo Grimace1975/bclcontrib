@@ -8,8 +8,8 @@ namespace SystemEx
         private static Int32Array _wia = new Int32Array(_wba.Buffer, 0, 1);
         private static Float32Array _wfa = new Float32Array(_wba.Buffer, 0, 1);
 
-        public static int SingleToIntBits(float v) { _wfa[0] = v; return _wia[0]; }
-        public static float IntBitsToSingle(int v) { _wia[0] = v; return _wfa[0]; }
+        public static int SingleToInt32Bits(float v) { _wfa[0] = v; return _wia[0]; }
+        public static float Int32BitsToSingle(int v) { _wia[0] = v; return _wfa[0]; }
 
         public static JSArrayInteger BytesToJSArray(byte[] data)
         {

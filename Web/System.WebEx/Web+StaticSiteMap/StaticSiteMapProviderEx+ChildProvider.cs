@@ -65,12 +65,12 @@ namespace System.Web
             return null;
         }
 
-        protected void AddProvider(string providerName, SiteMapNode parentNode)
+        public void AddProvider(string providerName, SiteMapNode parentNode)
         {
             if (parentNode == null)
                 throw new ArgumentNullException("parentNode");
             if (parentNode.Provider != this)
-                throw new ArgumentException(string.Format("XmlSiteMapProvider_cannot_add_node", parentNode.ToString()), "parentNode");
+                throw new ArgumentException(string.Format("StaticSiteMapProviderEx_cannot_add_node", parentNode.ToString()), "parentNode");
             var nodeFromProvider = GetNodeFromProvider(providerName);
             AddNode(nodeFromProvider, parentNode);
         }
@@ -80,10 +80,13 @@ namespace System.Web
             var providerFromName = GetProviderFromName(providerName);
             var rootNode = providerFromName.RootNode;
             if (rootNode == null)
-                throw new InvalidOperationException(string.Format("XmlSiteMapProvider_invalid_GetRootNodeCore", providerFromName.Name));
-            ChildProviderRootNodes.Add(providerFromName, rootNode);
-            _childProviders = null;
-            providerFromName.ParentProvider = this;
+                throw new InvalidOperationException(string.Format("StaticSiteMapProviderEx_invalid_GetRootNodeCore", providerFromName.Name));
+            if (!ChildProviderRootNodes.ContainsKey(providerFromName))
+            {
+                ChildProviderRootNodes.Add(providerFromName, rootNode);
+                _childProviders = null;
+                providerFromName.ParentProvider = this;
+            }
             return rootNode;
         }
 
@@ -95,9 +98,9 @@ namespace System.Web
             if (provider != this)
                 for (var parentProvider = provider.ParentProvider; parentProvider != this; parentProvider = parentProvider.ParentProvider)
                     if (parentProvider == null)
-                        throw new InvalidOperationException(string.Format("XmlSiteMapProvider_cannot_remove_node", node.ToString(), Name, provider.Name));
+                        throw new InvalidOperationException(string.Format("StaticSiteMapProviderEx_cannot_remove_node", node.ToString(), Name, provider.Name));
             if (node.Equals(provider.RootNode))
-                throw new InvalidOperationException("SiteMapProvider_cannot_remove_root_node");
+                throw new InvalidOperationException("StaticSiteMapProviderEx_cannot_remove_root_node");
             if (provider != this)
                 _providerRemoveNode.Invoke(provider, new[] { node });
             base.RemoveNode(node);
@@ -112,7 +115,7 @@ namespace System.Web
                 var providerFromName = GetProviderFromName(providerName);
                 var node = (SiteMapNode)ChildProviderRootNodes[providerFromName];
                 if (node == null)
-                    throw new InvalidOperationException(string.Format("XmlSiteMapProvider_cannot_find_provider", providerFromName.Name, Name));
+                    throw new InvalidOperationException(string.Format("StaticSiteMapProviderEx_cannot_find_provider", providerFromName.Name, Name));
                 providerFromName.ParentProvider = null;
                 ChildProviderRootNodes.Remove(providerFromName);
                 _childProviders = null;

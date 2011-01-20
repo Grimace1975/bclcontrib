@@ -274,14 +274,14 @@ SystemEx.JSConvertEx = function SystemEx_JSConvertEx() {
     /// <field name="_wfa" type="Float32Array" static="true">
     /// </field>
 }
-SystemEx.JSConvertEx.singleToIntBits = function SystemEx_JSConvertEx$singleToIntBits(v) {
+SystemEx.JSConvertEx.singleToInt32Bits = function SystemEx_JSConvertEx$singleToInt32Bits(v) {
     /// <param name="v" type="Number">
     /// </param>
     /// <returns type="Number" integer="true"></returns>
     SystemEx.JSConvertEx._wfa[0] = v;
     return SystemEx.JSConvertEx._wia[0];
 }
-SystemEx.JSConvertEx.intBitsToSingle = function SystemEx_JSConvertEx$intBitsToSingle(v) {
+SystemEx.JSConvertEx.int32BitsToSingle = function SystemEx_JSConvertEx$int32BitsToSingle(v) {
     /// <param name="v" type="Number" integer="true">
     /// </param>
     /// <returns type="Number"></returns>
@@ -597,7 +597,7 @@ SystemEx.IO.SE.readSingle = function SystemEx_IO_SE$readSingle(s) {
     /// <param name="s" type="SystemEx.IO.Stream">
     /// </param>
     /// <returns type="Number"></returns>
-    return SystemEx.JSConvertEx.intBitsToSingle(SystemEx.IO.SE.readInt32(s));
+    return SystemEx.JSConvertEx.int32BitsToSingle(SystemEx.IO.SE.readInt32(s));
 }
 SystemEx.IO.SE.readDouble = function SystemEx_IO_SE$readDouble(s) {
     /// <param name="s" type="SystemEx.IO.Stream">
@@ -709,7 +709,7 @@ SystemEx.IO.SE.writeSingle = function SystemEx_IO_SE$writeSingle(s, v) {
     /// </param>
     /// <param name="v" type="Number">
     /// </param>
-    SystemEx.IO.SE.writeInt32(s, SystemEx.JSConvertEx.singleToIntBits(v));
+    SystemEx.IO.SE.writeInt32(s, SystemEx.JSConvertEx.singleToInt32Bits(v));
 }
 SystemEx.IO.SE.writeDouble = function SystemEx_IO_SE$writeDouble(s, v) {
     /// <param name="s" type="SystemEx.IO.Stream">

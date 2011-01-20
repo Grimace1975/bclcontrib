@@ -86,7 +86,7 @@ namespace System.IO
 
         public static float ReadSingle(Stream s)
         {
-            return JSConvertEx.IntBitsToSingle(ReadInt32(s));
+            return JSConvertEx.Int32BitsToSingle(ReadInt32(s));
         }
 
         public static double ReadDouble(Stream s)
@@ -187,7 +187,7 @@ namespace System.IO
 
         public static void WriteSingle(Stream s, float v)
         {
-            WriteInt32(s, JSConvertEx.SingleToIntBits(v));
+            WriteInt32(s, JSConvertEx.SingleToInt32Bits(v));
         }
 
         public static void WriteDouble(Stream s, double v)
