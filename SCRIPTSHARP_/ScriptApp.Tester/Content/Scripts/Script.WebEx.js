@@ -18,8 +18,8 @@ SystemEx.JSArrayEx.clear=function(array,index,length){}
 SystemEx.JSArrayEx.copy=function(source,sourceIndex,destination,destinationIndex,length){if((source==null)||(destination==null)){throw new Error('NullPointerException:');}var $0=source.length;var $1=destination.length;if((sourceIndex<0)||(destinationIndex<0)||(length<0)||(sourceIndex+length>$0)||(destinationIndex+length>$1)){throw new Error('IndexOutOfBoundsException:');}SystemEx.JSArrayEx.$0(source,sourceIndex,destination,destinationIndex,length);}
 SystemEx.JSArrayEx.$0=function($p0,$p1,$p2,$p3,$p4){if(($p0===$p2)&&($p1<$p3)){$p1+=$p4;for(var $0=$p3+$p4;$0-->$p3;){$p2[$0]=$p0[--$p1];}}else{for(var $1=$p3+$p4;$p3<$1;){$p2[$p3++]=$p0[$p1++];}}}
 SystemEx.JSConvertEx=function(){}
-SystemEx.JSConvertEx.singleToIntBits=function(v){SystemEx.JSConvertEx.$2[0]=v;return SystemEx.JSConvertEx.$1[0];}
-SystemEx.JSConvertEx.intBitsToSingle=function(v){SystemEx.JSConvertEx.$1[0]=v;return SystemEx.JSConvertEx.$2[0];}
+SystemEx.JSConvertEx.singleToInt32Bits=function(v){SystemEx.JSConvertEx.$2[0]=v;return SystemEx.JSConvertEx.$1[0];}
+SystemEx.JSConvertEx.int32BitsToSingle=function(v){SystemEx.JSConvertEx.$1[0]=v;return SystemEx.JSConvertEx.$2[0];}
 SystemEx.JSConvertEx.bytesToJSArray=function(data){var $0=[];var $1=data.length;for(var $2=$1-1;$2>=0;$2--){$0.set($2,data[$2]);}return $0;}
 SystemEx.JSConvertEx.uBytesToJSArray=function(data){var $0=[];var $1=data.length;for(var $2=$1-1;$2>=0;$2--){$0.set($2,data[$2]&255);}return $0;}
 SystemEx.JSConvertEx.singlesToJSArray=function(data){var $0=[];var $1=data.length;for(var $2=$1-1;$2>=0;$2--){$0.set($2,data[$2]);}return $0;}
@@ -44,7 +44,7 @@ SystemEx.IO.SE.readChar=function(s){var $0=s.readByte();var $1=SystemEx.IO.SE.in
 SystemEx.IO.SE.readInt16=function(s){var $0=s.readByte();var $1=SystemEx.IO.SE.internalReadByte(s);return (($0<<8)|$1);}
 SystemEx.IO.SE.readInt32=function(s){var $0=s.readByte();var $1=s.readByte();var $2=s.readByte();var $3=SystemEx.IO.SE.internalReadByte(s);return ($0<<24)|($1<<16)|($2<<8)|$3;}
 SystemEx.IO.SE.readInt64=function(s){var $0=SystemEx.IO.SE.readInt32(s);var $1=SystemEx.IO.SE.readInt32(s)&4294967295;return ($0<<32)|$1;}
-SystemEx.IO.SE.readSingle=function(s){return SystemEx.JSConvertEx.intBitsToSingle(SystemEx.IO.SE.readInt32(s));}
+SystemEx.IO.SE.readSingle=function(s){return SystemEx.JSConvertEx.int32BitsToSingle(SystemEx.IO.SE.readInt32(s));}
 SystemEx.IO.SE.readDouble=function(s){throw new Error('NotSupportedException: readDouble');}
 SystemEx.IO.SE.readString=function(s){var $0=SystemEx.IO.SE.$0(s);var $1=new ss.StringBuilder();while($0>0){$0-=SystemEx.IO.SE.$1(s,$1);}return $1.toString();}
 SystemEx.IO.SE.readStringLine=function(s){throw new Error('NotSupportedException: ReadLine');}
@@ -56,7 +56,7 @@ SystemEx.IO.SE.writeChar=function(s,v){s.writeByte(v>>8);s.writeByte(v);}
 SystemEx.IO.SE.writeInt16=function(s,v){s.writeByte(v>>8);s.writeByte(v);}
 SystemEx.IO.SE.writeInt32=function(s,v){s.writeByte(v>>24);s.writeByte(v>>16);s.writeByte(v>>8);s.writeByte(v);}
 SystemEx.IO.SE.writeInt64=function(s,v){SystemEx.IO.SE.writeInt32(s,(v>>32));SystemEx.IO.SE.writeInt32(s,v);}
-SystemEx.IO.SE.writeSingle=function(s,v){SystemEx.IO.SE.writeInt32(s,SystemEx.JSConvertEx.singleToIntBits(v));}
+SystemEx.IO.SE.writeSingle=function(s,v){SystemEx.IO.SE.writeInt32(s,SystemEx.JSConvertEx.singleToInt32Bits(v));}
 SystemEx.IO.SE.writeDouble=function(s,v){throw new Error('NotSupportedException: writeDouble');}
 SystemEx.IO.SE.writeString=function(s,v){var $0=new SystemEx.IO.MemoryStream();for(var $1=0;$1<v.length;$1++){var $2=v.charAt($1);if(($2>0)&&($2<80)){$0.writeByte($2);}else if($2<'\u0800'){$0.writeByte(192|(31&($2>>6)));$0.writeByte(128|(63&$2));}else{$0.writeByte(224|(15&($2>>12)));$0.writeByte(128|(63&($2>>6)));$0.writeByte(128|(63&$2));}}SystemEx.IO.SE.writeInt16(s,$0.get_length());s.write($0.get_buffer(),0,$0.get_length());}
 SystemEx.IO.FileInfo=function(fileName,parent){while(fileName.endsWith('/')&&(fileName.length>0)){fileName=fileName.substring(0,fileName.length-1);}var $0=fileName.lastIndexOf('/');if($0===-1){this.$1=fileName;}else if($0===0){this.$1=fileName.substring($0,fileName.length);this.$0=((this.$1==='')?null:SystemEx.IO.FileInfo.root);}else{this.$1=fileName.substring($0+1,fileName.length);this.$0=new SystemEx.IO.FileInfo(fileName.substring(0,$0));}}

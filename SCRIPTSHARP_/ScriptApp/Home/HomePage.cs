@@ -10,13 +10,18 @@ namespace ScriptApp.Home
     {
         static HomePage()
         {
+            LocalStorage["Key"] = "Value";
+
+
+            WindowEx.Atob("This is here");
+
             FileInfo testFile = new FileInfo("/Test/This");
             Script.Alert(testFile.Path);
-            testFile.CreateNewFile();
+            //testFile.CreateNewFile();
             
-            foreach (FileInfo file in FileInfo.Root.ListFiles())
-                Script.Alert(file.Path);
-            Script.Alert("Done");
+            //foreach (FileInfo file in FileInfo.Root.ListFiles())
+            //    Script.Alert(file.Path);
+            //Script.Alert("Done");
         }
     }
 }
