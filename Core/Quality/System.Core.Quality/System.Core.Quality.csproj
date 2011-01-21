@@ -58,6 +58,7 @@
     <Compile Include="Quality+EventSourcing\EventSourcing+Impl\MemoryEventStore.cs" />
     <Compile Include="Quality+EventSourcing\EventSourcing\AggregateRoot.cs" />
     <Compile Include="Quality+EventSourcing\EventSourcing+Impl\ReplayAggregateRoot.cs" />
+    <Compile Include="Quality+EventSourcing\EventSourcing\AggregateRootQueryOptions.cs" />
     <Compile Include="Quality+EventSourcing\EventSourcing\Event2.cs" />
     <Compile Include="Quality+EventSourcing\EventSourcing+Impl\RegistryEventDispatcher.cs" />
     <Compile Include="Quality+EventSourcing\EventSourcing\IAggregateRootEventDispatcher.cs" />

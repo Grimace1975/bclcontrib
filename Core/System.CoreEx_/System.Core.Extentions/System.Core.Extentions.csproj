@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="ActivatorEx.cs" />
     <Compile Include="Collections\EnumerableEx.cs" />
+    <Compile Include="Collections\Generic\KeyEqualityComparer.cs" />
     <Compile Include="Collections\Generic\PagedList.cs" />
     <Compile Include="Collections\Generic\DictionaryExtensions.cs" />
     <Compile Include="Collections\Generic\IPagedMetadata.cs" />

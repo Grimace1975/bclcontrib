@@ -2,7 +2,7 @@
 using System.Text;
 namespace System.Quality
 {
-    public class JsonSerializer : ISerializer
+    public class WcfSerializer : ISerializer
     {
         public T ReadObject<T>(Type type, Stream s)
             where T : class
@@ -11,7 +11,7 @@ namespace System.Quality
                 throw new ArgumentNullException("type");
             if (s == null)
                 throw new ArgumentNullException("s");
-            var serializer = new System.Runtime.Serialization.Json.DataContractJsonSerializer(type);
+            var serializer = new System.Runtime.Serialization.DataContractSerializer(type);
             return (serializer.ReadObject(s) as T);
         }
 
@@ -22,7 +22,7 @@ namespace System.Quality
                 throw new ArgumentNullException("type");
             if (s == null)
                 throw new ArgumentNullException("s");
-            var serializer = new System.Runtime.Serialization.Json.DataContractJsonSerializer(type);
+            var serializer = new System.Runtime.Serialization.DataContractSerializer(type);
             serializer.WriteObject(s, graph);
         }
     }

@@ -83,7 +83,7 @@ When Not Matched By Target Then
                 var command = new SqlCommand(sql, connection) { CommandType = CommandType.Text, };
                 command.Parameters.AddRange(new[] {
                     new SqlParameter { ParameterName = "@aggregateId", SqlDbType = SqlDbType.NVarChar, Value = snapshot.AggregateId },
-                    new SqlParameter { ParameterName = "@type", SqlDbType = SqlDbType.NVarChar, Value = snapshotType.Name },
+                    new SqlParameter { ParameterName = "@type", SqlDbType = SqlDbType.NVarChar, Value = snapshotType.AssemblyQualifiedName },
                     new SqlParameter { ParameterName = "@blob", SqlDbType = SqlDbType.NVarChar, Value = snapshotJson } });
                 connection.Open();
                 command.ExecuteNonQuery();
