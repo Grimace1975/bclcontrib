@@ -302,6 +302,9 @@
     <Compile Include="..\System.CoreEx_\System.Core.Extentions\Collections\Generic\IPagedMetadata.cs">
       <Link>System.Core.Extentions\Collections\Generic\IPagedMetadata.cs</Link>
     </Compile>
+    <Compile Include="..\System.CoreEx_\System.Core.Extentions\Collections\Generic\KeyEqualityComparer.cs">
+      <Link>System.Core.Extentions\Collections\Generic\KeyEqualityComparer.cs</Link>
+    </Compile>
     <Compile Include="..\System.CoreEx_\System.Core.Extentions\Collections\Generic\PagedList.cs">
       <Link>System.Core.Extentions\Collections\Generic\PagedList.cs</Link>
     </Compile>

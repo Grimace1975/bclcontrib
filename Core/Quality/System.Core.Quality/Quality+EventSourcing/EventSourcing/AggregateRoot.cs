@@ -37,7 +37,7 @@ namespace System.Quality.EventSourcing
     {
         public static readonly IAggregateRootEventDispatcher EmptyEventDispatcher = new EmptyAggregateRootEventDispatcher();
         private readonly List<Event> _changes = new List<Event>();
-        private readonly IAggregateRootEventDispatcher _eventDispatcher;
+        private IAggregateRootEventDispatcher _eventDispatcher;
         private bool _useStorageBasedSequencing;
 
         private class EmptyAggregateRootEventDispatcher : IAggregateRootEventDispatcher
@@ -45,15 +45,8 @@ namespace System.Quality.EventSourcing
             public void ApplyEvent(AggregateRoot aggregate, Event e) { }
         }
 
-        //public AggregateRoot()
-        //    : this(new RegistryEventDispatcher()) { }
-        //public AggregateRoot(Type aggregateType)
-        //    : this(new RegistryEventDispatcher(aggregateType)) { }
-        public AggregateRoot(IAggregateRootEventDispatcher eventDispatcher)
+        public AggregateRoot()
         {
-            if (eventDispatcher == null)
-                throw new ArgumentNullException("eventDispatcher");
-            _eventDispatcher = eventDispatcher;
             _useStorageBasedSequencing = false;
         }
 
@@ -63,12 +56,20 @@ namespace System.Quality.EventSourcing
         protected IAggregateRootEventDispatcher EventDispatcher
         {
             get { return _eventDispatcher; }
+            set
+            {
+                if (value == null)
+                    throw new ArgumentNullException("value");
+                _eventDispatcher = value;
+            }
         }
 
         protected void ApplyEvent(Event e)
         {
             if (e == null)
                 throw new ArgumentNullException("e");
+            if (_eventDispatcher == null)
+                throw new InvalidOperationException("EventDispatcher must be set first.");
             e.AggregateId = AggregateId;
             e.EventDate = DateTime.Now;
             if (!_useStorageBasedSequencing)
@@ -79,17 +80,20 @@ namespace System.Quality.EventSourcing
 
         #region Access State
 
-        void IAccessAggregateRootState.LoadFromHistory(IEnumerable<Event> events)
+        bool IAccessAggregateRootState.LoadFromHistory(IEnumerable<Event> events)
         {
             if (events == null)
                 throw new ArgumentNullException("events");
-            int? lastEventSequence = 0;
+            if (_eventDispatcher == null)
+                throw new InvalidOperationException("EventDispatcher must be set first.");
+            int? lastEventSequence = null;
             foreach (var e in events.OrderBy(x => x.Sequence))
             {
                 _eventDispatcher.ApplyEvent(this, e);
                 lastEventSequence = e.Sequence;
             }
-            LastEventSequence = (int)lastEventSequence;
+            LastEventSequence = (int)(lastEventSequence ?? 0);
+            return (lastEventSequence.HasValue);
         }
 
         IEnumerable<Event> IAccessAggregateRootState.GetUncommittedChanges()

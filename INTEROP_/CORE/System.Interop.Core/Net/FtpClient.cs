@@ -36,11 +36,11 @@ namespace System.Interop.Core.Net
         /// Initializes a new instance of the <see cref="FtpClient"/> class.
         /// </summary>
         /// <param name="remoteHost">The remote host.</param>
-        /// <param name="userId">The user id.</param>
+        /// <param name="userName">The user id.</param>
         /// <param name="password">The password.</param>
-        public FtpClient(string remoteHost, string userId, string password)
+        public FtpClient(string remoteHost, string userName, string password)
         {
-            Credentials = new NetworkCredential(userId, password);
+            Credentials = new NetworkCredential(userName, password);
             RemoteHost = remoteHost;
         }
 

@@ -38,23 +38,37 @@ namespace System.Quality.EventSourcing
         private readonly IDictionary<Type, Action<Event>> _handlerRegistry = new Dictionary<Type, Action<Event>>();
 
         public RegistryEventDispatcher() { }
-        public RegistryEventDispatcher(Type aggregateType)
+        public RegistryEventDispatcher(AggregateRoot aggregate)
         {
-            RegisterByConvention(aggregateType);
+            RegisterByConvention(aggregate);
         }
 
-        public void RegisterByConvention(Type aggregateType)
+        private class HandlerPair
         {
-            var eventBaseType = typeof(Event);
-            var handlerInfos = aggregateType.GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
+            public Type EventType;
+            public Action<Event> Handler;
+        }
+
+        public void RegisterByConvention(AggregateRoot aggregate)
+        {
+            if (aggregate == null)
+                throw new ArgumentNullException("aggregate");
+            var eventType = typeof(Event);
+            var actionType = typeof(Action<>);
+            //var actionEventType = typeof(Action<Event>);
+            //var covariantCastMethod = typeof(ExpressionEx).GetMethod("CovariantCast");
+            var handlerInfos = aggregate.GetType().GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
                 .Where(x => !x.IsGenericMethod && (x.Name == "HandleEvent"))
                 .Select(methodInfo =>
                 {
                     var parameters = methodInfo.GetParameters();
-                    Type eventType;
-                    if ((parameters.Length != 1) || !(eventType = parameters[0].ParameterType).IsSubclassOf(eventBaseType))
+                    Type derivedEventType;
+                    if ((parameters.Length != 1) || !(derivedEventType = parameters[0].ParameterType).IsSubclassOf(eventType))
                         return null;
-                    return new { EventType = eventType, Handler = Delegate.CreateDelegate(typeof(Action<Event>), methodInfo) };
+                    return new HandlerPair { EventType = derivedEventType, Handler = ((Event e) => methodInfo.Invoke(aggregate, new[] { e })) };
+                    //var derivedActionDelegate = Delegate.CreateDelegate(actionType.MakeGenericType(derivedEventType), aggregate, methodInfo);
+                    //var actionEventDelegate = (Action<Event>)Delegate.CreateDelegate(actionEventType, covariantCastMethod.MakeGenericMethod(eventType, derivedEventType));
+                    //return new HandlerPair { EventType = derivedEventType, Handler = actionEventDelegate };
                 })
                 .Where(x => x != null);
             foreach (var handlerInfo in handlerInfos)
@@ -62,7 +76,7 @@ namespace System.Quality.EventSourcing
         }
 
         public void RegisterHandler<TEvent>(Action<TEvent> handler)
-           where TEvent : Event { var castHandler = ExpressionEx.CastArgument<Event, TEvent>(e => handler(e)); RegisterHandler(typeof(TEvent), castHandler); }
+           where TEvent : Event { var castHandler = ExpressionEx.CovariantCast<Event, TEvent>(e => handler(e)); RegisterHandler(typeof(TEvent), castHandler); }
         public void RegisterHandler(Type eventType, Action<Event> handler)
         {
             _handlerRegistry.Add(eventType, handler);

@@ -54,6 +54,13 @@ namespace System.DirectoryServices
             collection.Value = value;
         }
 
+        public static void SetValue(this PropertyValueCollection collection, int value)
+        {
+            if (collection == null)
+                throw new ArgumentNullException("collection");
+            collection.Value = value;
+        }
+
         public static string GetSingleStringValue(this ResultPropertyCollection collection, string propertyName)
         {
             if (collection == null)

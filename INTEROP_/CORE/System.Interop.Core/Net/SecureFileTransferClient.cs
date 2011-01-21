@@ -33,7 +33,7 @@ namespace System.Interop.Core.Net
     /// </summary>
     public class SecureFileTransferClient : FileTransferClientBase
     {
-        public SecureFileTransferClient(SecureCopySettings settings, string remoteHost, string userId)
+        public SecureFileTransferClient(SecureCopySettings settings, string remoteHost, string userName)
         {
             if (settings == null)
                 throw new ArgumentNullException("settings");
@@ -41,7 +41,7 @@ namespace System.Interop.Core.Net
                 throw new ArgumentNullException("remoteHost");
             SecureCopySettings = (SecureCopySettings)settings.Clone();
             SecureCopySettings.Options = SecureCopySettingsOptions.ForceSftp;
-            Credentials = new NetworkCredential(userId, null);
+            Credentials = new NetworkCredential(userName, null);
             RemoteHost = remoteHost;
         }
 
@@ -87,7 +87,7 @@ namespace System.Interop.Core.Net
         /// <returns></returns>
         public override bool TryGet(string remoteFile, string localFile, out Exception ex)
         {
-            return SecureCopyInterop.TryGet(SecureCopySettings, RemoteHost, SecureCopySettings.UserId, remoteFile, localFile, out ex);
+            return SecureCopyInterop.TryGet(SecureCopySettings, RemoteHost, Credentials.UserName, remoteFile, localFile, out ex);
         }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace System.Interop.Core.Net
         public override bool TryPut(string localFile, string remoteFile, out Exception ex)
         {
             SecureCopySettings.Options |= SecureCopySettingsOptions.ForceSftp;
-            return SecureCopyInterop.TryPut(SecureCopySettings, RemoteHost, SecureCopySettings.UserId, new[] { localFile }, remoteFile, out ex);
+            return SecureCopyInterop.TryPut(SecureCopySettings, RemoteHost, Credentials.UserName, new[] { localFile }, remoteFile, out ex);
         }
     }
 }

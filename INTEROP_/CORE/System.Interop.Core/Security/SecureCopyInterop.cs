@@ -106,7 +106,7 @@ namespace System.Interop.Core.Security
 
         #endregion
 
-        public static bool TryGet(SecureCopySettings settings, string remoteHost, string userId, string remoteFile, string localFile, out Exception ex)
+        public static bool TryGet(SecureCopySettings settings, string remoteHost, string userName, string remoteFile, string localFile, out Exception ex)
         {
             if (settings == null)
                 throw new ArgumentNullException("settings");
@@ -119,8 +119,8 @@ namespace System.Interop.Core.Security
             //
             if (File.Exists(localFile))
                 File.Delete(localFile);
-            if (!string.IsNullOrEmpty(userId))
-                remoteHost = userId + "@" + remoteHost;
+            if (!string.IsNullOrEmpty(userName))
+                remoteHost = userName + "@" + remoteHost;
             string executablePath;
             var arguments = string.Format(GetArgumentsXABC, Get(settings, out executablePath), remoteHost, remoteFile, localFile);
             try
@@ -128,12 +128,9 @@ namespace System.Interop.Core.Security
                 var launcher = new ProcessLauncher();
                 launcher.Launch(settings.ProcessTimeoutInMilliseconds, executablePath, arguments, (w) =>
                 {
-                    // Send passphrase, if any
-                    if (!string.IsNullOrEmpty(settings.PrivateKeyPassphase))
-                    {
-                        w.WriteLine(settings.PrivateKeyPassphase);
-                        w.Flush();
-                    }
+                    // Respond N
+                    w.WriteLine("n");
+                    w.Flush();
                 });
                 ex = null;
                 return true;
@@ -141,8 +138,8 @@ namespace System.Interop.Core.Security
             catch (SecureCopyException e) { ex = e; return false; }
         }
 
-        public static bool TryPut(SecureCopySettings settings, string remoteHost, string userId, string localFiles, string remoteFile, out Exception ex) { return TryPut(settings, remoteHost, userId, new[] { localFiles }, remoteFile, out ex); }
-        public static bool TryPut(SecureCopySettings settings, string remoteHost, string userId, string[] localFiles, string remoteFile, out Exception ex)
+        public static bool TryPut(SecureCopySettings settings, string remoteHost, string userName, string localFiles, string remoteFile, out Exception ex) { return TryPut(settings, remoteHost, userName, new[] { localFiles }, remoteFile, out ex); }
+        public static bool TryPut(SecureCopySettings settings, string remoteHost, string userName, string[] localFiles, string remoteFile, out Exception ex)
         {
             if (settings == null)
                 throw new ArgumentNullException("settings");
@@ -153,8 +150,8 @@ namespace System.Interop.Core.Security
             if (string.IsNullOrEmpty(remoteFile))
                 throw new ArgumentNullException("remoteFile");
             //
-            if (!string.IsNullOrEmpty(userId))
-                remoteHost = userId + "@" + remoteHost;
+            if (!string.IsNullOrEmpty(userName))
+                remoteHost = userName + "@" + remoteHost;
             string executablePath;
             var arguments = string.Format(PutArgumentsXABC, Get(settings, out executablePath), string.Join(" ", localFiles), remoteHost, remoteFile);
             try
@@ -162,12 +159,9 @@ namespace System.Interop.Core.Security
                 var launcher = new ProcessLauncher();
                 launcher.Launch(settings.ProcessPutTimeoutInMilliseconds, executablePath, arguments, (w) =>
                 {
-                    // Send passphrase, if any
-                    if (!string.IsNullOrEmpty(settings.PrivateKeyPassphase))
-                    {
-                        w.WriteLine(settings.PrivateKeyPassphase);
-                        w.Flush();
-                    }
+                    // Respond N
+                    w.WriteLine("n");
+                    w.Flush();
                 });
                 ex = null;
                 return true;
@@ -186,7 +180,7 @@ namespace System.Interop.Core.Security
         //    items = null;
         //    return false;
         //}
-        public static bool TryList(SecureCopySettings settings, string remoteHost, string userId, string fileSpecification, out string items, out Exception ex)
+        public static bool TryList(SecureCopySettings settings, string remoteHost, string userName, string fileSpecification, out string items, out Exception ex)
         {
             if (settings == null)
                 throw new ArgumentNullException("settings");
@@ -195,8 +189,8 @@ namespace System.Interop.Core.Security
             if (string.IsNullOrEmpty(fileSpecification))
                 throw new ArgumentNullException("fileSpecification");
             //
-            if (!string.IsNullOrEmpty(userId))
-                remoteHost = userId + "@" + remoteHost;
+            if (!string.IsNullOrEmpty(userName))
+                remoteHost = userName + "@" + remoteHost;
             string executablePath;
             var arguments = string.Format(ListArgumentsXAB, Get(settings, out executablePath), remoteHost, fileSpecification);
             try
@@ -204,12 +198,9 @@ namespace System.Interop.Core.Security
                 var launcher = new ProcessLauncher();
                 launcher.Launch(settings.ProcessTimeoutInMilliseconds, executablePath, arguments, (w) =>
                 {
-                    // Send passphrase, if any
-                    if (!string.IsNullOrEmpty(settings.PrivateKeyPassphase))
-                    {
-                        w.WriteLine(settings.PrivateKeyPassphase);
-                        w.Flush();
-                    }
+                    // Respond N
+                    w.WriteLine("n");
+                    w.Flush();
                 });
                 items = launcher.OutputString;
                 ex = null;
@@ -241,8 +232,8 @@ namespace System.Interop.Core.Security
                 b.AppendFormat("-load \"{0}\" ", settings.SessionName);
             if (settings.Port.HasValue)
                 b.AppendFormat("-P {0} ", settings.Port);
-            if (!string.IsNullOrEmpty(settings.UserId))
-                b.AppendFormat("-l \"{0}\" ", settings.UserId);
+            if (!string.IsNullOrEmpty(settings.UserName))
+                b.AppendFormat("-l \"{0}\" ", settings.UserName);
             if (!string.IsNullOrEmpty(settings.Password))
                 b.AppendFormat("-pw \"{0}\" ", settings.Password);
             if ((options & SecureCopySettingsOptions.ForceSshProtocol1) == SecureCopySettingsOptions.ForceSshProtocol1)

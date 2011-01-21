@@ -31,7 +31,7 @@ namespace System.Quality.EventSourcing
     /// </summary>
     public interface IAccessAggregateRootState
     {
-        void LoadFromHistory(IEnumerable<Event> events);
+        bool LoadFromHistory(IEnumerable<Event> events);
         IEnumerable<Event> GetUncommittedChanges();
         void MarkChangesAsCommitted();
     }
