@@ -78,6 +78,11 @@ namespace System.Quality.EventSourcing
             _changes.Add(e); // trackAsChange
         }
 
+        public bool HasChanged
+        {
+            get { return (_changes.Count > 0); }
+        }
+
         #region Access State
 
         bool IAccessAggregateRootState.LoadFromHistory(IEnumerable<Event> events)
