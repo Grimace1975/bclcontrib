@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Patterns\Reporting.1\MultiColumnLayout.cs" />
+    <Compile Include="Patterns\Reporting\FlatFileEmitOptions.cs" />
     <Compile Include="Patterns\Reporting\FlatFileContext.cs" />
     <Compile Include="Patterns\Reporting\FlatFileCsvEmitter.cs" />
     <Compile Include="Patterns\Reporting\FlatFileCsvEmitterExtensions.cs" />

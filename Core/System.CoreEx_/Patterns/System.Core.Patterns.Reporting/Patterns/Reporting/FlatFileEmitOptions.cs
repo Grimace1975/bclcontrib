@@ -23,16 +23,14 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 #endregion
-namespace System.Quality.EventSourcing
+namespace System.Patterns.Reporting
 {
     /// <summary>
-    /// IAggregateRootSnapshotStore
+    /// FlatFileEmitOptions
     /// </summary>
-    public interface IAggregateRootSnapshotStore
+    public enum FlatFileEmitOptions
     {
-        bool ShouldSnapshot(AggregateRootRepository repository, AggregateRoot aggregate);
-        AggregateRootSnapshot GetLatestSnapshot<TAggregateRoot>(object aggregateId)
-            where TAggregateRoot : AggregateRoot;
-        void SaveSnapshot(AggregateRootSnapshot snapshot);
+        HasHeaderRow = 0x1,
+        EncodeValues = 0x2,
     }
 }

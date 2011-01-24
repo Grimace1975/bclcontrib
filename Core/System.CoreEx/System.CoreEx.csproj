@@ -185,6 +185,9 @@
     <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Reporting\Patterns\Reporting\FlatFileCsvEmitterExtensions.cs">
       <Link>Patterns\System.Core.Patterns.Reporting\Patterns\Reporting\FlatFileCsvEmitterExtensions.cs</Link>
     </Compile>
+    <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Reporting\Patterns\Reporting\FlatFileEmitOptions.cs">
+      <Link>Patterns\System.Core.Patterns.Reporting\Patterns\Reporting\FlatFileEmitOptions.cs</Link>
+    </Compile>
     <Compile Include="..\System.CoreEx_\Patterns\System.Core.Patterns.Reporting\Patterns\Reporting\FlatFileField.cs">
       <Link>Patterns\System.Core.Patterns.Reporting\Patterns\Reporting\FlatFileField.cs</Link>
     </Compile>

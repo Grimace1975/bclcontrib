@@ -23,6 +23,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 #endregion
+using System.Linq;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Collections.ObjectModel;
@@ -34,6 +35,8 @@ namespace System.Quality.EventSourcing
     public interface IAggregateRootRepository
     {
         TAggregateRoot GetById<TAggregateRoot>(object aggregateId, AggregateRootQueryOptions queryOptions)
+            where TAggregateRoot : AggregateRoot;
+        IEnumerable<TAggregateRoot> GetManyByIds<TAggregateRoot>(IEnumerable<object> aggregateIds, AggregateRootQueryOptions queryOptions)
             where TAggregateRoot : AggregateRoot;
         IEnumerable<Event> GetEventsById(object aggregateId);
         void Save(AggregateRoot aggregate);
@@ -82,6 +85,8 @@ namespace System.Quality.EventSourcing
         public TAggregateRoot GetById<TAggregateRoot>(object aggregateId, AggregateRootQueryOptions queryOptions)
              where TAggregateRoot : AggregateRoot
         {
+            if (aggregateId == null)
+                throw new ArgumentNullException("aggreaggregateIdgateIds");
             var aggregate = (_factory(typeof(TAggregateRoot)) as TAggregateRoot);
             if (aggregate == null)
                 throw new InvalidOperationException("Factory");
@@ -91,7 +96,7 @@ namespace System.Quality.EventSourcing
             if (_snapshotStore != null)
             {
                 var snapshoter = (aggregate as ICanAggregateRootSnapshot);
-                if ((snapshoter != null) && ((snapshot = _snapshotStore.GetSnapshot<TAggregateRoot>(aggregateId)) != null))
+                if ((snapshoter != null) && ((snapshot = _snapshotStore.GetLatestSnapshot<TAggregateRoot>(aggregateId)) != null))
                 {
                     loaded = true;
                     snapshoter.LoadSnapshot(snapshot);
@@ -103,6 +108,14 @@ namespace System.Quality.EventSourcing
             return ((queryOptions & AggregateRootQueryOptions.UseNullAggregates) == 0 ? aggregate : (loaded ? aggregate : null));
         }
 
+        public IEnumerable<TAggregateRoot> GetManyByIds<TAggregateRoot>(IEnumerable<object> aggregateIds, AggregateRootQueryOptions queryOptions)
+            where TAggregateRoot : AggregateRoot
+        {
+            if (aggregateIds == null)
+                throw new ArgumentNullException("aggregateIds");
+            return aggregateIds.Select(x => GetById<TAggregateRoot>(x, queryOptions)).ToList();
+        }
+
         public void Save(AggregateRoot aggregate)
         {
             var accessAggregateState = (IAccessAggregateRootState)aggregate;
@@ -111,6 +124,13 @@ namespace System.Quality.EventSourcing
             if (_eventDispatcher != null)
                 _eventDispatcher(events);
             accessAggregateState.MarkChangesAsCommitted();
+            // make snapshot
+            if (_snapshotStore != null)
+            {
+                var snapshoter = (aggregate as ICanAggregateRootSnapshot);
+                if ((snapshoter != null) && (_snapshotStore.ShouldSnapshot(aggregate)))
+                    _snapshotStore.SaveSnapshot(snapshoter.GetSnapshot());
+            }
         }
     }
 }

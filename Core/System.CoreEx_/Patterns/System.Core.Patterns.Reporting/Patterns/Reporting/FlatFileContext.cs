@@ -30,15 +30,29 @@ namespace System.Patterns.Reporting
     /// </summary>
     public class FlatFileContext
     {
+        public static readonly FlatFileContext DefaultContext = new FlatFileContext { };
+
         public FlatFileContext()
         {
-            HasHeaderRow = true;
+            EmitOptions = FlatFileEmitOptions.HasHeaderRow | FlatFileEmitOptions.EncodeValues;
             FilterMode = FlatFileFilterMode.ExceptionsInFields;
             Fields = new FlatFileFieldCollection();
         }
 
-        public bool HasHeaderRow { get; set; }
+        public bool this[FlatFileEmitOptions option]
+        {
+            get { return ((EmitOptions & option) == option); }
+            set { EmitOptions = (value ? EmitOptions | option : EmitOptions & ~option); }
+        }
+
+        public bool HasHeaderRow
+        {
+            get { return this[FlatFileEmitOptions.HasHeaderRow]; }
+            set { this[FlatFileEmitOptions.HasHeaderRow] = value; }
+        }
+
         public FlatFileFilterMode FilterMode { get; set; }
         public FlatFileFieldCollection Fields { get; private set; }
+        public FlatFileEmitOptions EmitOptions { get; set; }
     }
 }

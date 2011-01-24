@@ -45,19 +45,21 @@ namespace System.Patterns.Reporting
             public bool? AsExcelFunction;
         }
 
-        public void Emit<TItem>(TextWriter w, IEnumerable<TItem> set) { Emit<TItem>((FlatFileContext)null, w, set); }
+        public void Emit<TItem>(TextWriter w, IEnumerable<TItem> set) { Emit<TItem>(FlatFileContext.DefaultContext, w, set); }
         public void Emit<TItem>(FlatFileContext context, TextWriter w, IEnumerable<TItem> set)
         {
+            if (context == null)
+                throw new ArgumentNullException("context");
             if (w == null)
                 throw new ArgumentNullException("w");
             if (set == null)
                 throw new ArgumentNullException("set");
-            // get names
             var itemProperties = GetItemProperties<TItem>();
+            var shouldEncodeValues = ((context.EmitOptions & FlatFileEmitOptions.EncodeValues) != 0);
             // header
-            var fields = (context != null ? context.Fields : null);
+            var fields = (context.Fields.Count > 0 ? context.Fields : null);
             var b = new StringBuilder();
-            if ((context == null) || (context.HasHeaderRow))
+            if ((context.EmitOptions & FlatFileEmitOptions.HasHeaderRow) != 0)
             {
                 foreach (var itemProperty in itemProperties)
                 {
@@ -67,7 +69,9 @@ namespace System.Patterns.Reporting
                     if ((fields != null) && (fields.TryGetValue(name, out field)) && (field != null))
                         if (field.IsIgnore)
                             continue;
-                    b.Append(CsvCodec.Encode(name) + ",");
+                        else if (field.DisplayName != null)
+                            name = field.DisplayName;
+                    b.Append(TryEncode(shouldEncodeValues, name) + ",");
                 }
                 if (b.Length > 0)
                     b.Length--;
@@ -123,7 +127,7 @@ namespace System.Patterns.Reporting
                     else
                         valueAsText = (value != null ? value.ToString() : string.Empty);
                     // append value
-                    b.Append(CsvCodec.Encode(valueAsText) + ",");
+                    b.Append(TryEncode(shouldEncodeValues, valueAsText) + ",");
                 }
                 b.Length--;
                 w.Write(b.ToString() + Environment.NewLine);
@@ -140,6 +144,11 @@ namespace System.Patterns.Reporting
         private static PropertyInfo[] GetItemProperties<T>()
         {
             return typeof(T).GetProperties().ToArray();
+        }
+
+        private string TryEncode(bool shouldEncodeValues, string value)
+        {
+            return (shouldEncodeValues ? CsvCodec.Encode(value) : value);
         }
     }
 }

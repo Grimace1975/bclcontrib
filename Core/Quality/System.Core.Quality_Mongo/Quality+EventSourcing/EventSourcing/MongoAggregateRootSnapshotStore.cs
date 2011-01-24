@@ -31,7 +31,7 @@ namespace System.Quality.EventSourcing
             return configurationBuilder.BuildConfiguration();
         }
 
-        public AggregateRootSnapshot GetSnapshot<TAggregateRoot>(object aggregateId)
+        public AggregateRootSnapshot GetLatestSnapshot<TAggregateRoot>(object aggregateId)
             where TAggregateRoot : AggregateRoot
         {
             return _database.GetCollection<AggregateRootSnapshot>("snapshots")
@@ -40,11 +40,15 @@ namespace System.Quality.EventSourcing
                 .SingleOrDefault();
         }
 
-        public void SaveSnapshot<TSnapshot>(TSnapshot snapshot)
-            where TSnapshot : AggregateRootSnapshot
+        public void SaveSnapshot(AggregateRootSnapshot snapshot)
         {
-            var monoSnapshots = _database.GetCollection<TSnapshot>("snapshots");
+            var monoSnapshots = _database.GetCollection<AggregateRootSnapshot>("snapshots");
             monoSnapshots.Update(snapshot, UpdateFlags.Upsert);
+        }
+
+        public bool ShouldSnapshot(AggregateRootRepository repository, AggregateRoot aggregate)
+        {
+            return false;
         }
     }
 }
