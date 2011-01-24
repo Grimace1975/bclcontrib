@@ -211,8 +211,9 @@ namespace System.DirectoryServices.AccountManagement
                 throw new ArgumentNullException("context");
             if (string.IsNullOrEmpty(email))
                 throw new ArgumentNullException("email");
-            var searcher = new PrincipalSearcher(new UserPrincipal(context) { EmailAddress = email });
-            using (var users = searcher.FindAll())
+            var principalSearcher = new PrincipalSearcher(new UserPrincipal(context) { EmailAddress = email });
+            //principalSearcher.PageSize = 1000;
+            using (var users = principalSearcher.FindAll())
                 switch (users.Count())
                 {
                     case 0:
@@ -246,6 +247,7 @@ namespace System.DirectoryServices.AccountManagement
             foreach (var queryFilter in principalMatcher.GetQueryFilters(context))
             {
                 var principalSearcher = new PrincipalSearcher(queryFilter);
+                //principalSearcher.PageSize = 1000;
                 if (searchLimiter != null)
                     searchLimiter(principalMatcher, principalSearcher);
                 using (var searchResults = principalSearcher.FindAll())

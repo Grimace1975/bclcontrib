@@ -37,7 +37,7 @@ namespace System.Quality.EventSourcing
             _serializer = serializer;
         }
 
-        public AggregateRootSnapshot GetSnapshot<TAggregateRoot>(object aggregateId)
+        public AggregateRootSnapshot GetLatestSnapshot<TAggregateRoot>(object aggregateId)
             where TAggregateRoot : AggregateRoot
         {
             using (var connection = new SqlConnection(_connectionString))
@@ -58,8 +58,7 @@ From dbo.[{0}]
             }
         }
 
-        public void SaveSnapshot<TSnapshot>(TSnapshot snapshot)
-            where TSnapshot : AggregateRootSnapshot
+        public void SaveSnapshot(AggregateRootRepository repository, AggregateRootSnapshot snapshot)
         {
             var snapshotType = snapshot.GetType();
             var snapshotJson = _serializer.WriteObject(snapshotType, snapshot);
@@ -95,6 +94,11 @@ When Not Matched By Target Then
             var type = Type.GetType(r.Field<string>(ordinal.Type));
             string blob = r.Field<string>(ordinal.Blob);
             return _serializer.ReadObject<AggregateRootSnapshot>(type, blob);
+        }
+
+        public bool ShouldSnapshot(AggregateRoot aggregate)
+        {
+            return false;
         }
     }
 }

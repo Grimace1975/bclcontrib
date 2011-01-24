@@ -26,13 +26,11 @@ THE SOFTWARE.
 namespace System.Quality.EventSourcing
 {
     /// <summary>
-    /// IAggregateRootSnapshotStore
+    /// AggregateRootOptions
     /// </summary>
-    public interface IAggregateRootSnapshotStore
+    [Flags]
+    public enum AggregateRootOptions
     {
-        bool ShouldSnapshot(AggregateRootRepository repository, AggregateRoot aggregate);
-        AggregateRootSnapshot GetLatestSnapshot<TAggregateRoot>(object aggregateId)
-            where TAggregateRoot : AggregateRoot;
-        void SaveSnapshot(AggregateRootSnapshot snapshot);
+        UseStorageBasedSequencing = 0x1,
     }
 }

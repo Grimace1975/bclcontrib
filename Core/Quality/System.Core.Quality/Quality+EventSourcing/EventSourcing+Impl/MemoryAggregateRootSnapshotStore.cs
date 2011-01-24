@@ -34,7 +34,7 @@ namespace System.Quality.EventSourcing
     {
         private readonly List<AggregateRootSnapshot> _snapshots = new List<AggregateRootSnapshot>();
 
-        public AggregateRootSnapshot GetSnapshot<TAggregateRoot>(object aggregateId)
+        public AggregateRootSnapshot GetLatestSnapshot<TAggregateRoot>(object aggregateId)
             where TAggregateRoot : AggregateRoot
         {
             return _snapshots
@@ -43,10 +43,14 @@ namespace System.Quality.EventSourcing
                 .SingleOrDefault();
         }
 
-        public void SaveSnapshot<TSnapshot>(TSnapshot snapshot)
-            where TSnapshot : AggregateRootSnapshot
+        public void SaveSnapshot(AggregateRootSnapshot snapshot)
         {
             _snapshots.Add(snapshot);
+        }
+
+        public bool ShouldSnapshot(AggregateRootRepository repository, AggregateRoot aggregate)
+        {
+            return false;
         }
     }
 }

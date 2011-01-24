@@ -45,9 +45,10 @@ namespace System.Quality.EventSourcing
             public void ApplyEvent(AggregateRoot aggregate, Event e) { }
         }
 
-        public AggregateRoot()
+        public AggregateRoot() { }
+        public AggregateRoot(AggregateRootOptions options)
         {
-            _useStorageBasedSequencing = false;
+            _useStorageBasedSequencing = ((options & AggregateRootOptions.UseStorageBasedSequencing) != 0);
         }
 
         public object AggregateId { get; protected set; }

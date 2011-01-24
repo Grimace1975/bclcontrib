@@ -147,6 +147,7 @@ namespace System.DirectoryServices
             foreach (var queryFilter in directoryEntryMatcher.GetQueryFilters())
             {
                 var directorySearcher = new DirectorySearcher(directoryEntry);
+                directorySearcher.PageSize = 1000;
                 if (searchLimiter != null)
                     searchLimiter(directoryEntryMatcher, directorySearcher);
                 using (var searchResults = directorySearcher.FindAll())
@@ -205,6 +206,7 @@ namespace System.DirectoryServices
                 {
                     var filterPart = "(" + Ldap.EncodeFilter(identityProperty) + "=" + string.Join(")(" + Ldap.EncodeFilter(identityProperty) + "=", batch.Select(x => Ldap.EncodeFilter(x, true)).ToArray()) + ")";
                     var directorySearcher = new DirectorySearcher(directoryEntry, string.Format(queryFilter, "(|" + filterPart + ")"), propertiesToLoad);
+                    directorySearcher.PageSize = 1000;
                     if (limiter != null)
                         limiter(directorySearcher);
                     list.AddRange(
