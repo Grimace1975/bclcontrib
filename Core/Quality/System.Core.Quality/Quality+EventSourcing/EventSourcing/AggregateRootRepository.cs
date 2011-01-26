@@ -128,7 +128,7 @@ namespace System.Quality.EventSourcing
             if (_snapshotStore != null)
             {
                 var snapshoter = (aggregate as ICanAggregateRootSnapshot);
-                if ((snapshoter != null) && (_snapshotStore.ShouldSnapshot(aggregate)))
+                if ((snapshoter != null) && (_snapshotStore.ShouldSnapshot(this, aggregate)))
                     _snapshotStore.SaveSnapshot(snapshoter.GetSnapshot());
             }
         }

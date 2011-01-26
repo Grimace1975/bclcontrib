@@ -23,32 +23,16 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 #endregion
-using System.Linq;
 using System.Collections.Generic;
 namespace System.Quality.EventSourcing
 {
     /// <summary>
-    /// MemoryEventStore
+    /// IBatchedAggregateRootSnapshotStore
     /// </summary>
-    public class MemoryEventStore : IEventStore
+    public interface IBatchedAggregateRootSnapshotStore : IAggregateRootSnapshotStore
     {
-        private readonly List<Event> _events = new List<Event>();
-
-        public IEnumerable<Event> GetEventsForAggregate(object aggregateId, int startSequence)
-        {
-            return _events
-                .Where(x => (x.AggregateId.Equals(aggregateId)) && (x.EventSequence > startSequence))
-                .ToList();
-        }
-
-        public IEnumerable<Event> GetEventsByEventTypes(IEnumerable<Type> eventTypes)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void SaveEvents(object aggregateId, IEnumerable<Event> events)
-        {
-            _events.AddRange(events);
-        }
+        IEnumerable<AggregateRootSnapshot> GetLatestSnapshots<TAggregateRoot>(IEnumerable<object> aggregateIds)
+            where TAggregateRoot : AggregateRoot;
+        void SaveSnapshots(IEnumerable<AggregateRootSnapshot> snapshots);
     }
 }

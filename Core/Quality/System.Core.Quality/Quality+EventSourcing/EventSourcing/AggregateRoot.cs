@@ -52,6 +52,7 @@ namespace System.Quality.EventSourcing
         }
 
         public object AggregateId { get; protected set; }
+        protected internal DateTime LastEventDate { get; private set; }
         protected internal int LastEventSequence { get; private set; }
 
         protected IAggregateRootEventDispatcher EventDispatcher
@@ -74,7 +75,7 @@ namespace System.Quality.EventSourcing
             e.AggregateId = AggregateId;
             e.EventDate = DateTime.Now;
             if (!_useStorageBasedSequencing)
-                e.Sequence = ++LastEventSequence;
+                e.EventSequence = ++LastEventSequence;
             _eventDispatcher.ApplyEvent(this, e);
             _changes.Add(e); // trackAsChange
         }
@@ -92,14 +93,21 @@ namespace System.Quality.EventSourcing
                 throw new ArgumentNullException("events");
             if (_eventDispatcher == null)
                 throw new InvalidOperationException("EventDispatcher must be set first.");
-            int? lastEventSequence = null;
-            foreach (var e in events.OrderBy(x => x.Sequence))
+            Event lastEvent = null;
+            foreach (var e in events.OrderBy(x => x.EventSequence))
             {
                 _eventDispatcher.ApplyEvent(this, e);
-                lastEventSequence = e.Sequence;
+                lastEvent = e;
             }
-            LastEventSequence = (int)(lastEventSequence ?? 0);
-            return (lastEventSequence.HasValue);
+            if (lastEvent != null)
+            {
+                LastEventDate = lastEvent.EventDate;
+                LastEventSequence = (int)(lastEvent.EventSequence ?? 0);
+                return true;
+            }
+            LastEventDate = DateTime.Now;
+            LastEventSequence = 0;
+            return false;
         }
 
         IEnumerable<Event> IAccessAggregateRootState.GetUncommittedChanges()
