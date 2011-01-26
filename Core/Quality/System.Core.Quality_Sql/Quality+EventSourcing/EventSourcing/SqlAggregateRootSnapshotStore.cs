@@ -58,7 +58,7 @@ From dbo.[{0}]
             }
         }
 
-        public void SaveSnapshot(AggregateRootRepository repository, AggregateRootSnapshot snapshot)
+        public void SaveSnapshot(AggregateRootSnapshot snapshot)
         {
             var snapshotType = snapshot.GetType();
             var snapshotJson = _serializer.WriteObject(snapshotType, snapshot);
@@ -96,7 +96,7 @@ When Not Matched By Target Then
             return _serializer.ReadObject<AggregateRootSnapshot>(type, blob);
         }
 
-        public bool ShouldSnapshot(AggregateRoot aggregate)
+        public bool ShouldSnapshot(AggregateRootRepository repository, AggregateRoot aggregate)
         {
             return false;
         }

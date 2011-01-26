@@ -33,6 +33,6 @@ namespace System.Quality.EventSourcing
     {
         public object AggregateId { get; set; }
         public DateTime EventDate { get; set; }
-        public int? Sequence { get; set; }
+        public int? EventSequence { get; set; }
     }
 }

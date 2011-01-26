@@ -31,9 +31,6 @@ namespace System.Quality.EventSourcing
     [Serializable]
     public abstract class Event<TData> : Event
     {
-        public object AggregateId { get; set; }
-        public DateTime EventDate { get; set; }
-        public int? Sequence { get; set; }
         public TData Data { get; set; }
     }
 }

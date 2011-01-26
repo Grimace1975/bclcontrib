@@ -37,7 +37,7 @@ namespace System.Quality.EventSourcing
             return _database.GetCollection<Event>("events")
                 .Linq()
                 .Where(e => _aggregateKeyEqualityComparer(e.AggregateId, aggregateId))
-                .Where(e => e.Sequence > startSequence)
+                .Where(e => e.EventSequence > startSequence)
                 .ToList();
         }
 

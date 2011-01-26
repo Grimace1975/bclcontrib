@@ -101,7 +101,7 @@ Order By AggregateId, EventSequence;", _tableName);
                 {
                     var eventType = x.GetType();
                     return new XElement("e",
-                        new XAttribute("sequence", x.Sequence),
+                        new XAttribute("eventSequence", x.EventSequence),
                         new XAttribute("eventDate", x.EventDate),
                         new XAttribute("type", eventType.AssemblyQualifiedName),
                         _serializer.WriteObject(eventType, x));
@@ -111,7 +111,7 @@ Order By AggregateId, EventSequence;", _tableName);
                 var b = new StringBuilder();
                 b.Append(string.Format(@"
 Insert dbo.[{0}] (AggregateId, EventSequence, EventDate, Type, Blob)
-Select @aggregateId, _xml.item.value(N'@sequence', N'int'), _xml.item.value(N'@eventDate', N'datetime'), _xml.item.value(N'@type', N'nvarchar(500)'), _xml.item.value(N'.', N'nvarchar(max)')
+Select @aggregateId, _xml.item.value(N'@eventSequence', N'int'), _xml.item.value(N'@eventDate', N'datetime'), _xml.item.value(N'@type', N'nvarchar(500)'), _xml.item.value(N'.', N'nvarchar(max)')
 From @eventsXml.nodes(N'/r/e') _xml(item);", _tableName));
                 var command = new SqlCommand(b.ToString(), connection) { CommandType = CommandType.Text, };
                 command.Parameters.AddRange(new[] {
