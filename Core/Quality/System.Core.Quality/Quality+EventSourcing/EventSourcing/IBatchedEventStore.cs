@@ -31,7 +31,7 @@ namespace System.Quality.EventSourcing
     /// </summary>
     public interface IBatchedEventStore : IEventStore
     {
-        IEnumerable<AggregateTuple<Event>> GetEventsByIds(IEnumerable<AggregateTuple<int>> aggregateIds);
-        void SaveEvents(IEnumerable<AggregateTuple<Event>> events);
+        IEnumerable<AggregateTuple<IEnumerable<Event>>> GetEventsByIds(IEnumerable<AggregateTuple<int>> aggregateIds);
+        void SaveEvents(IEnumerable<AggregateTuple<IEnumerable<Event>>> events);
     }
 }

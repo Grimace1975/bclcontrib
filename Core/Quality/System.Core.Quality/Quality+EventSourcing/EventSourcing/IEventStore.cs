@@ -31,7 +31,7 @@ namespace System.Quality.EventSourcing
     /// </summary>
     public interface IEventStore
     {
-        IEnumerable<Event> GetEventsForAggregate(object aggregateId, int startSequence);
+        IEnumerable<Event> GetEventsById(object aggregateId, int startSequence);
         void SaveEvents(object aggregateId, IEnumerable<Event> events);
     }
 }

@@ -3,9 +3,11 @@ using System.Reflection;
 using System.Text;
 using System.Data.SqlClient;
 using System.Data;
+using System.Collections.Generic;
+using System.Xml.Linq;
 namespace System.Quality.EventSourcing
 {
-    public class SqlAggregateRootSnapshotStore : IAggregateRootSnapshotStore
+    public class SqlAggregateRootSnapshotStore : IBatchedAggregateRootSnapshotStore
     {
         private readonly string _connectionString;
         private readonly string _tableName;
@@ -20,6 +22,7 @@ namespace System.Quality.EventSourcing
                 Blob = r.GetOrdinal("Blob");
             }
         }
+
         public SqlAggregateRootSnapshotStore(string connectionString)
             : this(connectionString, "AggregateSnapshot", new JsonSerializer()) { }
         public SqlAggregateRootSnapshotStore(string connectionString, string tableName)
@@ -58,6 +61,33 @@ From dbo.[{0}]
             }
         }
 
+        public IEnumerable<AggregateRootSnapshot> GetLatestSnapshots<TAggregateRoot>(IEnumerable<object> aggregateIds)
+            where TAggregateRoot : AggregateRoot
+        {
+            var idsXml = new XElement("r", aggregateIds
+                .Select(x => new XElement("i", new XAttribute("id", x.ToString()))));
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                var sql = string.Format(@"
+Select Top 1 Type, Blob
+From dbo.[{0}] _Events
+    Inner Join @eventsXml.nodes(N'/r/i') _xml(item)
+    On (_Events.AggregateId = _xml.item.value(N'@id', N'nvarchar(100)'));", _tableName);
+                var command = new SqlCommand(sql, connection) { CommandType = CommandType.Text };
+                command.Parameters.AddRange(new[] {
+                    new SqlParameter { ParameterName = "@idsXml", SqlDbType = SqlDbType.Xml, Value = (idsXml != null ? idsXml.ToString() : string.Empty) } });
+                connection.Open();
+                var snapshots = new List<AggregateRootSnapshot>();
+                using (var r = command.ExecuteReader())
+                {
+                    var ordinal = new SnapshotOrdinal(r);
+                    while (r.Read())
+                        snapshots.Add(MakeSnapshot(r, ordinal));
+                }
+                return snapshots;
+            }
+        }
+
         public void SaveSnapshot(AggregateRootSnapshot snapshot)
         {
             var snapshotType = snapshot.GetType();
@@ -79,11 +109,47 @@ When Matched Then
 When Not Matched By Target Then
 	Insert (AggregateId, Type, Blob)
 	Values (@aggregateId, @type, @blob);", _tableName);
-                var command = new SqlCommand(sql, connection) { CommandType = CommandType.Text, };
+                var command = new SqlCommand(sql, connection) { CommandType = CommandType.Text };
                 command.Parameters.AddRange(new[] {
                     new SqlParameter { ParameterName = "@aggregateId", SqlDbType = SqlDbType.NVarChar, Value = snapshot.AggregateId },
                     new SqlParameter { ParameterName = "@type", SqlDbType = SqlDbType.NVarChar, Value = snapshotType.AssemblyQualifiedName },
                     new SqlParameter { ParameterName = "@blob", SqlDbType = SqlDbType.NVarChar, Value = snapshotJson } });
+                connection.Open();
+                command.ExecuteNonQuery();
+            }
+        }
+
+        public void SaveSnapshots(IEnumerable<AggregateRootSnapshot> snapshots)
+        {
+            var snapshotsXml = new XElement("r", snapshots
+                .Select(x =>
+                {
+                    var snapshotType = x.GetType();
+                    return new XElement("s",
+                        new XAttribute("aggregateId", x.AggregateId),
+                        new XAttribute("type", snapshotType.AssemblyQualifiedName),
+                        _serializer.WriteObject(snapshotType, x));
+                }));
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                var sql = string.Format(@"
+With _Target As (
+	Select *
+	From dbo.[{0}]
+		Where (AggregateId = @aggregateId)
+)
+Merge _Target
+Using (
+	Select @aggregateId As AggregateId) As _Source
+On (_Target.AggregateId = _Source.AggregateId)
+When Matched Then
+	Update Set Type = @type, Blob = @blob
+When Not Matched By Target Then
+	Insert (AggregateId, Type, Blob)
+	Values (@aggregateId, @type, @blob);", _tableName);
+                var command = new SqlCommand(sql, connection) { CommandType = CommandType.Text };
+                command.Parameters.AddRange(new[] {
+                    new SqlParameter { ParameterName = "@snapshotsXml", SqlDbType = SqlDbType.NVarChar, Value = (snapshotsXml != null ? snapshotsXml.ToString() : string.Empty) } });
                 connection.Open();
                 command.ExecuteNonQuery();
             }
