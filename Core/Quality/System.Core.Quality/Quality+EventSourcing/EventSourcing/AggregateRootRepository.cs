@@ -40,6 +40,7 @@ namespace System.Quality.EventSourcing
             where TAggregateRoot : AggregateRoot;
         IEnumerable<Event> GetEventsById(object aggregateId);
         void Save(AggregateRoot aggregate);
+        void Save(IEnumerable<AggregateRoot> aggregate);
     }
 
     public static class IAggregateRootRepositoryExtensions
@@ -54,7 +55,9 @@ namespace System.Quality.EventSourcing
     public class AggregateRootRepository : IAggregateRootRepository
     {
         private readonly IEventStore _eventStore;
+        private readonly IBatchedEventStore _batchedEventStore;
         private readonly IAggregateRootSnapshotStore _snapshotStore;
+        private readonly IBatchedAggregateRootSnapshotStore _batchedSnapshotStore;
         private readonly Action<IEnumerable<Event>> _eventDispatcher;
         private readonly Func<Type, AggregateRoot> _factory;
 
@@ -72,14 +75,16 @@ namespace System.Quality.EventSourcing
             if (eventStore == null)
                 throw new ArgumentNullException("eventStore");
             _eventStore = eventStore;
+            _batchedEventStore = (eventStore as IBatchedEventStore);
             _snapshotStore = snapshotStore;
+            _batchedSnapshotStore = (snapshotStore as IBatchedAggregateRootSnapshotStore);
             _eventDispatcher = eventDispatcher;
             _factory = (factory ?? DefaultFactory.Factory);
         }
 
         public IEnumerable<Event> GetEventsById(object aggregateId)
         {
-            return _eventStore.GetEventsForAggregate(aggregateId, 0);
+            return _eventStore.GetEventsById(aggregateId, 0);
         }
 
         public TAggregateRoot GetById<TAggregateRoot>(object aggregateId, AggregateRootQueryOptions queryOptions)
@@ -103,7 +108,7 @@ namespace System.Quality.EventSourcing
                 }
             }
             // load events
-            var events = _eventStore.GetEventsForAggregate(aggregateId, (snapshot != null ? snapshot.LastEventSequence : 0));
+            var events = _eventStore.GetEventsById(aggregateId, (snapshot != null ? snapshot.LastEventSequence : 0));
             loaded |= ((IAccessAggregateRootState)aggregate).LoadFromHistory(events);
             return ((queryOptions & AggregateRootQueryOptions.UseNullAggregates) == 0 ? aggregate : (loaded ? aggregate : null));
         }
@@ -118,6 +123,8 @@ namespace System.Quality.EventSourcing
 
         public void Save(AggregateRoot aggregate)
         {
+            if (aggregate == null)
+                throw new ArgumentNullException("aggregate");
             var accessAggregateState = (IAccessAggregateRootState)aggregate;
             var events = accessAggregateState.GetUncommittedChanges();
             _eventStore.SaveEvents(aggregate.AggregateId, events);
@@ -131,6 +138,13 @@ namespace System.Quality.EventSourcing
                 if ((snapshoter != null) && (_snapshotStore.ShouldSnapshot(this, aggregate)))
                     _snapshotStore.SaveSnapshot(snapshoter.GetSnapshot());
             }
+        }
+        public void Save(IEnumerable<AggregateRoot> aggregates)
+        {
+            if (aggregates == null)
+                throw new ArgumentNullException("aggregates");
+            foreach (var aggregate in aggregates)
+                Save(aggregate);
         }
     }
 }

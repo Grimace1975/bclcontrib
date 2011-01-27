@@ -32,7 +32,7 @@ namespace System.Quality.EventSourcing
             return configurationBuilder.BuildConfiguration();
         }
 
-        public IEnumerable<Event> GetEventsForAggregate(object aggregateId, int startSequence)
+        public IEnumerable<Event> GetEventsById(object aggregateId, int startSequence)
         {
             return _database.GetCollection<Event>("events")
                 .Linq()

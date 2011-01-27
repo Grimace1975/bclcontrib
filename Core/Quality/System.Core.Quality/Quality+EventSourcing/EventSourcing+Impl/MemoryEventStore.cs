@@ -34,7 +34,7 @@ namespace System.Quality.EventSourcing
     {
         private readonly List<Event> _events = new List<Event>();
 
-        public IEnumerable<Event> GetEventsForAggregate(object aggregateId, int startSequence)
+        public IEnumerable<Event> GetEventsById(object aggregateId, int startSequence)
         {
             return _events
                 .Where(x => (x.AggregateId.Equals(aggregateId)) && (x.EventSequence > startSequence))
