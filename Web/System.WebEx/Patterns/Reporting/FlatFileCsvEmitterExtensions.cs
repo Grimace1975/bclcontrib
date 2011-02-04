@@ -33,8 +33,9 @@ namespace System.Patterns.Reporting
     /// </summary>
     public static partial class FlatFileCsvEmitterExtensions
     {
-        public static void EmitHttp<TItem>(this FlatFileCsvEmitter emitter, string fileName, IEnumerable<TItem> set) { EmitHttp<TItem>(emitter, (FlatFileContext)null, fileName, set); }
-        public static void EmitHttp<TItem>(this FlatFileCsvEmitter emitter, FlatFileContext context, string fileName, IEnumerable<TItem> set)
+        public static void EmitHttp<TItem>(this FlatFileCsvEmitter emitter, string fileName, IEnumerable<TItem> set) { EmitHttp<TItem>(emitter, FlatFileContext.DefaultContext, fileName, set, true); }
+        public static void EmitHttp<TItem>(this FlatFileCsvEmitter emitter, FlatFileContext context, string fileName, IEnumerable<TItem> set) { EmitHttp<TItem>(emitter, context, fileName, set, true); }
+        public static void EmitHttp<TItem>(this FlatFileCsvEmitter emitter, FlatFileContext context, string fileName, IEnumerable<TItem> set, bool endRequest)
         {
             if (string.IsNullOrEmpty(fileName))
                 throw new ArgumentNullException("fileName");
@@ -46,6 +47,8 @@ namespace System.Patterns.Reporting
             response.ContentType = "application/csv; name=" + fileName;
             response.AddHeader("Content-Disposition", "attachment; filename=" + fileName);
             emitter.Emit<TItem>(context, response.Output, set);
+            if (endRequest)
+                response.End();
         }
     }
 }
