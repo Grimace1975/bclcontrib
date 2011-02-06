@@ -21,9 +21,9 @@ namespace SystemEx.IO
             return new byte[initialSize != 0 ? initialSize : 16];
         }
 
-        public byte[] Buffer
+        public byte[] GetBuffer()
         {
-            get { return _buffer; }
+            return _buffer;
         }
 
         public byte[] ToArray()
@@ -63,5 +63,7 @@ namespace SystemEx.IO
         {
             _buffer = null;
         }
+
+        public override void Flush() { }
     }
 }

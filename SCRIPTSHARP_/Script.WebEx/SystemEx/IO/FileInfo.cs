@@ -135,7 +135,7 @@ namespace SystemEx.IO
                 {
                     if (!Exists())
                         return 0;
-                    FileStream raf = new FileStream(this, FileMode.Append, FileAccess.Read);
+                    FileStream raf = new FileStream(null, FileMode.Append, FileAccess.Read, this);
                     long length = raf.Length;
                     raf.Close();
                     return length;

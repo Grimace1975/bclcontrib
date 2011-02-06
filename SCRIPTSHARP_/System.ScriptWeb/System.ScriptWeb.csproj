@@ -32,11 +32,65 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="..\Script.WebEx\SystemEx+3D\ByteBuilder+3DReadWrite.cs">
+      <Link>System+3D\ByteBuilder+3DReadWrite.cs</Link>
+    </Compile>
+    <Compile Include="..\Script.WebEx\SystemEx+3D\Math3D.cs">
+      <Link>System+3D\Math3D.cs</Link>
+    </Compile>
+    <Compile Include="..\Script.WebEx\SystemEx+3D\Plane3.cs">
+      <Link>System+3D\Plane3.cs</Link>
+    </Compile>
+    <Compile Include="..\Script.WebEx\SystemEx\ByteBuilder+ReadWrite.cs">
+      <Link>System\ByteBuilder+ReadWrite.cs</Link>
+    </Compile>
+    <Compile Include="..\Script.WebEx\SystemEx\ByteBuilder.cs">
+      <Link>System\ByteBuilder.cs</Link>
+    </Compile>
+    <Compile Include="..\Script.WebEx\SystemEx\ErrorCode.cs">
+      <Link>System\ErrorCode.cs</Link>
+    </Compile>
+    <Compile Include="..\Script.WebEx\SystemEx\ErrorHandler.cs">
+      <Link>System\ErrorHandler.cs</Link>
+    </Compile>
+    <Compile Include="..\Script.WebEx\SystemEx\Interop\CSyntax\ConversionSpecification.cs">
+      <Link>System\Interop\CSyntax\ConversionSpecification.cs</Link>
+    </Compile>
+    <Compile Include="..\Script.WebEx\SystemEx\Interop\CSyntax\PrintfFormat.cs">
+      <Link>System\Interop\CSyntax\PrintfFormat.cs</Link>
+    </Compile>
+    <Compile Include="..\Script.WebEx\SystemEx\Interop\CSyntax\PrintfHelper.cs">
+      <Link>System\Interop\CSyntax\PrintfHelper.cs</Link>
+    </Compile>
     <Compile Include="..\Script.WebEx\SystemEx\IO\SE.cs">
       <Link>IO\SE.cs</Link>
     </Compile>
+    <Compile Include="..\Script.WebEx\SystemEx\JSArrayEx.cs">
+      <Link>System\JSArrayEx.cs</Link>
+    </Compile>
+    <Compile Include="..\Script.WebEx\SystemEx\JSConvert.cs">
+      <Link>System\JSConvert.cs</Link>
+    </Compile>
+    <Compile Include="..\Script.WebEx\SystemEx\JSString.cs">
+      <Link>System\JSString.cs</Link>
+    </Compile>
+    <Compile Include="..\Script.WebEx\SystemEx\JSSystem.cs">
+      <Link>System\JSSystem.cs</Link>
+    </Compile>
+    <Compile Include="..\Script.WebEx\SystemEx\Security\Cryptography\CrcSlim.cs">
+      <Link>System\Cryptography\CrcSlim.cs</Link>
+    </Compile>
+    <Compile Include="..\Script.WebEx\SystemEx\Security\Cryptography\Md4Slim.cs">
+      <Link>System\Cryptography\Md4Slim.cs</Link>
+    </Compile>
     <Compile Include="..\Script.WebEx\SystemEx\StringBuilderEx.cs">
       <Link>Text\StringBuilderEx.cs</Link>
+    </Compile>
+    <Compile Include="..\Script.WebEx\SystemEx\Text\PackText.cs">
+      <Link>System\Text\PackText.cs</Link>
+    </Compile>
+    <Compile Include="..\Script.WebEx\SystemEx\Timer.cs">
+      <Link>System\Timer.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
