@@ -7,6 +7,19 @@ function executeScript() {
 Type.registerNamespace('SystemEx');
 
 ////////////////////////////////////////////////////////////////////////////////
+// SystemEx.IAsyncAssetLoader
+
+SystemEx.IAsyncAssetLoader = function() { 
+};
+SystemEx.IAsyncAssetLoader.prototype = {
+    getAsset : null,
+    pump : null,
+    reset : null
+}
+SystemEx.IAsyncAssetLoader.registerInterface('SystemEx.IAsyncAssetLoader');
+
+
+////////////////////////////////////////////////////////////////////////////////
 // SystemEx.ErrorCode
 
 SystemEx.ErrorCode = function() { 
@@ -1078,7 +1091,12 @@ SystemEx.JSSystem.tryCatch = function SystemEx_JSSystem$tryCatch(e, name) {
     /// <param name="name" type="String">
     /// </param>
     /// <returns type="Boolean"></returns>
+    console.warn(e.message);
     throw e;
+}
+SystemEx.JSSystem.get_currentMSecond = function SystemEx_JSSystem$get_currentMSecond() {
+    /// <value type="Number" integer="true"></value>
+    return (new Date()).getTime();
 }
 
 
@@ -1356,17 +1374,6 @@ SystemEx.JSConvert.ints32ToJSArray = function SystemEx_JSConvert$ints32ToJSArray
         jsan.set(index, data[index]);
     }
     return jsan;
-}
-
-
-////////////////////////////////////////////////////////////////////////////////
-// SystemEx.Timer
-
-SystemEx.Timer = function SystemEx_Timer() {
-}
-SystemEx.Timer.milliseconds = function SystemEx_Timer$milliseconds() {
-    /// <returns type="Number" integer="true"></returns>
-    return 0;
 }
 
 
@@ -5571,7 +5578,6 @@ SystemEx.JSSystem.registerClass('SystemEx.JSSystem');
 SystemEx.JSString.registerClass('SystemEx.JSString');
 SystemEx.JSArrayEx.registerClass('SystemEx.JSArrayEx');
 SystemEx.JSConvert.registerClass('SystemEx.JSConvert');
-SystemEx.Timer.registerClass('SystemEx.Timer');
 SystemEx.StringBuilderEx.registerClass('SystemEx.StringBuilderEx');
 SystemEx.Html.CloseEventArgs.registerClass('SystemEx.Html.CloseEventArgs');
 SystemEx.Html.MessageEventArgs.registerClass('SystemEx.Html.MessageEventArgs');

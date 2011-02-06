@@ -49,6 +49,7 @@
     <Compile Include="SystemEx+3D\ByteBuilder+3DReadWrite.cs" />
     <Compile Include="SystemEx\ByteBuilder+ReadWrite.cs" />
     <Compile Include="SystemEx\ByteBuilder.cs" />
+    <Compile Include="SystemEx\IAsyncAssetLoader.cs" />
     <Compile Include="SystemEx\JSSystem.cs" />
     <Compile Include="SystemEx\JSString.cs" />
     <Compile Include="SystemEx\ErrorHandler.cs" />
@@ -72,6 +73,7 @@
     <Compile Include="SystemEx\Security\Cryptography\Md4Slim.cs" />
     <Compile Include="SystemEx\Text\PackText.cs" />
     <Compile Include="SystemEx\Timer.cs" />
+    <Compile Include="System\JSAsyncCallback.cs" />
     <Compile Include="System\Html\CanvasElementEx.cs" />
     <Compile Include="System\Html\VideoElement.cs" />
     <Compile Include="System\Html\WindowEx.cs" />
@@ -92,6 +94,7 @@
     <Compile Include="System\JSArrayMixed.cs" />
     <Compile Include="System\JSArrayNumber.cs" />
     <Compile Include="System\JSArrayString.cs" />
+    <Compile Include="System\Specialized\MozConsole.cs" />
     <Compile Include="System\TypedArrays\ArrayBufferView.cs" />
     <Compile Include="System\TypedArrays\ArrayBuffer.cs" />
     <Compile Include="System\TypedArrays\DataView.cs" />

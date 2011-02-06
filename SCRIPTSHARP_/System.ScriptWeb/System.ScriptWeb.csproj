@@ -53,6 +53,9 @@
     <Compile Include="..\Script.WebEx\SystemEx\ErrorHandler.cs">
       <Link>System\ErrorHandler.cs</Link>
     </Compile>
+    <Compile Include="..\Script.WebEx\SystemEx\IAsyncAssetLoader.cs">
+      <Link>System\IAsyncAssetLoader.cs</Link>
+    </Compile>
     <Compile Include="..\Script.WebEx\SystemEx\Interop\CSyntax\ConversionSpecification.cs">
       <Link>System\Interop\CSyntax\ConversionSpecification.cs</Link>
     </Compile>
@@ -89,8 +92,8 @@
     <Compile Include="..\Script.WebEx\SystemEx\Text\PackText.cs">
       <Link>System\Text\PackText.cs</Link>
     </Compile>
-    <Compile Include="..\Script.WebEx\SystemEx\Timer.cs">
-      <Link>System\Timer.cs</Link>
+    <Compile Include="..\Script.WebEx\System\JSAsyncCallback.cs">
+      <Link>System\JSAsyncCallback.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
