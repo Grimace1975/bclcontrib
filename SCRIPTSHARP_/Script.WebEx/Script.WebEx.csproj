@@ -44,6 +44,15 @@
     <Reference Include="Script.Web" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="SystemEx+3D\Math3D.cs" />
+    <Compile Include="SystemEx+3D\Plane3.cs" />
+    <Compile Include="SystemEx+3D\ByteBuilder+3DReadWrite.cs" />
+    <Compile Include="SystemEx\ByteBuilder+ReadWrite.cs" />
+    <Compile Include="SystemEx\ByteBuilder.cs" />
+    <Compile Include="SystemEx\JSSystem.cs" />
+    <Compile Include="SystemEx\JSString.cs" />
+    <Compile Include="SystemEx\ErrorHandler.cs" />
+    <Compile Include="SystemEx\ErrorCode.cs" />
     <Compile Include="SystemEx\Html+Net\CloseEventArgs.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -53,9 +62,16 @@
     <Compile Include="SystemEx\Html+Net\WebSocket.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="SystemEx\Interop\CSyntax\ConversionSpecification.cs" />
+    <Compile Include="SystemEx\Interop\CSyntax\PrintfFormat.cs" />
+    <Compile Include="SystemEx\Interop\CSyntax\PrintfHelper.cs" />
     <Compile Include="SystemEx\JSArrayEx.cs" />
     <Compile Include="SystemEx\IO\MemoryStream.cs" />
-    <Compile Include="SystemEx\JSConvertEx.cs" />
+    <Compile Include="SystemEx\JSConvert.cs" />
+    <Compile Include="SystemEx\Security\Cryptography\CrcSlim.cs" />
+    <Compile Include="SystemEx\Security\Cryptography\Md4Slim.cs" />
+    <Compile Include="SystemEx\Text\PackText.cs" />
+    <Compile Include="SystemEx\Timer.cs" />
     <Compile Include="System\Html\CanvasElementEx.cs" />
     <Compile Include="System\Html\VideoElement.cs" />
     <Compile Include="System\Html\WindowEx.cs" />
@@ -91,13 +107,7 @@
     <Content Include="Properties\Script.WebEx.script" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SystemEx\Html\LocalStorage.cs" />
-    <None Include="SystemEx\Html+Canvas\CanvasElement.java" />
-    <None Include="SystemEx\Html+Canvas\CanvasGradient.java" />
-    <None Include="SystemEx\Html+Canvas\CanvasPattern.java" />
-    <None Include="SystemEx\Html+Canvas\CanvasPixelArray.java" />
-    <None Include="SystemEx\Html+Canvas\CanvasRenderingContext2D.java" />
-    <None Include="SystemEx\Html+Canvas\ImageData.java" />
-    <None Include="SystemEx\Html+Canvas\TextMetrics.java" />
+    <Content Include="Resource_\webgl-debug.js" />
     <Compile Include="System\WebGL\WebGLActiveInfo.cs" />
     <Compile Include="System\WebGL\WebGLBuffer.cs" />
     <Compile Include="System\WebGL\WebGLContextAttributes.cs" />

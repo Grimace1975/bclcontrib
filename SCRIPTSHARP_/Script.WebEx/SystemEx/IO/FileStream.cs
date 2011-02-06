@@ -1,6 +1,7 @@
 using System;
 using SystemEx.Html;
 using System.Html;
+using System.Runtime.CompilerServices;
 namespace SystemEx.IO
 {
     public class FileStream : Stream
@@ -14,8 +15,12 @@ namespace SystemEx.IO
         private int _position;
         private int _length;
 
-        public FileStream(FileInfo fileInfo, FileMode fileMode, FileAccess fileAccess)
+        [AlternateSignature]
+        public extern FileStream(string path, FileMode fileMode, FileAccess fileAccess);
+        public FileStream(string path, FileMode fileMode, FileAccess fileAccess, FileInfo fileInfo)
         {
+            if (fileInfo == null)
+                fileInfo = new FileInfo(path);
             _name = fileInfo.GetCanonicalPath();
             if ((fileAccess != FileAccess.Read) && (fileAccess != FileAccess.ReadWrite))
                 throw new Exception("IllegalArgumentException: fileAccess");
@@ -105,7 +110,7 @@ namespace SystemEx.IO
             _newData = null;
         }
 
-        void Flush()
+        public override void Flush()
         {
             if (!_isDirty)
                 return;

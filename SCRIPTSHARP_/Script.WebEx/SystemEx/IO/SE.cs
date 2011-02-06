@@ -3,6 +3,7 @@ using System;
 using System.Runtime.CompilerServices;
 namespace SystemEx.IO
 #else
+using System.Text;
 namespace System.IO
 #endif
 {
@@ -33,8 +34,12 @@ namespace System.IO
             return (byte)v;
         }
 
+#if CODE_ANALYSIS
         [AlternateSignature]
         public static extern void ReadBytes(Stream s, byte[] b);
+#else
+        public static void ReadBytes(Stream s, byte[] b) { ReadBytes(s, b, 0, 0); }
+#endif
         public static void ReadBytes(Stream s, byte[] b, int offset, int length)
         {
             if ((offset == 0) && (length == 0))
@@ -86,7 +91,7 @@ namespace System.IO
 
         public static float ReadSingle(Stream s)
         {
-            return JSConvertEx.Int32BitsToSingle(ReadInt32(s));
+            return JSConvert.Int32BitsToSingle(ReadInt32(s));
         }
 
         public static double ReadDouble(Stream s)
@@ -144,39 +149,43 @@ namespace System.IO
 
         public static void WriteByte(Stream s, int v)
         {
-            s.WriteByte(v);
+            s.WriteByte((byte)v);
         }
 
         public static void WriteBytes(Stream s, string v)
         {
             int length = v.Length;
             for (int index = 0; index < length; index++)
+#if CODE_ANALYSIS
                 s.WriteByte(v.CharAt(index) & 0xff);
+#else
+                s.WriteByte((byte)(v[index] & 0xff));
+#endif
         }
 
         public static void WriteBoolean(Stream s, bool v)
         {
-            s.WriteByte(v ? 1 : 0);
+            s.WriteByte((byte)(v ? 1 : 0));
         }
 
         public static void WriteChar(Stream s, int v)
         {
-            s.WriteByte(v >> 8);
-            s.WriteByte(v);
+            s.WriteByte((byte)(v >> 8));
+            s.WriteByte((byte)v);
         }
 
         public static void WriteInt16(Stream s, int v)
         {
-            s.WriteByte(v >> 8);
-            s.WriteByte(v);
+            s.WriteByte((byte)(v >> 8));
+            s.WriteByte((byte)v);
         }
 
         public static void WriteInt32(Stream s, int v)
         {
-            s.WriteByte(v >> 24);
-            s.WriteByte(v >> 16);
-            s.WriteByte(v >> 8);
-            s.WriteByte(v);
+            s.WriteByte((byte)(v >> 24));
+            s.WriteByte((byte)(v >> 16));
+            s.WriteByte((byte)(v >> 8));
+            s.WriteByte((byte)v);
         }
 
         public static void WriteInt64(Stream s, long v)
@@ -187,7 +196,7 @@ namespace System.IO
 
         public static void WriteSingle(Stream s, float v)
         {
-            WriteInt32(s, JSConvertEx.SingleToInt32Bits(v));
+            WriteInt32(s, JSConvert.SingleToInt32Bits(v));
         }
 
         public static void WriteDouble(Stream s, double v)
@@ -200,23 +209,27 @@ namespace System.IO
             MemoryStream baos = new MemoryStream();
             for (int index = 0; index < v.Length; index++)
             {
+#if CODE_ANALYSIS
                 char c = v.CharAt(index);
+#else
+                char c = v[index];
+#endif
                 if ((c > 0) && (c < 80))
-                    baos.WriteByte(c);
+                    baos.WriteByte((byte)c);
                 else if (c < '\u0800')
                 {
-                    baos.WriteByte(0xc0 | (0x1f & (c >> 6)));
-                    baos.WriteByte(0x80 | (0x3f & c));
+                    baos.WriteByte((byte)(0xc0 | (0x1f & (c >> 6))));
+                    baos.WriteByte((byte)(0x80 | (0x3f & c)));
                 }
                 else
                 {
-                    baos.WriteByte(0xe0 | (0x0f & (c >> 12)));
-                    baos.WriteByte(0x80 | (0x3f & (c >> 6)));
-                    baos.WriteByte(0x80 | (0x3f & c));
+                    baos.WriteByte((byte)(0xe0 | (0x0f & (c >> 12))));
+                    baos.WriteByte((byte)(0x80 | (0x3f & (c >> 6))));
+                    baos.WriteByte((byte)(0x80 | (0x3f & c)));
                 }
             }
-            WriteInt16(s, baos.Length);
-            s.Write(baos.Buffer, 0, baos.Length);
+            WriteInt16(s, (int)baos.Length);
+            s.Write(baos.GetBuffer(), 0, (int)baos.Length);
         }
 
         #endregion

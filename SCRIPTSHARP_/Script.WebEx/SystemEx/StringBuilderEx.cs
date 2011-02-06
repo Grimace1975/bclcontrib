@@ -1,9 +1,9 @@
-#if CODE_ANALYSIS
+#if !CODE_ANALYSIS
+namespace System.Text
+#else
 using System;
 using System.Runtime.CompilerServices;
 namespace SystemEx
-#else
-namespace System.Text
 #endif
 {
     public class StringBuilderEx
@@ -18,8 +18,10 @@ namespace System.Text
     ss.StringBuilder.prototype.length = 0");
         }
         public static int GetLength(StringBuilder b) { return (int)Script.Literal("{0}.length", b); }
+        public static void SetLength(StringBuilder b, int value) { Script.Literal("{0}.length = {1}", b, value); }
 #else
         public static int GetLength(StringBuilder b) { return b.Length; }
+        public static void SetLength(StringBuilder b, int value) { b.Length = value; }
 #endif
     }
 }

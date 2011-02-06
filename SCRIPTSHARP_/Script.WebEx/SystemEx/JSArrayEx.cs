@@ -1,13 +1,18 @@
+#if !CODE_ANALYSIS
+namespace System
+#else
 using System;
 namespace SystemEx
+#endif
 {
+#if CODE_ANALYSIS
     public class JSArrayEx
     {
         public static void Clear(Array array, int index, int length)
         {
         }
 
-        public static void Copy(object source, int sourceIndex, object destination, int destinationIndex, int length)
+        public static void Copy(Array source, int sourceIndex, Array destination, int destinationIndex, int length)
         {
             if ((source == null) || (destination == null))
                 throw new Exception("NullPointerException:");
@@ -49,5 +54,26 @@ namespace SystemEx
             //        {2}[{3}++] = {0}[{1}++];
             //", source, sourceIndex, destination, destinationIndex, length);
         }
+
+        //public static void Fill<T>(T[] source, int offset, int length, T value)
+        //{
+        //    for (int i = 0; i < source.Length; i++)
+        //        source[i] = value;
+        //}
+
+        //public static T[][] NewJagged<T>(int a, int b)
+        //{
+        //    var array = new T[a][];
+        //    for (int index = 0; index < a; index++)
+        //        array[index] = new T[b];
+        //    return array;
+        //}
     }
+#else
+    public class JSArrayEx
+    {
+        public static void Clear(Array array, int index, int length) { Array.Clear(array, index, length); }
+        public static void Copy(Array source, int sourceIndex, Array destination, int destinationIndex, int length) { Array.Copy(source, sourceIndex, destination, destinationIndex, length); }
+    }
+#endif
 }

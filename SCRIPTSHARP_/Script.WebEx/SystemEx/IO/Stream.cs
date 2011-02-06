@@ -2,7 +2,7 @@ using System;
 using System.Runtime.CompilerServices;
 namespace SystemEx.IO
 {
-    public abstract class Stream
+    public abstract class Stream : IDisposable
     {
         public abstract int ReadByte();
 
@@ -37,5 +37,12 @@ namespace SystemEx.IO
         }
 
         public abstract void Close();
+
+        public abstract void Flush();
+
+        void IDisposable.Dispose()
+        {
+            Close();
+        }
     }
 }
