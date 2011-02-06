@@ -1114,6 +1114,16 @@ SystemEx.JSString.stringToChars = function SystemEx_JSString$stringToChars(s) {
     }
     return b;
 }
+SystemEx.JSString.equals = function SystemEx_JSString$equals(s1, s2, ignoreCase) {
+    /// <param name="s1" type="String">
+    /// </param>
+    /// <param name="s2" type="String">
+    /// </param>
+    /// <param name="ignoreCase" type="Boolean">
+    /// </param>
+    /// <returns type="Boolean"></returns>
+    return String.equals(s1, s2, ignoreCase);
+}
 
 
 ////////////////////////////////////////////////////////////////////////////////

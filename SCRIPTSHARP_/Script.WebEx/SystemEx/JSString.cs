@@ -28,6 +28,8 @@ namespace SystemEx
                 b[index] = (char)s.CharCodeAt(index);
             return b;
         }
+
+        public static bool Equals(string s1, string s2, bool ignoreCase) { return string.Equals(s1, s2, ignoreCase); }
     }
 #else
     public class JSString
@@ -35,6 +37,7 @@ namespace SystemEx
         public static string CharsToString(char[] b) { return new String(b); }
         public static string CharsToString(char[] b, int startIndex, int length) { return new String(b, startIndex, length); }
         public static char[] StringToChars(string s) { return s.ToCharArray(); }
+        public static bool Equals(string s1, string s2, bool ignoreCase) { return string.Equals(s1, s2, (ignoreCase ? StringComparison.OrdinalIgnoreCase : StringComparison.Ordinal)); }
     }
 #endif
 }

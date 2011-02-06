@@ -53,6 +53,7 @@ SystemEx.JSSystem.tryCatch=function(e,name){throw e;}
 SystemEx.JSString=function(){}
 SystemEx.JSString.charsToString=function(b,startIndex,length){if(length===0){length=b.length;}var $0=new Array(length);for(var $1=0;$1<length;$1++){$0[$1]=b[startIndex+$1];}return String.fromCharCode($0);}
 SystemEx.JSString.stringToChars=function(s){var $0=new Array(s.length);for(var $1=0;$1<s.length;$1++){$0[$1]=s.charCodeAt($1);}return $0;}
+SystemEx.JSString.equals=function(s1,s2,ignoreCase){return String.equals(s1,s2,ignoreCase);}
 SystemEx.JSArrayEx=function(){}
 SystemEx.JSArrayEx.clear=function(array,index,length){}
 SystemEx.JSArrayEx.copy=function(source,sourceIndex,destination,destinationIndex,length){if((source==null)||(destination==null)){throw new Error('NullPointerException:');}var $0=source.length;var $1=destination.length;if((sourceIndex<0)||(destinationIndex<0)||(length<0)||(sourceIndex+length>$0)||(destinationIndex+length>$1)){throw new Error('IndexOutOfBoundsException:');}SystemEx.JSArrayEx.$0(source,sourceIndex,destination,destinationIndex,length);}
