@@ -1,0 +1,154 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{31D819FA-9DBB-480E-AC21-DA27C966BC2B}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>System</RootNamespace>
+    <AssemblyName>System.Core.Extentions</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.XML" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ActivatorEx.cs" />
+    <Compile Include="Collections\EnumerableEx.cs" />
+    <Compile Include="Collections\Generic\KeyEqualityComparer.cs" />
+    <Compile Include="Collections\Generic\PagedList.cs" />
+    <Compile Include="Collections\Generic\DictionaryExtensions.cs" />
+    <Compile Include="Collections\Generic\IPagedMetadata.cs" />
+    <Compile Include="DateTimeEx.cs" />
+    <Compile Include="DateTimeExtensions.cs" />
+    <Compile Include="Diagnostics\Logger.cs" />
+    <Compile Include="EnumEx.cs" />
+    <Compile Include="EnumNameAttribute.cs" />
+    <Compile Include="Globalization\CultureInfoEx.cs" />
+    <Compile Include="Globalization\CultureInfoExtensions.cs" />
+    <Compile Include="IO\Native_.cs" />
+    <Compile Include="IO\DirectoryEx.cs" />
+    <Compile Include="IO\FileEx.cs" />
+    <Compile Include="IO\FileActor.cs" />
+    <Compile Include="IO\FileActorArguments.cs" />
+    <Compile Include="IO\FileArchiver.cs" />
+    <Compile Include="IO\IOExtensions.cs" />
+    <Compile Include="IO\PathEx.cs" />
+    <None Include="Linq\+zEnumerableExtensions\WrappedSelectIterator.cs" />
+    <None Include="Linq\+zEnumerableExtensions\WhereEnumerableIterator.cs" />
+    <None Include="Linq\+zEnumerableExtensions\WhereSelectArrayIterator.cs" />
+    <Compile Include="Linq\HierarchyNode2.cs" />
+    <Compile Include="Linq\QueryableExtensions+Hierarchy.cs" />
+    <Compile Include="Linq\HierarchyNode.cs" />
+    <Compile Include="Linq\EnumerableExtensions+Hierarchy.cs" />
+    <Compile Include="Linq\Buffer.cs" />
+    <Compile Include="Linq+Paging\DefaultModelMetadataProvider.cs" />
+    <Compile Include="Linq+Paging\EmptyLinqPagedMetadataProvider.cs" />
+    <Compile Include="Linq+Paging\LinqPagedMetadataProvider.cs" />
+    <Compile Include="Linq+Paging\LinqPagedMetadataProviders.cs" />
+    <Compile Include="Linq+Paging\LinqPagedMetadata.cs" />
+    <Compile Include="Linq+Paging\QueryableExtensions.cs" />
+    <Compile Include="Linq\EnumerableExtensions+Indexing.cs" />
+    <Compile Include="Linq\Expressions\ExpressionEx.cs" />
+    <Compile Include="Linq\QueryableExtensions.cs" />
+    <Compile Include="Linq\EnumerableExtensions+Tightest.cs" />
+    <None Include="Linq\+zEnumerableExtensions\WhereSelectListIterator.cs" />
+    <None Include="Linq\+zEnumerableExtensions\WhereSelectEnumerableIterator.cs" />
+    <None Include="Linq\+zEnumerableExtensions\Iterator.cs" />
+    <Compile Include="Linq+Paging\EnumerableExtensions.cs" />
+    <Compile Include="Linq+Paging\LinqPagedCriteria.cs" />
+    <Compile Include="Linq\DynamicQueryable.cs" />
+    <Compile Include="Linq\EnumerableExtensions.cs" />
+    <Compile Include="Linq\Expressions\LambdaExpressionExtensions.cs" />
+    <Compile Include="Local.Designer.cs">
+      <DependentUpon>Local.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="MathEx.cs" />
+    <Compile Include="Net\FileTransferClientBase.cs" />
+    <Compile Include="Net\SmsCarrierId.cs" />
+    <Compile Include="Net\SmsClientBase.cs" />
+    <Compile Include="Net\SmsMessage.cs" />
+    <Compile Include="ObjectExtensions.cs" />
+    <Compile Include="Patterns\Schema+Culture\CultureSchemaBase.cs" />
+    <Compile Include="Patterns\Schema+Uri\IUriPartScanner.cs" />
+    <Compile Include="Patterns\Schema+Uri\UriContextBase.cs" />
+    <Compile Include="Patterns\Schema+Uri\UriPart.cs" />
+    <Compile Include="Patterns\Schema+Uri\UriPartBase.cs" />
+    <Compile Include="Patterns\Schema+Uri\UriSchemaBase.cs" />
+    <Compile Include="Patterns\Schema+Uri\UriVirtual.cs" />
+    <Compile Include="Patterns\Schema+Uri\UriVirtualSchemaBase.cs" />
+    <Compile Include="Patterns\Versioning\VersionManagerBase.cs" />
+    <Compile Include="Patterns\Versioning\VersionType.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Security\Cryptography\X509Certificates\SecurityEx.cs" />
+    <Compile Include="Security\SecurityEx.cs" />
+    <Compile Include="StringEx.cs" />
+    <Compile Include="StringEx+ExtractString.cs" />
+    <Compile Include="StringExtensions.cs" />
+    <Compile Include="Threading\Async\AsyncResultWrapper.cs" />
+    <Compile Include="Threading\Async\AsyncVoid.cs" />
+    <Compile Include="Threading\Async\BeginInvokeDelegate.cs" />
+    <Compile Include="Threading\Async\EndInvokeDelegate.cs" />
+    <Compile Include="Threading\Async\EndInvokeDelegate2.cs" />
+    <Compile Include="Threading\Async\SimpleAsyncResult.cs" />
+    <Compile Include="Threading\FrugalThreadPool.cs" />
+    <Compile Include="Threading\SingleEntryGate.cs" />
+    <Compile Include="UriExtensions.cs" />
+    <Compile Include="Xml\XmlExtensions.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Local.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Local.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\System.Core.Nattrib\System.Core.Nattrib.csproj">
+      <Project>{55D806D0-B6AF-4E92-B4DC-525F3676A6E5}</Project>
+      <Name>System.Core.Nattrib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\System.Core2\System.Core2.csproj">
+      <Project>{7F64972D-477E-4F38-BC95-BD835D501146}</Project>
+      <Name>System.Core2</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
