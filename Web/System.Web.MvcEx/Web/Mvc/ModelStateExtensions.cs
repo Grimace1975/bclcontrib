@@ -23,6 +23,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 #endregion
+using System.Linq;
 using System.Collections.Generic;
 using System.Web.Script.Serialization;
 using System.Linq.Expressions;
@@ -105,6 +106,11 @@ namespace System.Web.Mvc
             var templateInfo = viewData.TemplateInfo;
             var fullFieldName = templateInfo.GetFullHtmlFieldName(expression);
             viewData.ModelState.AddModelError(fullFieldName, errorMessage);
+        }
+
+        public static bool HasErrors(this ModelStateDictionary dictionary)
+        {
+            return dictionary.Values.Any(x => x.Errors.Count > 0);
         }
     }
 }
