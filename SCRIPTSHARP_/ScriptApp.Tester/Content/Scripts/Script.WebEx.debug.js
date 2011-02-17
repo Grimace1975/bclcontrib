@@ -4333,6 +4333,11 @@ SystemEx.IO.MemoryStream.prototype = {
         /// <value type="Number" integer="true"></value>
         return this._position$1;
     },
+    set_position: function SystemEx_IO_MemoryStream$set_position(value) {
+        /// <value type="Number" integer="true"></value>
+        this._position$1 = value;
+        return value;
+    },
     
     readByte: function SystemEx_IO_MemoryStream$readByte() {
         /// <returns type="Number" integer="true"></returns>
@@ -4392,6 +4397,13 @@ SystemEx.IO.SE.readByte = function SystemEx_IO_SE$readByte(s) {
     }
     return v;
 }
+SystemEx.IO.SE.readSByte = function SystemEx_IO_SE$readSByte(s) {
+    /// <param name="s" type="SystemEx.IO.Stream">
+    /// </param>
+    /// <returns type="Number" integer="true"></returns>
+    var v = s.readByte();
+    return v;
+}
 SystemEx.IO.SE.readBytes = function SystemEx_IO_SE$readBytes(s, b, offset, length) {
     /// <param name="s" type="SystemEx.IO.Stream">
     /// </param>
@@ -4435,6 +4447,14 @@ SystemEx.IO.SE.readInt16 = function SystemEx_IO_SE$readInt16(s) {
     var b = SystemEx.IO.SE.internalReadByte(s);
     return ((a << 8) | b);
 }
+SystemEx.IO.SE.readUInt16 = function SystemEx_IO_SE$readUInt16(s) {
+    /// <param name="s" type="SystemEx.IO.Stream">
+    /// </param>
+    /// <returns type="Number" integer="true"></returns>
+    var a = s.readByte();
+    var b = SystemEx.IO.SE.internalReadByte(s);
+    return ((a << 8) | b);
+}
 SystemEx.IO.SE.readInt32 = function SystemEx_IO_SE$readInt32(s) {
     /// <param name="s" type="SystemEx.IO.Stream">
     /// </param>
@@ -4445,6 +4465,16 @@ SystemEx.IO.SE.readInt32 = function SystemEx_IO_SE$readInt32(s) {
     var d = SystemEx.IO.SE.internalReadByte(s);
     return (a << 24) | (b << 16) | (c << 8) | d;
 }
+SystemEx.IO.SE.readUInt32 = function SystemEx_IO_SE$readUInt32(s) {
+    /// <param name="s" type="SystemEx.IO.Stream">
+    /// </param>
+    /// <returns type="Number" integer="true"></returns>
+    var a = s.readByte();
+    var b = s.readByte();
+    var c = s.readByte();
+    var d = SystemEx.IO.SE.internalReadByte(s);
+    return ((a << 24) | (b << 16) | (c << 8) | d);
+}
 SystemEx.IO.SE.readInt64 = function SystemEx_IO_SE$readInt64(s) {
     /// <param name="s" type="SystemEx.IO.Stream">
     /// </param>
@@ -4452,6 +4482,14 @@ SystemEx.IO.SE.readInt64 = function SystemEx_IO_SE$readInt64(s) {
     var a = SystemEx.IO.SE.readInt32(s);
     var b = SystemEx.IO.SE.readInt32(s) & 4294967295;
     return (a << 32) | b;
+}
+SystemEx.IO.SE.readUInt64 = function SystemEx_IO_SE$readUInt64(s) {
+    /// <param name="s" type="SystemEx.IO.Stream">
+    /// </param>
+    /// <returns type="Number" integer="true"></returns>
+    var a = SystemEx.IO.SE.readInt32(s);
+    var b = SystemEx.IO.SE.readInt32(s) & 4294967295;
+    return ((a << 32) | b);
 }
 SystemEx.IO.SE.readSingle = function SystemEx_IO_SE$readSingle(s) {
     /// <param name="s" type="SystemEx.IO.Stream">
@@ -4513,6 +4551,13 @@ SystemEx.IO.SE.writeByte = function SystemEx_IO_SE$writeByte(s, v) {
     /// </param>
     s.writeByte(v);
 }
+SystemEx.IO.SE.writeSByte = function SystemEx_IO_SE$writeSByte(s, v) {
+    /// <param name="s" type="SystemEx.IO.Stream">
+    /// </param>
+    /// <param name="v" type="Number" integer="true">
+    /// </param>
+    s.writeByte(v);
+}
 SystemEx.IO.SE.writeBytes = function SystemEx_IO_SE$writeBytes(s, v) {
     /// <param name="s" type="SystemEx.IO.Stream">
     /// </param>
@@ -4533,7 +4578,7 @@ SystemEx.IO.SE.writeBoolean = function SystemEx_IO_SE$writeBoolean(s, v) {
 SystemEx.IO.SE.writeChar = function SystemEx_IO_SE$writeChar(s, v) {
     /// <param name="s" type="SystemEx.IO.Stream">
     /// </param>
-    /// <param name="v" type="Number" integer="true">
+    /// <param name="v" type="String">
     /// </param>
     s.writeByte((v >> 8));
     s.writeByte(v);
@@ -4546,6 +4591,14 @@ SystemEx.IO.SE.writeInt16 = function SystemEx_IO_SE$writeInt16(s, v) {
     s.writeByte((v >> 8));
     s.writeByte(v);
 }
+SystemEx.IO.SE.writeUInt16 = function SystemEx_IO_SE$writeUInt16(s, v) {
+    /// <param name="s" type="SystemEx.IO.Stream">
+    /// </param>
+    /// <param name="v" type="Number" integer="true">
+    /// </param>
+    s.writeByte((v >>> 8));
+    s.writeByte(v);
+}
 SystemEx.IO.SE.writeInt32 = function SystemEx_IO_SE$writeInt32(s, v) {
     /// <param name="s" type="SystemEx.IO.Stream">
     /// </param>
@@ -4556,12 +4609,30 @@ SystemEx.IO.SE.writeInt32 = function SystemEx_IO_SE$writeInt32(s, v) {
     s.writeByte((v >> 8));
     s.writeByte(v);
 }
+SystemEx.IO.SE.writeUInt32 = function SystemEx_IO_SE$writeUInt32(s, v) {
+    /// <param name="s" type="SystemEx.IO.Stream">
+    /// </param>
+    /// <param name="v" type="Number" integer="true">
+    /// </param>
+    s.writeByte((v >>> 24));
+    s.writeByte((v >>> 16));
+    s.writeByte((v >>> 8));
+    s.writeByte(v);
+}
 SystemEx.IO.SE.writeInt64 = function SystemEx_IO_SE$writeInt64(s, v) {
     /// <param name="s" type="SystemEx.IO.Stream">
     /// </param>
     /// <param name="v" type="Number" integer="true">
     /// </param>
     SystemEx.IO.SE.writeInt32(s, (v >> 32));
+    SystemEx.IO.SE.writeInt32(s, v);
+}
+SystemEx.IO.SE.writeUInt64 = function SystemEx_IO_SE$writeUInt64(s, v) {
+    /// <param name="s" type="SystemEx.IO.Stream">
+    /// </param>
+    /// <param name="v" type="Number" integer="true">
+    /// </param>
+    SystemEx.IO.SE.writeInt32(s, (v >>> 32));
     SystemEx.IO.SE.writeInt32(s, v);
 }
 SystemEx.IO.SE.writeSingle = function SystemEx_IO_SE$writeSingle(s, v) {
@@ -4599,7 +4670,7 @@ SystemEx.IO.SE.writeString = function SystemEx_IO_SE$writeString(s, v) {
             baos.writeByte((128 | (63 & c)));
         }
     }
-    SystemEx.IO.SE.writeInt16(s, baos.get_length());
+    SystemEx.IO.SE.writeUInt16(s, baos.get_length());
     s.write(baos.getBuffer(), 0, baos.get_length());
 }
 
@@ -4952,9 +5023,14 @@ SystemEx.IO.FileStream.prototype = {
         return value;
     },
     
-    get_poition: function SystemEx_IO_FileStream$get_poition() {
+    get_position: function SystemEx_IO_FileStream$get_position() {
         /// <value type="Number" integer="true"></value>
         return this._position$1;
+    },
+    set_position: function SystemEx_IO_FileStream$set_position(value) {
+        /// <value type="Number" integer="true"></value>
+        this._position$1 = value;
+        return value;
     },
     
     close: function SystemEx_IO_FileStream$close() {
@@ -4976,7 +5052,7 @@ SystemEx.IO.FileStream.prototype = {
             this._data$1 += filler.toString();
         }
         var p2 = this._newDataPosition$1 + SystemEx.StringBuilderEx.getLength(this._newData$1);
-        this._data$1 = this._data$1.substring(0, this._newDataPosition$1) + this._newData$1.toString() + ((p2 < this._data$1.length) ? this._data$1.substring(p2, this._data$1.length) : '');
+        this._data$1 = this._data$1.substring(0, this._newDataPosition$1) + this._newData$1.toString() + ((p2 < this._data$1.length) ? this._data$1.substring(p2, this._data$1.length) : String.Empty);
         this._newData$1 = null;
     },
     

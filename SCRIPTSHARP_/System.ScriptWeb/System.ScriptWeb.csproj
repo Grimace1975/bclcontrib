@@ -92,6 +92,42 @@
     <Compile Include="..\Script.WebEx\SystemEx\Text\PackText.cs">
       <Link>System\Text\PackText.cs</Link>
     </Compile>
+    <Compile Include="..\Script.WebEx\System\Interop\OpenGL\WebGL.cs">
+      <Link>System\Interop\OpenGL\WebGL.cs</Link>
+    </Compile>
+    <Compile Include="..\Script.WebEx\System\Interop\OpenGL\WebGLActiveInfo.cs">
+      <Link>System\Interop\OpenGL\WebGLActiveInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\Script.WebEx\System\Interop\OpenGL\WebGLBuffer.cs">
+      <Link>System\Interop\OpenGL\WebGLBuffer.cs</Link>
+    </Compile>
+    <Compile Include="..\Script.WebEx\System\Interop\OpenGL\WebGLContextAttributes.cs">
+      <Link>System\Interop\OpenGL\WebGLContextAttributes.cs</Link>
+    </Compile>
+    <Compile Include="..\Script.WebEx\System\Interop\OpenGL\WebGLFramebuffer.cs">
+      <Link>System\Interop\OpenGL\WebGLFramebuffer.cs</Link>
+    </Compile>
+    <Compile Include="..\Script.WebEx\System\Interop\OpenGL\WebGLObject.cs">
+      <Link>System\Interop\OpenGL\WebGLObject.cs</Link>
+    </Compile>
+    <Compile Include="..\Script.WebEx\System\Interop\OpenGL\WebGLProgram.cs">
+      <Link>System\Interop\OpenGL\WebGLProgram.cs</Link>
+    </Compile>
+    <Compile Include="..\Script.WebEx\System\Interop\OpenGL\WebGLRenderbuffer.cs">
+      <Link>System\Interop\OpenGL\WebGLRenderbuffer.cs</Link>
+    </Compile>
+    <Compile Include="..\Script.WebEx\System\Interop\OpenGL\WebGLRenderingContext.cs">
+      <Link>System\Interop\OpenGL\WebGLRenderingContext.cs</Link>
+    </Compile>
+    <Compile Include="..\Script.WebEx\System\Interop\OpenGL\WebGLShader.cs">
+      <Link>System\Interop\OpenGL\WebGLShader.cs</Link>
+    </Compile>
+    <Compile Include="..\Script.WebEx\System\Interop\OpenGL\WebGLTexture.cs">
+      <Link>System\Interop\OpenGL\WebGLTexture.cs</Link>
+    </Compile>
+    <Compile Include="..\Script.WebEx\System\Interop\OpenGL\WebGLUniformLocation.cs">
+      <Link>System\Interop\OpenGL\WebGLUniformLocation.cs</Link>
+    </Compile>
     <Compile Include="..\Script.WebEx\System\JSAsyncCallback.cs">
       <Link>System\JSAsyncCallback.cs</Link>
     </Compile>
