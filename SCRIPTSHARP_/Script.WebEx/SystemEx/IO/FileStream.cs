@@ -10,10 +10,10 @@ namespace SystemEx.IO
         private readonly bool _isWriteable;
         private bool _isDirty;
         private string _data;
-        private int _newDataPosition;
+        private long _newDataPosition;
         private StringBuilder _newData;
-        private int _position;
-        private int _length;
+        private long _position;
+        private long _length;
 
         [AlternateSignature]
         public extern FileStream(string path, FileMode fileMode, FileAccess fileAccess);
@@ -80,9 +80,10 @@ namespace SystemEx.IO
             }
         }
 
-        public long Poition
+        public override long Position
         {
             get { return _position; }
+            set { _position = value; }
         }
 
         public override void Close()
@@ -105,8 +106,8 @@ namespace SystemEx.IO
                     filler.Append('\0');
                 _data += filler.ToString();
             }
-            int p2 = _newDataPosition + StringBuilderEx.GetLength(_newData);
-            _data = _data.Substring(0, _newDataPosition) + _newData.ToString() + (p2 < _data.Length ? _data.Substring(p2, _data.Length) : "");
+            long p2 = _newDataPosition + StringBuilderEx.GetLength(_newData);
+            _data = _data.Substring(0, (int)_newDataPosition) + _newData.ToString() + (p2 < _data.Length ? _data.Substring((int)p2, _data.Length) : string.Empty);
             _newData = null;
         }
 
@@ -126,7 +127,7 @@ namespace SystemEx.IO
             else
             {
                 Consolidate();
-                return _data.CharAt(_position++);
+                return _data.CharAt((int)_position++);
             }
         }
 

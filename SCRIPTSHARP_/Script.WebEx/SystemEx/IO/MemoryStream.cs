@@ -5,7 +5,7 @@ namespace SystemEx.IO
     {
         private int _count;
         private byte[] _buffer;
-        private int _position;
+        private long _position;
 
         [AlternateSignature]
         public extern MemoryStream();
@@ -38,9 +38,10 @@ namespace SystemEx.IO
             get { return _count; }
         }
 
-        public int Position
+        public override long Position
         {
             get { return _position; }
+            set { _position = value; }
         }
 
         public override int ReadByte()

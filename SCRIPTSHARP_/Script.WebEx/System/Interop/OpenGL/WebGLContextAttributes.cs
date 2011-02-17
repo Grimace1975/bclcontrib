@@ -1,12 +1,13 @@
 using System.Runtime.CompilerServices;
-namespace System.WebGL
+namespace System.Interop.OpenGL
 {
     /// <summary>
     /// The WebGLContextAttributes interface contains drawing surface attributes and is passed as the second parameter to getContext. A native object may be supplied as this parameter; the specified attributes will be queried from this object.
     /// </summary>
+#if CODE_ANALYSIS
     [IgnoreNamespace, Imported]
-    // [Record]
-    public class WebGLContextAttributes
+#endif
+    public class WebGLContextAttributes // : Record
     {
         /// <summary>
         /// The following list describes each attribute in the WebGLContextAttributes object and its use. For each attribute the default value is shown. The default value is used either if no second parameter is passed to getContext, or if a native object is passed which has no attribute of the given name.
