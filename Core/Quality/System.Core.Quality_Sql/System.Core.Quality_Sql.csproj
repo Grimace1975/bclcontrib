@@ -49,6 +49,7 @@
       <Link>+FromDataEx\Data\DataReaderExtensions.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Quality+EventSourcing\EventSourcing\SqlOfflineSnapshotQuery.cs" />
     <Compile Include="Quality+EventSourcing\EventSourcing\SqlAggregateRootSnapshotStore.cs" />
     <Compile Include="Quality+EventSourcing\EventSourcing\SqlEventStore.cs" />
   </ItemGroup>

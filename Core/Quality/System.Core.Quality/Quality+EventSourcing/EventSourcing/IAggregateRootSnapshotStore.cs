@@ -30,9 +30,9 @@ namespace System.Quality.EventSourcing
     /// </summary>
     public interface IAggregateRootSnapshotStore
     {
-        bool ShouldSnapshot(AggregateRootRepository repository, AggregateRoot aggregate);
+        Func<IAggregateRootRepository, AggregateRoot, bool> InlineSnapshotPredicate { get; }
         AggregateRootSnapshot GetLatestSnapshot<TAggregateRoot>(object aggregateId)
             where TAggregateRoot : AggregateRoot;
-        void SaveSnapshot(AggregateRootSnapshot snapshot);
+        void SaveSnapshot(Type aggregateType, AggregateRootSnapshot snapshot);
     }
 }

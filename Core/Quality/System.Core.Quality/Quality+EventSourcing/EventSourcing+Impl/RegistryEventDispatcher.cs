@@ -82,6 +82,11 @@ namespace System.Quality.EventSourcing
             _handlerRegistry.Add(eventType, handler);
         }
 
+        public IEnumerable<Type> GetEventTypes()
+        {
+            return _handlerRegistry.Keys;
+        }
+
         public void ApplyEvent(AggregateRoot aggregate, Event e)
         {
             Action<Event> handler;

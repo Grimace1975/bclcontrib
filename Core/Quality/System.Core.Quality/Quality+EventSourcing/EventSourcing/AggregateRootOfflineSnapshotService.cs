@@ -28,26 +28,39 @@ using System.Collections.Generic;
 namespace System.Quality.EventSourcing
 {
     /// <summary>
-    /// MemoryAggregateRootSnapshotStore
+    /// IAggregateRootOfflineSnapshotService
     /// </summary>
-    public class MemoryAggregateRootSnapshotStore : IAggregateRootSnapshotStore
+    public interface IAggregateRootOfflineSnapshotService
     {
-        private readonly List<AggregateRootSnapshot> _snapshots = new List<AggregateRootSnapshot>();
+        void MakeSnapshots(IEnumerable<Type> aggregateTypes);
+    }
 
-        public AggregateRootSnapshot GetLatestSnapshot<TAggregateRoot>(object aggregateId)
-            where TAggregateRoot : AggregateRoot
+    /// <summary>
+    /// AggregateRootOfflineSnapshotService
+    /// </summary>
+    public class AggregateRootOfflineSnapshotService : IAggregateRootOfflineSnapshotService
+    {
+        private readonly IAggregateRootRepository _repository;
+        private readonly IOfflineSnaphotQuery _snaphotQuery;
+
+        public AggregateRootOfflineSnapshotService(IAggregateRootRepository repository, IOfflineSnaphotQuery snaphotQuery)
         {
-            return _snapshots
-                .Where(x => x.AggregateId.Equals(aggregateId))
-                .OrderBy(x => x.LastEventSequence)
-                .SingleOrDefault();
+            if (repository == null)
+                throw new ArgumentNullException("repository");
+            if (snaphotQuery == null)
+                throw new ArgumentNullException("snaphotQuery");
+            _repository = repository;
+            _snaphotQuery = snaphotQuery;
         }
 
-        public void SaveSnapshot(Type aggregateType, AggregateRootSnapshot snapshot)
+        public void MakeSnapshots(IEnumerable<Type> aggregateTypes)
         {
-            _snapshots.Add(snapshot);
+            foreach (var item in _snaphotQuery.GetAggregatesToSnapshot(aggregateTypes))
+            {
+                var aggregate = _repository.GetById(item.Item1, item.AggregateId, AggregateRootQueryOptions.UseNullAggregates);
+                if (aggregate != null)
+                    _repository.MakeSnapshot(aggregate);
+            }
         }
-
-        public Func<IAggregateRootRepository, AggregateRoot, bool> InlineSnapshotPredicate { get; set; }
     }
 }

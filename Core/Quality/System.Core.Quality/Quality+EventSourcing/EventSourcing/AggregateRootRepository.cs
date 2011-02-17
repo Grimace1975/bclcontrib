@@ -41,12 +41,26 @@ namespace System.Quality.EventSourcing
         IEnumerable<Event> GetEventsById(object aggregateId);
         void Save(AggregateRoot aggregate);
         void Save(IEnumerable<AggregateRoot> aggregate);
+        void MakeSnapshot(AggregateRoot aggregate, Func<IAggregateRootRepository, AggregateRoot, bool> predicate);
     }
 
     public static class IAggregateRootRepositoryExtensions
     {
         public static TAggregateRoot GetById<TAggregateRoot>(this IAggregateRootRepository repository, object aggregateId)
             where TAggregateRoot : AggregateRoot { return repository.GetById<TAggregateRoot>(aggregateId, 0); }
+        public static object GetById(this IAggregateRootRepository repository, Type aggregateType, object aggregateId)
+        {
+            return repository.GetById<AggregateRoot>(aggregateId, 0);
+        }
+        public static AggregateRoot GetById(this IAggregateRootRepository repository, Type aggregateType, object aggregateId, AggregateRootQueryOptions queryOptions)
+        {
+            return repository.GetById<AggregateRoot>(aggregateId, queryOptions);
+        }
+        public static IEnumerable<AggregateRoot> GetManyByIds(this IAggregateRootRepository repository, IEnumerable<object> aggregateIds, Type aggregateType, AggregateRootQueryOptions queryOptions)
+        {
+            return repository.GetManyByIds<AggregateRoot>(aggregateIds, queryOptions);
+        }
+        public static void MakeSnapshot(this IAggregateRootRepository repository, AggregateRoot aggregate) { repository.MakeSnapshot(aggregate, null); }
     }
 
     /// <summary>
@@ -91,10 +105,10 @@ namespace System.Quality.EventSourcing
              where TAggregateRoot : AggregateRoot
         {
             if (aggregateId == null)
-                throw new ArgumentNullException("aggreaggregateIdgateIds");
+                throw new ArgumentNullException("aggregateId");
             var aggregate = (_factory(typeof(TAggregateRoot)) as TAggregateRoot);
             if (aggregate == null)
-                throw new InvalidOperationException("Factory");
+                throw new InvalidOperationException("aggregate");
             // find snapshot
             bool loaded = false;
             AggregateRootSnapshot snapshot = null;
@@ -131,13 +145,9 @@ namespace System.Quality.EventSourcing
             if (_eventDispatcher != null)
                 _eventDispatcher(events);
             accessAggregateState.MarkChangesAsCommitted();
-            // make snapshot
-            if (_snapshotStore != null)
-            {
-                var snapshoter = (aggregate as ICanAggregateRootSnapshot);
-                if ((snapshoter != null) && (_snapshotStore.ShouldSnapshot(this, aggregate)))
-                    _snapshotStore.SaveSnapshot(snapshoter.GetSnapshot());
-            }
+            Func<IAggregateRootRepository, AggregateRoot, bool> inlineSnapshotPredicate;
+            if ((_snapshotStore != null) && ((inlineSnapshotPredicate = _snapshotStore.InlineSnapshotPredicate) != null) && (aggregate is ICanAggregateRootSnapshot))
+                MakeSnapshot(aggregate, inlineSnapshotPredicate);
         }
         public void Save(IEnumerable<AggregateRoot> aggregates)
         {
@@ -145,6 +155,18 @@ namespace System.Quality.EventSourcing
                 throw new ArgumentNullException("aggregates");
             foreach (var aggregate in aggregates)
                 Save(aggregate);
+        }
+
+        public void MakeSnapshot(AggregateRoot aggregate, Func<IAggregateRootRepository, AggregateRoot, bool> predicate)
+        {
+            if (aggregate == null)
+                throw new ArgumentNullException("aggregate");
+            ICanAggregateRootSnapshot snapshoter;
+            if ((_snapshotStore != null) && ((snapshoter = (aggregate as ICanAggregateRootSnapshot)) != null))
+            {
+                if ((predicate == null) || (predicate(this, aggregate)))
+                    _snapshotStore.SaveSnapshot(aggregate.GetType(), snapshoter.GetSnapshot());
+            }
         }
     }
 }
