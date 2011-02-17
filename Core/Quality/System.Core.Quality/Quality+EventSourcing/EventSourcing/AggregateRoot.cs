@@ -43,6 +43,7 @@ namespace System.Quality.EventSourcing
         private class EmptyAggregateRootEventDispatcher : IAggregateRootEventDispatcher
         {
             public void ApplyEvent(AggregateRoot aggregate, Event e) { }
+            public IEnumerable<Type> GetEventTypes() { return null; }
         }
 
         public AggregateRoot() { }

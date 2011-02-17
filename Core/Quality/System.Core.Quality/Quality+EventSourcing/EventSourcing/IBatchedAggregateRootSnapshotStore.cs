@@ -31,8 +31,8 @@ namespace System.Quality.EventSourcing
     /// </summary>
     public interface IBatchedAggregateRootSnapshotStore : IAggregateRootSnapshotStore
     {
-        IEnumerable<AggregateRootSnapshot> GetLatestSnapshots<TAggregateRoot>(IEnumerable<object> aggregateIds)
+        IEnumerable<AggregateTuple<AggregateRootSnapshot>> GetLatestSnapshots<TAggregateRoot>(IEnumerable<object> aggregateIds)
             where TAggregateRoot : AggregateRoot;
-        void SaveSnapshots(IEnumerable<AggregateRootSnapshot> snapshots);
+        void SaveSnapshots(Type aggregateType, IEnumerable<AggregateRootSnapshot> snapshots);
     }
 }

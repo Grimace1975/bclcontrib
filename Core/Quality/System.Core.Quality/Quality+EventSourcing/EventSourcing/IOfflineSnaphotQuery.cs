@@ -27,11 +27,10 @@ using System.Collections.Generic;
 namespace System.Quality.EventSourcing
 {
     /// <summary>
-    /// IAggregateRootEventDispatcher
+    /// IOfflineSnaphotQuery
     /// </summary>
-    public interface IAggregateRootEventDispatcher
+    public interface IOfflineSnaphotQuery
     {
-        void ApplyEvent(AggregateRoot aggregate, Event e);
-        IEnumerable<Type> GetEventTypes();
+        IEnumerable<AggregateTuple<Type>> GetAggregatesToSnapshot(IEnumerable<Type> aggregateTypes);
     }
 }

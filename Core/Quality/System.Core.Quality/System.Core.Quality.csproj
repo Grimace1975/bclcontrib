@@ -60,6 +60,9 @@
     <Compile Include="Quality+EventSourcing\EventSourcing\AggregateRootQueryOptions.cs" />
     <Compile Include="Quality+EventSourcing\EventSourcing\AggregateRootOptions.cs" />
     <Compile Include="Quality+EventSourcing\EventSourcing\AggregateTuple.cs" />
+    <Compile Include="Quality+EventSourcing\EventSourcing\AggregateRootOfflineSnapshotService.cs" />
+    <Compile Include="Quality+EventSourcing\EventSourcing\AggregateTuple2.cs" />
+    <Compile Include="Quality+EventSourcing\EventSourcing\IOfflineSnaphotQuery.cs" />
     <Compile Include="Quality+EventSourcing\EventSourcing\Event2.cs" />
     <Compile Include="Quality+EventSourcing\EventSourcing+Impl\RegistryEventDispatcher.cs" />
     <Compile Include="Quality+EventSourcing\EventSourcing\IAggregateRootEventDispatcher.cs" />

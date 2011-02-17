@@ -40,15 +40,12 @@ namespace System.Quality.EventSourcing
                 .SingleOrDefault();
         }
 
-        public void SaveSnapshot(AggregateRootSnapshot snapshot)
+        public void SaveSnapshot(Type aggregateType, AggregateRootSnapshot snapshot)
         {
             var monoSnapshots = _database.GetCollection<AggregateRootSnapshot>("snapshots");
             monoSnapshots.Update(snapshot, UpdateFlags.Upsert);
         }
 
-        public bool ShouldSnapshot(AggregateRootRepository repository, AggregateRoot aggregate)
-        {
-            return false;
-        }
+        public Func<IAggregateRootRepository, AggregateRoot, bool> InlineSnapshotPredicate { get; set; }
     }
 }

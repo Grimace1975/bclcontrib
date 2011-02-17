@@ -101,7 +101,7 @@ namespace System
         public static object Parse<T>(object value, object defaultValue) { return Parse<T>(value, defaultValue, null); }
         public static object Parse<T>(object value, object defaultValue, Nattrib attrib)
         {
-            return ObjectParserDelegateFactory<T, object>.Parse2(value, defaultValue, attrib);
+            return ObjectParserDelegateFactory<T, T>.Parse2(value, defaultValue, attrib);
         }
         public static object Parse<TResult>(IObjectParser<TResult> parser, object value, object defaultValue) { return Parse<TResult>(parser, value, defaultValue, null); }
         public static object Parse<TResult>(IObjectParser<TResult> parser, object value, object defaultValue, Nattrib attrib)
@@ -125,7 +125,7 @@ namespace System
         public static bool Validate<T>(object value) { return Validate<T>(value, null); }
         public static bool Validate<T>(object value, Nattrib attrib)
         {
-            return ObjectParserDelegateFactory<T, bool>.Validate(value, attrib);
+            return ObjectParserDelegateFactory<T, T>.Validate(value, attrib);
         }
         public static bool Validate<TResult>(IObjectParser<TResult> parser, object value) { return Validate<TResult>(parser, value, null); }
         public static bool Validate<TResult>(IObjectParser<TResult> parser, object value, Nattrib attrib)
@@ -170,7 +170,7 @@ namespace System
         public static object Parse<T>(string text, object defaultValue) { return Parse<T>(text, defaultValue, null); }
         public static object Parse<T>(string text, object defaultValue, Nattrib attrib)
         {
-            return StringParserDelegateFactory<T, object>.Parse2(text, defaultValue, attrib);
+            return StringParserDelegateFactory<T, T>.Parse2(text, defaultValue, attrib);
         }
         public static object Parse<TResult>(IStringParser<TResult> parser, string text, object defaultValue) { return Parse<TResult>(parser, text, defaultValue, null); }
         public static object Parse<TResult>(IStringParser<TResult> parser, string text, object defaultValue, Nattrib attrib)
@@ -194,7 +194,7 @@ namespace System
         public static bool Validate<T>(string text) { return Validate<T>(text, null); }
         public static bool Validate<T>(string text, Nattrib attrib)
         {
-            return StringParserDelegateFactory<T, bool>.Validate(text, attrib);
+            return StringParserDelegateFactory<T, T>.Validate(text, attrib);
         }
         public static bool Validate<TResult>(IStringParser<TResult> parser, string text) { return Validate<TResult>(parser, text, null); }
         public static bool Validate<TResult>(IStringParser<TResult> parser, string text, Nattrib attrib)
