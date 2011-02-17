@@ -127,6 +127,12 @@ namespace System
             return (float)Math.Sqrt(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]);
         }
 
+        public static float Length(float x, float y, float z)
+        {
+            return (float)Math.Sqrt(x * x + y * y + z * z);
+        }
+
+
         public static void VectorInverse(float[] v)
         {
             v[0] = -v[0];
@@ -141,7 +147,7 @@ namespace System
             result[2] = v[2] * scale;
         }
 
-        public static float vectoyaw(float[] vec)
+        public static float VectoYaw(float[] vec)
         {
             float yaw;
             if (/*vec[YAW] == 0 &&*/
@@ -162,7 +168,7 @@ namespace System
             return yaw;
         }
 
-        public static void vectoangles(float[] value1, float[] angles)
+        public static void VectoAngles(float[] value1, float[] angles)
         {
             float yaw, pitch;
             if (value1[1] == 0 && value1[0] == 0)

@@ -42,6 +42,514 @@ SystemEx.ErrorCode.registerEnum('SystemEx.ErrorCode', false);
 
 
 ////////////////////////////////////////////////////////////////////////////////
+// SystemEx.MathMatrix
+
+SystemEx.MathMatrix = function SystemEx_MathMatrix() {
+}
+SystemEx.MathMatrix.multiplyMM = function SystemEx_MathMatrix$multiplyMM(ab, abOfs, a, aOfs, b, bOfs) {
+    /// <param name="ab" type="Array" elementType="Number">
+    /// </param>
+    /// <param name="abOfs" type="Number" integer="true">
+    /// </param>
+    /// <param name="a" type="Array" elementType="Number">
+    /// </param>
+    /// <param name="aOfs" type="Number" integer="true">
+    /// </param>
+    /// <param name="b" type="Array" elementType="Number">
+    /// </param>
+    /// <param name="bOfs" type="Number" integer="true">
+    /// </param>
+    for (var i = 0; i < 4; i++) {
+        ab[abOfs + 0] = (b[bOfs + 0] * a[aOfs + 0]) + (b[bOfs + 1] * a[aOfs + 4]) + (b[bOfs + 2] * a[aOfs + 8]) + (b[bOfs + 3] * a[aOfs + 12]);
+        ab[abOfs + 1] = (b[bOfs + 0] * a[aOfs + 1]) + (b[bOfs + 1] * a[aOfs + 5]) + (b[bOfs + 2] * a[aOfs + 9]) + (b[bOfs + 3] * a[aOfs + 13]);
+        ab[abOfs + 2] = (b[bOfs + 0] * a[aOfs + 2]) + (b[bOfs + 1] * a[aOfs + 6]) + (b[bOfs + 2] * a[aOfs + 10]) + (b[bOfs + 3] * a[aOfs + 14]);
+        ab[abOfs + 3] = (b[bOfs + 0] * a[aOfs + 3]) + (b[bOfs + 1] * a[aOfs + 7]) + (b[bOfs + 2] * a[aOfs + 11]) + (b[bOfs + 3] * a[aOfs + 15]);
+        abOfs += 4;
+        bOfs += 4;
+    }
+}
+SystemEx.MathMatrix.multiplyMV = function SystemEx_MathMatrix$multiplyMV(result, rOfs, m, mOfs, v, vOfs) {
+    /// <param name="result" type="Array" elementType="Number">
+    /// </param>
+    /// <param name="rOfs" type="Number" integer="true">
+    /// </param>
+    /// <param name="m" type="Array" elementType="Number">
+    /// </param>
+    /// <param name="mOfs" type="Number" integer="true">
+    /// </param>
+    /// <param name="v" type="Array" elementType="Number">
+    /// </param>
+    /// <param name="vOfs" type="Number" integer="true">
+    /// </param>
+    var x = v[vOfs + 0];
+    var y = v[vOfs + 1];
+    var z = v[vOfs + 2];
+    var w = v[vOfs + 3];
+    result[rOfs + 0] = m[mOfs + 0] * x + m[mOfs + 4] * y + m[mOfs + 8] * z + m[mOfs + 12] * w;
+    result[rOfs + 1] = m[mOfs + 1] * x + m[mOfs + 5] * y + m[mOfs + 9] * z + m[mOfs + 13] * w;
+    result[rOfs + 2] = m[mOfs + 2] * x + m[mOfs + 6] * y + m[mOfs + 10] * z + m[mOfs + 14] * w;
+    result[rOfs + 3] = m[mOfs + 3] * x + m[mOfs + 7] * y + m[mOfs + 11] * z + m[mOfs + 15] * w;
+}
+SystemEx.MathMatrix.transposeM = function SystemEx_MathMatrix$transposeM(mTrans, mTransOffset, m, mOffset) {
+    /// <param name="mTrans" type="Array" elementType="Number">
+    /// </param>
+    /// <param name="mTransOffset" type="Number" integer="true">
+    /// </param>
+    /// <param name="m" type="Array" elementType="Number">
+    /// </param>
+    /// <param name="mOffset" type="Number" integer="true">
+    /// </param>
+    for (var i = 0; i < 4; i++) {
+        var mBase = i * 4 + mOffset;
+        mTrans[i + mTransOffset] = m[mBase];
+        mTrans[i + 4 + mTransOffset] = m[mBase + 1];
+        mTrans[i + 8 + mTransOffset] = m[mBase + 2];
+        mTrans[i + 12 + mTransOffset] = m[mBase + 3];
+    }
+}
+SystemEx.MathMatrix.invertM = function SystemEx_MathMatrix$invertM(mInv, mInvOffset, m, mOffset) {
+    /// <param name="mInv" type="Array" elementType="Number">
+    /// </param>
+    /// <param name="mInvOffset" type="Number" integer="true">
+    /// </param>
+    /// <param name="m" type="Array" elementType="Number">
+    /// </param>
+    /// <param name="mOffset" type="Number" integer="true">
+    /// </param>
+    /// <returns type="Boolean"></returns>
+    var src = new Array(16);
+    SystemEx.MathMatrix.transposeM(src, 0, m, mOffset);
+    var tmp = new Array(12);
+    tmp[0] = src[10] * src[15];
+    tmp[1] = src[11] * src[14];
+    tmp[2] = src[9] * src[15];
+    tmp[3] = src[11] * src[13];
+    tmp[4] = src[9] * src[14];
+    tmp[5] = src[10] * src[13];
+    tmp[6] = src[8] * src[15];
+    tmp[7] = src[11] * src[12];
+    tmp[8] = src[8] * src[14];
+    tmp[9] = src[10] * src[12];
+    tmp[10] = src[8] * src[13];
+    tmp[11] = src[9] * src[12];
+    var dst = new Array(16);
+    dst[0] = tmp[0] * src[5] + tmp[3] * src[6] + tmp[4] * src[7];
+    dst[0] -= tmp[1] * src[5] + tmp[2] * src[6] + tmp[5] * src[7];
+    dst[1] = tmp[1] * src[4] + tmp[6] * src[6] + tmp[9] * src[7];
+    dst[1] -= tmp[0] * src[4] + tmp[7] * src[6] + tmp[8] * src[7];
+    dst[2] = tmp[2] * src[4] + tmp[7] * src[5] + tmp[10] * src[7];
+    dst[2] -= tmp[3] * src[4] + tmp[6] * src[5] + tmp[11] * src[7];
+    dst[3] = tmp[5] * src[4] + tmp[8] * src[5] + tmp[11] * src[6];
+    dst[3] -= tmp[4] * src[4] + tmp[9] * src[5] + tmp[10] * src[6];
+    dst[4] = tmp[1] * src[1] + tmp[2] * src[2] + tmp[5] * src[3];
+    dst[4] -= tmp[0] * src[1] + tmp[3] * src[2] + tmp[4] * src[3];
+    dst[5] = tmp[0] * src[0] + tmp[7] * src[2] + tmp[8] * src[3];
+    dst[5] -= tmp[1] * src[0] + tmp[6] * src[2] + tmp[9] * src[3];
+    dst[6] = tmp[3] * src[0] + tmp[6] * src[1] + tmp[11] * src[3];
+    dst[6] -= tmp[2] * src[0] + tmp[7] * src[1] + tmp[10] * src[3];
+    dst[7] = tmp[4] * src[0] + tmp[9] * src[1] + tmp[10] * src[2];
+    dst[7] -= tmp[5] * src[0] + tmp[8] * src[1] + tmp[11] * src[2];
+    tmp[0] = src[2] * src[7];
+    tmp[1] = src[3] * src[6];
+    tmp[2] = src[1] * src[7];
+    tmp[3] = src[3] * src[5];
+    tmp[4] = src[1] * src[6];
+    tmp[5] = src[2] * src[5];
+    tmp[6] = src[0] * src[7];
+    tmp[7] = src[3] * src[4];
+    tmp[8] = src[0] * src[6];
+    tmp[9] = src[2] * src[4];
+    tmp[10] = src[0] * src[5];
+    tmp[11] = src[1] * src[4];
+    dst[8] = tmp[0] * src[13] + tmp[3] * src[14] + tmp[4] * src[15];
+    dst[8] -= tmp[1] * src[13] + tmp[2] * src[14] + tmp[5] * src[15];
+    dst[9] = tmp[1] * src[12] + tmp[6] * src[14] + tmp[9] * src[15];
+    dst[9] -= tmp[0] * src[12] + tmp[7] * src[14] + tmp[8] * src[15];
+    dst[10] = tmp[2] * src[12] + tmp[7] * src[13] + tmp[10] * src[15];
+    dst[10] -= tmp[3] * src[12] + tmp[6] * src[13] + tmp[11] * src[15];
+    dst[11] = tmp[5] * src[12] + tmp[8] * src[13] + tmp[11] * src[14];
+    dst[11] -= tmp[4] * src[12] + tmp[9] * src[13] + tmp[10] * src[14];
+    dst[12] = tmp[2] * src[10] + tmp[5] * src[11] + tmp[1] * src[9];
+    dst[12] -= tmp[4] * src[11] + tmp[0] * src[9] + tmp[3] * src[10];
+    dst[13] = tmp[8] * src[11] + tmp[0] * src[8] + tmp[7] * src[10];
+    dst[13] -= tmp[6] * src[10] + tmp[9] * src[11] + tmp[1] * src[8];
+    dst[14] = tmp[6] * src[9] + tmp[11] * src[11] + tmp[3] * src[8];
+    dst[14] -= tmp[10] * src[11] + tmp[2] * src[8] + tmp[7] * src[9];
+    dst[15] = tmp[10] * src[10] + tmp[4] * src[8] + tmp[9] * src[9];
+    dst[15] -= tmp[8] * src[9] + tmp[11] * src[10] + tmp[5] * src[8];
+    var det = src[0] * dst[0] + src[1] * dst[1] + src[2] * dst[2] + src[3] * dst[3];
+    if (det === 0) {
+    }
+    det = 1 / det;
+    for (var j = 0; j < 16; j++) {
+        mInv[j + mInvOffset] = dst[j] * det;
+    }
+    return true;
+}
+SystemEx.MathMatrix.orthoM = function SystemEx_MathMatrix$orthoM(m, mOffset, left, right, bottom, top, near, far) {
+    /// <param name="m" type="Array" elementType="Number">
+    /// </param>
+    /// <param name="mOffset" type="Number" integer="true">
+    /// </param>
+    /// <param name="left" type="Number">
+    /// </param>
+    /// <param name="right" type="Number">
+    /// </param>
+    /// <param name="bottom" type="Number">
+    /// </param>
+    /// <param name="top" type="Number">
+    /// </param>
+    /// <param name="near" type="Number">
+    /// </param>
+    /// <param name="far" type="Number">
+    /// </param>
+    if (left === right) {
+        throw new Error('ArgumentException: left == right');
+    }
+    if (bottom === top) {
+        throw new Error('ArgumentException: bottom == top');
+    }
+    if (near === far) {
+        throw new Error('ArgumentException: near == far');
+    }
+    var r_width = 1 / (right - left);
+    var r_height = 1 / (top - bottom);
+    var r_depth = 1 / (far - near);
+    var x = 2 * r_width;
+    var y = 2 * r_height;
+    var z = -2 * r_depth;
+    var tx = -(right + left) * r_width;
+    var ty = -(top + bottom) * r_height;
+    var tz = -(far + near) * r_depth;
+    m[mOffset + 0] = x;
+    m[mOffset + 5] = y;
+    m[mOffset + 10] = z;
+    m[mOffset + 12] = tx;
+    m[mOffset + 13] = ty;
+    m[mOffset + 14] = tz;
+    m[mOffset + 15] = 1;
+    m[mOffset + 1] = 0;
+    m[mOffset + 2] = 0;
+    m[mOffset + 3] = 0;
+    m[mOffset + 4] = 0;
+    m[mOffset + 6] = 0;
+    m[mOffset + 7] = 0;
+    m[mOffset + 8] = 0;
+    m[mOffset + 9] = 0;
+    m[mOffset + 11] = 0;
+}
+SystemEx.MathMatrix.frustumM = function SystemEx_MathMatrix$frustumM(m, offset, left, right, bottom, top, near, far) {
+    /// <param name="m" type="Array" elementType="Number">
+    /// </param>
+    /// <param name="offset" type="Number" integer="true">
+    /// </param>
+    /// <param name="left" type="Number">
+    /// </param>
+    /// <param name="right" type="Number">
+    /// </param>
+    /// <param name="bottom" type="Number">
+    /// </param>
+    /// <param name="top" type="Number">
+    /// </param>
+    /// <param name="near" type="Number">
+    /// </param>
+    /// <param name="far" type="Number">
+    /// </param>
+    if (left === right) {
+        throw new Error('ArgumentException: left == right');
+    }
+    if (top === bottom) {
+        throw new Error('ArgumentException: top == bottom');
+    }
+    if (near === far) {
+        throw new Error('ArgumentException: near == far');
+    }
+    if (near <= 0) {
+        throw new Error('ArgumentException: near <= 0.0f');
+    }
+    if (far <= 0) {
+        throw new Error('ArgumentException: far <= 0.0f');
+    }
+    var r_width = 1 / (right - left);
+    var r_height = 1 / (top - bottom);
+    var r_depth = 1 / (near - far);
+    var x = 2 * (near * r_width);
+    var y = 2 * (near * r_height);
+    var A = 2 * ((right + left) * r_width);
+    var B = (top + bottom) * r_height;
+    var C = (far + near) * r_depth;
+    var D = 2 * (far * near * r_depth);
+    m[offset + 0] = x;
+    m[offset + 5] = y;
+    m[offset + 8] = A;
+    m[offset + 9] = B;
+    m[offset + 10] = C;
+    m[offset + 14] = D;
+    m[offset + 11] = -1;
+    m[offset + 1] = 0;
+    m[offset + 2] = 0;
+    m[offset + 3] = 0;
+    m[offset + 4] = 0;
+    m[offset + 6] = 0;
+    m[offset + 7] = 0;
+    m[offset + 12] = 0;
+    m[offset + 13] = 0;
+    m[offset + 15] = 0;
+}
+SystemEx.MathMatrix.setIdentityM = function SystemEx_MathMatrix$setIdentityM(sm, smOffset) {
+    /// <param name="sm" type="Array" elementType="Number">
+    /// </param>
+    /// <param name="smOffset" type="Number" integer="true">
+    /// </param>
+    for (var i = 0; i < 16; i++) {
+        sm[smOffset + i] = 0;
+    }
+    for (var i = 0; i < 16; i += 5) {
+        sm[smOffset + i] = 1;
+    }
+}
+SystemEx.MathMatrix.scaleM = function SystemEx_MathMatrix$scaleM(sm, smOffset, m, mOffset, x, y, z) {
+    /// <param name="sm" type="Array" elementType="Number">
+    /// </param>
+    /// <param name="smOffset" type="Number" integer="true">
+    /// </param>
+    /// <param name="m" type="Array" elementType="Number">
+    /// </param>
+    /// <param name="mOffset" type="Number" integer="true">
+    /// </param>
+    /// <param name="x" type="Number">
+    /// </param>
+    /// <param name="y" type="Number">
+    /// </param>
+    /// <param name="z" type="Number">
+    /// </param>
+    for (var i = 0; i < 4; i++) {
+        var smi = smOffset + i;
+        var mi = mOffset + i;
+        sm[smi] = m[mi] * x;
+        sm[4 + smi] = m[4 + mi] * y;
+        sm[8 + smi] = m[8 + mi] * z;
+        sm[12 + smi] = m[12 + mi];
+    }
+}
+SystemEx.MathMatrix.scaleM2 = function SystemEx_MathMatrix$scaleM2(m, mOffset, x, y, z) {
+    /// <param name="m" type="Array" elementType="Number">
+    /// </param>
+    /// <param name="mOffset" type="Number" integer="true">
+    /// </param>
+    /// <param name="x" type="Number">
+    /// </param>
+    /// <param name="y" type="Number">
+    /// </param>
+    /// <param name="z" type="Number">
+    /// </param>
+    for (var i = 0; i < 4; i++) {
+        var mi = mOffset + i;
+        m[mi] *= x;
+        m[4 + mi] *= y;
+        m[8 + mi] *= z;
+    }
+}
+SystemEx.MathMatrix.translateM = function SystemEx_MathMatrix$translateM(tm, tmOffset, m, mOffset, x, y, z) {
+    /// <param name="tm" type="Array" elementType="Number">
+    /// </param>
+    /// <param name="tmOffset" type="Number" integer="true">
+    /// </param>
+    /// <param name="m" type="Array" elementType="Number">
+    /// </param>
+    /// <param name="mOffset" type="Number" integer="true">
+    /// </param>
+    /// <param name="x" type="Number">
+    /// </param>
+    /// <param name="y" type="Number">
+    /// </param>
+    /// <param name="z" type="Number">
+    /// </param>
+    for (var i = 0; i < 4; i++) {
+        var tmi = tmOffset + i;
+        var mi = mOffset + i;
+        tm[12 + tmi] = m[mi] * x + m[4 + mi] * y + m[8 + mi] * z + m[12 + mi];
+    }
+}
+SystemEx.MathMatrix.translateM2 = function SystemEx_MathMatrix$translateM2(m, mOffset, x, y, z) {
+    /// <param name="m" type="Array" elementType="Number">
+    /// </param>
+    /// <param name="mOffset" type="Number" integer="true">
+    /// </param>
+    /// <param name="x" type="Number">
+    /// </param>
+    /// <param name="y" type="Number">
+    /// </param>
+    /// <param name="z" type="Number">
+    /// </param>
+    for (var i = 0; i < 4; i++) {
+        var mi = mOffset + i;
+        m[12 + mi] += m[mi] * x + m[4 + mi] * y + m[8 + mi] * z;
+    }
+}
+SystemEx.MathMatrix.rotateM = function SystemEx_MathMatrix$rotateM(rm, rmOffset, m, mOffset, a, x, y, z) {
+    /// <param name="rm" type="Array" elementType="Number">
+    /// </param>
+    /// <param name="rmOffset" type="Number" integer="true">
+    /// </param>
+    /// <param name="m" type="Array" elementType="Number">
+    /// </param>
+    /// <param name="mOffset" type="Number" integer="true">
+    /// </param>
+    /// <param name="a" type="Number">
+    /// </param>
+    /// <param name="x" type="Number">
+    /// </param>
+    /// <param name="y" type="Number">
+    /// </param>
+    /// <param name="z" type="Number">
+    /// </param>
+    var r = new Array(16);
+    SystemEx.MathMatrix.setRotateM(r, 0, a, x, y, z);
+    SystemEx.MathMatrix.multiplyMM(rm, rmOffset, m, mOffset, r, 0);
+}
+SystemEx.MathMatrix.rotateM2 = function SystemEx_MathMatrix$rotateM2(m, mOffset, a, x, y, z) {
+    /// <param name="m" type="Array" elementType="Number">
+    /// </param>
+    /// <param name="mOffset" type="Number" integer="true">
+    /// </param>
+    /// <param name="a" type="Number">
+    /// </param>
+    /// <param name="x" type="Number">
+    /// </param>
+    /// <param name="y" type="Number">
+    /// </param>
+    /// <param name="z" type="Number">
+    /// </param>
+    var temp = new Array(32);
+    SystemEx.MathMatrix.setRotateM(temp, 0, a, x, y, z);
+    SystemEx.MathMatrix.multiplyMM(temp, 16, m, mOffset, temp, 0);
+    SystemEx.JSArrayEx.copy(temp, 16, m, mOffset, 16);
+}
+SystemEx.MathMatrix.setRotateM = function SystemEx_MathMatrix$setRotateM(rm, rmOffset, a, x, y, z) {
+    /// <param name="rm" type="Array" elementType="Number">
+    /// </param>
+    /// <param name="rmOffset" type="Number" integer="true">
+    /// </param>
+    /// <param name="a" type="Number">
+    /// </param>
+    /// <param name="x" type="Number">
+    /// </param>
+    /// <param name="y" type="Number">
+    /// </param>
+    /// <param name="z" type="Number">
+    /// </param>
+    rm[rmOffset + 3] = 0;
+    rm[rmOffset + 7] = 0;
+    rm[rmOffset + 11] = 0;
+    rm[rmOffset + 12] = 0;
+    rm[rmOffset + 13] = 0;
+    rm[rmOffset + 14] = 0;
+    rm[rmOffset + 15] = 1;
+    a *= (Math.PI / 180);
+    var s = Math.sin(a);
+    var c = Math.cos(a);
+    if (1 === x && 0 === y && 0 === z) {
+        rm[rmOffset + 5] = c;
+        rm[rmOffset + 10] = c;
+        rm[rmOffset + 6] = s;
+        rm[rmOffset + 9] = -s;
+        rm[rmOffset + 1] = 0;
+        rm[rmOffset + 2] = 0;
+        rm[rmOffset + 4] = 0;
+        rm[rmOffset + 8] = 0;
+        rm[rmOffset + 0] = 1;
+    }
+    else if (0 === x && 1 === y && 0 === z) {
+        rm[rmOffset + 0] = c;
+        rm[rmOffset + 10] = c;
+        rm[rmOffset + 8] = s;
+        rm[rmOffset + 2] = -s;
+        rm[rmOffset + 1] = 0;
+        rm[rmOffset + 4] = 0;
+        rm[rmOffset + 6] = 0;
+        rm[rmOffset + 9] = 0;
+        rm[rmOffset + 5] = 1;
+    }
+    else if (0 === x && 0 === y && 1 === z) {
+        rm[rmOffset + 0] = c;
+        rm[rmOffset + 5] = c;
+        rm[rmOffset + 1] = s;
+        rm[rmOffset + 4] = -s;
+        rm[rmOffset + 2] = 0;
+        rm[rmOffset + 6] = 0;
+        rm[rmOffset + 8] = 0;
+        rm[rmOffset + 9] = 0;
+        rm[rmOffset + 10] = 1;
+    }
+    else {
+        var len = SystemEx.Math3D.length(x, y, z);
+        if (1 !== len) {
+            var recipLen = 1 / len;
+            x *= recipLen;
+            y *= recipLen;
+            z *= recipLen;
+        }
+        var nc = 1 - c;
+        var xy = x * y;
+        var yz = y * z;
+        var zx = z * x;
+        var xs = x * s;
+        var ys = y * s;
+        var zs = z * s;
+        rm[rmOffset + 0] = x * x * nc + c;
+        rm[rmOffset + 4] = xy * nc - zs;
+        rm[rmOffset + 8] = zx * nc + ys;
+        rm[rmOffset + 1] = xy * nc + zs;
+        rm[rmOffset + 5] = y * y * nc + c;
+        rm[rmOffset + 9] = yz * nc - xs;
+        rm[rmOffset + 2] = zx * nc - ys;
+        rm[rmOffset + 6] = yz * nc + xs;
+        rm[rmOffset + 10] = z * z * nc + c;
+    }
+}
+SystemEx.MathMatrix.setRotateEulerM = function SystemEx_MathMatrix$setRotateEulerM(rm, rmOffset, x, y, z) {
+    /// <param name="rm" type="Array" elementType="Number">
+    /// </param>
+    /// <param name="rmOffset" type="Number" integer="true">
+    /// </param>
+    /// <param name="x" type="Number">
+    /// </param>
+    /// <param name="y" type="Number">
+    /// </param>
+    /// <param name="z" type="Number">
+    /// </param>
+    x *= (Math.PI / 180);
+    y *= (Math.PI / 180);
+    z *= (Math.PI / 180);
+    var cx = Math.cos(x);
+    var sx = Math.sin(x);
+    var cy = Math.cos(y);
+    var sy = Math.sin(y);
+    var cz = Math.cos(z);
+    var sz = Math.sin(z);
+    var cxsy = cx * sy;
+    var sxsy = sx * sy;
+    rm[rmOffset + 0] = cy * cz;
+    rm[rmOffset + 1] = -cy * sz;
+    rm[rmOffset + 2] = sy;
+    rm[rmOffset + 3] = 0;
+    rm[rmOffset + 4] = cxsy * cz + cx * sz;
+    rm[rmOffset + 5] = -cxsy * sz + cx * cz;
+    rm[rmOffset + 6] = -sx * cy;
+    rm[rmOffset + 7] = 0;
+    rm[rmOffset + 8] = -sxsy * cz + sx * sz;
+    rm[rmOffset + 9] = sxsy * sz + sx * cz;
+    rm[rmOffset + 10] = cx * cy;
+    rm[rmOffset + 11] = 0;
+    rm[rmOffset + 12] = 0;
+    rm[rmOffset + 13] = 0;
+    rm[rmOffset + 14] = 0;
+    rm[rmOffset + 15] = 1;
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
 // SystemEx.Math3D
 
 SystemEx.Math3D = function SystemEx_Math3D() {
@@ -232,6 +740,16 @@ SystemEx.Math3D.vectorLength = function SystemEx_Math3D$vectorLength(v) {
     /// <returns type="Number"></returns>
     return Math.sqrt(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]);
 }
+SystemEx.Math3D.length = function SystemEx_Math3D$length(x, y, z) {
+    /// <param name="x" type="Number">
+    /// </param>
+    /// <param name="y" type="Number">
+    /// </param>
+    /// <param name="z" type="Number">
+    /// </param>
+    /// <returns type="Number"></returns>
+    return Math.sqrt(x * x + y * y + z * z);
+}
 SystemEx.Math3D.vectorInverse = function SystemEx_Math3D$vectorInverse(v) {
     /// <param name="v" type="Array" elementType="Number">
     /// </param>
@@ -250,7 +768,7 @@ SystemEx.Math3D.vectorScale = function SystemEx_Math3D$vectorScale(v, scale, res
     result[1] = v[1] * scale;
     result[2] = v[2] * scale;
 }
-SystemEx.Math3D.vectoyaw = function SystemEx_Math3D$vectoyaw(vec) {
+SystemEx.Math3D.vectoYaw = function SystemEx_Math3D$vectoYaw(vec) {
     /// <param name="vec" type="Array" elementType="Number">
     /// </param>
     /// <returns type="Number"></returns>
@@ -272,7 +790,7 @@ SystemEx.Math3D.vectoyaw = function SystemEx_Math3D$vectoyaw(vec) {
     }
     return yaw;
 }
-SystemEx.Math3D.vectoangles = function SystemEx_Math3D$vectoangles(value1, angles) {
+SystemEx.Math3D.vectoAngles = function SystemEx_Math3D$vectoAngles(value1, angles) {
     /// <param name="value1" type="Array" elementType="Number">
     /// </param>
     /// <param name="angles" type="Array" elementType="Number">
@@ -1394,6 +1912,315 @@ SystemEx.StringBuilderEx.setLength = function SystemEx_StringBuilderEx$setLength
     /// <param name="value" type="Number" integer="true">
     /// </param>
     b.length = value;
+}
+
+
+Type.registerNamespace('SystemEx.Interop.OpenGL');
+
+////////////////////////////////////////////////////////////////////////////////
+// SystemEx.Interop.OpenGL.WebGLES11RenderingContext
+
+SystemEx.Interop.OpenGL.WebGLES11RenderingContext = function SystemEx_Interop_OpenGL_WebGLES11RenderingContext() {
+    /// <field name="gleS11_MODELVIEW" type="Number" integer="true" static="true">
+    /// </field>
+    /// <field name="gleS11_PROJECTION" type="Number" integer="true" static="true">
+    /// </field>
+    /// <field name="gleS11_MATRIX_MODE" type="Number" integer="true" static="true">
+    /// </field>
+    /// <field name="_matrixMode$2" type="Number" integer="true">
+    /// </field>
+    /// <field name="_viewportX$2" type="Number" integer="true">
+    /// </field>
+    /// <field name="_viewportY$2" type="Number" integer="true">
+    /// </field>
+    /// <field name="_viewportW$2" type="Number" integer="true">
+    /// </field>
+    /// <field name="_viewportH$2" type="Number" integer="true">
+    /// </field>
+    /// <field name="_projectionMatrix$2" type="Array" elementType="Number">
+    /// </field>
+    /// <field name="_modelViewMatrix$2" type="Array" elementType="Number">
+    /// </field>
+    /// <field name="_textureMatrix$2" type="Array" elementType="Number">
+    /// </field>
+    /// <field name="_currentMatrix$2" type="Array" elementType="Number">
+    /// </field>
+    /// <field name="_projectionMatrixStack$2" type="Array">
+    /// </field>
+    /// <field name="_modelViewMatrixStack$2" type="Array">
+    /// </field>
+    /// <field name="_textureMatrixStack$2" type="Array">
+    /// </field>
+    /// <field name="_currentMatrixStack$2" type="Array">
+    /// </field>
+    /// <field name="_tmpMatrix$2" type="Array" elementType="Number">
+    /// </field>
+    /// <field name="_mvpMatrix$2" type="Array" elementType="Number">
+    /// </field>
+    /// <field name="_mvpDirty$2" type="Boolean">
+    /// </field>
+    this._matrixMode$2 = SystemEx.Interop.OpenGL.WebGLES11RenderingContext.gleS11_MODELVIEW;
+    this._projectionMatrix$2 = new Array(16);
+    this._modelViewMatrix$2 = new Array(16);
+    this._textureMatrix$2 = new Array(16);
+    this._projectionMatrixStack$2 = [];
+    this._modelViewMatrixStack$2 = [];
+    this._textureMatrixStack$2 = [];
+    this._tmpMatrix$2 = new Array(16);
+    this._mvpMatrix$2 = new Array(16);
+    SystemEx.Interop.OpenGL.WebGLES11RenderingContext.initializeBase(this);
+}
+SystemEx.Interop.OpenGL.WebGLES11RenderingContext.prototype = {
+    _viewportX$2: 0,
+    _viewportY$2: 0,
+    _viewportW$2: 0,
+    _viewportH$2: 0,
+    _currentMatrix$2: null,
+    _currentMatrixStack$2: null,
+    _mvpDirty$2: true,
+    
+    glLoadIdentity: function SystemEx_Interop_OpenGL_WebGLES11RenderingContext$glLoadIdentity() {
+        SystemEx.MathMatrix.setIdentityM(this._currentMatrix$2, 0);
+        this._mvpDirty$2 = true;
+    },
+    
+    glMatrixMode: function SystemEx_Interop_OpenGL_WebGLES11RenderingContext$glMatrixMode(mode) {
+        /// <param name="mode" type="Number" integer="true">
+        /// </param>
+        switch (mode) {
+            case SystemEx.Interop.OpenGL.WebGLES11RenderingContext.gleS11_MODELVIEW:
+                this._currentMatrix$2 = this._modelViewMatrix$2;
+                this._currentMatrixStack$2 = this._modelViewMatrixStack$2;
+                break;
+            case SystemEx.Interop.OpenGL.WebGLES11RenderingContext.gleS11_PROJECTION:
+                this._currentMatrix$2 = this._projectionMatrix$2;
+                this._currentMatrixStack$2 = this._projectionMatrixStack$2;
+                break;
+            case WebGL.TEXTURE:
+                this._currentMatrix$2 = this._textureMatrix$2;
+                this._currentMatrixStack$2 = this._textureMatrixStack$2;
+                break;
+            default:
+                throw new Error('ArgumentException: Unrecoginzed matrix mode: ' + mode);
+        }
+        this._matrixMode$2 = mode;
+    },
+    
+    glGetInteger: function SystemEx_Interop_OpenGL_WebGLES11RenderingContext$glGetInteger(what, s) {
+        /// <param name="what" type="Number" integer="true">
+        /// </param>
+        /// <param name="s" type="SystemEx.IO.Stream">
+        /// </param>
+        switch (what) {
+            case SystemEx.Interop.OpenGL.WebGLES11RenderingContext.gleS11_MATRIX_MODE:
+                SystemEx.IO.SE.writeUInt32(s, this._matrixMode$2);
+                break;
+            default:
+                throw new Error('ArgumentException:');
+        }
+    },
+    
+    glMultMatrixf: function SystemEx_Interop_OpenGL_WebGLES11RenderingContext$glMultMatrixf(matrix, ofs) {
+        /// <param name="matrix" type="Array" elementType="Number">
+        /// </param>
+        /// <param name="ofs" type="Number" integer="true">
+        /// </param>
+        SystemEx.MathMatrix.multiplyMM(this._tmpMatrix$2, 0, this._currentMatrix$2, 0, matrix, ofs);
+        SystemEx.JSArrayEx.copy(this._tmpMatrix$2, 0, this._currentMatrix$2, 0, 16);
+        this._mvpDirty$2 = true;
+    },
+    
+    glPushMatrix: function SystemEx_Interop_OpenGL_WebGLES11RenderingContext$glPushMatrix() {
+        var copy = new Array(16);
+        SystemEx.JSArrayEx.copy(this._currentMatrix$2, 0, copy, 0, 16);
+        this._currentMatrixStack$2.push(copy);
+    },
+    
+    glPopMatrix: function SystemEx_Interop_OpenGL_WebGLES11RenderingContext$glPopMatrix() {
+        var top = this._currentMatrixStack$2.pop();
+        SystemEx.JSArrayEx.copy(top, 0, this._currentMatrix$2, 0, 16);
+        this._mvpDirty$2 = true;
+    },
+    
+    glRotatef: function SystemEx_Interop_OpenGL_WebGLES11RenderingContext$glRotatef(angle, x, y, z) {
+        /// <param name="angle" type="Number">
+        /// </param>
+        /// <param name="x" type="Number">
+        /// </param>
+        /// <param name="y" type="Number">
+        /// </param>
+        /// <param name="z" type="Number">
+        /// </param>
+        if ((x !== 0) || (y !== 0) || (z !== 0)) {
+            SystemEx.MathMatrix.rotateM2(this._currentMatrix$2, 0, angle, x, y, z);
+        }
+        this._mvpDirty$2 = true;
+    },
+    
+    glScalef: function SystemEx_Interop_OpenGL_WebGLES11RenderingContext$glScalef(x, y, z) {
+        /// <param name="x" type="Number">
+        /// </param>
+        /// <param name="y" type="Number">
+        /// </param>
+        /// <param name="z" type="Number">
+        /// </param>
+        SystemEx.MathMatrix.scaleM2(this._currentMatrix$2, 0, x, y, z);
+        this._mvpDirty$2 = true;
+    },
+    
+    glTranslatef: function SystemEx_Interop_OpenGL_WebGLES11RenderingContext$glTranslatef(tx, ty, tz) {
+        /// <param name="tx" type="Number">
+        /// </param>
+        /// <param name="ty" type="Number">
+        /// </param>
+        /// <param name="tz" type="Number">
+        /// </param>
+        SystemEx.MathMatrix.translateM2(this._currentMatrix$2, 0, tx, ty, tz);
+        this._mvpDirty$2 = true;
+    },
+    
+    glViewport: function SystemEx_Interop_OpenGL_WebGLES11RenderingContext$glViewport(x, y, w, h) {
+        /// <param name="x" type="Number" integer="true">
+        /// </param>
+        /// <param name="y" type="Number" integer="true">
+        /// </param>
+        /// <param name="w" type="Number" integer="true">
+        /// </param>
+        /// <param name="h" type="Number" integer="true">
+        /// </param>
+        this._viewportX$2 = x;
+        this._viewportY$2 = y;
+        this._viewportW$2 = w;
+        this._viewportH$2 = h;
+    },
+    
+    glFrustum: function SystemEx_Interop_OpenGL_WebGLES11RenderingContext$glFrustum(left, right, bottom, top, znear, zfar) {
+        /// <param name="left" type="Number">
+        /// </param>
+        /// <param name="right" type="Number">
+        /// </param>
+        /// <param name="bottom" type="Number">
+        /// </param>
+        /// <param name="top" type="Number">
+        /// </param>
+        /// <param name="znear" type="Number">
+        /// </param>
+        /// <param name="zfar" type="Number">
+        /// </param>
+        var matrix = new Array(16);
+        var temp, temp2, temp3, temp4;
+        temp = 2 * znear;
+        temp2 = right - left;
+        temp3 = top - bottom;
+        temp4 = zfar - znear;
+        matrix[0] = (temp / temp2);
+        matrix[1] = 0;
+        matrix[2] = 0;
+        matrix[3] = 0;
+        matrix[4] = 0;
+        matrix[5] = (temp / temp3);
+        matrix[6] = 0;
+        matrix[7] = 0;
+        matrix[8] = ((right + left) / temp2);
+        matrix[9] = ((top + bottom) / temp3);
+        matrix[10] = ((-zfar - znear) / temp4);
+        matrix[11] = -1;
+        matrix[12] = 0;
+        matrix[13] = 0;
+        matrix[14] = ((-temp * zfar) / temp4);
+        matrix[15] = 0;
+        this.glMultMatrixf(matrix, 0);
+    },
+    
+    _updateMvpMatrix$2: function SystemEx_Interop_OpenGL_WebGLES11RenderingContext$_updateMvpMatrix$2() {
+        /// <returns type="Boolean"></returns>
+        if (!this._mvpDirty$2) {
+            return false;
+        }
+        SystemEx.MathMatrix.multiplyMM(this._mvpMatrix$2, 0, this._projectionMatrix$2, 0, this._modelViewMatrix$2, 0);
+        this._mvpDirty$2 = false;
+        return true;
+    },
+    
+    glOrtho: function SystemEx_Interop_OpenGL_WebGLES11RenderingContext$glOrtho(left, right, bottom, top, near, far) {
+        /// <param name="left" type="Number" integer="true">
+        /// </param>
+        /// <param name="right" type="Number" integer="true">
+        /// </param>
+        /// <param name="bottom" type="Number" integer="true">
+        /// </param>
+        /// <param name="top" type="Number" integer="true">
+        /// </param>
+        /// <param name="near" type="Number" integer="true">
+        /// </param>
+        /// <param name="far" type="Number" integer="true">
+        /// </param>
+        var l = left;
+        var r = right;
+        var b = bottom;
+        var n = near;
+        var f = far;
+        var t = top;
+        var matrix = [ 2 / (r - l), 0, 0, 0, 0, 2 / (t - b), 0, 0, 0, 0, -2 / f - n, 0, -(r + l) / (r - l), -(t + b) / (t - b), -(f + n) / (f - n), 1 ];
+        this.glMultMatrixf(matrix, 0);
+        this._mvpDirty$2 = true;
+    },
+    
+    project: function SystemEx_Interop_OpenGL_WebGLES11RenderingContext$project(objX, objY, objZ, view, win) {
+        /// <param name="objX" type="Number">
+        /// </param>
+        /// <param name="objY" type="Number">
+        /// </param>
+        /// <param name="objZ" type="Number">
+        /// </param>
+        /// <param name="view" type="Array" elementType="Number" elementInteger="true">
+        /// </param>
+        /// <param name="win" type="Array" elementType="Number">
+        /// </param>
+        /// <returns type="Boolean"></returns>
+        var v = [ objX, objY, objZ, 1 ];
+        var v2 = new Array(4);
+        SystemEx.MathMatrix.multiplyMV(v2, 0, this._mvpMatrix$2, 0, v, 0);
+        var w = v2[3];
+        if (w === 0) {
+            return false;
+        }
+        var rw = 1 / w;
+        win[0] = this._viewportX$2 + this._viewportW$2 * (v2[0] * rw + 1) * 0.5;
+        win[1] = this._viewportY$2 + this._viewportH$2 * (v2[1] * rw + 1) * 0.5;
+        win[2] = (v2[2] * rw + 1) * 0.5;
+        return true;
+    },
+    
+    glGetFloat: function SystemEx_Interop_OpenGL_WebGLES11RenderingContext$glGetFloat(name, s) {
+        /// <param name="name" type="Number" integer="true">
+        /// </param>
+        /// <param name="s" type="SystemEx.IO.Stream">
+        /// </param>
+        switch (name) {
+            case SystemEx.Interop.OpenGL.WebGLES11RenderingContext.gleS11_MODELVIEW:
+            case WebGL._MODELVIEW_MATRIX:
+                var p = s.get_position();
+                for (var index = 0; index < this._modelViewMatrix$2.length; index++) {
+                    SystemEx.IO.SE.writeSingle(s, this._modelViewMatrix$2[index]);
+                }
+                s.set_position(p);
+                break;
+            default:
+                throw new Error('ArgumentException: glGetFloat');
+        }
+    },
+    
+    glLoadMatrix: function SystemEx_Interop_OpenGL_WebGLES11RenderingContext$glLoadMatrix(s) {
+        /// <param name="s" type="SystemEx.IO.Stream">
+        /// </param>
+        var p = s.get_position();
+        for (var index = 0; index < this._currentMatrix$2.length; index++) {
+            this._currentMatrix$2[index] = SystemEx.IO.SE.readSingle(s);
+        }
+        s.set_position(p);
+        this._mvpDirty$2 = true;
+    }
 }
 
 
@@ -5647,6 +6474,7 @@ SystemEx.Text.PackText.info_Print = function SystemEx_Text_PackText$info_Print(s
 }
 
 
+SystemEx.MathMatrix.registerClass('SystemEx.MathMatrix');
 SystemEx.Math3D.registerClass('SystemEx.Math3D');
 SystemEx.Plane3.registerClass('SystemEx.Plane3');
 SystemEx.ByteBuilder.registerClass('SystemEx.ByteBuilder');
@@ -5655,6 +6483,7 @@ SystemEx.JSString.registerClass('SystemEx.JSString');
 SystemEx.JSArrayEx.registerClass('SystemEx.JSArrayEx');
 SystemEx.JSConvert.registerClass('SystemEx.JSConvert');
 SystemEx.StringBuilderEx.registerClass('SystemEx.StringBuilderEx');
+SystemEx.Interop.OpenGL.WebGLES11RenderingContext.registerClass('SystemEx.Interop.OpenGL.WebGLES11RenderingContext', WebGLRenderingContext);
 SystemEx.Html.CloseEventArgs.registerClass('SystemEx.Html.CloseEventArgs');
 SystemEx.Html.MessageEventArgs.registerClass('SystemEx.Html.MessageEventArgs');
 SystemEx.Html.WebSocket.registerClass('SystemEx.Html.WebSocket');
@@ -5704,6 +6533,9 @@ SystemEx.JSConvert._wfa = new Float32Array(SystemEx.JSConvert._wba.buffer, 0, 1)
     ss.StringBuilder.prototype.clear = function(s) { this.length = 0; return this.baseClear(); }
     ss.StringBuilder.prototype.length = 0;
 })();
+SystemEx.Interop.OpenGL.WebGLES11RenderingContext.gleS11_MODELVIEW = 5888;
+SystemEx.Interop.OpenGL.WebGLES11RenderingContext.gleS11_PROJECTION = 5889;
+SystemEx.Interop.OpenGL.WebGLES11RenderingContext.gleS11_MATRIX_MODE = 2976;
 SystemEx.Html.WebSocket.CONNECTING = 0;
 SystemEx.Html.WebSocket.OPEN = 1;
 SystemEx.Html.WebSocket.CLOSING = 2;
