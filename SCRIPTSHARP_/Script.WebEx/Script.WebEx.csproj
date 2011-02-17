@@ -73,6 +73,7 @@
     <Compile Include="SystemEx\Security\Cryptography\Md4Slim.cs" />
     <Compile Include="SystemEx\Text\PackText.cs" />
     <Compile Include="SystemEx\Timer.cs" />
+    <Compile Include="System\Interop\OpenGL\WebGL.cs" />
     <Compile Include="System\JSAsyncCallback.cs" />
     <Compile Include="System\Html\CanvasElementEx.cs" />
     <Compile Include="System\Html\VideoElement.cs" />
@@ -111,17 +112,17 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SystemEx\Html\LocalStorage.cs" />
     <Content Include="Resource_\webgl-debug.js" />
-    <Compile Include="System\WebGL\WebGLActiveInfo.cs" />
-    <Compile Include="System\WebGL\WebGLBuffer.cs" />
-    <Compile Include="System\WebGL\WebGLContextAttributes.cs" />
-    <Compile Include="System\WebGL\WebGLFramebuffer.cs" />
-    <Compile Include="System\WebGL\WebGLObject.cs" />
-    <Compile Include="System\WebGL\WebGLProgram.cs" />
-    <Compile Include="System\WebGL\WebGLRenderbuffer.cs" />
-    <Compile Include="System\WebGL\WebGLRenderingContext.cs" />
-    <Compile Include="System\WebGL\WebGLShader.cs" />
-    <Compile Include="System\WebGL\WebGLTexture.cs" />
-    <Compile Include="System\WebGL\WebGLUniformLocation.cs" />
+    <Compile Include="System\Interop\OpenGL\WebGLActiveInfo.cs" />
+    <Compile Include="System\Interop\OpenGL\WebGLBuffer.cs" />
+    <Compile Include="System\Interop\OpenGL\WebGLContextAttributes.cs" />
+    <Compile Include="System\Interop\OpenGL\WebGLFramebuffer.cs" />
+    <Compile Include="System\Interop\OpenGL\WebGLObject.cs" />
+    <Compile Include="System\Interop\OpenGL\WebGLProgram.cs" />
+    <Compile Include="System\Interop\OpenGL\WebGLRenderbuffer.cs" />
+    <Compile Include="System\Interop\OpenGL\WebGLRenderingContext.cs" />
+    <Compile Include="System\Interop\OpenGL\WebGLShader.cs" />
+    <Compile Include="System\Interop\OpenGL\WebGLTexture.cs" />
+    <Compile Include="System\Interop\OpenGL\WebGLUniformLocation.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(ProgramFiles)\ScriptSharp\v1.0\ScriptSharp.targets" />

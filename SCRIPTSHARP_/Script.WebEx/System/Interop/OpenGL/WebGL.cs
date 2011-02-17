@@ -1,11 +1,11 @@
 using System.Runtime.CompilerServices;
-using System.TypedArrays;
-using System.Html.Media.Graphics;
-using System.Html;
-namespace System.WebGL
+//[GLES2.0]http://www.khronos.org/registry/gles/api/2.0/gl2.h
+namespace System.Interop.OpenGL
 {
+#if CODE_ANALYSIS
     [IgnoreNamespace, Imported]
-    public class WebGLRenderingContext
+#endif
+    public class WebGL
     {
         /* ClearBufferMask */
         public const uint DEPTH_BUFFER_BIT = 0x00000100;
@@ -201,6 +201,7 @@ namespace System.WebGL
         public const uint INT = 0x1404;
         public const uint UNSIGNED_INT = 0x1405;
         public const uint FLOAT = 0x1406;
+        public const uint GLES20_FIXED = 0x140C;
 
         /* PixelFormat */
         public const uint DEPTH_COMPONENT = 0x1902;
@@ -262,6 +263,7 @@ namespace System.WebGL
         public const uint VENDOR = 0x1F00;
         public const uint RENDERER = 0x1F01;
         public const uint VERSION = 0x1F02;
+        public const uint GLES20_EXTENSIONS = 0x1F03;
 
         /* TextureMagFilter */
         public const uint NEAREST = 0x2600;
@@ -369,6 +371,11 @@ namespace System.WebGL
         public const uint COMPILE_STATUS = 0x8B81;
         public const uint INFO_LOG_LENGTH = 0x8B84;
         public const uint SHADER_SOURCE_LENGTH = 0x8B88;
+        public const uint GLES20_SHADER_COMPILER = 0x8DFA;
+
+        /* ES20: Shader Binary */
+        public const uint GLES20_SHADER_BINARY_FORMATS = 0x8DF8;
+        public const uint GLES20_NUM_SHADER_BINARY_FORMATS = 0x8DF9;
 
         /* Shader Precision-Specified Types */
         public const uint LOW_FLOAT = 0x8DF0;
@@ -388,7 +395,7 @@ namespace System.WebGL
         public const uint DEPTH_COMPONENT16 = 0x81A5;
         public const uint STENCIL_INDEX = 0x1901;
         public const uint STENCIL_INDEX8 = 0x8D48;
-        public const uint DEPTH_STENCIL = 0x84F9;
+        public const uint DEPTH_STENCIL = 0x84F9; /* not in ES20 */
 
         public const uint RENDERBUFFER_WIDTH = 0x8D42;
         public const uint RENDERBUFFER_HEIGHT = 0x8D43;
@@ -408,7 +415,7 @@ namespace System.WebGL
         public const uint COLOR_ATTACHMENT0 = 0x8CE0;
         public const uint DEPTH_ATTACHMENT = 0x8D00;
         public const uint STENCIL_ATTACHMENT = 0x8D20;
-        public const uint DEPTH_STENCIL_ATTACHMENT = 0x821A;
+        public const uint DEPTH_STENCIL_ATTACHMENT = 0x821A; /* not in ES20 */
 
         public const uint NONE = 0;
 
@@ -431,217 +438,10 @@ namespace System.WebGL
         public const uint UNPACK_COLORSPACE_CONVERSION_WEBGL = 0x9243;
         public const uint BROWSER_DEFAULT_WEBGL = 0x9244;
 
-
-        protected WebGLRenderingContext() { }
-
-        public CanvasElement Canvas
-        {
-            get { return null; }
-        }
-        public long DrawingBufferWidth
-        {
-            get { return 0; }
-        }
-        public long DrawingBufferHeight
-        {
-            get { return 0; }
-        }
-
-        public WebGLContextAttributes GetContextAttributes() { return null; }
-        public bool IsContextLost() { return false; }
-
-        public string[] GetSupportedExtensions() { return null; }
-        public object GetExtension(string name) { return null; }
-
-        public void ActiveTexture(uint texture) { }
-        public void AttachShader(WebGLProgram program, WebGLShader shader) { }
-        public void BindAttribLocation(WebGLProgram program, int index, string name) { }
-        public void BindBuffer(uint target, WebGLBuffer buffer) { }
-        public void BindFramebuffer(uint target, WebGLFramebuffer framebuffer) { }
-        public void BindRenderbuffer(uint target, WebGLRenderbuffer renderbuffer) { }
-        public void BindTexture(uint target, WebGLTexture texture) { }
-        public void BlendColor(float red, float green, float blue, float alpha) { }
-        public void BlendEquation(uint mode) { }
-        public void BlendEquationSeparate(uint modeRGB, uint modeAlpha) { }
-        public void BlendFunc(uint sfactor, uint dfactor) { }
-        public void BlendFuncSeparate(uint srcRGB, uint dstRGB, uint srcAlpha, uint dstAlpha) { }
-
-        public void BufferData(uint target, int size, int usage) { }
-        public void BufferData(uint target, ArrayBufferView data, int usage) { }
-        public void BufferData(uint target, ArrayBuffer data, int usage) { }
-        public void bufferSubData(uint target, long offset, ArrayBufferView data) { }
-        public void BufferSubData(uint target, long offset, ArrayBuffer data) { }
-
-        public uint CheckFramebufferStatus(uint target) { return 0; }
-        public void Clear(uint mask) { }
-        public void ClearColor(float red, float green, float blue, float alpha) { }
-        public void ClearDepth(float depth) { }
-        public void ClearStencil(int s) { }
-        public void ColorMask(bool red, bool green, bool blue, bool alpha) { }
-        public void CompileShader(WebGLShader shader) { }
-
-        public void CopyTexImage2D(uint target, int level, uint internalformat, int x, int y, int width, int height, int border) { }
-        public void CopyTexSubImage2D(uint target, int level, int xoffset, int yoffset, int x, int y, int width, int height) { }
-
-        public WebGLBuffer CreateBuffer() { return null; }
-        public WebGLFramebuffer CreateFramebuffer() { return null; }
-        public WebGLProgram CreateProgram() { return null; }
-        public WebGLRenderbuffer CreateRenderbuffer() { return null; }
-        public WebGLShader CreateShader(int type) { return null; }
-        public WebGLTexture CreateTexture() { return null; }
-
-        public void CullFace(uint mode) { }
-
-        public void DeleteBuffer(WebGLBuffer buffer) { }
-        public void DeleteFramebuffer(WebGLFramebuffer framebuffer) { }
-        public void DeleteProgram(WebGLProgram program) { }
-        public void DeleteRenderbuffer(WebGLRenderbuffer renderbuffer) { }
-        public void DeleteShader(WebGLShader shader) { }
-        public void DeleteTexture(WebGLTexture texture) { }
-
-        public void DepthFunc(uint func) { }
-        public void DepthMask(bool flag) { }
-        public void DepthRange(float zNear, float zFar) { }
-        public void DetachShader(WebGLProgram program, WebGLShader shader) { }
-        public void Disable(uint cap) { }
-        public void DisableVertexAttribArray(uint index) { }
-        public void DrawArrays(uint mode, uint first, int count) { }
-        public void DrawElements(uint mode, int count, uint type, long offset) { }
-
-        public void Enable(uint cap) { }
-        public void EnableVertexAttribArray(uint index) { }
-        public void Finish() { }
-        public void Flush() { }
-        public void FramebufferRenderbuffer(uint target, uint attachment, uint renderbuffertarget, WebGLRenderbuffer renderbuffer) { }
-        public void FramebufferTexture2D(uint target, uint attachment, uint textarget, WebGLTexture texture, int level) { }
-        public void FrontFace(uint mode) { }
-
-        public void GenerateMipmap(uint target) { }
-
-        public WebGLActiveInfo GetActiveAttrib(WebGLProgram program, int index) { return null; }
-        public WebGLActiveInfo GetActiveUniform(WebGLProgram program, int index) { return null; }
-        public WebGLShader[] GetAttachedShaders(WebGLProgram program) { return null; }
-
-        public int GetAttribLocation(WebGLProgram program, string name) { return 0; }
-
-        public object GetParameter(uint pname) { return null; }
-        public object GetBufferParameter(uint target, uint pname) { return null; }
-
-        public uint GetError() { return 0; }
-
-        public object GetFramebufferAttachmentParameter(uint target, uint attachment, uint pname) { return null; }
-        public object GetProgramParameter(WebGLProgram program, uint pname) { return null; }
-        public string GetProgramInfoLog(WebGLProgram program) { return null; }
-        public object GetRenderbufferParameter(uint target, uint pname) { return null; }
-        public object GetShaderParameter(WebGLShader shader, uint pname) { return null; }
-        public string GetShaderInfoLog(WebGLShader shader) { return null; }
-
-        public string GetShaderSource(WebGLShader shader) { return null; }
-
-        public object GetTexParameter(uint target, uint pname) { return null; }
-
-        public object GetUniform(WebGLProgram program, WebGLUniformLocation location) { return null; }
-
-        public WebGLUniformLocation GetUniformLocation(WebGLProgram program, string name) { return null; }
-
-        public object GetVertexAttrib(uint index, uint pname) { return null; }
-
-        public long GetVertexAttribOffset(uint index, uint pname) { return 0; }
-
-        public void Hint(uint target, uint mode) { }
-        public bool IsBuffer(WebGLBuffer buffer) { return false; }
-        public bool IsEnabled(uint cap) { return false; }
-        public bool IsFramebuffer(WebGLFramebuffer framebuffer) { return false; }
-        public bool IsProgram(WebGLProgram program) { return false; }
-        public bool IsRenderbuffer(WebGLRenderbuffer renderbuffer) { return false; }
-        public bool IsShader(WebGLShader shader) { return false; }
-        public bool IsTexture(WebGLTexture texture) { return false; }
-        public void LineWidth(float width) { }
-        public void LinkProgram(WebGLProgram program) { }
-        public void PixelStorei(uint pname, uint param) { }
-        public void PolygonOffset(float factor, float units) { }
-
-        public void ReadPixels(int x, int y, int width, int height, uint format, uint type, ArrayBufferView pixels) { }
-
-        public void RenderbufferStorage(uint target, uint internalformat, int width, int height) { }
-        public void SampleCoverage(float value, bool invert) { }
-        public void Scissor(int x, int y, int width, int height) { }
-
-        public void ShaderSource(WebGLShader shader, string source) { }
-
-        public void StencilFunc(uint func, int @ref, uint mask) { }
-        public void StencilFuncSeparate(uint face, int func, int @ref, uint mask) { }
-        public void StencilMask(uint mask) { }
-        public void StencilMaskSeparate(uint face, uint mask) { }
-        public void StencilOp(uint fail, uint zfail, uint zpass) { }
-        public void StencilOpSeparate(int face, int fail, int zfail, int zpass) { }
-
-        public void TexImage2D(uint target, int level, uint internalformat, int width, int height, int border, uint format, uint type, ArrayBufferView pixels) { }
-        public void TexImage2D(uint target, int level, uint internalformat, uint format, int type, ImageData pixels) { }
-        public void TexImage2D(uint target, int level, uint internalformat, uint format, int type, ImageElement image) { }
-        public void TexImage2D(uint target, int level, uint internalformat, uint format, int type, CanvasElement canvas) { }
-        public void TexImage2D(uint target, int level, uint internalformat, uint format, int type, VideoElement video) { }
-
-
-        public void TexParameterf(uint target, uint pname, float param) { }
-        public void TexParameteri(uint target, uint pname, int param) { }
-
-        public void TexSubImage2D(uint target, int level, int xoffset, int yoffset, int width, int height, uint format, uint type, ArrayBufferView pixels) { }
-        public void TexSubImage2D(uint target, int level, int xoffset, int yoffset, uint format, uint type, ImageData pixels) { }
-        public void TexSubImage2D(int target, int level, int xoffset, int yoffset, uint format, uint type, ImageElement image) { }
-        public void TexSubImage2D(int target, int level, int xoffset, int yoffset, uint format, uint type, CanvasElement canvas) { }
-        public void TexSubImage2D(int target, int level, int xoffset, int yoffset, uint format, uint type, VideoElement video) { }
-
-        public void Uniform1f(WebGLUniformLocation location, float x) { }
-        public void Uniform1fv(WebGLUniformLocation location, Float32Array v) { }
-        public void Uniform1fv(WebGLUniformLocation location, float[] v) { }
-        public void Uniform1i(WebGLUniformLocation location, int x) { }
-        public void Uniform1iv(WebGLUniformLocation location, Int32Array v) { }
-        public void Uniform1iv(WebGLUniformLocation location, int[] v) { }
-        public void Uniform2f(WebGLUniformLocation location, float x, float y) { }
-        public void Uniform2fv(WebGLUniformLocation location, Float32Array v) { }
-        public void Uniform2fv(WebGLUniformLocation location, float[] v) { }
-        public void Uniform2i(WebGLUniformLocation location, int x, int y) { }
-        public void Uniform2iv(WebGLUniformLocation location, Int32Array v) { }
-        public void Uniform2iv(WebGLUniformLocation location, int[] v) { }
-        public void Uniform3f(WebGLUniformLocation location, float x, float y, float z) { }
-        public void Uniform3fv(WebGLUniformLocation location, Float32Array v) { }
-        public void Uniform3fv(WebGLUniformLocation location, float[] v) { }
-        public void Uniform3i(WebGLUniformLocation location, int x, int y, int z) { }
-        public void Uniform3iv(WebGLUniformLocation location, Int32Array v) { }
-        public void Uniform3iv(WebGLUniformLocation location, int[] v) { }
-        public void Uniform4f(WebGLUniformLocation location, float x, float y, float z, float w) { }
-        public void Uniform4fv(WebGLUniformLocation location, Float32Array v) { }
-        public void Uniform4fv(WebGLUniformLocation location, float[] v) { }
-        public void Uniform4i(WebGLUniformLocation location, int x, int y, int z, int w) { }
-        public void Uniform4iv(WebGLUniformLocation location, Int32Array v) { }
-        public void Uniform4iv(WebGLUniformLocation location, int[] v) { }
-
-        public void UniformMatrix2fv(WebGLUniformLocation location, bool transpose, Float32Array value) { }
-        public void UniformMatrix2fv(WebGLUniformLocation location, bool transpose, float[] value) { }
-        public void UniformMatrix3fv(WebGLUniformLocation location, bool transpose, Float32Array value) { }
-        public void UniformMatrix3fv(WebGLUniformLocation location, bool transpose, float[] value) { }
-        public void UniformMatrix4fv(WebGLUniformLocation location, bool transpose, Float32Array value) { }
-        public void UniformMatrix4fv(WebGLUniformLocation location, bool transpose, float[] value) { }
-
-
-        public void UseProgram(WebGLProgram program) { }
-        public void ValidateProgram(WebGLProgram program) { }
-
-        public void VertexAttrib1f(uint indx, float x) { }
-        public void VertexAttrib1fv(uint indx, Float32Array values) { }
-        public void VertexAttrib1fv(uint indx, float[] values) { }
-        public void VertexAttrib2f(uint indx, float x, float y) { }
-        public void VertexAttrib2fv(uint indx, Float32Array values) { }
-        public void VertexAttrib2fv(uint indx, float[] values) { }
-        public void VertexAttrib3f(uint indx, float x, float y, float z) { }
-        public void VertexAttrib3fv(uint indx, Float32Array values) { }
-        public void VertexAttrib3fv(uint indx, float[] values) { }
-        public void VertexAttrib4f(uint indx, float x, float y, float z, float w) { }
-        public void VertexAttrib4fv(uint indx, Float32Array values) { }
-        public void VertexAttrib4fv(uint indx, float[] values) { }
-        public void VertexAttribPointer(uint indx, int size, uint type, bool normalized, int stride, long offset) { }
-
-        public void Viewport(int x, int y, int width, int height) { }
+        /* WebGL-transition enums */
+        public const uint _QUADS = 0x0007;
+        public const uint _POLYGON = TRIANGLE_FAN;
+        public const uint _MODELVIEW_MATRIX = 2982;
+        public const uint _SIMPLE_TEXUTRED_QUAD = 0xFFFFFFFF;
     }
 }

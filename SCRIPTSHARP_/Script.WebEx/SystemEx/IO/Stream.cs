@@ -37,8 +37,8 @@ namespace SystemEx.IO
         }
 
         public abstract void Close();
-
         public abstract void Flush();
+        public abstract long Position { get; set; }
 
         void IDisposable.Dispose()
         {
