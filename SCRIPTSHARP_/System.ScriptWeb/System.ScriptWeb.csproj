@@ -38,6 +38,9 @@
     <Compile Include="..\Script.WebEx\SystemEx+3D\Math3D.cs">
       <Link>System+3D\Math3D.cs</Link>
     </Compile>
+    <Compile Include="..\Script.WebEx\SystemEx+3D\MathMatrix.cs">
+      <Link>System+3D\MathMatrix.cs</Link>
+    </Compile>
     <Compile Include="..\Script.WebEx\SystemEx+3D\Plane3.cs">
       <Link>System+3D\Plane3.cs</Link>
     </Compile>
@@ -64,6 +67,9 @@
     </Compile>
     <Compile Include="..\Script.WebEx\SystemEx\Interop\CSyntax\PrintfHelper.cs">
       <Link>System\Interop\CSyntax\PrintfHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\Script.WebEx\SystemEx\Interop\OpenGL\WebGLES11RenderingContext.cs">
+      <Link>System\Interop\OpenGL\WebGLES11RenderingContext.cs</Link>
     </Compile>
     <Compile Include="..\Script.WebEx\SystemEx\IO\SE.cs">
       <Link>IO\SE.cs</Link>
