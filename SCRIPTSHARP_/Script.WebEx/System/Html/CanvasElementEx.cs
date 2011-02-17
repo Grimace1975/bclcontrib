@@ -1,6 +1,6 @@
 using System.Runtime.CompilerServices;
-using System.WebGL;
 using System.Html.Media.Graphics;
+using System.Interop.OpenGL;
 namespace System.Html
 {
     // [w3] http://www.khronos.org/webgl/wiki/Debugging

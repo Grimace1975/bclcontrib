@@ -34,6 +34,12 @@ namespace System.IO
             return (byte)v;
         }
 
+        public static sbyte ReadSByte(Stream s)
+        {
+            int v = s.ReadByte();
+            return (sbyte)v;
+        }
+
 #if CODE_ANALYSIS
         [AlternateSignature]
         public static extern void ReadBytes(Stream s, byte[] b);
@@ -73,6 +79,13 @@ namespace System.IO
             return (short)((a << 8) | b);
         }
 
+        public static ushort ReadUInt16(Stream s)
+        {
+            int a = s.ReadByte();
+            int b = InternalReadByte(s);
+            return (ushort)((a << 8) | b);
+        }
+
         public static int ReadInt32(Stream s)
         {
             int a = s.ReadByte();
@@ -82,11 +95,27 @@ namespace System.IO
             return (a << 24) | (b << 16) | (c << 8) | d;
         }
 
+        public static uint ReadUInt32(Stream s)
+        {
+            int a = s.ReadByte();
+            int b = s.ReadByte();
+            int c = s.ReadByte();
+            int d = InternalReadByte(s);
+            return (uint)((a << 24) | (b << 16) | (c << 8) | d);
+        }
+
         public static long ReadInt64(Stream s)
         {
             long a = ReadInt32(s);
             long b = ReadInt32(s) & 0x0ffffffff;
             return (a << 32) | b;
+        }
+
+        public static ulong ReadUInt64(Stream s)
+        {
+            long a = ReadInt32(s);
+            long b = ReadInt32(s) & 0x0ffffffff;
+            return (ulong)((a << 32) | b);
         }
 
         public static float ReadSingle(Stream s)
@@ -147,7 +176,12 @@ namespace System.IO
 
         #region Write
 
-        public static void WriteByte(Stream s, int v)
+        public static void WriteByte(Stream s, byte v)
+        {
+            s.WriteByte(v);
+        }
+
+        public static void WriteSByte(Stream s, sbyte v)
         {
             s.WriteByte((byte)v);
         }
@@ -168,17 +202,24 @@ namespace System.IO
             s.WriteByte((byte)(v ? 1 : 0));
         }
 
-        public static void WriteChar(Stream s, int v)
+        public static void WriteChar(Stream s, char v)
         {
             s.WriteByte((byte)(v >> 8));
             s.WriteByte((byte)v);
         }
 
-        public static void WriteInt16(Stream s, int v)
+        public static void WriteInt16(Stream s, short v)
         {
             s.WriteByte((byte)(v >> 8));
             s.WriteByte((byte)v);
         }
+
+        public static void WriteUInt16(Stream s, ushort v)
+        {
+            s.WriteByte((byte)(v >> 8));
+            s.WriteByte((byte)v);
+        }
+
 
         public static void WriteInt32(Stream s, int v)
         {
@@ -188,7 +229,21 @@ namespace System.IO
             s.WriteByte((byte)v);
         }
 
+        public static void WriteUInt32(Stream s, uint v)
+        {
+            s.WriteByte((byte)(v >> 24));
+            s.WriteByte((byte)(v >> 16));
+            s.WriteByte((byte)(v >> 8));
+            s.WriteByte((byte)v);
+        }
+
         public static void WriteInt64(Stream s, long v)
+        {
+            WriteInt32(s, (int)(v >> 32));
+            WriteInt32(s, (int)v);
+        }
+
+        public static void WriteUInt64(Stream s, ulong v)
         {
             WriteInt32(s, (int)(v >> 32));
             WriteInt32(s, (int)v);
@@ -228,7 +283,7 @@ namespace System.IO
                     baos.WriteByte((byte)(0x80 | (0x3f & c)));
                 }
             }
-            WriteInt16(s, (int)baos.Length);
+            WriteUInt16(s, (ushort)baos.Length);
             s.Write(baos.GetBuffer(), 0, (int)baos.Length);
         }
 
