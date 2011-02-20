@@ -1,3 +1,4 @@
+//[Khronos]http://www.khronos.org/registry/webgl/specs/latest/
 #if !CODE_ANALYSIS
 #else
 using System.Runtime.CompilerServices;
@@ -14,12 +15,12 @@ namespace System.Interop.OpenGL
 #if CODE_ANALYSIS
     [IgnoreNamespace, Imported]
 #endif
-    public class WebGLRenderingContext : WebGL
+    public class WebGLRenderingContext : GLES20
     {
         protected WebGLRenderingContext() { }
 
 #if CODE_ANALYSIS
-        public virtual CanvasElement Canvas
+        public virtual CanvasElementEx Canvas
         {
             get { return null; }
         }
@@ -75,7 +76,7 @@ namespace System.Interop.OpenGL
         public virtual WebGLFramebuffer CreateFramebuffer() { return null; }
         public virtual WebGLProgram CreateProgram() { return null; }
         public virtual WebGLRenderbuffer CreateRenderbuffer() { return null; }
-        public virtual WebGLShader CreateShader(int type) { return null; }
+        public virtual WebGLShader CreateShader(uint type) { return null; }
         public virtual WebGLTexture CreateTexture() { return null; }
 
         public virtual void CullFace(uint mode) { }
@@ -169,6 +170,7 @@ namespace System.Interop.OpenGL
         public void TexImage2D(uint target, int level, uint internalformat, uint format, int type, ImageData pixels) { }
         public void TexImage2D(uint target, int level, uint internalformat, uint format, int type, ImageElement image) { }
         public void TexImage2D(uint target, int level, uint internalformat, uint format, int type, CanvasElement canvas) { }
+        public void TexImage2D(uint target, int level, uint internalformat, uint format, int type, CanvasElementEx canvas) { }
         public void TexImage2D(uint target, int level, uint internalformat, uint format, int type, VideoElement video) { }
 #endif
 
@@ -180,6 +182,7 @@ namespace System.Interop.OpenGL
         public void TexSubImage2D(uint target, int level, int xoffset, int yoffset, uint format, uint type, ImageData pixels) { }
         public void TexSubImage2D(int target, int level, int xoffset, int yoffset, uint format, uint type, ImageElement image) { }
         public void TexSubImage2D(int target, int level, int xoffset, int yoffset, uint format, uint type, CanvasElement canvas) { }
+        public void TexSubImage2D(int target, int level, int xoffset, int yoffset, uint format, uint type, CanvasElementEx canvas) { }
         public void TexSubImage2D(int target, int level, int xoffset, int yoffset, uint format, uint type, VideoElement video) { }
 #endif
 

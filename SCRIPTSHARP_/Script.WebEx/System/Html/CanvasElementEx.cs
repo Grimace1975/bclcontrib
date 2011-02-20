@@ -11,7 +11,7 @@ namespace System.Html
 
         public object GetContext(string contextID) { return null; }
         public object GetContext(string contextID, params object[] args) { return null; }
-        public CanvasContext2D GetContext2D() { return (CanvasContext2D)GetContext("2d"); }
+        public CanvasContext2DEx GetContext2D() { return (CanvasContext2DEx)GetContext("2d"); }
 
         [AlternateSignature]
         public extern WebGLRenderingContext GetContextWebGL();
