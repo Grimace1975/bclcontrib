@@ -1,5 +1,5 @@
 using System.Runtime.CompilerServices;
-//[GLES2.0]http://www.khronos.org/registry/gles/api/2.0/gl2.h
+//[Khronos GLES2.0]http://www.khronos.org/registry/gles/api/2.0/gl2.h
 namespace System.Interop.OpenGL
 {
 #if CODE_ANALYSIS
