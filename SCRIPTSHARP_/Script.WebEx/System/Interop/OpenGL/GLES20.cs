@@ -5,7 +5,7 @@ namespace System.Interop.OpenGL
 #if CODE_ANALYSIS
     [IgnoreNamespace, Imported]
 #endif
-    public class WebGL
+    public class GLES20
     {
         /* ClearBufferMask */
         public const uint DEPTH_BUFFER_BIT = 0x00000100;
@@ -437,11 +437,5 @@ namespace System.Interop.OpenGL
         public const uint CONTEXT_LOST_WEBGL = 0x9242;
         public const uint UNPACK_COLORSPACE_CONVERSION_WEBGL = 0x9243;
         public const uint BROWSER_DEFAULT_WEBGL = 0x9244;
-
-        /* WebGL-transition enums */
-        public const uint _QUADS = 0x0007;
-        public const uint _POLYGON = TRIANGLE_FAN;
-        public const uint _MODELVIEW_MATRIX = 2982;
-        public const uint _SIMPLE_TEXUTRED_QUAD = 0xFFFFFFFF;
     }
 }
