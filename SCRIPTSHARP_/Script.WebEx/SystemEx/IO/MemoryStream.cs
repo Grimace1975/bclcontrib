@@ -3,7 +3,7 @@ namespace SystemEx.IO
 {
     public class MemoryStream : Stream
     {
-        private int _count;
+        private long _length;
         private byte[] _buffer;
         private long _position;
 
@@ -28,14 +28,15 @@ namespace SystemEx.IO
 
         public byte[] ToArray()
         {
-            byte[] result = new byte[_count];
-            JSArrayEx.Copy(_buffer, 0, result, 0, _count);
+            byte[] result = new byte[_length];
+            JSArrayEx.Copy(_buffer, 0, result, 0, (int)_length);
             return result;
         }
 
-        public int Length
+        public override long Length
         {
-            get { return _count; }
+            get { return _length; }
+            set { _length = value; }
         }
 
         public override long Position
@@ -51,13 +52,13 @@ namespace SystemEx.IO
 
         public override void WriteByte(int b)
         {
-            if (_buffer.Length == _count)
+            if (_buffer.Length == _length)
             {
                 byte[] newBuf = new byte[_buffer.Length * 3 / 2];
-                JSArrayEx.Copy(_buffer, 0, newBuf, 0, _count);
+                JSArrayEx.Copy(_buffer, 0, newBuf, 0, (int)_length);
                 _buffer = newBuf;
             }
-            _buffer[_count++] = (byte)b;
+            _buffer[_length++] = (byte)b;
         }
 
         public override void Close()

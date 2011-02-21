@@ -1915,315 +1915,6 @@ SystemEx.StringBuilderEx.setLength = function SystemEx_StringBuilderEx$setLength
 }
 
 
-Type.registerNamespace('SystemEx.Interop.OpenGL');
-
-////////////////////////////////////////////////////////////////////////////////
-// SystemEx.Interop.OpenGL.WebGLES11RenderingContext
-
-SystemEx.Interop.OpenGL.WebGLES11RenderingContext = function SystemEx_Interop_OpenGL_WebGLES11RenderingContext() {
-    /// <field name="gleS11_MODELVIEW" type="Number" integer="true" static="true">
-    /// </field>
-    /// <field name="gleS11_PROJECTION" type="Number" integer="true" static="true">
-    /// </field>
-    /// <field name="gleS11_MATRIX_MODE" type="Number" integer="true" static="true">
-    /// </field>
-    /// <field name="_matrixMode$2" type="Number" integer="true">
-    /// </field>
-    /// <field name="_viewportX$2" type="Number" integer="true">
-    /// </field>
-    /// <field name="_viewportY$2" type="Number" integer="true">
-    /// </field>
-    /// <field name="_viewportW$2" type="Number" integer="true">
-    /// </field>
-    /// <field name="_viewportH$2" type="Number" integer="true">
-    /// </field>
-    /// <field name="_projectionMatrix$2" type="Array" elementType="Number">
-    /// </field>
-    /// <field name="_modelViewMatrix$2" type="Array" elementType="Number">
-    /// </field>
-    /// <field name="_textureMatrix$2" type="Array" elementType="Number">
-    /// </field>
-    /// <field name="_currentMatrix$2" type="Array" elementType="Number">
-    /// </field>
-    /// <field name="_projectionMatrixStack$2" type="Array">
-    /// </field>
-    /// <field name="_modelViewMatrixStack$2" type="Array">
-    /// </field>
-    /// <field name="_textureMatrixStack$2" type="Array">
-    /// </field>
-    /// <field name="_currentMatrixStack$2" type="Array">
-    /// </field>
-    /// <field name="_tmpMatrix$2" type="Array" elementType="Number">
-    /// </field>
-    /// <field name="_mvpMatrix$2" type="Array" elementType="Number">
-    /// </field>
-    /// <field name="_mvpDirty$2" type="Boolean">
-    /// </field>
-    this._matrixMode$2 = SystemEx.Interop.OpenGL.WebGLES11RenderingContext.gleS11_MODELVIEW;
-    this._projectionMatrix$2 = new Array(16);
-    this._modelViewMatrix$2 = new Array(16);
-    this._textureMatrix$2 = new Array(16);
-    this._projectionMatrixStack$2 = [];
-    this._modelViewMatrixStack$2 = [];
-    this._textureMatrixStack$2 = [];
-    this._tmpMatrix$2 = new Array(16);
-    this._mvpMatrix$2 = new Array(16);
-    SystemEx.Interop.OpenGL.WebGLES11RenderingContext.initializeBase(this);
-}
-SystemEx.Interop.OpenGL.WebGLES11RenderingContext.prototype = {
-    _viewportX$2: 0,
-    _viewportY$2: 0,
-    _viewportW$2: 0,
-    _viewportH$2: 0,
-    _currentMatrix$2: null,
-    _currentMatrixStack$2: null,
-    _mvpDirty$2: true,
-    
-    glLoadIdentity: function SystemEx_Interop_OpenGL_WebGLES11RenderingContext$glLoadIdentity() {
-        SystemEx.MathMatrix.setIdentityM(this._currentMatrix$2, 0);
-        this._mvpDirty$2 = true;
-    },
-    
-    glMatrixMode: function SystemEx_Interop_OpenGL_WebGLES11RenderingContext$glMatrixMode(mode) {
-        /// <param name="mode" type="Number" integer="true">
-        /// </param>
-        switch (mode) {
-            case SystemEx.Interop.OpenGL.WebGLES11RenderingContext.gleS11_MODELVIEW:
-                this._currentMatrix$2 = this._modelViewMatrix$2;
-                this._currentMatrixStack$2 = this._modelViewMatrixStack$2;
-                break;
-            case SystemEx.Interop.OpenGL.WebGLES11RenderingContext.gleS11_PROJECTION:
-                this._currentMatrix$2 = this._projectionMatrix$2;
-                this._currentMatrixStack$2 = this._projectionMatrixStack$2;
-                break;
-            case WebGL.TEXTURE:
-                this._currentMatrix$2 = this._textureMatrix$2;
-                this._currentMatrixStack$2 = this._textureMatrixStack$2;
-                break;
-            default:
-                throw new Error('ArgumentException: Unrecoginzed matrix mode: ' + mode);
-        }
-        this._matrixMode$2 = mode;
-    },
-    
-    glGetInteger: function SystemEx_Interop_OpenGL_WebGLES11RenderingContext$glGetInteger(what, s) {
-        /// <param name="what" type="Number" integer="true">
-        /// </param>
-        /// <param name="s" type="SystemEx.IO.Stream">
-        /// </param>
-        switch (what) {
-            case SystemEx.Interop.OpenGL.WebGLES11RenderingContext.gleS11_MATRIX_MODE:
-                SystemEx.IO.SE.writeUInt32(s, this._matrixMode$2);
-                break;
-            default:
-                throw new Error('ArgumentException:');
-        }
-    },
-    
-    glMultMatrixf: function SystemEx_Interop_OpenGL_WebGLES11RenderingContext$glMultMatrixf(matrix, ofs) {
-        /// <param name="matrix" type="Array" elementType="Number">
-        /// </param>
-        /// <param name="ofs" type="Number" integer="true">
-        /// </param>
-        SystemEx.MathMatrix.multiplyMM(this._tmpMatrix$2, 0, this._currentMatrix$2, 0, matrix, ofs);
-        SystemEx.JSArrayEx.copy(this._tmpMatrix$2, 0, this._currentMatrix$2, 0, 16);
-        this._mvpDirty$2 = true;
-    },
-    
-    glPushMatrix: function SystemEx_Interop_OpenGL_WebGLES11RenderingContext$glPushMatrix() {
-        var copy = new Array(16);
-        SystemEx.JSArrayEx.copy(this._currentMatrix$2, 0, copy, 0, 16);
-        this._currentMatrixStack$2.push(copy);
-    },
-    
-    glPopMatrix: function SystemEx_Interop_OpenGL_WebGLES11RenderingContext$glPopMatrix() {
-        var top = this._currentMatrixStack$2.pop();
-        SystemEx.JSArrayEx.copy(top, 0, this._currentMatrix$2, 0, 16);
-        this._mvpDirty$2 = true;
-    },
-    
-    glRotatef: function SystemEx_Interop_OpenGL_WebGLES11RenderingContext$glRotatef(angle, x, y, z) {
-        /// <param name="angle" type="Number">
-        /// </param>
-        /// <param name="x" type="Number">
-        /// </param>
-        /// <param name="y" type="Number">
-        /// </param>
-        /// <param name="z" type="Number">
-        /// </param>
-        if ((x !== 0) || (y !== 0) || (z !== 0)) {
-            SystemEx.MathMatrix.rotateM2(this._currentMatrix$2, 0, angle, x, y, z);
-        }
-        this._mvpDirty$2 = true;
-    },
-    
-    glScalef: function SystemEx_Interop_OpenGL_WebGLES11RenderingContext$glScalef(x, y, z) {
-        /// <param name="x" type="Number">
-        /// </param>
-        /// <param name="y" type="Number">
-        /// </param>
-        /// <param name="z" type="Number">
-        /// </param>
-        SystemEx.MathMatrix.scaleM2(this._currentMatrix$2, 0, x, y, z);
-        this._mvpDirty$2 = true;
-    },
-    
-    glTranslatef: function SystemEx_Interop_OpenGL_WebGLES11RenderingContext$glTranslatef(tx, ty, tz) {
-        /// <param name="tx" type="Number">
-        /// </param>
-        /// <param name="ty" type="Number">
-        /// </param>
-        /// <param name="tz" type="Number">
-        /// </param>
-        SystemEx.MathMatrix.translateM2(this._currentMatrix$2, 0, tx, ty, tz);
-        this._mvpDirty$2 = true;
-    },
-    
-    glViewport: function SystemEx_Interop_OpenGL_WebGLES11RenderingContext$glViewport(x, y, w, h) {
-        /// <param name="x" type="Number" integer="true">
-        /// </param>
-        /// <param name="y" type="Number" integer="true">
-        /// </param>
-        /// <param name="w" type="Number" integer="true">
-        /// </param>
-        /// <param name="h" type="Number" integer="true">
-        /// </param>
-        this._viewportX$2 = x;
-        this._viewportY$2 = y;
-        this._viewportW$2 = w;
-        this._viewportH$2 = h;
-    },
-    
-    glFrustum: function SystemEx_Interop_OpenGL_WebGLES11RenderingContext$glFrustum(left, right, bottom, top, znear, zfar) {
-        /// <param name="left" type="Number">
-        /// </param>
-        /// <param name="right" type="Number">
-        /// </param>
-        /// <param name="bottom" type="Number">
-        /// </param>
-        /// <param name="top" type="Number">
-        /// </param>
-        /// <param name="znear" type="Number">
-        /// </param>
-        /// <param name="zfar" type="Number">
-        /// </param>
-        var matrix = new Array(16);
-        var temp, temp2, temp3, temp4;
-        temp = 2 * znear;
-        temp2 = right - left;
-        temp3 = top - bottom;
-        temp4 = zfar - znear;
-        matrix[0] = (temp / temp2);
-        matrix[1] = 0;
-        matrix[2] = 0;
-        matrix[3] = 0;
-        matrix[4] = 0;
-        matrix[5] = (temp / temp3);
-        matrix[6] = 0;
-        matrix[7] = 0;
-        matrix[8] = ((right + left) / temp2);
-        matrix[9] = ((top + bottom) / temp3);
-        matrix[10] = ((-zfar - znear) / temp4);
-        matrix[11] = -1;
-        matrix[12] = 0;
-        matrix[13] = 0;
-        matrix[14] = ((-temp * zfar) / temp4);
-        matrix[15] = 0;
-        this.glMultMatrixf(matrix, 0);
-    },
-    
-    _updateMvpMatrix$2: function SystemEx_Interop_OpenGL_WebGLES11RenderingContext$_updateMvpMatrix$2() {
-        /// <returns type="Boolean"></returns>
-        if (!this._mvpDirty$2) {
-            return false;
-        }
-        SystemEx.MathMatrix.multiplyMM(this._mvpMatrix$2, 0, this._projectionMatrix$2, 0, this._modelViewMatrix$2, 0);
-        this._mvpDirty$2 = false;
-        return true;
-    },
-    
-    glOrtho: function SystemEx_Interop_OpenGL_WebGLES11RenderingContext$glOrtho(left, right, bottom, top, near, far) {
-        /// <param name="left" type="Number" integer="true">
-        /// </param>
-        /// <param name="right" type="Number" integer="true">
-        /// </param>
-        /// <param name="bottom" type="Number" integer="true">
-        /// </param>
-        /// <param name="top" type="Number" integer="true">
-        /// </param>
-        /// <param name="near" type="Number" integer="true">
-        /// </param>
-        /// <param name="far" type="Number" integer="true">
-        /// </param>
-        var l = left;
-        var r = right;
-        var b = bottom;
-        var n = near;
-        var f = far;
-        var t = top;
-        var matrix = [ 2 / (r - l), 0, 0, 0, 0, 2 / (t - b), 0, 0, 0, 0, -2 / f - n, 0, -(r + l) / (r - l), -(t + b) / (t - b), -(f + n) / (f - n), 1 ];
-        this.glMultMatrixf(matrix, 0);
-        this._mvpDirty$2 = true;
-    },
-    
-    project: function SystemEx_Interop_OpenGL_WebGLES11RenderingContext$project(objX, objY, objZ, view, win) {
-        /// <param name="objX" type="Number">
-        /// </param>
-        /// <param name="objY" type="Number">
-        /// </param>
-        /// <param name="objZ" type="Number">
-        /// </param>
-        /// <param name="view" type="Array" elementType="Number" elementInteger="true">
-        /// </param>
-        /// <param name="win" type="Array" elementType="Number">
-        /// </param>
-        /// <returns type="Boolean"></returns>
-        var v = [ objX, objY, objZ, 1 ];
-        var v2 = new Array(4);
-        SystemEx.MathMatrix.multiplyMV(v2, 0, this._mvpMatrix$2, 0, v, 0);
-        var w = v2[3];
-        if (w === 0) {
-            return false;
-        }
-        var rw = 1 / w;
-        win[0] = this._viewportX$2 + this._viewportW$2 * (v2[0] * rw + 1) * 0.5;
-        win[1] = this._viewportY$2 + this._viewportH$2 * (v2[1] * rw + 1) * 0.5;
-        win[2] = (v2[2] * rw + 1) * 0.5;
-        return true;
-    },
-    
-    glGetFloat: function SystemEx_Interop_OpenGL_WebGLES11RenderingContext$glGetFloat(name, s) {
-        /// <param name="name" type="Number" integer="true">
-        /// </param>
-        /// <param name="s" type="SystemEx.IO.Stream">
-        /// </param>
-        switch (name) {
-            case SystemEx.Interop.OpenGL.WebGLES11RenderingContext.gleS11_MODELVIEW:
-            case WebGL._MODELVIEW_MATRIX:
-                var p = s.get_position();
-                for (var index = 0; index < this._modelViewMatrix$2.length; index++) {
-                    SystemEx.IO.SE.writeSingle(s, this._modelViewMatrix$2[index]);
-                }
-                s.set_position(p);
-                break;
-            default:
-                throw new Error('ArgumentException: glGetFloat');
-        }
-    },
-    
-    glLoadMatrix: function SystemEx_Interop_OpenGL_WebGLES11RenderingContext$glLoadMatrix(s) {
-        /// <param name="s" type="SystemEx.IO.Stream">
-        /// </param>
-        var p = s.get_position();
-        for (var index = 0; index < this._currentMatrix$2.length; index++) {
-            this._currentMatrix$2[index] = SystemEx.IO.SE.readSingle(s);
-        }
-        s.set_position(p);
-        this._mvpDirty$2 = true;
-    }
-}
-
-
 Type.registerNamespace('SystemEx.Html');
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -5119,7 +4810,7 @@ SystemEx.IO.FileMode.registerEnum('SystemEx.IO.FileMode', false);
 SystemEx.IO.MemoryStream = function SystemEx_IO_MemoryStream(buffer) {
     /// <param name="buffer" type="Array" elementType="Number" elementInteger="true">
     /// </param>
-    /// <field name="_count$1" type="Number" integer="true">
+    /// <field name="_length$1" type="Number" integer="true">
     /// </field>
     /// <field name="_buffer$1" type="Array" elementType="Number" elementInteger="true">
     /// </field>
@@ -5135,7 +4826,7 @@ SystemEx.IO.MemoryStream.makeBuffer = function SystemEx_IO_MemoryStream$makeBuff
     return new Array((initialSize !== 0) ? initialSize : 16);
 }
 SystemEx.IO.MemoryStream.prototype = {
-    _count$1: 0,
+    _length$1: 0,
     _buffer$1: null,
     _position$1: 0,
     
@@ -5146,14 +4837,19 @@ SystemEx.IO.MemoryStream.prototype = {
     
     toArray: function SystemEx_IO_MemoryStream$toArray() {
         /// <returns type="Array" elementType="Number" elementInteger="true"></returns>
-        var result = new Array(this._count$1);
-        SystemEx.JSArrayEx.copy(this._buffer$1, 0, result, 0, this._count$1);
+        var result = new Array(this._length$1);
+        SystemEx.JSArrayEx.copy(this._buffer$1, 0, result, 0, this._length$1);
         return result;
     },
     
     get_length: function SystemEx_IO_MemoryStream$get_length() {
         /// <value type="Number" integer="true"></value>
-        return this._count$1;
+        return this._length$1;
+    },
+    set_length: function SystemEx_IO_MemoryStream$set_length(value) {
+        /// <value type="Number" integer="true"></value>
+        this._length$1 = value;
+        return value;
     },
     
     get_position: function SystemEx_IO_MemoryStream$get_position() {
@@ -5174,12 +4870,12 @@ SystemEx.IO.MemoryStream.prototype = {
     writeByte: function SystemEx_IO_MemoryStream$writeByte(b) {
         /// <param name="b" type="Number" integer="true">
         /// </param>
-        if (this._buffer$1.length === this._count$1) {
+        if (this._buffer$1.length === this._length$1) {
             var newBuf = new Array(this._buffer$1.length * 3 / 2);
-            SystemEx.JSArrayEx.copy(this._buffer$1, 0, newBuf, 0, this._count$1);
+            SystemEx.JSArrayEx.copy(this._buffer$1, 0, newBuf, 0, this._length$1);
             this._buffer$1 = newBuf;
         }
-        this._buffer$1[this._count$1++] = b;
+        this._buffer$1[this._length$1++] = b;
     },
     
     close: function SystemEx_IO_MemoryStream$close() {
@@ -6483,7 +6179,6 @@ SystemEx.JSString.registerClass('SystemEx.JSString');
 SystemEx.JSArrayEx.registerClass('SystemEx.JSArrayEx');
 SystemEx.JSConvert.registerClass('SystemEx.JSConvert');
 SystemEx.StringBuilderEx.registerClass('SystemEx.StringBuilderEx');
-SystemEx.Interop.OpenGL.WebGLES11RenderingContext.registerClass('SystemEx.Interop.OpenGL.WebGLES11RenderingContext', WebGLRenderingContext);
 SystemEx.Html.CloseEventArgs.registerClass('SystemEx.Html.CloseEventArgs');
 SystemEx.Html.MessageEventArgs.registerClass('SystemEx.Html.MessageEventArgs');
 SystemEx.Html.WebSocket.registerClass('SystemEx.Html.WebSocket');
@@ -6533,9 +6228,6 @@ SystemEx.JSConvert._wfa = new Float32Array(SystemEx.JSConvert._wba.buffer, 0, 1)
     ss.StringBuilder.prototype.clear = function(s) { this.length = 0; return this.baseClear(); }
     ss.StringBuilder.prototype.length = 0;
 })();
-SystemEx.Interop.OpenGL.WebGLES11RenderingContext.gleS11_MODELVIEW = 5888;
-SystemEx.Interop.OpenGL.WebGLES11RenderingContext.gleS11_PROJECTION = 5889;
-SystemEx.Interop.OpenGL.WebGLES11RenderingContext.gleS11_MATRIX_MODE = 2976;
 SystemEx.Html.WebSocket.CONNECTING = 0;
 SystemEx.Html.WebSocket.OPEN = 1;
 SystemEx.Html.WebSocket.CLOSING = 2;

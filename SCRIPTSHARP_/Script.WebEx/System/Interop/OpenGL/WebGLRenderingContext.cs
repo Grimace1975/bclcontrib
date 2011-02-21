@@ -42,7 +42,7 @@ namespace System.Interop.OpenGL
 
         public virtual void ActiveTexture(uint texture) { }
         public virtual void AttachShader(WebGLProgram program, WebGLShader shader) { }
-        public virtual void BindAttribLocation(WebGLProgram program, int index, string name) { }
+        public virtual void BindAttribLocation(WebGLProgram program, uint index, string name) { }
         public virtual void BindBuffer(uint target, WebGLBuffer buffer) { }
         public virtual void BindFramebuffer(uint target, WebGLFramebuffer framebuffer) { }
         public virtual void BindRenderbuffer(uint target, WebGLRenderbuffer renderbuffer) { }
@@ -53,8 +53,8 @@ namespace System.Interop.OpenGL
         public virtual void BlendFunc(uint sfactor, uint dfactor) { }
         public virtual void BlendFuncSeparate(uint srcRGB, uint dstRGB, uint srcAlpha, uint dstAlpha) { }
 
-        public virtual void BufferData(uint target, int size, int usage) { }
-        public virtual void BufferData(uint target, ArrayBufferView data, int usage) { }
+        public virtual void BufferData(uint target, int size, uint usage) { }
+        public virtual void BufferData(uint target, ArrayBufferView data, uint usage) { }
         public virtual void BufferSubData(uint target, long offset, ArrayBufferView data) { }
 #if CODE_ANALYSIS
         public void BufferData(uint target, ArrayBuffer data, int usage) { }
@@ -94,7 +94,7 @@ namespace System.Interop.OpenGL
         public virtual void DetachShader(WebGLProgram program, WebGLShader shader) { }
         public virtual void Disable(uint cap) { }
         public virtual void DisableVertexAttribArray(uint index) { }
-        public virtual void DrawArrays(uint mode, uint first, int count) { }
+        public virtual void DrawArrays(uint mode, int first, int count) { }
         public virtual void DrawElements(uint mode, int count, uint type, long offset) { }
 
         public virtual void Enable(uint cap) { }
@@ -147,7 +147,7 @@ namespace System.Interop.OpenGL
         public virtual bool IsTexture(WebGLTexture texture) { return false; }
         public virtual void LineWidth(float width) { }
         public virtual void LinkProgram(WebGLProgram program) { }
-        public virtual void PixelStorei(uint pname, uint param) { }
+        public virtual void PixelStorei(uint pname, int param) { }
         public virtual void PolygonOffset(float factor, float units) { }
 
         public virtual void ReadPixels(int x, int y, int width, int height, uint format, uint type, ArrayBufferView pixels) { }
@@ -180,10 +180,10 @@ namespace System.Interop.OpenGL
         public virtual void TexSubImage2D(uint target, int level, int xoffset, int yoffset, int width, int height, uint format, uint type, ArrayBufferView pixels) { }
 #if CODE_ANALYSIS
         public void TexSubImage2D(uint target, int level, int xoffset, int yoffset, uint format, uint type, ImageData pixels) { }
-        public void TexSubImage2D(int target, int level, int xoffset, int yoffset, uint format, uint type, ImageElement image) { }
-        public void TexSubImage2D(int target, int level, int xoffset, int yoffset, uint format, uint type, CanvasElement canvas) { }
-        public void TexSubImage2D(int target, int level, int xoffset, int yoffset, uint format, uint type, CanvasElementEx canvas) { }
-        public void TexSubImage2D(int target, int level, int xoffset, int yoffset, uint format, uint type, VideoElement video) { }
+        public void TexSubImage2D(uint target, int level, int xoffset, int yoffset, uint format, uint type, ImageElement image) { }
+        public void TexSubImage2D(uint target, int level, int xoffset, int yoffset, uint format, uint type, CanvasElement canvas) { }
+        public void TexSubImage2D(uint target, int level, int xoffset, int yoffset, uint format, uint type, CanvasElementEx canvas) { }
+        public void TexSubImage2D(uint target, int level, int xoffset, int yoffset, uint format, uint type, VideoElement video) { }
 #endif
 
         public virtual void Uniform1f(WebGLUniformLocation location, float x) { }

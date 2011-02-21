@@ -51,9 +51,6 @@
     <Compile Include="SystemEx\ByteBuilder+ReadWrite.cs" />
     <Compile Include="SystemEx\ByteBuilder.cs" />
     <Compile Include="SystemEx\IAsyncAssetLoader.cs" />
-    <Compile Include="SystemEx\Interop\OpenGL\WebGLES11BufferData.cs" />
-    <Compile Include="SystemEx\Interop\OpenGL\WebGLES11RenderingContext2.cs" />
-    <Compile Include="SystemEx\Interop\OpenGL\WebGLES11RenderingContext.cs" />
     <Compile Include="SystemEx\JSSystem.cs" />
     <Compile Include="SystemEx\JSString.cs" />
     <Compile Include="SystemEx\ErrorHandler.cs" />
@@ -79,7 +76,6 @@
     <Compile Include="SystemEx\Timer.cs" />
     <Compile Include="System\Html\Media\Graphics\CanvasContext2DEx.cs" />
     <Compile Include="System\Html\Media\Graphics\CanvasContextEx.cs" />
-    <Compile Include="System\Interop\OpenGL\GLES11.cs" />
     <Compile Include="System\Interop\OpenGL\GLES20.cs" />
     <Compile Include="System\JSAsyncCallback.cs" />
     <Compile Include="System\Html\CanvasElementEx.cs" />
