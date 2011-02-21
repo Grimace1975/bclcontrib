@@ -5,7 +5,7 @@ namespace System.Interop.OpenGL
 #if CODE_ANALYSIS
     [IgnoreNamespace, Imported]
 #endif
-    public class GLES20
+    public abstract class GLES20
     {
         /* ClearBufferMask */
         public const uint DEPTH_BUFFER_BIT = 0x00000100;

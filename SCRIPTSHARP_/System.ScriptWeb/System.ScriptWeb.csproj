@@ -68,9 +68,6 @@
     <Compile Include="..\Script.WebEx\SystemEx\Interop\CSyntax\PrintfHelper.cs">
       <Link>System\Interop\CSyntax\PrintfHelper.cs</Link>
     </Compile>
-    <Compile Include="..\Script.WebEx\SystemEx\Interop\OpenGL\WebGLES11RenderingContext.cs">
-      <Link>System\Interop\OpenGL\WebGLES11RenderingContext.cs</Link>
-    </Compile>
     <Compile Include="..\Script.WebEx\SystemEx\IO\SE.cs">
       <Link>IO\SE.cs</Link>
     </Compile>
@@ -98,8 +95,8 @@
     <Compile Include="..\Script.WebEx\SystemEx\Text\PackText.cs">
       <Link>System\Text\PackText.cs</Link>
     </Compile>
-    <Compile Include="..\Script.WebEx\System\Interop\OpenGL\WebGL.cs">
-      <Link>System\Interop\OpenGL\WebGL.cs</Link>
+    <Compile Include="..\Script.WebEx\System\Interop\OpenGL\GLES20.cs">
+      <Link>System\Interop\OpenGL\GLES20.cs</Link>
     </Compile>
     <Compile Include="..\Script.WebEx\System\Interop\OpenGL\WebGLActiveInfo.cs">
       <Link>System\Interop\OpenGL\WebGLActiveInfo.cs</Link>
