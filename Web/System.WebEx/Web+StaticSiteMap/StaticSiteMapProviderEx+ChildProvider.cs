@@ -65,24 +65,16 @@ namespace System.Web
         }
 
         public void AddProvider(string providerName, SiteMapNode parentNode) { AddProvider(providerName, parentNode, null); }
-        public void AddProvider(string providerName, SiteMapNode parentNode, string rebaseUrl)
+        public void AddProvider(string providerName, SiteMapNode parentNode, Action<SiteMapNode> rebaseAction)
         {
             if (parentNode == null)
                 throw new ArgumentNullException("parentNode");
             if (parentNode.Provider != this)
                 throw new ArgumentException(string.Format("StaticSiteMapProviderEx_cannot_add_node", parentNode.ToString()), "parentNode");
             var nodeFromProvider = GetNodeFromProvider(providerName);
-            if (!string.IsNullOrEmpty(rebaseUrl))
-                RebaseNodesRecurse(nodeFromProvider, rebaseUrl);
+            if (rebaseAction != null)
+                rebaseAction(nodeFromProvider);
             AddNode(nodeFromProvider, parentNode);
-        }
-
-        private void RebaseNodesRecurse(SiteMapNode node, string rebaseUrl)
-        {
-            node.Url = rebaseUrl + node.Url;
-            if (node.HasChildNodes)
-                foreach (SiteMapNode childNode in node.ChildNodes)
-                    RebaseNodesRecurse(childNode, rebaseUrl);
         }
 
         private SiteMapNode GetNodeFromProvider(string providerName)

@@ -137,9 +137,10 @@ namespace Digital.ContentManagement
                                 var virtualNodes = new List<KeyValuePair<SiteMapVirtualNode, string>>();
                                 while (r.Read())
                                 {
-                                    var node = CreateSiteMapNodeFromDataReader(nodes, virtualNodes, pageOrdinal, r, ref hiddenRootTreeId);
+                                    var parentNode = GetParentNodeFromDataReader(nodes, _rootNode, pageOrdinal, r, false);
+                                    var node = CreateSiteMapNodeFromDataReader(parentNode, nodes, virtualNodes, pageOrdinal, r, ref hiddenRootTreeId);
                                     if (node != null)
-                                        observer.OnNext(new StaticSiteMapProviderEx.NodeToAdd { Node = node, ParentNode = GetParentNodeFromDataReader(nodes, _rootNode, pageOrdinal, r, false) });
+                                        observer.OnNext(new StaticSiteMapProviderEx.NodeToAdd { Node = node, ParentNode = parentNode });
                                 }
                                 if (virtualNodes.Count > 0)
                                     LinkVirtualNodes(nodes, virtualNodes);
@@ -183,7 +184,7 @@ namespace Digital.ContentManagement
                 return (string.IsNullOrEmpty(attribAsText) ? null : s_xmlTextPack.PackDecode(attribAsText));
             }
 
-            protected virtual SiteMapNode CreateSiteMapNodeFromDataReader(Dictionary<string, SiteMapNodeEx> nodes, List<KeyValuePair<SiteMapVirtualNode, string>> virtualNodes, PageOrdinal ordinal, IDataReader r, ref string hiddenRootTreeId)
+            protected virtual SiteMapNode CreateSiteMapNodeFromDataReader(SiteMapNode parentNode, Dictionary<string, SiteMapNodeEx> nodes, List<KeyValuePair<SiteMapVirtualNode, string>> virtualNodes, PageOrdinal ordinal, IDataReader r, ref string hiddenRootTreeId)
             {
                 if (r.IsDBNull(ordinal.TreeId))
                     throw new ProviderException("Missing node ID");
@@ -223,7 +224,11 @@ namespace Digital.ContentManagement
                 switch (type)
                 {
                     case "X-AddProvider":
-                        _provider.AddProvider(name, _provider.RootNode, "/" + id);
+                        _provider.AddProvider(virtualize, parentNode, x =>
+                        {
+                            x.Title = name;
+                            SiteMapNodeEx.RebaseNodesRecurse(x, "/" + id);
+                        });
                         return null;
                     case "X-Section":
                         node = virtualNode = new SiteMapSectionNode(_provider, uid, "/" + id, name);
