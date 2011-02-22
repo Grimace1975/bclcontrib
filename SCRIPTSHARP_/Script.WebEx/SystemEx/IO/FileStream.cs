@@ -60,7 +60,7 @@ namespace SystemEx.IO
             _position = (int)position;
         }
 
-        public long Length
+        public override long Length
         {
             get { return _length; }
             set

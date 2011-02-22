@@ -1,4 +1,5 @@
-﻿#if !CODE_ANALYSIS
+﻿//[Khronos]http://www.khronos.org/opengles/1_X/
+#if !CODE_ANALYSIS
 using System.IO;
 using System.Collections;
 namespace System.Interop.OpenGL
@@ -6,16 +7,29 @@ namespace System.Interop.OpenGL
 using System;
 using SystemEx.IO;
 using System.Collections;
+using System.Interop.OpenGL;
 namespace SystemEx.Interop.OpenGL
 #endif
 {
-    public partial class WebGLES11RenderingContext : System.Interop.OpenGL.WebGLRenderingContext
+    public partial class WebGLES11RenderingContext : WebGLRenderingContext
     {
-        public const int GLES11_MODELVIEW = 0x1700;
-        public const int GLES11_PROJECTION = 0x1701;
-        public const int GLES11_MATRIX_MODE = 0x0BA0;
+        //public const uint GLES11_ARRAY_TEXCOORD_1 = 3;
+        //public const uint GLES11_ARRAY_TEXCOORD_0 = 2;
+        //public const uint GLES11_ARRAY_COLOR = 1;
+        //public const uint GLES11_ARRAY_POSITION = 0;
+
         //
-        private uint _matrixMode = GLES11_MODELVIEW;
+        //public const uint GLES11_MODELVIEW = 0x1700;
+        //public const uint GLES11_PROJECTION = 0x1701;
+        public const uint _MATRIX_MODE = 0x0BA0;
+        /* WebGL-transition enums */
+        public const uint _QUADS = 0x0007;
+        public const uint _POLYGON = TRIANGLE_FAN;
+        public const uint _MODELVIEW_MATRIX = 2982;
+        public const uint _SIMPLE_TEXUTRED_QUAD = 0xFFFFFFFF;
+
+        //
+        private uint _matrixMode = GLES11.MODELVIEW;
         private int _viewportX;
         private int _viewportY;
         private int _viewportW;
@@ -31,6 +45,17 @@ namespace SystemEx.Interop.OpenGL
         private float[] _tmpMatrix = new float[16];
         private float[] _mvpMatrix = new float[16];
         private bool _mvpDirty = true;
+        private int _width;
+        private int _height;
+
+        public WebGLES11RenderingContext(int width, int height)
+        {
+            MathMatrix.SetIdentityM(_modelViewMatrix, 0);
+            MathMatrix.SetIdentityM(_projectionMatrix, 0);
+            MathMatrix.SetIdentityM(_textureMatrix, 0);
+            _width = width;
+            _height = height;
+        }
 
         public void glLoadIdentity()
         {
@@ -42,11 +67,11 @@ namespace SystemEx.Interop.OpenGL
         {
             switch (mode)
             {
-                case GLES11_MODELVIEW:
+                case GLES11.MODELVIEW:
                     _currentMatrix = _modelViewMatrix;
                     _currentMatrixStack = _modelViewMatrixStack;
                     break;
-                case GLES11_PROJECTION:
+                case GLES11.PROJECTION:
                     _currentMatrix = _projectionMatrix;
                     _currentMatrixStack = _projectionMatrixStack;
                     break;
@@ -64,7 +89,7 @@ namespace SystemEx.Interop.OpenGL
         {
             switch (what)
             {
-                case GLES11_MATRIX_MODE:
+                case _MATRIX_MODE:
                     SE.WriteUInt32(s, _matrixMode);
                     break;
                 default:
@@ -178,7 +203,7 @@ namespace SystemEx.Interop.OpenGL
             _mvpDirty = true;
         }
 
-        public bool project(float objX, float objY, float objZ, int[] view, float[] win)
+        public bool glProject(float objX, float objY, float objZ, int[] view, float[] win)
         {
             float[] v = { objX, objY, objZ, 1f };
             float[] v2 = new float[4];
@@ -197,7 +222,7 @@ namespace SystemEx.Interop.OpenGL
         {
             switch (name)
             {
-                case GLES11_MODELVIEW:
+                case GLES11.MODELVIEW:
                 case _MODELVIEW_MATRIX:
                     long p = s.Position;
                     for (int index = 0; index < _modelViewMatrix.Length; index++)
@@ -218,8 +243,7 @@ namespace SystemEx.Interop.OpenGL
             _mvpDirty = true;
         }
 
-        //public int Width;
-        //public int Height;
+
         //public DisplayMode getDisplayMode()
         //{
         //    return new DisplayMode(Width, Height, 24, 60);
