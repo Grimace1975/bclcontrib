@@ -128,7 +128,7 @@ namespace Digital.ContentManagement
                                 // create the root SiteMapNode and add it to the site map
                                 string rootName = r.Field<string>(rootOrdinal.Name, "Home");
                                 string rootUri = "/" + r.Field<string>(rootOrdinal.Uri, "Index.htm");
-                                _rootNode = new SiteMapRootNode(_provider, string.Empty, rootUri, rootName);
+                                _rootNode = new SiteMapRootNode(_provider, "#" + _provider.Name, rootUri, rootName);
                                 observer.OnNext(new StaticSiteMapProviderEx.NodeToAdd { Node = _rootNode });
                                 // build a tree of SiteMapNodes underneath the root node
                                 r.NextResult();
@@ -138,7 +138,8 @@ namespace Digital.ContentManagement
                                 while (r.Read())
                                 {
                                     var node = CreateSiteMapNodeFromDataReader(nodes, virtualNodes, pageOrdinal, r, ref hiddenRootTreeId);
-                                    observer.OnNext(new StaticSiteMapProviderEx.NodeToAdd { Node = node, ParentNode = GetParentNodeFromDataReader(nodes, _rootNode, pageOrdinal, r, false) });
+                                    if (node != null)
+                                        observer.OnNext(new StaticSiteMapProviderEx.NodeToAdd { Node = node, ParentNode = GetParentNodeFromDataReader(nodes, _rootNode, pageOrdinal, r, false) });
                                 }
                                 if (virtualNodes.Count > 0)
                                     LinkVirtualNodes(nodes, virtualNodes);
@@ -221,6 +222,9 @@ namespace Digital.ContentManagement
                 SiteMapVirtualNode virtualNode;
                 switch (type)
                 {
+                    case "X-AddProvider":
+                        _provider.AddProvider(name, _provider.RootNode, "/" + id);
+                        return null;
                     case "X-Section":
                         node = virtualNode = new SiteMapSectionNode(_provider, uid, "/" + id, name);
                         SetRouteInNode(_routeCreator.CreateRoutes(node, id, virtualize), node);
