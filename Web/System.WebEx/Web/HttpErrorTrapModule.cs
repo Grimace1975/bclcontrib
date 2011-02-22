@@ -66,18 +66,11 @@ namespace System.Web
                 // WARNING: "~/web.config" fails/questionable if in a sub-application, because trys to map to the root web.config (should be parameter)
                 var configuration = WebConfigurationManager.OpenWebConfiguration("~/web.config");
                 var customErrorsSection = (CustomErrorsSection)configuration.GetSection("system.web/customErrors");
-                var customErrors = customErrorsSection.Errors;
-                var customError = customErrors[statusId.ToString()];
+                var customError = customErrorsSection.Errors[statusId.ToString()];
                 // find redirect
                 string redirect = (customError == null ? customErrorsSection.DefaultRedirect : customError.Redirect);
                 // find httpHandlerType
-                Type httpHandlerType;
-                var customErrorsSectionSyn = new CustomErrorsSectionSyn(customErrorsSection);
-                var customErrorSyn = new CustomErrorSyn(customError);
-                httpHandlerType = (customErrorsSectionSyn.DefaultUrlRoutingType == null ? (Type)null : customErrorsSectionSyn.DefaultUrlRoutingType);
-                if ((customErrors != null) && (customErrorSyn.UrlRoutingType != null))
-                    httpHandlerType = customErrorSyn.UrlRoutingType;
-                var handlerBuilder = (httpHandlerType == null ? (Func<IHttpHandler>)null : () => (IHttpHandler)Activator.CreateInstance(httpHandlerType));
+                var handlerBuilder = FindHttpHandler(customErrorsSection, statusId.ToString());
                 // clears existing response headers and sets the desired ones.
                 httpContext.ClearError();
                 var httpResponse = httpContext.Response;
@@ -92,6 +85,21 @@ namespace System.Web
                     httpResponse.Flush();
             }
             application.CompleteRequest();
+        }
+
+        private static Func<IHttpHandler> FindHttpHandler(CustomErrorsSection customErrorsSection, string customErrorId)
+        {
+            var customErrorsSectionSyn = new CustomErrorsSectionSyn(customErrorsSection);
+            var customErrorSyn = new CustomErrorSyn(customErrorsSection.Errors[customErrorId]);
+            Type httpHandlerType = null;
+            try
+            {
+                httpHandlerType = customErrorsSectionSyn.DefaultUrlRoutingType;
+                if (customErrorSyn.UrlRoutingType != null)
+                    httpHandlerType = customErrorSyn.UrlRoutingType;
+            }
+            catch { }
+            return (httpHandlerType == null ? (Func<IHttpHandler>)null : () => (IHttpHandler)Activator.CreateInstance(httpHandlerType));
         }
 
         /// <summary>
