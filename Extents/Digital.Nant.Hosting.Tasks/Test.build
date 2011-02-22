@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<project name="Test">
+  <target name="build">
+    <!--<manageAccount stage="Develop" applicationId="TEST" />-->
+    <!--<manageIis stage="Develop" applicationId="NEW" remove="false">
+      <binding information="*:80:" protocol="http" />
+    </manageIis>-->
+    <manageApplicationPackage deploymentEnvironment="Develop" applicationId="TYRONE" remove="true">
+      <binding information="*:80:" protocol="http" />
+    </manageApplicationPackage>
+  </target>
+</project>

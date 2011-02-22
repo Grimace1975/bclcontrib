@@ -1,0 +1,133 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{A44E9D89-BFF2-41A4-AADC-3C2BDFDAEEB1}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>System</RootNamespace>
+    <AssemblyName>System.Core.Quality</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>BclContrib.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\System.CoreEx_\System.Core.Extentions\Linq\Expressions\ExpressionEx.cs">
+      <Link>+FromCoreEx\Linq\Expressions\ExpressionEx.cs</Link>
+    </Compile>
+    <Compile Include="..\..\System.CoreEx_\System.Core.Reflection\Reflection\AssemblyExtensions.cs">
+      <Link>+FromCoreEx\Reflection\AssemblyExtensions.cs</Link>
+    </Compile>
+    <Compile Include="Quality+Cqrs\Cqrs\ICommand.cs" />
+    <Compile Include="Quality+EventSourcing\EventSourcing+Impl\MemoryAggregateRootSnapshotStore.cs" />
+    <Compile Include="Quality+EventSourcing\EventSourcing+Impl\MemoryEventStore.cs" />
+    <Compile Include="Quality+EventSourcing\EventSourcing\AggregateRoot.cs" />
+    <Compile Include="Quality+EventSourcing\EventSourcing\AggregateRootQueryOptions.cs" />
+    <Compile Include="Quality+EventSourcing\EventSourcing\AggregateRootOptions.cs" />
+    <Compile Include="Quality+EventSourcing\EventSourcing\AggregateTuple.cs" />
+    <Compile Include="Quality+EventSourcing\EventSourcing\AggregateRootOfflineSnapshotService.cs" />
+    <Compile Include="Quality+EventSourcing\EventSourcing\AggregateTuple2.cs" />
+    <Compile Include="Quality+EventSourcing\EventSourcing\IOfflineSnaphotQuery.cs" />
+    <Compile Include="Quality+EventSourcing\EventSourcing\Event2.cs" />
+    <Compile Include="Quality+EventSourcing\EventSourcing+Impl\RegistryEventDispatcher.cs" />
+    <Compile Include="Quality+EventSourcing\EventSourcing\IAggregateRootEventDispatcher.cs" />
+    <Compile Include="Quality+EventSourcing\EventSourcing\IBatchedAggregateRootSnapshotStore.cs" />
+    <Compile Include="Quality+EventSourcing\EventSourcing\IBatchedEventStore.cs" />
+    <Compile Include="Quality+EventSourcing\EventSourcing\ICanAggregateRootSnapshot.cs" />
+    <Compile Include="Quality+EventSourcing\EventSourcing\AggregateRootSnapshot.cs" />
+    <Compile Include="Quality+EventSourcing\EventSourcing\AggregateRootRepository.cs" />
+    <Compile Include="Quality+EventSourcing\EventSourcing\IAggregateRootSnapshotStore.cs" />
+    <Compile Include="Quality+EventSourcing\EventSourcing\Event.cs" />
+    <Compile Include="Quality+EventSourcing\EventSourcing\IEventStore.cs" />
+    <Compile Include="Quality+EventSourcing\EventSourcing\IAccessAggregateRootState.cs" />
+    <Compile Include="Quality+ServiceBus\ServiceBusExtensions.cs" />
+    <Compile Include="Quality+ServiceBus\IServiceBus.cs" />
+    <Compile Include="Quality+ServiceBus\IServiceMessageHandler.cs" />
+    <Compile Include="Quality+ServiceBus\IServiceMessageHandlerFactory.cs" />
+    <Compile Include="Quality+ServiceBus\ServiceBusManager.cs" />
+    <Compile Include="Quality+ServiceBus\IServiceBusCallback.cs" />
+    <Compile Include="Quality+ServiceBus\IServiceMessage.cs" />
+    <Compile Include="Quality+ServiceBus\IPublishingServiceBus.cs" />
+    <Compile Include="Quality+ServiceBus\ServiceBus.cs" />
+    <Compile Include="Quality+ServiceBus\ServiceBusException.cs" />
+    <Compile Include="Quality+ServiceLocator\IServiceRegistrationByNameConvention.cs" />
+    <Compile Include="Quality+ServiceLocator\IWantToSkipServiceLocator.cs" />
+    <Compile Include="Local.Designer.cs">
+      <DependentUpon>Local.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Quality+TypeMocker\ITypeMockerWill.cs" />
+    <Compile Include="Quality+TypeMocker\ITypeMocker.cs" />
+    <Compile Include="Quality+TypeMocker\TypeMocker.cs" />
+    <Compile Include="Quality+TypeMocker\TypeMockManager.cs" />
+    <Compile Include="Quality+ServiceLocator\ServiceDependencyAttribute.cs" />
+    <Compile Include="Quality+ServiceLocator\IServiceLocator.cs" />
+    <Compile Include="Quality+ServiceLocator\IServiceRegistrar.cs" />
+    <Compile Include="Quality+ServiceLocator\ServiceLocator.cs" />
+    <Compile Include="Quality+ServiceLocator\ServiceLocatorExtensions.cs" />
+    <Compile Include="Quality+ServiceLocator\ServiceLocatorManager.cs" />
+    <Compile Include="Quality+ServiceLocator\ServiceResolutionException.cs" />
+    <Compile Include="Quality+ServiceLocator\Reference_\zResolveLifetime.cs" />
+    <Compile Include="Quality+ServiceLocator\IServiceRegistration.cs" />
+    <Compile Include="Quality\AssemblyTypeCatalog.cs" />
+    <Compile Include="Quality\ISerializerExtensions.cs" />
+    <Compile Include="Quality\ISerializer.cs" />
+    <Compile Include="Quality\TypeCatalogExtensions.cs" />
+    <Compile Include="Quality\ITypeCatalog.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Local.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Local.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="BclContrib.snk" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
