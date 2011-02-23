@@ -57,7 +57,7 @@ namespace System.Web
             var httpContext = application.Context;
             // log error
             LogException(exception, httpContext);
-            //+ server transfer httpexception
+            // server transfer httpexception
             var httpException = (exception as HttpException);
             if (httpException != null)
             {
@@ -139,10 +139,7 @@ namespace System.Web
                 else
                     Logger.LogEvent(Logger.LogEventType.Fatal, "HttpErrorTrapModule", errorText);
             }
-            catch (Exception localException)
-            {
-                Trace.WriteLine(localException);
-            }
+            catch (Exception localException) { Trace.WriteLine(localException); }
         }
     }
 }

@@ -126,14 +126,6 @@ namespace System.Web
             }
         }
 
-        public static void RebaseNodesRecurse(SiteMapNode node, string rebaseUrl)
-        {
-            node.Url = rebaseUrl + node.Url;
-            if (node.HasChildNodes)
-                foreach (SiteMapNode childNode in node.ChildNodes)
-                    RebaseNodesRecurse(childNode, rebaseUrl);
-        }
-
         #region EmptySiteMapProvider
         private class EmptySiteMapProvider : SiteMapProvider
         {

@@ -105,6 +105,41 @@ namespace Digital.ContentManagement
                 return _rootNode;
             }
 
+            protected struct VirtualNode
+            {
+                private SiteMapVirtualNode _node;
+                private string _treeId;
+                public VirtualNode(SiteMapVirtualNode node, string treeId) { _node = node; _treeId = treeId; }
+                public SiteMapVirtualNode Node
+                {
+                    get { return _node; }
+                }
+                public string TreeId
+                {
+                    get { return _treeId; }
+                }
+            }
+
+            protected struct AddProviderNode
+            {
+                private string _providerName;
+                private SiteMapNode _parentNode;
+                private Action<SiteMapNode> _rebaseAction;
+                public AddProviderNode(string providerName, SiteMapNode parentNode, Action<SiteMapNode> rebaseAction) { _providerName = providerName; _parentNode = parentNode; _rebaseAction = rebaseAction; }
+                public string ProviderName
+                {
+                    get { return _providerName; }
+                }
+                public SiteMapNode ParentNode
+                {
+                    get { return _parentNode; }
+                }
+                public Action<SiteMapNode> RebaseAction
+                {
+                    get { return _rebaseAction; }
+                }
+            }
+
             public override IDisposable Subscribe(IObserver<StaticSiteMapProviderEx.NodeToAdd> observer)
             {
                 if (observer == null)
@@ -117,6 +152,8 @@ namespace Digital.ContentManagement
                     try
                     {
                         IDbCommand command;
+                        List<VirtualNode> virtualNodes;
+                        List<AddProviderNode> addProviderNodes;
                         using (var connection = Open(_connect, out command))
                         {
                             connection.Open();
@@ -134,37 +171,46 @@ namespace Digital.ContentManagement
                                 r.NextResult();
                                 var pageOrdinal = CreatePageOrdinal(r);
                                 string hiddenRootTreeId = null;
-                                var virtualNodes = new List<KeyValuePair<SiteMapVirtualNode, string>>();
+                                virtualNodes = new List<VirtualNode>();
+                                addProviderNodes = new List<AddProviderNode>();
                                 while (r.Read())
                                 {
                                     var parentNode = GetParentNodeFromDataReader(nodes, _rootNode, pageOrdinal, r, false);
-                                    var node = CreateSiteMapNodeFromDataReader(parentNode, nodes, virtualNodes, pageOrdinal, r, ref hiddenRootTreeId);
+                                    var node = CreateSiteMapNodeFromDataReader(parentNode, nodes, virtualNodes, addProviderNodes, pageOrdinal, r, ref hiddenRootTreeId);
                                     if (node != null)
                                         observer.OnNext(new StaticSiteMapProviderEx.NodeToAdd { Node = node, ParentNode = parentNode });
                                 }
-                                if (virtualNodes.Count > 0)
-                                    LinkVirtualNodes(nodes, virtualNodes);
                             }
-                            observer.OnCompleted();
-                            return null;
                         }
+                        if (virtualNodes.Count > 0)
+                            LinkVirtualNodes(nodes, virtualNodes);
+                        if (addProviderNodes.Count > 0)
+                            LinkAddProviderNodes(_provider, addProviderNodes);
+                        observer.OnCompleted();
+                        return null;
                     }
                     catch (Exception ex) { observer.OnError(ex); return null; }
                 }
             }
 
-            private static void LinkVirtualNodes(Dictionary<string, SiteMapNodeEx> nodes, List<KeyValuePair<SiteMapVirtualNode, string>> virtualNodes)
+            private static void LinkVirtualNodes(Dictionary<string, SiteMapNodeEx> nodes, List<VirtualNode> virtualNodes)
             {
                 SiteMapNodeEx node;
-                foreach (var virtualNode in virtualNodes.Where(x => x.Value != null))
-                    if (nodes.TryGetValue(virtualNode.Value, out node))
+                foreach (var virtualNode in virtualNodes.Where(x => x.TreeId != null))
+                    if (nodes.TryGetValue(virtualNode.TreeId, out node))
                     {
-                        var key = virtualNode.Key;
+                        var key = virtualNode.Node;
                         var nodeExtent = node.Get<SiteMapNodePartialProviderExtent>();
                         if (nodeExtent != null)
                             key.Set<SiteMapNodePartialProviderExtent>(nodeExtent);
                         key.Actual = node;
                     }
+            }
+
+            private static void LinkAddProviderNodes(StaticSiteMapProviderEx provider, List<AddProviderNode> addProviderNodes)
+            {
+                foreach (var addProviderNode in addProviderNodes)
+                    provider.AddProvider(addProviderNode.ProviderName, addProviderNode.ParentNode, addProviderNode.RebaseAction);
             }
 
             protected virtual IDbConnection Open(string connect, out IDbCommand command)
@@ -184,7 +230,7 @@ namespace Digital.ContentManagement
                 return (string.IsNullOrEmpty(attribAsText) ? null : s_xmlTextPack.PackDecode(attribAsText));
             }
 
-            protected virtual SiteMapNode CreateSiteMapNodeFromDataReader(SiteMapNode parentNode, Dictionary<string, SiteMapNodeEx> nodes, List<KeyValuePair<SiteMapVirtualNode, string>> virtualNodes, PageOrdinal ordinal, IDataReader r, ref string hiddenRootTreeId)
+            protected virtual SiteMapNode CreateSiteMapNodeFromDataReader(SiteMapNode parentNode, Dictionary<string, SiteMapNodeEx> nodes, List<VirtualNode> virtualNodes, List<AddProviderNode> addProviderNodes, PageOrdinal ordinal, IDataReader r, ref string hiddenRootTreeId)
             {
                 if (r.IsDBNull(ordinal.TreeId))
                     throw new ProviderException("Missing node ID");
@@ -224,16 +270,18 @@ namespace Digital.ContentManagement
                 switch (type)
                 {
                     case "X-AddProvider":
-                        _provider.AddProvider(virtualize, parentNode, x =>
+                        addProviderNodes.Add(new AddProviderNode(virtualize, parentNode, x =>
                         {
                             x.Title = name;
-                            SiteMapNodeEx.RebaseNodesRecurse(x, "/" + id);
-                        });
+                            var externalProvider = (x.Provider as StaticSiteMapProviderEx);
+                            if (externalProvider != null)
+                                externalProvider.RebaseNodesRecurse(x, "/" + id);
+                        }));
                         return null;
                     case "X-Section":
                         node = virtualNode = new SiteMapSectionNode(_provider, uid, "/" + id, name);
                         SetRouteInNode(_routeCreator.CreateRoutes(node, id, virtualize), node);
-                        virtualNodes.Add(new KeyValuePair<SiteMapVirtualNode, string>(virtualNode, defaultTreeId));
+                        virtualNodes.Add(new VirtualNode(virtualNode, defaultTreeId));
                         break;
                     case "E-Form":
                         node = new SiteMapFormNode(_provider, uid, "/" + id, name);

@@ -28,6 +28,7 @@ using System.Configuration.Provider;
 using System.Collections.Specialized;
 using System.Reflection;
 using System.Web.Routing;
+using System.Collections;
 namespace System.Web
 {
     /// <summary>
@@ -38,8 +39,18 @@ namespace System.Web
         private IStaticSiteMapProviderExNodeStore _nodeStore;
         private ReaderWriterLockSlim _rwLock = new ReaderWriterLockSlim(LockRecursionPolicy.SupportsRecursion);
         private SiteMapNode _rootNode;
-        private object _baseLock = typeof(SiteMapProvider).GetField("_lock", BindingFlags.NonPublic | BindingFlags.Instance);
+        private object _providerLock;
         private MethodInfo _providerRemoveNode = typeof(SiteMapProvider).GetMethod("RemoveNode", BindingFlags.NonPublic | BindingFlags.Instance);
+        private IDictionary _providerKeyTable;
+        private IDictionary _providerUrlTable;
+
+        public StaticSiteMapProviderEx()
+        {
+            _providerLock = typeof(SiteMapProvider).GetField("_lock", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(this);
+            var baseType = typeof(StaticSiteMapProvider);
+            _providerKeyTable = (IDictionary)baseType.GetProperty("KeyTable", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(this, null);
+            _providerUrlTable = (IDictionary)baseType.GetProperty("UrlTable", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(this, null);
+        }
 
         public override void Initialize(string name, NameValueCollection config)
         {
@@ -142,7 +153,7 @@ namespace System.Web
         public override SiteMapNode FindSiteMapNodeFromKey(string key)
         {
             // locks handled by BuildSiteMap
-            var node = base.FindSiteMapNodeFromKey(key);
+            var node = FindSiteMapNodeFromKeyEx(key, false);
             if (node != null)
                 return node;
             return FindSiteMapNodeFromChildProviderKey(key);

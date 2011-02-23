@@ -71,13 +71,11 @@ namespace System.Web
                 throw new ArgumentNullException("parentNode");
             if (parentNode.Provider != this)
                 throw new ArgumentException(string.Format("StaticSiteMapProviderEx_cannot_add_node", parentNode.ToString()), "parentNode");
-            var nodeFromProvider = GetNodeFromProvider(providerName);
-            if (rebaseAction != null)
-                rebaseAction(nodeFromProvider);
-            AddNode(nodeFromProvider, parentNode);
+            var rootNode = GetNodeFromProvider(providerName, rebaseAction);
+            AddNode(rootNode, parentNode);
         }
 
-        private SiteMapNode GetNodeFromProvider(string providerName)
+        private SiteMapNode GetNodeFromProvider(string providerName, Action<SiteMapNode> rebaseAction)
         {
             var providerFromName = GetProviderFromName(providerName);
             var rootNode = providerFromName.RootNode;
@@ -88,6 +86,8 @@ namespace System.Web
                 ChildProviderRootNodes.Add(providerFromName, rootNode);
                 _childProviders = null;
                 providerFromName.ParentProvider = this;
+                if (rebaseAction != null)
+                    rebaseAction(rootNode);
             }
             return rootNode;
         }
@@ -112,7 +112,7 @@ namespace System.Web
         {
             if (providerName == null)
                 throw new ArgumentNullException("providerName");
-            lock (_baseLock)
+            lock (_providerLock)
             {
                 var providerFromName = GetProviderFromName(providerName);
                 var node = ChildProviderRootNodes[providerFromName];
@@ -130,7 +130,7 @@ namespace System.Web
             get
             {
                 if (_childProviders == null)
-                    lock (_baseLock)
+                    lock (_providerLock)
                         if (_childProviders == null)
                             _childProviders = new List<SiteMapProvider>(ChildProviderRootNodes.Keys);
                 return _childProviders;
@@ -142,7 +142,7 @@ namespace System.Web
             get
             {
                 if (_childProviderRootNodes == null)
-                    lock (_baseLock)
+                    lock (_providerLock)
                         if (_childProviderRootNodes == null)
                             _childProviderRootNodes = new Dictionary<SiteMapProvider, SiteMapNode>();
                 return _childProviderRootNodes;
@@ -158,7 +158,7 @@ namespace System.Web
             if (rootNode == null)
                 throw new InvalidOperationException(string.Format("XmlSiteMapProvider_invalid_sitemapnode_returned", childProvider.Name));
             if (!node.Equals(rootNode))
-                lock (_baseLock)
+                lock (_providerLock)
                 {
                     node = ChildProviderRootNodes[childProvider];
                     if (node != null)
