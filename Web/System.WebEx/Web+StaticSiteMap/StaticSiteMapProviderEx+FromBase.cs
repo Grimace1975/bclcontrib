@@ -36,6 +36,9 @@ namespace System.Web
             node.Url = newNodeUrl;
             _providerUrlTable.Remove(nodeUrl);
             _providerUrlTable.Add(newNodeUrl, node);
+            // duplicate root node
+            if (nodeUrl == "/")
+                _providerUrlTable.Add(rebaseUrl, node);
             if (node.HasChildNodes)
                 foreach (SiteMapNode childNode in node.ChildNodes)
                     RebaseNodesRecurse(childNode, rebaseUrl);
