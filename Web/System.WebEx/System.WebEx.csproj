@@ -73,6 +73,7 @@
     <Compile Include="Patterns\Caching\WebEnvironmentDebugStaticCacheProvider.cs" />
     <Compile Include="Patterns\Reporting\FlatFileCsvEmitterExtensions.cs" />
     <Compile Include="Web+SiteMap\IHaveVirtualUrlSiteMapNode.cs" />
+    <Compile Include="Web+StaticSiteMap\StaticSiteMapProviderEx+FromBase.cs" />
     <Compile Include="Web\Configuration\CustomErrorSyn.cs" />
     <Compile Include="Web\Configuration\CustomErrorsSectionSyn.cs" />
     <Compile Include="Web\WebResourceRegex.cs" />
