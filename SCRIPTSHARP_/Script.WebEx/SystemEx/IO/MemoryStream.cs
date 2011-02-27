@@ -36,7 +36,6 @@ namespace SystemEx.IO
         public override long Length
         {
             get { return _length; }
-            set { _length = value; }
         }
 
         public override long Position
@@ -67,5 +66,18 @@ namespace SystemEx.IO
         }
 
         public override void Flush() { }
+
+        public override void SetLength(long value)
+        {
+            if (_buffer.Length != value)
+            {
+                byte[] newBuf = new byte[value * 3 / 2];
+                JSArrayEx.Copy(_buffer, 0, newBuf, 0, (int)_length);
+                _buffer = newBuf;
+                while (_length < value)
+                    _buffer[_length++] = 0;
+            }
+            _length = value;
+        }
     }
 }

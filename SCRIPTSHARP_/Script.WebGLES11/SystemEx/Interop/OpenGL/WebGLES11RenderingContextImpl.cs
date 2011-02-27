@@ -1,5 +1,8 @@
 ﻿//[Khronos]http://www.khronos.org/opengles/1_X/
 #if !CODE_ANALYSIS
+using System;
+using System.IO;
+namespace System.Interop.OpenGL
 #else
 using System.Html;
 using System;
@@ -18,7 +21,9 @@ namespace SystemEx.Interop.OpenGL
         {
             if (_logCount >= 1000)
                 return;
+#if CODE_ANALYSIS
             MozConsole.Log(_logCount++ + ": " + msg);
+#endif
         }
         private void CheckError(string s)
         {
@@ -64,24 +69,32 @@ namespace SystemEx.Interop.OpenGL
         private WebGLUniformLocation _uTexEnv1;
         private WebGLUniformLocation _uEnableTexture0;
         private WebGLUniformLocation _uEnableTexture1;
-        private WebGLBuffer[] _staticDrawBuffers = new WebGLBuffer[0];
         private WebGLES11BufferData[] _buffers = new WebGLES11BufferData[SMALL_BUF_COUNT];
-        public WebGLRenderingContext gl;
-        private CanvasElementEx _canvas;
-        private WebGLTexture[] _textures = new WebGLTexture[0];
-        private int[] _textureFormats = new int[0];
+        public WebGLRenderingContext gl;    
         private uint _clientActiveTexture = 0;
         private uint _activeTexture = 0;
         private uint[] _boundTextureId = new uint[2];
         private int[] _texEnvMode = new int[2];
-        private uint[] _textureFormat = new uint[0];
         private WebGLBuffer _elementBuffer;
+        //
+        private WebGLBuffer[] _staticDrawBuffers = new WebGLBuffer[0];
+        private WebGLTexture[] _textures = new WebGLTexture[0];
+        private int[] _textureFormats = new int[0];
+        private uint[] _textureFormat = new uint[0];
 
+#if CODE_ANALYSIS
+        private CanvasElementEx _canvas;
         public WebGLES11RenderingContextImpl(CanvasElementEx canvas)
             : base(canvas.Width, canvas.Height)
         {
             _canvas = canvas;
             gl = canvas.GetContextWebGL();
+#else
+        public WebGLES11RenderingContextImpl()
+            : base(100, 100)
+        {
+            gl = null;
+#endif
             if (gl == null)
                 throw new Exception("UnsupportedOperationException: WebGL N/A");
             InitShaders(); CheckError("initShader");
@@ -217,7 +230,6 @@ namespace SystemEx.Interop.OpenGL
             return shader;
         }
 
-
         #region Implementation GLES11
 
         /* Available only in Common profile */
@@ -230,7 +242,6 @@ namespace SystemEx.Interop.OpenGL
         public override void PointSize(float size) { }
         public override void TexParameterf(uint target, uint pname, float param) { gl.TexParameterf(target, pname, param); CheckError("glTexParameterf"); }
         public override void TexParameterfv(uint target, uint pname, Stream @params) { }
-
 
         /* Available in both Common and Common-Lite profiles */
         public override void ActiveTexture(uint texture) { gl.ActiveTexture(texture); CheckError("glActiveTexture"); _activeTexture = texture - TEXTURE0; }
@@ -254,12 +265,12 @@ namespace SystemEx.Interop.OpenGL
         public override void CullFace(uint mode) { gl.CullFace(mode); CheckError("glCullFace"); }
         public override void DeleteTextures(int n, Stream textures)
         {
-            //for (int index = 0; index < _textures.Length; index++)
-            //{
-            //    int tid = SE.ReadInt32(textures[textures.Position + index];
-            //    gl.DeleteTexture(_textures[tid]); CheckError("glDeleteTexture");
-            //    _textures[tid] = null;
-            //}
+            for (int index = 0; index < n; index++)
+            {
+                int textureIndex = SE.ReadInt32(textures);
+                gl.DeleteTexture(_textures[textureIndex]); CheckError("glDeleteTexture");
+                _textures[textureIndex] = null;
+            }
         }
         public override void DepthFunc(uint func) { gl.DepthFunc(func); CheckError("glDepthFunc"); }
         public override void DepthMask(bool flag) { gl.DepthMask(flag); CheckError("glDepthMask"); }
@@ -385,9 +396,11 @@ namespace SystemEx.Interop.OpenGL
         public override void TexEnviv(uint target, uint pname, Stream @params) { }
         public override void TexEnvxv(uint target, uint pname, Stream @params) { }
         public override void TexImage2D(uint target, int level, uint internalformat, int width, int height, int border, uint format, uint type, Stream pixels) { _textureFormat[_boundTextureId[_activeTexture]] = internalformat; gl.TexImage2D(target, level, internalformat, width, height, border, format, type, GetTypedArray(pixels, type)); CheckError("glTexImage2D"); }
+#if CODE_ANALYSIS
         public override void TexImage2Di(uint target, int level, uint internalformat, uint format, int type, ImageElement image) { /*Log("setting texImage2d; image: " + image.Src);*/ gl.TexImage2D(target, level, internalformat, format, type, image); CheckError("texImage2D"); }
         public override void TexImage2De(uint target, int level, uint internalformat, uint format, int type, CanvasElement canvas) { gl.TexImage2D(target, level, internalformat, format, type, canvas); CheckError("texImage2D"); }
         public override void TexImage2Dx(uint target, int level, uint internalformat, uint format, int type, CanvasElementEx canvas) { gl.TexImage2D(target, level, internalformat, format, type, canvas); CheckError("texImage2D"); }
+#endif
         public override void TexParameteri(uint target, uint pname, int param) { gl.TexParameteri(target, pname, param); CheckError("glTexParameteri"); }
         public override void TexParameterx(uint target, uint pname, int param) { gl.TexParameteri(target, pname, param); CheckError("glTexParameteri"); }
         public override void TexParameteriv(uint target, uint pname, Stream @params) { }
@@ -418,10 +431,10 @@ namespace SystemEx.Interop.OpenGL
             long p = s.Position;
             long l = s.Length;
             s.Position = p + offset;
-            s.Length = p + offset + count;
+            s.SetLength(p + offset + count);
             gl.BufferSubData(ARRAY_BUFFER, offset * 4, GetTypedArray(s, FLOAT));
             s.Position = p;
-            s.Length = l;
+            s.SetLength(l);
         }
 
         private void PrepareDraw()
@@ -446,70 +459,61 @@ namespace SystemEx.Interop.OpenGL
             //Log("prepDraw: " + sizes);
         }
 
-        private void VertexAttribPointer(uint index, int size, uint type, bool normalize, int stride, Stream pointer)
+        private void VertexAttribPointer(uint indx, int size, uint type, bool normalize, int stride, Stream pointer)
         {
-            WebGLES11BufferData bd = _buffers[index];
-            bd.Stride = stride;
-            bd.Size = size;
-            bd.Normalized = normalize;
-            bd.Type = type;
-            bd.ToBind = GetTypedArray(pointer, type);
+            WebGLES11BufferData b = _buffers[indx];
+            b.Stride = stride;
+            b.Size = size;
+            b.Normalized = normalize;
+            b.Type = type;
+            b.ToBind = GetTypedArray(pointer, type);
         }
 
         private void VertexAttribStaticDrawPointer(uint indx, int size, uint type, bool normalized, int stride, long offset, Stream pointer, int staticDrawIndex)
         {
-            WebGLBuffer buffer = _staticDrawBuffers[staticDrawIndex];
-            if (buffer == null)
+            WebGLBuffer b = _staticDrawBuffers[staticDrawIndex];
+            if (b == null)
             {
-                _staticDrawBuffers[staticDrawIndex] = buffer = gl.CreateBuffer();
-                gl.BindBuffer(ARRAY_BUFFER, buffer);
+                _staticDrawBuffers[staticDrawIndex] = b = gl.CreateBuffer();
+                gl.BindBuffer(ARRAY_BUFFER, b);
                 gl.BufferData(ARRAY_BUFFER, GetTypedArray(pointer, type), STATIC_DRAW); CheckError("bufferData");
                 //Log("static buffer created; id: " + staticDrawIndex + " remaining: " + pointer.Remaining());
             }
-            gl.BindBuffer(ARRAY_BUFFER, buffer);
+            gl.BindBuffer(ARRAY_BUFFER, b);
             gl.VertexAttribPointer(indx, size, type, normalized, stride, offset); CheckError("vertexAttribPointer");
             _buffers[indx].ToBind = null;
         }
 
         private ArrayBufferView GetTypedArray(Stream s, uint type)
         {
-            //MemoryStream memoryStream = (s as MemoryStream);
+#if CODE_ANALYSIS
+            MemoryStream memoryStream = (s as MemoryStream);
             //if (arrayHolder == null)
             //{
-            //if ((type != BYTE) && (type != UNSIGNED_BYTE))
-            //    throw new Exception("RuntimeException: Buffer byte order problem");
-            ////arrayHolder = (HasArrayBufferView)((ByteBufferWrapper)s).getByteBuffer();
+            //    if ((type != BYTE) && (type != UNSIGNED_BYTE))
+            //        throw new Exception("RuntimeException: Buffer byte order problem");
+            //    //arrayHolder = (HasArrayBufferView)((ByteBufferWrapper)s).getByteBuffer();
             //}
-            //ArrayBufferView array = memoryStream.GetBuffer();
-            //int remainingBytes = (int)(s.Length - s.Position);
-            //int byteOffset = array.ByteOffset + ((int)s.Position * elementSize);
-            //switch (type)
-            //{
-            //    case FLOAT:
-            //        return new Float32Array(array.Buffer, byteOffset, remainingBytes / 4);
-            //    case UNSIGNED_BYTE:
-            //        return new Uint8Array(array.Buffer, byteOffset, remainingBytes);
-            //    case UNSIGNED_SHORT:
-            //        return new Uint16Array(array.Buffer, byteOffset, remainingBytes / 2);
-            //    case INT:
-            //        return new Int32Array(array.Buffer, byteOffset, remainingBytes / 4);
-            //    case SHORT:
-            //        return new Int16Array(array.Buffer, byteOffset, remainingBytes / 2);
-            //    case BYTE:
-            //        return new Int8Array(array.Buffer, byteOffset, remainingBytes);
-            //}
+            ArrayBufferView array = null; // memoryStream.GetBuffer();
+            int remainingBytes = (int)(s.Length - s.Position);
+            int byteOffset = 0; // array.ByteOffset + ((int)s.Position * elementSize);
+            switch (type)
+            {
+                case FLOAT:
+                    return new Float32Array(array.Buffer, byteOffset, remainingBytes / 4);
+                case UNSIGNED_BYTE:
+                    return new Uint8Array(array.Buffer, byteOffset, remainingBytes);
+                case UNSIGNED_SHORT:
+                    return new Uint16Array(array.Buffer, byteOffset, remainingBytes / 2);
+                case INT:
+                    return new Int32Array(array.Buffer, byteOffset, remainingBytes / 4);
+                case SHORT:
+                    return new Int16Array(array.Buffer, byteOffset, remainingBytes / 2);
+                case BYTE:
+                    return new Int8Array(array.Buffer, byteOffset, remainingBytes);
+            }
+#endif
             throw new Exception("IllegalArgumentException:");
         }
-
-        //        public override void setDisplayMode(DisplayMode displayMode)
-        //        {
-        //            _canvas.setWidth(displayMode.width);
-        //            _canvas.setHeight(displayMode.height);
-        //        }
-
-        //        public DisplayMode[] getAvailableDisplayModes()
-        //        {
-        //            return new DisplayMode[] { getDisplayMode(), new DisplayMode(Window.getClientWidth(), Window.getClientHeight(), 32, 60) };
-        //        }
     }
 }

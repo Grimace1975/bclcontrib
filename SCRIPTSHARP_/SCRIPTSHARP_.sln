@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScriptApp.Tester", "ScriptA
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Script.WebGLES11", "Script.WebGLES11\Script.WebGLES11.csproj", "{D5A19ADB-5CE0-473F-9CF0-3D91D683851B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.ScriptWebGLES11", "System.ScriptWebGLES11\System.ScriptWebGLES11.csproj", "{F602DDFA-96A5-4B08-99B1-45E75152FCC8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +39,10 @@ Global
 		{D5A19ADB-5CE0-473F-9CF0-3D91D683851B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D5A19ADB-5CE0-473F-9CF0-3D91D683851B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D5A19ADB-5CE0-473F-9CF0-3D91D683851B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F602DDFA-96A5-4B08-99B1-45E75152FCC8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F602DDFA-96A5-4B08-99B1-45E75152FCC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F602DDFA-96A5-4B08-99B1-45E75152FCC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F602DDFA-96A5-4B08-99B1-45E75152FCC8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

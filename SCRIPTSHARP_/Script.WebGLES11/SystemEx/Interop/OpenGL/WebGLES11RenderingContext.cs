@@ -320,9 +320,11 @@ namespace SystemEx.Interop.OpenGL
         public abstract void TexEnviv(uint target, uint pname, Stream @params);
         public abstract void TexEnvxv(uint target, uint pname, Stream @params);
         public abstract void TexImage2D(uint target, int level, uint internalformat, int width, int height, int border, uint format, uint type, Stream pixels);
+#if CODE_ANALYSIS
         public abstract void TexImage2Di(uint target, int level, uint internalformat, uint format, int type, ImageElement image);
         public abstract void TexImage2De(uint target, int level, uint internalformat, uint format, int type, CanvasElement canvas);
         public abstract void TexImage2Dx(uint target, int level, uint internalformat, uint format, int type, CanvasElementEx canvas);
+#endif
         //# public abstract void TexParameteri(uint target, uint pname, int param);
         public abstract void TexParameterx(uint target, uint pname, int param);
         public abstract void TexParameteriv(uint target, uint pname, Stream @params);

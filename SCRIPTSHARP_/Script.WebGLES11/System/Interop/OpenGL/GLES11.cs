@@ -1,6 +1,6 @@
 using System.Runtime.CompilerServices;
-//[Khronos GLES21.1]http://www.khronos.org/registry/gles/api/1.0/gl.h
-//[Khronos GLES21.1]http://www.khronos.org/registry/gles/api/1.1/gl.h
+//[Khronos GLES1.1]http://www.khronos.org/registry/gles/api/1.1/gl.h
+//[Khronos GLES1.0]http://www.khronos.org/registry/gles/api/1.0/gl.h
 namespace System.Interop.OpenGL
 {
 #if CODE_ANALYSIS

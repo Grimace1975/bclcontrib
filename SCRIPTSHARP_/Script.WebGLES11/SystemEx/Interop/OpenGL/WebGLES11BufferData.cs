@@ -1,6 +1,4 @@
 ﻿#if !CODE_ANALYSIS
-using System.IO;
-using System.Collections;
 namespace System.Interop.OpenGL
 #else
 using System.TypedArrays;
@@ -9,7 +7,11 @@ using System;
 namespace SystemEx.Interop.OpenGL
 #endif
 {
+#if CODE_ANALYSIS
     internal sealed class WebGLES11BufferData : Record
+#else
+    internal struct WebGLES11BufferData
+#endif
     {
         public ArrayBufferView ToBind;
         public WebGLBuffer Buffer;

@@ -57,17 +57,9 @@ SystemEx.Interop.OpenGL.WebGLES11RenderingContextImpl = function SystemEx_Intero
     /// </field>
     /// <field name="_uEnableTexture1$3" type="WebGLUniformLocation">
     /// </field>
-    /// <field name="_staticDrawBuffers$3" type="Array" elementType="WebGLBuffer">
-    /// </field>
     /// <field name="_buffers$3" type="Array" elementType="_webGLES11BufferData">
     /// </field>
     /// <field name="gl" type="WebGLRenderingContext">
-    /// </field>
-    /// <field name="_canvas$3" type="Object" domElement="true">
-    /// </field>
-    /// <field name="_textures$3" type="Array" elementType="WebGLTexture">
-    /// </field>
-    /// <field name="_textureFormats$3" type="Array" elementType="Number" elementInteger="true">
     /// </field>
     /// <field name="_clientActiveTexture$3" type="Number" integer="true">
     /// </field>
@@ -77,16 +69,24 @@ SystemEx.Interop.OpenGL.WebGLES11RenderingContextImpl = function SystemEx_Intero
     /// </field>
     /// <field name="_texEnvMode$3" type="Array" elementType="Number" elementInteger="true">
     /// </field>
-    /// <field name="_textureFormat$3" type="Array" elementType="Number" elementInteger="true">
-    /// </field>
     /// <field name="_elementBuffer$3" type="WebGLBuffer">
     /// </field>
-    this._staticDrawBuffers$3 = new Array(0);
+    /// <field name="_staticDrawBuffers$3" type="Array" elementType="WebGLBuffer">
+    /// </field>
+    /// <field name="_textures$3" type="Array" elementType="WebGLTexture">
+    /// </field>
+    /// <field name="_textureFormats$3" type="Array" elementType="Number" elementInteger="true">
+    /// </field>
+    /// <field name="_textureFormat$3" type="Array" elementType="Number" elementInteger="true">
+    /// </field>
+    /// <field name="_canvas$3" type="Object" domElement="true">
+    /// </field>
     this._buffers$3 = new Array(SystemEx.Interop.OpenGL.WebGLES11RenderingContextImpl._smalL_BUF_COUNT$3);
-    this._textures$3 = new Array(0);
-    this._textureFormats$3 = new Array(0);
     this._boundTextureId$3 = new Array(2);
     this._texEnvMode$3 = new Array(2);
+    this._staticDrawBuffers$3 = new Array(0);
+    this._textures$3 = new Array(0);
+    this._textureFormats$3 = new Array(0);
     this._textureFormat$3 = new Array(0);
     SystemEx.Interop.OpenGL.WebGLES11RenderingContextImpl.initializeBase(this, [ canvas.width, canvas.height ]);
     this._canvas$3 = canvas;
@@ -140,10 +140,10 @@ SystemEx.Interop.OpenGL.WebGLES11RenderingContextImpl.prototype = {
     _uEnableTexture0$3: null,
     _uEnableTexture1$3: null,
     gl: null,
-    _canvas$3: null,
     _clientActiveTexture$3: 0,
     _activeTexture$3: 0,
     _elementBuffer$3: null,
+    _canvas$3: null,
     
     _initShaders$3: function SystemEx_Interop_OpenGL_WebGLES11RenderingContextImpl$_initShaders$3() {
         var vertexShader = this._loadShader$3(GLES20.verteX_SHADER, '\r\n        attribute vec4 a_position;\r\n        attribute vec4 a_color;\r\n        attribute vec2 a_texCoord0;\r\n        attribute vec2 a_texCoord1;\r\n        uniform mat4 u_mvpMatrix;\r\n        varying vec4 v_color;\r\n        varying vec2 v_texCoord0;\r\n        varying vec2 v_texCoord1;\r\n        void main()\r\n        {\r\n            gl_Position = u_mvpMatrix * a_position;\r\n            v_color = a_color;\r\n            v_texCoord0 = a_texCoord0;\r\n            v_texCoord1 = a_texCoord1;\r\n        }');
@@ -342,6 +342,12 @@ SystemEx.Interop.OpenGL.WebGLES11RenderingContextImpl.prototype = {
         /// </param>
         /// <param name="textures" type="SystemEx.IO.Stream">
         /// </param>
+        for (var index = 0; index < n; index++) {
+            var textureIndex = SystemEx.IO.SE.readInt32(textures);
+            this.gl.deleteTexture(this._textures$3[textureIndex]);
+            this._checkError$3('glDeleteTexture');
+            this._textures$3[textureIndex] = null;
+        }
     },
     
     depthFunc: function SystemEx_Interop_OpenGL_WebGLES11RenderingContextImpl$depthFunc(func) {
@@ -828,10 +834,10 @@ SystemEx.Interop.OpenGL.WebGLES11RenderingContextImpl.prototype = {
         var p = s.get_position();
         var l = s.get_length();
         s.set_position(p + offset);
-        s.set_length(p + offset + count);
+        s.setLength(p + offset + count);
         this.gl.bufferSubData(GLES20.arraY_BUFFER, offset * 4, this._getTypedArray$3(s, GLES20.FLOAT));
         s.set_position(p);
-        s.set_length(l);
+        s.setLength(l);
     },
     
     _prepareDraw$3: function SystemEx_Interop_OpenGL_WebGLES11RenderingContextImpl$_prepareDraw$3() {
@@ -855,8 +861,8 @@ SystemEx.Interop.OpenGL.WebGLES11RenderingContextImpl.prototype = {
         }
     },
     
-    _vertexAttribPointer$3: function SystemEx_Interop_OpenGL_WebGLES11RenderingContextImpl$_vertexAttribPointer$3(index, size, type, normalize, stride, pointer) {
-        /// <param name="index" type="Number" integer="true">
+    _vertexAttribPointer$3: function SystemEx_Interop_OpenGL_WebGLES11RenderingContextImpl$_vertexAttribPointer$3(indx, size, type, normalize, stride, pointer) {
+        /// <param name="indx" type="Number" integer="true">
         /// </param>
         /// <param name="size" type="Number" integer="true">
         /// </param>
@@ -868,12 +874,12 @@ SystemEx.Interop.OpenGL.WebGLES11RenderingContextImpl.prototype = {
         /// </param>
         /// <param name="pointer" type="SystemEx.IO.Stream">
         /// </param>
-        var bd = this._buffers$3[index];
-        bd.stride = stride;
-        bd.size = size;
-        bd.normalized = normalize;
-        bd.type = type;
-        bd.toBind = this._getTypedArray$3(pointer, type);
+        var b = this._buffers$3[indx];
+        b.stride = stride;
+        b.size = size;
+        b.normalized = normalize;
+        b.type = type;
+        b.toBind = this._getTypedArray$3(pointer, type);
     },
     
     _vertexAttribStaticDrawPointer$3: function SystemEx_Interop_OpenGL_WebGLES11RenderingContextImpl$_vertexAttribStaticDrawPointer$3(indx, size, type, normalized, stride, offset, pointer, staticDrawIndex) {
@@ -893,14 +899,14 @@ SystemEx.Interop.OpenGL.WebGLES11RenderingContextImpl.prototype = {
         /// </param>
         /// <param name="staticDrawIndex" type="Number" integer="true">
         /// </param>
-        var buffer = this._staticDrawBuffers$3[staticDrawIndex];
-        if (buffer == null) {
-            this._staticDrawBuffers$3[staticDrawIndex] = buffer = this.gl.createBuffer();
-            this.gl.bindBuffer(GLES20.arraY_BUFFER, buffer);
+        var b = this._staticDrawBuffers$3[staticDrawIndex];
+        if (b == null) {
+            this._staticDrawBuffers$3[staticDrawIndex] = b = this.gl.createBuffer();
+            this.gl.bindBuffer(GLES20.arraY_BUFFER, b);
             this.gl.bufferData(GLES20.arraY_BUFFER, this._getTypedArray$3(pointer, type), GLES20.statiC_DRAW);
             this._checkError$3('bufferData');
         }
-        this.gl.bindBuffer(GLES20.arraY_BUFFER, buffer);
+        this.gl.bindBuffer(GLES20.arraY_BUFFER, b);
         this.gl.vertexAttribPointer(indx, size, type, normalized, stride, offset);
         this._checkError$3('vertexAttribPointer');
         this._buffers$3[indx].toBind = null;
@@ -912,6 +918,24 @@ SystemEx.Interop.OpenGL.WebGLES11RenderingContextImpl.prototype = {
         /// <param name="type" type="Number" integer="true">
         /// </param>
         /// <returns type="ArrayBufferView"></returns>
+        var memoryStream = (Type.safeCast(s, SystemEx.IO.MemoryStream));
+        var array = null;
+        var remainingBytes = (s.get_length() - s.get_position());
+        var byteOffset = 0;
+        switch (type) {
+            case GLES20.FLOAT:
+                return new Float32Array(array.buffer, byteOffset, remainingBytes / 4);
+            case GLES20.unsigneD_BYTE:
+                return new Uint8Array(array.buffer, byteOffset, remainingBytes);
+            case GLES20.unsigneD_SHORT:
+                return new Uint16Array(array.buffer, byteOffset, remainingBytes / 2);
+            case GLES20.INT:
+                return new Int32Array(array.buffer, byteOffset, remainingBytes / 4);
+            case GLES20.SHORT:
+                return new Int16Array(array.buffer, byteOffset, remainingBytes / 2);
+            case GLES20.BYTE:
+                return new Int8Array(array.buffer, byteOffset, remainingBytes);
+        }
         throw new Error('IllegalArgumentException:');
     }
 }

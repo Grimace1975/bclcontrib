@@ -1,6 +1,4 @@
 ﻿#if !CODE_ANALYSIS
-using System.IO;
-using System.Collections;
 namespace System.Interop.OpenGL
 #else
 using System.TypedArrays;

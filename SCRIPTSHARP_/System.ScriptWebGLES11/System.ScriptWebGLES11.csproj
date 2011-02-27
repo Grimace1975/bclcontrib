@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{F602DDFA-96A5-4B08-99B1-45E75152FCC8}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>System.ScriptWebGLES11</RootNamespace>
+    <AssemblyName>System.ScriptWebGLES11</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\Script.WebGLES11\SystemEx\Interop\OpenGL\GLXX.cs">
+      <Link>System\Interop\OpenGL\GLXX.cs</Link>
+    </Compile>
+    <Compile Include="..\Script.WebGLES11\SystemEx\Interop\OpenGL\WebGLES11BufferData.cs">
+      <Link>System\Interop\OpenGL\WebGLES11BufferData.cs</Link>
+    </Compile>
+    <Compile Include="..\Script.WebGLES11\SystemEx\Interop\OpenGL\WebGLES11RenderingContext.cs">
+      <Link>System\Interop\OpenGL\WebGLES11RenderingContext.cs</Link>
+    </Compile>
+    <Compile Include="..\Script.WebGLES11\SystemEx\Interop\OpenGL\WebGLES11RenderingContextImpl.cs">
+      <Link>System\Interop\OpenGL\WebGLES11RenderingContextImpl.cs</Link>
+    </Compile>
+    <Compile Include="..\Script.WebGLES11\System\Interop\OpenGL\GLES11.cs">
+      <Link>System\Interop\OpenGL\GLES11.cs</Link>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\System.ScriptWeb\System.ScriptWeb.csproj">
+      <Project>{000B49B0-7F92-4579-9276-A960A5AB4669}</Project>
+      <Name>System.ScriptWeb</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

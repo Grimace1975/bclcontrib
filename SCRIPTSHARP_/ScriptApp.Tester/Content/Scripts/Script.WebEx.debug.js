@@ -4846,11 +4846,6 @@ SystemEx.IO.MemoryStream.prototype = {
         /// <value type="Number" integer="true"></value>
         return this._length$1;
     },
-    set_length: function SystemEx_IO_MemoryStream$set_length(value) {
-        /// <value type="Number" integer="true"></value>
-        this._length$1 = value;
-        return value;
-    },
     
     get_position: function SystemEx_IO_MemoryStream$get_position() {
         /// <value type="Number" integer="true"></value>
@@ -4883,6 +4878,20 @@ SystemEx.IO.MemoryStream.prototype = {
     },
     
     flush: function SystemEx_IO_MemoryStream$flush() {
+    },
+    
+    setLength: function SystemEx_IO_MemoryStream$setLength(value) {
+        /// <param name="value" type="Number" integer="true">
+        /// </param>
+        if (this._buffer$1.length !== value) {
+            var newBuf = new Array(value * 3 / 2);
+            SystemEx.JSArrayEx.copy(this._buffer$1, 0, newBuf, 0, this._length$1);
+            this._buffer$1 = newBuf;
+            while (this._length$1 < value) {
+                this._buffer$1[this._length$1++] = 0;
+            }
+        }
+        this._length$1 = value;
     }
 }
 
@@ -5529,8 +5538,10 @@ SystemEx.IO.FileStream.prototype = {
         /// <value type="Number" integer="true"></value>
         return this._length$1;
     },
-    set_length: function SystemEx_IO_FileStream$set_length(value) {
-        /// <value type="Number" integer="true"></value>
+    
+    setLength: function SystemEx_IO_FileStream$setLength(value) {
+        /// <param name="value" type="Number" integer="true">
+        /// </param>
         if (this._length$1 !== value) {
             this._consolidate$1();
             if (this._data$1.length > value) {
@@ -5543,7 +5554,6 @@ SystemEx.IO.FileStream.prototype = {
                 }
             }
         }
-        return value;
     },
     
     get_position: function SystemEx_IO_FileStream$get_position() {

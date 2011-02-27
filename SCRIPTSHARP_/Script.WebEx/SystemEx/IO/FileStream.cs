@@ -63,20 +63,21 @@ namespace SystemEx.IO
         public override long Length
         {
             get { return _length; }
-            set
+        }
+
+        public override void SetLength(long value)
+        {
+            if (_length != value)
             {
-                if (_length != value)
+                Consolidate();
+                if (_data.Length > value)
                 {
-                    Consolidate();
-                    if (_data.Length > value)
-                    {
-                        _data = _data.Substring(0, (int)value);
-                        _length = (int)value;
-                    }
-                    else
-                        while (_length < value)
-                            WriteByte(0);
+                    _data = _data.Substring(0, (int)value);
+                    _length = (int)value;
                 }
+                else
+                    while (_length < value)
+                        WriteByte(0);
             }
         }
 
