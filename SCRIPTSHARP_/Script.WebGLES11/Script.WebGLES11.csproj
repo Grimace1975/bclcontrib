@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{D5A19ADB-5CE0-473F-9CF0-3D91D683851B}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <NoStdLib>True</NoStdLib>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
+    <LangVersion>ISO-2</LangVersion>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Script.WebGLES11</RootNamespace>
+    <AssemblyName>Script.WebGLES11</AssemblyName>
+    <TemplateFile>Properties\Script.WebGLES11.script</TemplateFile>
+    <CodeAnalysisRuleSet>Properties\Script.WebGLES11.ruleset</CodeAnalysisRuleSet>
+    <ReferencePath>$(ProgramFiles)\ScriptSharp\v1.0\Framework\</ReferencePath>
+    <DeploymentPath>..\ScriptApp.Tester\Content\Scripts</DeploymentPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;CODE_ANALYSIS</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoWarn>0028, 1591, 1684</NoWarn>
+    <DocumentationFile>bin\Debug\Script.WebGLES11.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>CODE_ANALYSIS</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoWarn>0028, 1591, 1684</NoWarn>
+    <DocumentationFile>bin\Release\Script.WebGLES11.xml</DocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="mscorlib, Version=0.6.1.0, Culture=neutral, PublicKeyToken=8fc0e3af5abcb6c4, processorArchitecture=MSIL" />
+    <Reference Include="Script.Web" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="SystemEx\Interop\OpenGL\WebGLARBContext.cs" />
+    <Compile Include="SystemEx\Interop\OpenGL\WebGL41Context.cs" />
+    <Compile Include="SystemEx\Interop\OpenGL\WebGL33Context.cs" />
+    <Compile Include="SystemEx\Interop\OpenGL\WebGL21Context.cs" />
+    <Compile Include="SystemEx\Interop\OpenGL\WebGL15Context.cs" />
+    <Compile Include="SystemEx\Interop\OpenGL\GLXX.cs" />
+    <Compile Include="SystemEx\Interop\OpenGL\WebGLES11RenderingContextImpl.cs" />
+    <Compile Include="SystemEx\Interop\OpenGL\WebGLES11BufferData.cs" />
+    <Compile Include="SystemEx\Interop\OpenGL\WebGLES11RenderingContext.cs" />
+    <Compile Include="System\Interop\OpenGL\GLARB.cs" />
+    <Compile Include="System\Interop\OpenGL\GL41.cs" />
+    <Compile Include="System\Interop\OpenGL\GL33.cs" />
+    <Compile Include="System\Interop\OpenGL\GL21.cs" />
+    <Compile Include="System\Interop\OpenGL\GL15.cs" />
+    <Compile Include="System\Interop\OpenGL\GLES11.cs" />
+    <Content Include="Properties\Script.WebGLES11.ruleset" />
+    <Content Include="Properties\Script.WebGLES11.script" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Script.WebEx\Script.WebEx.csproj">
+      <Project>{068E947D-D6EC-4197-8132-C827AA0C4C28}</Project>
+      <Name>Script.WebEx</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(ProgramFiles)\ScriptSharp\v1.0\ScriptSharp.targets" />
+</Project>

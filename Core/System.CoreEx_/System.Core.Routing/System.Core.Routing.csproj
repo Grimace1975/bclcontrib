@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{B6648FB5-9382-4D41-A678-2FE59788D6BA}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>System.Core.Routing</RootNamespace>
+    <AssemblyName>System.Core.Routing</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Collections.1\RoutedCommand\CommandManager.cs" />
+    <Compile Include="Collections.1\RoutedCommand\ICommand.cs" />
+    <Compile Include="Collections.1\RoutedCommand\RoutedCommand.cs" />
+    <Compile Include="Collections.1\RoutedCommand\RoutedFormCommand.cs" />
+    <Compile Include="Collections\EventElement.cs" />
+    <Compile Include="Collections\Routing\ClassHandlers.cs" />
+    <Compile Include="Collections\Routing\ClassHandlersStore.cs" />
+    <Compile Include="Collections\Routing\EventHandlersStore.cs" />
+    <Compile Include="Collections\Routing\EventManager.cs" />
+    <Compile Include="Collections\Routing\EventPrivateKey.cs" />
+    <Compile Include="Collections\Routing\EventRoute.cs" />
+    <Compile Include="Collections\Routing\EventRouteFactory.cs" />
+    <Compile Include="Collections\Routing\GlobalEventManager.cs" />
+    <Compile Include="Collections\Routing\RoutedEvent.cs" />
+    <Compile Include="Collections\Routing\RoutedEventArgs.cs" />
+    <Compile Include="Collections\Routing\RoutedEventHandler.cs" />
+    <Compile Include="Collections\Routing\RoutedEventHandlerInfo.cs" />
+    <Compile Include="Collections\Routing\RoutedEventHandlerInfoList.cs" />
+    <Compile Include="Collections\Routing\RouteItem.cs" />
+    <Compile Include="Collections\Routing\RoutingStrategy.cs" />
+    <Compile Include="Collections\Routing\SourceItem.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\System.Core.Objects\System.Core.Objects.csproj">
+      <Project>{832FFBD9-7400-4B33-BC3A-63C07C8740F2}</Project>
+      <Name>System.Core.Objects</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\System.Core2\System.Core2.csproj">
+      <Project>{7F64972D-477E-4F38-BC95-BD835D501146}</Project>
+      <Name>System.Core2</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
