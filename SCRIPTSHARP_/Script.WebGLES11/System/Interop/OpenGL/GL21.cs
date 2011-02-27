@@ -4,7 +4,7 @@ namespace System.Interop.OpenGL
 #if CODE_ANALYSIS
     [IgnoreNamespace, Imported]
 #endif
-    public abstract class GL15
+    public abstract class GL21
     {
         // GL_VERSION_2_0
         public const uint BLEND_EQUATION_RGB = 0x8009;

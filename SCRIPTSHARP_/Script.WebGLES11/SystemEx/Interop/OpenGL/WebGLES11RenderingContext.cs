@@ -14,6 +14,10 @@ namespace SystemEx.Interop.OpenGL
 {
     public abstract class WebGLES11RenderingContext : WebGLRenderingContext
     {
+        protected const uint ARRAY_POSITION = 0;
+        protected const uint ARRAY_COLOR = 1;
+        protected const uint ARRAY_TEXCOORD_0 = 2;
+        protected const uint ARRAY_TEXCOORD_1 = 3;
         private uint _matrixMode = GLES11.MODELVIEW;
         private int _viewportX;
         private int _viewportY;
@@ -321,9 +325,9 @@ namespace SystemEx.Interop.OpenGL
         public abstract void TexEnvxv(uint target, uint pname, Stream @params);
         public abstract void TexImage2D(uint target, int level, uint internalformat, int width, int height, int border, uint format, uint type, Stream pixels);
 #if CODE_ANALYSIS
-        public abstract void TexImage2Di(uint target, int level, uint internalformat, uint format, int type, ImageElement image);
-        public abstract void TexImage2De(uint target, int level, uint internalformat, uint format, int type, CanvasElement canvas);
-        public abstract void TexImage2Dx(uint target, int level, uint internalformat, uint format, int type, CanvasElementEx canvas);
+        public abstract void TexImage2Di(uint target, int level, uint internalformat, uint format, uint type, ImageElement image);
+        public abstract void TexImage2De(uint target, int level, uint internalformat, uint format, uint type, CanvasElement canvas);
+        public abstract void TexImage2Dx(uint target, int level, uint internalformat, uint format, uint type, CanvasElementEx canvas);
 #endif
         //# public abstract void TexParameteri(uint target, uint pname, int param);
         public abstract void TexParameterx(uint target, uint pname, int param);

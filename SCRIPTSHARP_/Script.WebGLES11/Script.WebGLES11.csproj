@@ -44,19 +44,20 @@
     <Reference Include="Script.Web" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="SystemEx\Interop\OpenGL\WebGLARBContext.cs" />
-    <Compile Include="SystemEx\Interop\OpenGL\WebGL41Context.cs" />
-    <Compile Include="SystemEx\Interop\OpenGL\WebGL33Context.cs" />
-    <Compile Include="SystemEx\Interop\OpenGL\WebGL21Context.cs" />
+    <None Include="SystemEx\Interop\OpenGL\WebGLARBContext.cs" />
+    <None Include="SystemEx\Interop\OpenGL\WebGL41Context.cs" />
+    <None Include="SystemEx\Interop\OpenGL\WebGL33Context.cs" />
+    <None Include="SystemEx\Interop\OpenGL\WebGL21Context.cs" />
+    <Compile Include="SystemEx\Interop\OpenGL\WebGL15ContextImpl.cs" />
     <Compile Include="SystemEx\Interop\OpenGL\WebGL15Context.cs" />
-    <Compile Include="SystemEx\Interop\OpenGL\GLXX.cs" />
+    <Compile Include="System\Interop\OpenGL\GLXX.cs" />
     <Compile Include="SystemEx\Interop\OpenGL\WebGLES11RenderingContextImpl.cs" />
-    <Compile Include="SystemEx\Interop\OpenGL\WebGLES11BufferData.cs" />
+    <Compile Include="SystemEx\Interop\OpenGL\WebGLBufferData.cs" />
     <Compile Include="SystemEx\Interop\OpenGL\WebGLES11RenderingContext.cs" />
-    <Compile Include="System\Interop\OpenGL\GLARB.cs" />
-    <Compile Include="System\Interop\OpenGL\GL41.cs" />
-    <Compile Include="System\Interop\OpenGL\GL33.cs" />
-    <Compile Include="System\Interop\OpenGL\GL21.cs" />
+    <None Include="System\Interop\OpenGL\GLARB.cs" />
+    <None Include="System\Interop\OpenGL\GL41.cs" />
+    <None Include="System\Interop\OpenGL\GL33.cs" />
+    <None Include="System\Interop\OpenGL\GL21.cs" />
     <Compile Include="System\Interop\OpenGL\GL15.cs" />
     <Compile Include="System\Interop\OpenGL\GLES11.cs" />
     <Content Include="Properties\Script.WebGLES11.ruleset" />

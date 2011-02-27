@@ -69,7 +69,7 @@ namespace SystemEx.Interop.OpenGL
         private WebGLUniformLocation _uTexEnv1;
         private WebGLUniformLocation _uEnableTexture0;
         private WebGLUniformLocation _uEnableTexture1;
-        private WebGLES11BufferData[] _buffers = new WebGLES11BufferData[SMALL_BUF_COUNT];
+        private WebGLBufferData[] _buffers = new WebGLBufferData[SMALL_BUF_COUNT];
         public WebGLRenderingContext gl;    
         private uint _clientActiveTexture = 0;
         private uint _activeTexture = 0;
@@ -101,7 +101,7 @@ namespace SystemEx.Interop.OpenGL
             _elementBuffer = gl.CreateBuffer(); CheckError("createBuffer f. elements");
             for (int index = 0; index < _buffers.Length; index++)
             {
-                WebGLES11BufferData b = new WebGLES11BufferData();
+                WebGLBufferData b = new WebGLBufferData();
                 b.ToBind = null;
                 b.Buffer = gl.CreateBuffer(); CheckError("createBuffer" + index);
                 b.Stride = 0;
@@ -188,10 +188,10 @@ namespace SystemEx.Interop.OpenGL
             gl.AttachShader(programObject, vertexShader);
             gl.AttachShader(programObject, fragmentShader);
             // Bind "vPosition" to attribute 0
-            gl.BindAttribLocation(programObject, GLXX.ARRAY_POSITION, "a_position");
-            gl.BindAttribLocation(programObject, GLXX.ARRAY_COLOR, "a_color");
-            gl.BindAttribLocation(programObject, GLXX.ARRAY_TEXCOORD_0, "a_texCoord0");
-            gl.BindAttribLocation(programObject, GLXX.ARRAY_TEXCOORD_1, "a_texCoord1");
+            gl.BindAttribLocation(programObject, ARRAY_POSITION, "a_position");
+            gl.BindAttribLocation(programObject, ARRAY_COLOR, "a_color");
+            gl.BindAttribLocation(programObject, ARRAY_TEXCOORD_0, "a_texCoord0");
+            gl.BindAttribLocation(programObject, ARRAY_TEXCOORD_1, "a_texCoord1");
             // Link the program
             gl.LinkProgram(programObject);
             // TODO(haustein) get position, color from the linker, too
@@ -234,7 +234,7 @@ namespace SystemEx.Interop.OpenGL
 
         /* Available only in Common profile */
         public override void ClearColor(float red, float green, float blue, float alpha) { gl.ClearColor(red, green, blue, alpha); CheckError("glClearColor"); }
-        public override void Color4f(float red, float green, float blue, float alpha) { gl.VertexAttrib4f(GLXX.ARRAY_COLOR, red, green, blue, alpha); CheckError("glColor4f"); }
+        public override void Color4f(float red, float green, float blue, float alpha) { gl.VertexAttrib4f(ARRAY_COLOR, red, green, blue, alpha); CheckError("glColor4f"); }
         public override void DepthRangef(float zNear, float zFar) { gl.DepthRange(zNear, zFar); CheckError("glDepthRangef"); }
         //?public override void DrawBuffer(int buf) { /*TODO*/ }
         public override void PointParameterf(uint pname, float param) { }
@@ -261,7 +261,7 @@ namespace SystemEx.Interop.OpenGL
         public override void BlendFunc(uint sfactor, uint dfactor) { gl.BlendFunc(sfactor, dfactor); CheckError("glBlendFunc"); }
         public override void Clear(uint mask) { gl.Clear(mask); CheckError("glClear"); }
         public override void ClientActiveTexture(uint texture) { _clientActiveTexture = texture - TEXTURE0; }
-        public override void ColorPointer(int size, uint type, int stride, Stream pointer) { VertexAttribPointer(GLXX.ARRAY_COLOR, size, type, true, stride, pointer); CheckError("glColorPointer"); }
+        public override void ColorPointer(int size, uint type, int stride, Stream pointer) { VertexAttribPointer(ARRAY_COLOR, size, type, true, stride, pointer); CheckError("glColorPointer"); }
         public override void CullFace(uint mode) { gl.CullFace(mode); CheckError("glCullFace"); }
         public override void DeleteTextures(int n, Stream textures)
         {
@@ -300,19 +300,19 @@ namespace SystemEx.Interop.OpenGL
             switch (array)
             {
                 case GLES11.COLOR_ARRAY:
-                    gl.DisableVertexAttribArray(GLXX.ARRAY_COLOR); CheckError("DisableClientState colorArr");
+                    gl.DisableVertexAttribArray(ARRAY_COLOR); CheckError("DisableClientState colorArr");
                     break;
                 case GLES11.VERTEX_ARRAY:
-                    gl.DisableVertexAttribArray(GLXX.ARRAY_POSITION); CheckError("DisableClientState vertexArrr");
+                    gl.DisableVertexAttribArray(ARRAY_POSITION); CheckError("DisableClientState vertexArrr");
                     break;
                 case GLES11.TEXTURE_COORD_ARRAY:
                     switch (_clientActiveTexture)
                     {
                         case 0:
-                            gl.DisableVertexAttribArray(GLXX.ARRAY_TEXCOORD_0); CheckError("DisableClientState texCoord0");
+                            gl.DisableVertexAttribArray(ARRAY_TEXCOORD_0); CheckError("DisableClientState texCoord0");
                             break;
                         case 1:
-                            gl.DisableVertexAttribArray(GLXX.ARRAY_TEXCOORD_1); CheckError("DisableClientState texCoord1");
+                            gl.DisableVertexAttribArray(ARRAY_TEXCOORD_1); CheckError("DisableClientState texCoord1");
                             break;
                         default:
                             throw new Exception("RuntimeException:");
@@ -357,19 +357,19 @@ namespace SystemEx.Interop.OpenGL
             switch (array)
             {
                 case GLES11.COLOR_ARRAY:
-                    gl.EnableVertexAttribArray(GLXX.ARRAY_COLOR); CheckError("enableClientState colorArr");
+                    gl.EnableVertexAttribArray(ARRAY_COLOR); CheckError("enableClientState colorArr");
                     break;
                 case GLES11.VERTEX_ARRAY:
-                    gl.EnableVertexAttribArray(GLXX.ARRAY_POSITION); CheckError("enableClientState vertexArrr");
+                    gl.EnableVertexAttribArray(ARRAY_POSITION); CheckError("enableClientState vertexArrr");
                     break;
                 case GLES11.TEXTURE_COORD_ARRAY:
                     switch (_clientActiveTexture)
                     {
                         case 0:
-                            gl.EnableVertexAttribArray(GLXX.ARRAY_TEXCOORD_0); CheckError("enableClientState texCoord0");
+                            gl.EnableVertexAttribArray(ARRAY_TEXCOORD_0); CheckError("enableClientState texCoord0");
                             break;
                         case 1:
-                            gl.EnableVertexAttribArray(GLXX.ARRAY_TEXCOORD_1); CheckError("enableClientState texCoord1");
+                            gl.EnableVertexAttribArray(ARRAY_TEXCOORD_1); CheckError("enableClientState texCoord1");
                             break;
                         default:
                             throw new Exception("RuntimeException:");
@@ -390,23 +390,23 @@ namespace SystemEx.Interop.OpenGL
         public override void ReadPixels(int x, int y, int width, int height, uint format, uint type, Stream pixels) { }
         public override void Scissor(int x, int y, int width, int height) { gl.Scissor(x, y, width, height); CheckError("glScissor"); }
         public override void ShadeModel(uint mode) { }
-        public override void TexCoordPointer(int size, uint type, int stride, Stream pointer) { VertexAttribPointer(GLXX.ARRAY_TEXCOORD_0 + _clientActiveTexture, size, type, false, stride, pointer); CheckError("texCoordPointer"); }
+        public override void TexCoordPointer(int size, uint type, int stride, Stream pointer) { VertexAttribPointer(ARRAY_TEXCOORD_0 + _clientActiveTexture, size, type, false, stride, pointer); CheckError("texCoordPointer"); }
         public override void TexEnvi(uint target, uint pname, int param) { _texEnvMode[_activeTexture] = param; }
         public override void TexEnvx(uint target, uint pname, int param) { _texEnvMode[_activeTexture] = param; }
         public override void TexEnviv(uint target, uint pname, Stream @params) { }
         public override void TexEnvxv(uint target, uint pname, Stream @params) { }
         public override void TexImage2D(uint target, int level, uint internalformat, int width, int height, int border, uint format, uint type, Stream pixels) { _textureFormat[_boundTextureId[_activeTexture]] = internalformat; gl.TexImage2D(target, level, internalformat, width, height, border, format, type, GetTypedArray(pixels, type)); CheckError("glTexImage2D"); }
 #if CODE_ANALYSIS
-        public override void TexImage2Di(uint target, int level, uint internalformat, uint format, int type, ImageElement image) { /*Log("setting texImage2d; image: " + image.Src);*/ gl.TexImage2D(target, level, internalformat, format, type, image); CheckError("texImage2D"); }
-        public override void TexImage2De(uint target, int level, uint internalformat, uint format, int type, CanvasElement canvas) { gl.TexImage2D(target, level, internalformat, format, type, canvas); CheckError("texImage2D"); }
-        public override void TexImage2Dx(uint target, int level, uint internalformat, uint format, int type, CanvasElementEx canvas) { gl.TexImage2D(target, level, internalformat, format, type, canvas); CheckError("texImage2D"); }
+        public override void TexImage2Di(uint target, int level, uint internalformat, uint format, uint type, ImageElement image) { /*Log("setting texImage2d; image: " + image.Src);*/ gl.TexImage2D(target, level, internalformat, format, type, image); CheckError("texImage2D"); }
+        public override void TexImage2De(uint target, int level, uint internalformat, uint format, uint type, CanvasElement canvas) { gl.TexImage2D(target, level, internalformat, format, type, canvas); CheckError("texImage2D"); }
+        public override void TexImage2Dx(uint target, int level, uint internalformat, uint format, uint type, CanvasElementEx canvas) { gl.TexImage2D(target, level, internalformat, format, type, canvas); CheckError("texImage2D"); }
 #endif
         public override void TexParameteri(uint target, uint pname, int param) { gl.TexParameteri(target, pname, param); CheckError("glTexParameteri"); }
         public override void TexParameterx(uint target, uint pname, int param) { gl.TexParameteri(target, pname, param); CheckError("glTexParameteri"); }
         public override void TexParameteriv(uint target, uint pname, Stream @params) { }
         public override void TexParameterxv(uint target, uint pname, Stream @params) { }
         public override void TexSubImage2D(uint target, int level, int xoffset, int yoffset, int width, int height, uint format, uint type, Stream pixels) { gl.TexSubImage2D(target, level, xoffset, yoffset, width, height, format, type, GetTypedArray(pixels, type)); CheckError("glTexSubImage2D"); }
-        public override void VertexPointer(int size, uint type, int stride, Stream pointer) { VertexAttribPointer(GLXX.ARRAY_POSITION, size, type, false, stride, pointer); CheckError("glVertexPointer"); }
+        public override void VertexPointer(int size, uint type, int stride, Stream pointer) { VertexAttribPointer(ARRAY_POSITION, size, type, false, stride, pointer); CheckError("glVertexPointer"); }
         public override void Viewport(int x, int y, int width, int height) { base.Viewport(x, y, width, height); gl.Viewport(x, y, width, height); CheckError("glViewport"); }
 
         #endregion
@@ -426,7 +426,7 @@ namespace SystemEx.Interop.OpenGL
 
         private void UpdatTCBuffer(Stream s, int offset, int count)
         {
-            WebGLES11BufferData b = _buffers[GLXX.ARRAY_TEXCOORD_0];
+            WebGLBufferData b = _buffers[ARRAY_TEXCOORD_0];
             gl.BindBuffer(ARRAY_BUFFER, b.Buffer);
             long p = s.Position;
             long l = s.Length;
@@ -447,7 +447,7 @@ namespace SystemEx.Interop.OpenGL
             gl.Uniform1i(_uTexEnv1, GetTextureMode(1));
             for (uint indx = 0; indx < SMALL_BUF_COUNT; indx++)
             {
-                WebGLES11BufferData b = _buffers[indx];
+                WebGLBufferData b = _buffers[indx];
                 if (b.ToBind != null)
                 {
                     gl.BindBuffer(ARRAY_BUFFER, b.Buffer); CheckError("bindBuffer" + indx);
@@ -461,7 +461,7 @@ namespace SystemEx.Interop.OpenGL
 
         private void VertexAttribPointer(uint indx, int size, uint type, bool normalize, int stride, Stream pointer)
         {
-            WebGLES11BufferData b = _buffers[indx];
+            WebGLBufferData b = _buffers[indx];
             b.Stride = stride;
             b.Size = size;
             b.Normalized = normalize;

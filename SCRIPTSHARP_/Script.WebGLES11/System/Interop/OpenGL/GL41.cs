@@ -4,7 +4,7 @@ namespace System.Interop.OpenGL
 #if CODE_ANALYSIS
     [IgnoreNamespace, Imported]
 #endif
-    public abstract class GL33
+    public abstract class GL41
     {
         // GL_VERSION_4_0
         public const uint SAMPLE_SHADING = 0x8C36;
