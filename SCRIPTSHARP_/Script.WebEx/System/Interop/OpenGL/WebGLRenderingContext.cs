@@ -167,11 +167,11 @@ namespace System.Interop.OpenGL
 
         public virtual void TexImage2D(uint target, int level, uint internalformat, int width, int height, int border, uint format, uint type, ArrayBufferView pixels) { }
 #if CODE_ANALYSIS
-        public void TexImage2D(uint target, int level, uint internalformat, uint format, int type, ImageData pixels) { }
-        public void TexImage2D(uint target, int level, uint internalformat, uint format, int type, ImageElement image) { }
-        public void TexImage2D(uint target, int level, uint internalformat, uint format, int type, CanvasElement canvas) { }
-        public void TexImage2D(uint target, int level, uint internalformat, uint format, int type, CanvasElementEx canvas) { }
-        public void TexImage2D(uint target, int level, uint internalformat, uint format, int type, VideoElement video) { }
+        public void TexImage2D(uint target, int level, uint internalformat, uint format, uint type, ImageData pixels) { }
+        public void TexImage2D(uint target, int level, uint internalformat, uint format, uint type, ImageElement image) { }
+        public void TexImage2D(uint target, int level, uint internalformat, uint format, uint type, CanvasElement canvas) { }
+        public void TexImage2D(uint target, int level, uint internalformat, uint format, uint type, CanvasElementEx canvas) { }
+        public void TexImage2D(uint target, int level, uint internalformat, uint format, uint type, VideoElement video) { }
 #endif
 
         public virtual void TexParameterf(uint target, uint pname, float param) { }

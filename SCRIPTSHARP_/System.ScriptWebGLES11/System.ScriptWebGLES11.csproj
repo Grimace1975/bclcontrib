@@ -32,20 +32,23 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="..\Script.WebGLES11\SystemEx\Interop\OpenGL\GLXX.cs">
-      <Link>System\Interop\OpenGL\GLXX.cs</Link>
+    <Compile Include="..\Script.WebGLES11\SystemEx\Interop\OpenGL\WebGL15Context.cs">
+      <Link>System\Interop\OpenGL\WebGL15Context.cs</Link>
     </Compile>
-    <Compile Include="..\Script.WebGLES11\SystemEx\Interop\OpenGL\WebGLES11BufferData.cs">
-      <Link>System\Interop\OpenGL\WebGLES11BufferData.cs</Link>
+    <Compile Include="..\Script.WebGLES11\SystemEx\Interop\OpenGL\WebGL15ContextImpl.cs">
+      <Link>System\Interop\OpenGL\WebGL15ContextImpl.cs</Link>
     </Compile>
-    <Compile Include="..\Script.WebGLES11\SystemEx\Interop\OpenGL\WebGLES11RenderingContext.cs">
-      <Link>System\Interop\OpenGL\WebGLES11RenderingContext.cs</Link>
+    <Compile Include="..\Script.WebGLES11\SystemEx\Interop\OpenGL\WebGLBufferData.cs">
+      <Link>System\Interop\OpenGL\WebGLBufferData.cs</Link>
     </Compile>
-    <Compile Include="..\Script.WebGLES11\SystemEx\Interop\OpenGL\WebGLES11RenderingContextImpl.cs">
-      <Link>System\Interop\OpenGL\WebGLES11RenderingContextImpl.cs</Link>
+    <Compile Include="..\Script.WebGLES11\System\Interop\OpenGL\GL15.cs">
+      <Link>System\Interop\OpenGL\GL15.cs</Link>
     </Compile>
     <Compile Include="..\Script.WebGLES11\System\Interop\OpenGL\GLES11.cs">
       <Link>System\Interop\OpenGL\GLES11.cs</Link>
+    </Compile>
+    <Compile Include="..\Script.WebGLES11\System\Interop\OpenGL\GLXX.cs">
+      <Link>System\Interop\OpenGL\GLXX.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

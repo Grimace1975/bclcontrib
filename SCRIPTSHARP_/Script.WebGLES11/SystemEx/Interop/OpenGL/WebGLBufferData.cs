@@ -8,9 +8,9 @@ namespace SystemEx.Interop.OpenGL
 #endif
 {
 #if CODE_ANALYSIS
-    internal sealed class WebGLES11BufferData : Record
+    internal sealed class WebGLBufferData : Record
 #else
-    internal struct WebGLES11BufferData
+    internal struct WebGLBufferData
 #endif
     {
         public ArrayBufferView ToBind;
