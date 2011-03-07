@@ -123,23 +123,5 @@ namespace System.IO
 				_action(file);
 			_timer.Start();
 		}
-
-
-        // TODO better method name
-		public static void RecursiveAsSpider(string path, string filePattern, Action<string> action)
-		{
-			foreach (var file in Directory.GetFiles(path, filePattern))
-				try
-				{
-					action(file);
-				}
-				catch { }
-			foreach (var childPath in Directory.GetDirectories(path))
-				try
-				{
-                    RecursiveAsSpider(childPath, filePattern, action);
-				}
-				catch { }
-		}
 	}
 }
