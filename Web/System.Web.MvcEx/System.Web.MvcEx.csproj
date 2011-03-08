@@ -97,6 +97,7 @@
     <Compile Include="Web\Mvc+Quality\ServiceLocatorActionInvoker.cs" />
     <Compile Include="Web\Mvc+Quality\IInjectableModelBinder.cs" />
     <Compile Include="Web\Mvc+Quality\ServiceLocatorModelBinder.cs" />
+    <Compile Include="Web\Mvc\AreaRegistrationContextEx.cs" />
     <Compile Include="Web\Mvc\MobileIndirectViewDirector.cs" />
     <Compile Include="Web\Mvc\IndirectViewDirector.cs" />
     <Compile Include="Web\Mvc\IndirectWebFormViewEngine.cs" />
