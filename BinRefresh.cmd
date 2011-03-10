@@ -5,6 +5,7 @@ xcopy Abstractions\System.Abstractions\bin\Release\System.Abstractions.* bin\ /Q
 xcopy Core\Quality\System.Core.Quality\bin\Release\System.Core.Quality.* bin\Quality\ /Q /R /H /Y
 xcopy Core\Quality\System.Core.Quality_Ninject\bin\Release\System.Core.Quality_Ninject.* bin\Quality\ /Q /R /H /Y
 xcopy Core\Quality\System.Core.Quality_NServiceBus\bin\Release\System.Core.Quality_NServiceBus.* bin\Quality\ /Q /R /H /Y
+xcopy Core\Quality\System.Core.Quality_NServiceBus_Community\bin\Release\System.Core.Quality_NServiceBus_Community.* bin\Quality\ /Q /R /H /Y
 xcopy Core\Quality\System.Core.Quality_StructureMap\bin\Release\System.Core.Quality_StructureMap.* bin\Quality\ /Q /R /H /Y
 xcopy Core\Quality\System.Core.Quality_Unity\bin\Release\System.Core.Quality_Unity.* bin\Quality\ /Q /R /H /Y
 xcopy Core\Quality\System.Core.Quality_Windsor\bin\Release\System.Core.Quality_Windsor.* bin\Quality\ /Q /R /H /Y
@@ -32,6 +33,7 @@ xcopy Abstractions\System.Abstractions\bin\Debug\System.Abstractions.* bin\Debug
 xcopy Core\Quality\System.Core.Quality\bin\Debug\System.Core.Quality.* bin\Debug\Quality\ /Q /R /H /Y
 xcopy Core\Quality\System.Core.Quality_Ninject\bin\Debug\System.Core.Quality_Ninject.* bin\Debug\Quality\ /Q /R /H /Y
 xcopy Core\Quality\System.Core.Quality_NServiceBus\bin\Debug\System.Core.Quality_NServiceBus.* bin\Debug\Quality\ /Q /R /H /Y
+xcopy Core\Quality\System.Core.Quality_NServiceBus_Community\bin\Debug\System.Core.Quality_NServiceBus_Community.* bin\Debug\Quality\ /Q /R /H /Y
 xcopy Core\Quality\System.Core.Quality_StructureMap\bin\Debug\System.Core.Quality_StructureMap.* bin\Debug\Quality\ /Q /R /H /Y
 xcopy Core\Quality\System.Core.Quality_Unity\bin\Debug\System.Core.Quality_Unity.* bin\Debug\Quality\ /Q /R /H /Y
 xcopy Core\Quality\System.Core.Quality_Windsor\bin\Debug\System.Core.Quality_Windsor.* bin\Debug\Quality\ /Q /R /H /Y
