@@ -51,6 +51,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DirectoryServices\AccountManagement\MergeAction.cs" />
     <Compile Include="DirectoryServices\AccountManagement\GroupAdvancedFilters.cs" />
     <Compile Include="DirectoryServices\AccountManagement\GroupPrincipalEx.cs" />
     <Compile Include="DirectoryServices\AccountManagement\UserPrincipalMatcher.cs" />

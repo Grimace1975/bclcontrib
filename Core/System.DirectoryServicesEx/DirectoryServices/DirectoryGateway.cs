@@ -67,16 +67,19 @@ namespace System.DirectoryServices
         #region User Validation
         public bool ValidateUser(string container, string userId, string password)
         {
+			if (string.IsNullOrEmpty(container))
+				throw new ArgumentNullException("container");
+			if (string.IsNullOrEmpty(userId))
+				throw new ArgumentNullException("userId");
+			if (string.IsNullOrEmpty(password))
+				throw new ArgumentNullException("password", "Password required for user authentication");
             string username = GetUserAttributeBySearchProperty(container, userId, LdapUserNameAttribute, LdapUserDNAttribute);
             if (string.IsNullOrEmpty(username))
                 return false;
             var authenticationTypes = Ldap.GetAuthenticationTypes(_domain.EndsWith(":636")) & ~AuthenticationTypes.Secure;
             using (var entry = GetDirectoryEntry(container, username, password, authenticationTypes))
             {
-                try
-                {
-                    object nativeObject = entry.NativeObject;
-                }
+                try { object nativeObject = entry.NativeObject; }
                 catch { return false; }
                 return true;
             }

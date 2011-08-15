@@ -44,7 +44,7 @@ namespace System.Web
 				throw new ArgumentException("Cannot_redirect_to_newline");
 			var httpContext = HttpContext.Current;
 			var page = (httpContext.Handler as UI.Page);
-			if ((page != null) && (page.IsCallback))
+			if ((page != null) && page.IsCallback)
 				throw new ArgumentException("Redirect_not_allowed_in_callback");
 			httpResponse.Clear();
 			httpResponse.StatusCode = 301;
