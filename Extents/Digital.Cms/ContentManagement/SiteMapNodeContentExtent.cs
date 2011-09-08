@@ -31,6 +31,7 @@ namespace Digital.ContentManagement
     /// </summary>
     public class SiteMapNodeContentExtent
 	{
+        public int Shard { get; set; }
         public int Key { get; set; }
 		public string TreeId { get; set; }
         public SiteMapNode SectionNode { get; set; }

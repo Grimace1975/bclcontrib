@@ -33,7 +33,7 @@ namespace System.Web.Mvc.Html
 {
     public static partial class ChildActionExtensionsEx
     {
-        private static readonly MethodInfo s_wrapForServerExecuteMethod = Type.GetType("System.Web.Mvc.HttpHandlerUtil").GetMethod("WrapForServerExecute");
+        private static readonly MethodInfo s_wrapForServerExecuteMethod = Type.GetType("System.Web.Mvc.HttpHandlerUtil, " + AssemblyRef.SystemWebMvc).GetMethod("WrapForServerExecute");
 
         //public static MvcHtmlString ActionEx(this HtmlHelper htmlHelper, string actionName) { return ActionEx(htmlHelper, actionName, null, ((RouteValueDictionary)null)); }
         //public static MvcHtmlString ActionEx(this HtmlHelper htmlHelper, string actionName, object routeValues) { return ActionEx(htmlHelper, actionName, null, new RouteValueDictionary(routeValues)); }
@@ -66,7 +66,7 @@ namespace System.Web.Mvc.Html
             routeValues = MergeDictionaries(new RouteValueDictionary[] { routeValues, htmlHelper.ViewContext.RouteData.Values });
             routeValues["action"] = actionName;
             if (!string.IsNullOrEmpty(controllerName))
-                routeValues["controllerName"] = controllerName;
+                routeValues["controller"] = controllerName;
             //bool flag;
             var data = htmlHelper.RouteCollection.GetVirtualPathForArea(htmlHelper.ViewContext.RequestContext, null, routeValues); // out flag);
             if (data == null)

@@ -31,7 +31,7 @@ namespace System.Web.Routing
     /// <summary>
     /// DynamicRoute
     /// </summary>
-    public class DynamicRoute : RouteBase
+    public class DynamicRoute : Route
     {
         private IDynamicRoutingContext _routingContextAsFixed;
         private Func<DynamicRoute, IDynamicRoutingContext> _routingContext;
@@ -40,12 +40,16 @@ namespace System.Web.Routing
             : this(new SiteMapDynamicRoutingContext((ISiteMapProvider)SiteMap.Provider)) { }
         public DynamicRoute(ISiteMapProvider siteMapProvider)
             : this(new SiteMapDynamicRoutingContext(siteMapProvider)) { }
+        public DynamicRoute(SiteMapProvider siteMapProvider)
+            : this((ISiteMapProvider)siteMapProvider) { }
         public DynamicRoute(IDynamicRoutingContext routingContext)
+            : base(null, null)
         {
             _routingContextAsFixed = routingContext;
             RoutingContext = (r => _routingContextAsFixed);
         }
         public DynamicRoute(Func<DynamicRoute, IDynamicRoutingContext> routingContext)
+            : base(null, null)
         {
             RoutingContext = routingContext;
         }
