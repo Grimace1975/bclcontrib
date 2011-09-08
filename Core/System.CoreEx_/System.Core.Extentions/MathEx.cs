@@ -25,64 +25,74 @@ THE SOFTWARE.
 #endregion
 namespace System
 {
-	/// <summary>
-	/// Provides a basic façade pattern that facilitates common numeric-based calculations into a single class.
-	/// </summary>
-	public static class MathEx
-	{
-		internal static Random s_random = new Random();
+    /// <summary>
+    /// Provides a basic façade pattern that facilitates common numeric-based calculations into a single class.
+    /// </summary>
+    public static class MathEx
+    {
+        internal static Random s_random = new Random();
 
-		/// <summary>
-		/// Returns the ceiling of the value provided.
-		/// </summary>
-		/// <param name="value">The value.</param>
-		/// <returns></returns>
-		public static int Ceiling(decimal value)
-		{
-			return (int)Math.Ceiling((double)value);
-		}
-		/// <summary>
-		/// Ceilings the specified value.
-		/// </summary>
-		/// <param name="value">The value.</param>
-		/// <param name="decimals">The decimals.</param>
-		/// <returns></returns>
-		public static decimal Ceiling(decimal value, int decimals)
-		{
-			decimal factor = (decimal)Math.Pow(10.0, (float)decimals);
-			return (decimal)Math.Ceiling((double)(value * factor)) / factor;
-		}
+        public static DateTime Max(DateTime val1, DateTime val2)
+        {
+            return (val1 < val2 ? val2 : val1);
+        }
 
-		/// <summary>
-		/// Create a random value between the values provided.
-		/// </summary>
-		/// <param name="minValue">The min value.</param>
-		/// <param name="maxValue">The max value.</param>
-		/// <returns>The random value generated.</returns>
-		public static int CreateRandom(int minValue, int maxValue)
-		{
-			return s_random.Next(minValue, maxValue);
-		}
+        public static DateTime Min(DateTime val1, DateTime val2)
+        {
+            return (val1 > val2 ? val2 : val1);
+        }
 
-		/// <summary>
-		/// Returns the largest integer less than or equal to the specified value.
-		/// </summary>
-		/// <param name="value">The value.</param>
-		/// <returns></returns>
-		public static int Floor(decimal value)
-		{
-			return (int)Math.Floor((double)value);
-		}
-		/// <summary>
-		/// Floors the specified value.
-		/// </summary>
-		/// <param name="value">The value.</param>
-		/// <param name="decimals">The decimals.</param>
-		/// <returns></returns>
-		public static decimal Floor(decimal value, int decimals)
-		{
-			decimal factor = (decimal)Math.Pow(10.0, (float)decimals);
-			return (decimal)Math.Floor((double)(value * factor)) / factor;
-		}
-	}
+        /// <summary>
+        /// Returns the ceiling of the value provided.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <returns></returns>
+        public static int Ceiling(decimal value)
+        {
+            return (int)Math.Ceiling((double)value);
+        }
+        /// <summary>
+        /// Ceilings the specified value.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <param name="decimals">The decimals.</param>
+        /// <returns></returns>
+        public static decimal Ceiling(decimal value, int decimals)
+        {
+            decimal factor = (decimal)Math.Pow(10.0, (float)decimals);
+            return (decimal)Math.Ceiling((double)(value * factor)) / factor;
+        }
+
+        /// <summary>
+        /// Create a random value between the values provided.
+        /// </summary>
+        /// <param name="minValue">The min value.</param>
+        /// <param name="maxValue">The max value.</param>
+        /// <returns>The random value generated.</returns>
+        public static int CreateRandom(int minValue, int maxValue)
+        {
+            return s_random.Next(minValue, maxValue);
+        }
+
+        /// <summary>
+        /// Returns the largest integer less than or equal to the specified value.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <returns></returns>
+        public static int Floor(decimal value)
+        {
+            return (int)Math.Floor((double)value);
+        }
+        /// <summary>
+        /// Floors the specified value.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <param name="decimals">The decimals.</param>
+        /// <returns></returns>
+        public static decimal Floor(decimal value, int decimals)
+        {
+            decimal factor = (decimal)Math.Pow(10.0, (float)decimals);
+            return (decimal)Math.Floor((double)(value * factor)) / factor;
+        }
+    }
 }

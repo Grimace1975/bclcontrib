@@ -5,6 +5,7 @@ xcopy Abstractions\System.Abstractions\bin\Release\System.Abstractions.* bin\ /Q
 xcopy Core\Quality\System.Core.Quality\bin\Release\System.Core.Quality.* bin\Quality\ /Q /R /H /Y
 xcopy Core\Quality\System.Core.Quality_Ninject\bin\Release\System.Core.Quality_Ninject.* bin\Quality\ /Q /R /H /Y
 xcopy Core\Quality\System.Core.Quality_NServiceBus\bin\Release\System.Core.Quality_NServiceBus.* bin\Quality\ /Q /R /H /Y
+xcopy Core\Quality\System.Core.Quality_NServiceBus_Community\bin\Release\System.Core.Quality_NServiceBus_Community.* bin\Quality\ /Q /R /H /Y
 xcopy Core\Quality\System.Core.Quality_StructureMap\bin\Release\System.Core.Quality_StructureMap.* bin\Quality\ /Q /R /H /Y
 xcopy Core\Quality\System.Core.Quality_Unity\bin\Release\System.Core.Quality_Unity.* bin\Quality\ /Q /R /H /Y
 xcopy Core\Quality\System.Core.Quality_Windsor\bin\Release\System.Core.Quality_Windsor.* bin\Quality\ /Q /R /H /Y
@@ -32,6 +33,7 @@ xcopy Abstractions\System.Abstractions\bin\Debug\System.Abstractions.* bin\Debug
 xcopy Core\Quality\System.Core.Quality\bin\Debug\System.Core.Quality.* bin\Debug\Quality\ /Q /R /H /Y
 xcopy Core\Quality\System.Core.Quality_Ninject\bin\Debug\System.Core.Quality_Ninject.* bin\Debug\Quality\ /Q /R /H /Y
 xcopy Core\Quality\System.Core.Quality_NServiceBus\bin\Debug\System.Core.Quality_NServiceBus.* bin\Debug\Quality\ /Q /R /H /Y
+xcopy Core\Quality\System.Core.Quality_NServiceBus_Community\bin\Debug\System.Core.Quality_NServiceBus_Community.* bin\Debug\Quality\ /Q /R /H /Y
 xcopy Core\Quality\System.Core.Quality_StructureMap\bin\Debug\System.Core.Quality_StructureMap.* bin\Debug\Quality\ /Q /R /H /Y
 xcopy Core\Quality\System.Core.Quality_Unity\bin\Debug\System.Core.Quality_Unity.* bin\Debug\Quality\ /Q /R /H /Y
 xcopy Core\Quality\System.Core.Quality_Windsor\bin\Debug\System.Core.Quality_Windsor.* bin\Debug\Quality\ /Q /R /H /Y
@@ -52,17 +54,3 @@ xcopy Web\System.Web.MvcEx\bin\Debug\System.Web.MvcEx.* bin\Debug\ /Q /R /H /Y
 xcopy Web\System.WebEx\bin\Debug\System.WebEx.* bin\Debug\ /Q /R /H /Y
 xcopy INTEGRATE_\WEB\System.WebEx.Integrate\bin\Debug\System.WebEx.Integrate.* bin\Debug\INTEGRATE_\ /Q /R /H /Y
 xcopy INTEROP_\CORE\System.Interop.Core\bin\Debug\System.Interop.Core.* bin\Debug\INTEROP_\ /Q /R /H /Y
-
-::
-robocopy Bin\Debug\ "C:\_APPLICATION\AFIWEB\Library_\Reference Assemblies\BclContrib" /MIR /TEE /NJH /NJS
-::
-::robocopy Bin\ "C:\_APPLICATION\CITYOPWEB\Library_\Reference Assemblies\BclContrib" /MIR /TEE /NJH /NJS
-::robocopy Bin\Debug\ "C:\_APPLICATION\CITYOPWEB\Library_\Reference Assemblies\BclContrib" /MIR /TEE /NJH /NJS
-::
-::robocopy Bin\Debug\ "C:\_APPLICATION\HLLMRKLINK\Library_\Reference Assemblies\BclContrib" /MIR /TEE /NJH /NJS
-::robocopy Bin\Debug\ "C:\_APPLICATION\TBLCOMMUNITY\Library_\Reference Assemblies\BclContrib" /MIR /TEE /NJH /NJS
-::robocopy Bin\Debug\ "C:\_APPLICATION\CBIBENEFITSWEB\Library_\Reference Assemblies\BclContrib" /MIR /TEE /NJH /NJS
-::robocopy Bin\Debug\ "C:\_APPLICATION\KCHBRMEBWEB\Library_\Reference Assemblies\BclContrib" /MIR /TEE /NJH /NJS
-::robocopy Bin\Debug\ "C:\_APPLICATION\CHLTMWRV2WEB\Library_\Reference Assemblies\BclContrib" /MIR /TEE /NJH /NJS
-
-::pause

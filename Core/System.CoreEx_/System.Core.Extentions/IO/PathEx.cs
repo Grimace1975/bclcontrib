@@ -44,5 +44,22 @@ namespace System.IO
                 ((contentTypeAsObject = registryKey.GetValue("Content Type")) != null)
             ? contentTypeAsObject.ToString() : "application/octet-stream");
         }
+
+        // TODO better method name
+        public static void RecursiveAsSpider(string path, string filePattern, Action<string> action)
+        {
+            foreach (var file in Directory.GetFiles(path, filePattern))
+                try
+                {
+                    action(file);
+                }
+                catch { }
+            foreach (var childPath in Directory.GetDirectories(path))
+                try
+                {
+                    RecursiveAsSpider(childPath, filePattern, action);
+                }
+                catch { }
+        }
     }
 }

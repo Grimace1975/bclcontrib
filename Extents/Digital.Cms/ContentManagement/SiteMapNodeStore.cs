@@ -326,7 +326,7 @@ namespace Digital.ContentManagement
                         node[attribKey] = attrib[attribKey];
                 // content
                 var sectionNode = GetParentNodeFromDataReader(nodes, _rootNode, ordinal, r, true);
-                node.Set<SiteMapNodeContentExtent>(new SiteMapNodeContentExtent { Key = key, TreeId = treeId, SectionNode = sectionNode });
+                node.Set<SiteMapNodeContentExtent>(new SiteMapNodeContentExtent { Shard = _connectShard, Key = key, TreeId = treeId, SectionNode = sectionNode });
                 var contentNode = (node as SiteMapPageNode);
                 if (contentNode != null)
                 {
