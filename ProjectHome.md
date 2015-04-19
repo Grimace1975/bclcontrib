@@ -1,0 +1,1 @@
+This is the contrib project for the .NET BCL. This project adds additional functionality on top of the BCL. It is written in C#. Founded by Sky Morey.
